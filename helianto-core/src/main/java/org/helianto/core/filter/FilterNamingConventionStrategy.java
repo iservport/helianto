@@ -10,6 +10,13 @@ import org.helianto.core.naming.AbstractNamingConventionStrategy;
 public class FilterNamingConventionStrategy extends AbstractNamingConventionStrategy {
 
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * Constructor.
+	 */
+	public FilterNamingConventionStrategy() {
+		super();
+	}
 
 	@Override
 	protected String getSuffix() { return "Filter"; }

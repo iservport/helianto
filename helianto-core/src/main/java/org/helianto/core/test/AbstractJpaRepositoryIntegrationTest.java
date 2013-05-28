@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.Serializable;
 import java.util.List;
 
+import org.helianto.core.config.HeliantoConfig;
 import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
@@ -31,8 +32,9 @@ import org.springframework.transaction.annotation.Transactional;
  * @param <T> target class
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={
-		"classpath:/META-INF/spring/core-context.xml"})
+//@ContextConfiguration(locations={
+//		"classpath:/META-INF/spring/core-context.xml"})
+@ContextConfiguration(classes=HeliantoConfig.class)
 @Transactional
 public abstract class AbstractJpaRepositoryIntegrationTest<T, R extends FilterRepository<T, Serializable>> {
 

@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.easymock.EasyMock;
-import org.helianto.core.repository.FilterDao;
 import org.helianto.partner.domain.Account;
 import org.helianto.partner.filter.AccountFilterAdapter;
 import org.helianto.partner.form.AccountForm;
@@ -76,7 +75,6 @@ public class AccountMgrImplTests {
     private AccountMgrImpl accountMgr;
     private AccountRepository accountRepository;
 
-	@SuppressWarnings("unchecked")
 	@Before
     public void setUp() {
         accountMgr = new AccountMgrImpl();

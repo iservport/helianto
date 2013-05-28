@@ -8,7 +8,6 @@ import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Unit;
-import org.helianto.core.test.CategoryTestSupport;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -53,7 +52,7 @@ public class UnitFilterAdapterTests {
     
     @Test
     public void filterCategory() {
-    	Category category = CategoryTestSupport.createCategory();
+    	Category category = new Category();
     	category.setId(1);
     	form.setCategory(category);
         assertEquals(C1+C4, filter.createCriteriaAsString());

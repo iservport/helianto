@@ -32,51 +32,39 @@
 
 	<description>Persistence and transaction definition.</description>
 
-	<import resource="dataSource.xml"/>
-	
-	<jpa:repositories 
-		base-package="org.helianto.*.repository" 
-		factory-class="org.helianto.core.data.FilterRepositoryFactoryBean"/>
-               
-	<!--
-	 ! Scan this packages for annotated beans.
-	 !-->
-	<context:component-scan 
-		base-package="org.helianto.*.repository,org.helianto.*.service"/>
-	
 	<!-- Can't declare annotation-driven AND tx:advice to instruct Spring  -->
-	<tx:annotation-driven transaction-manager="transactionManager" />
-	 
+<!-- 	<tx:annotation-driven transaction-manager="transactionManager" />
+ -->	 
 	<!-- 
 	 ! Transaction manager and factory for JPA 
 	 !-->
 	 
-	<bean id="transactionManager" 
+<!-- 	<bean id="transactionManager" 
 		class="org.springframework.orm.jpa.JpaTransactionManager" >
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 		<property name="jpaDialect">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
 		</property>
 	</bean>
-	
-	<bean id="entityManagerFactory" 
+ -->	
+<!-- 	<bean id="entityManagerFactory" 
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
 		<property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
 		<property name="packagesToScan" ref="domainPackagesToScan" />
 	</bean>
-	
-	<util:list id="domainPackagesToScan" value-type="java.lang.String">
+ -->	
+<!-- 	<util:list id="domainPackagesToScan" value-type="java.lang.String">
 	    <value>org.helianto.*.domain</value>
 	</util:list>
-	
-	<bean id="jpaVendorAdapter" 
+ -->	
+<!-- 	<bean id="jpaVendorAdapter" 
 	    class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" >
 		<property name="showSql" value="true" />
 		<property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/>
 		<property name="generateDdl" value="true"/>
 	</bean>
-		
+ -->		
 	<bean id="persistenceStrategy" 
 		class="org.helianto.core.repository.HibernatePersistenceStrategy" />
 	
@@ -84,17 +72,17 @@
 	 ! Naming convention strategies.
 	 !-->
 	 
-	<bean id="defaultNamingConventionStrategy" 
+<!-- 	<bean id="defaultNamingConventionStrategy" 
 		class="org.helianto.core.naming.DefaultNamingConventionStrategy" />
 	 
 	<bean id="filterNamingConventionStrategy" 
 		class="org.helianto.core.filter.FilterNamingConventionStrategy" />
-	 
+ -->	 
 	<!-- 
 		Messages
 	-->
 	
-	<bean id="messageSource"
+<!-- 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
@@ -104,7 +92,7 @@
 				<value>../messages</value>
 			</list>
 		</property>
-	</bean>
+	</bean> -->
 		
 	
 </beans>
