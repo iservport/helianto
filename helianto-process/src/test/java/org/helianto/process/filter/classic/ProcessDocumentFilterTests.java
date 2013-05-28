@@ -23,12 +23,13 @@ import java.io.Serializable;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.classic.AbstractEntityBackedFilter;
-import org.helianto.process.def.InheritanceType;
-import org.helianto.process.domain.Operation;
+import org.helianto.document.domain.ProcessDocument;
 import org.helianto.process.domain.Process;
-import org.helianto.process.domain.ProcessDocument;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.iservport.production.def.InheritanceType;
+import com.iservport.production.domain.Operation;
 
 /**
  * 

@@ -1,11 +1,11 @@
-package org.helianto.process.repository;
+package org.helianto.document.repository;
 
 import java.io.Serializable;
 
 import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.KeyType;
-import org.helianto.process.domain.ProcessDocument;
-import org.helianto.process.domain.ProcessDocumentKey;
+import org.helianto.document.domain.ProcessDocument;
+import org.helianto.document.domain.ProcessDocumentKey;
 
 /**
  * Process document key repository.

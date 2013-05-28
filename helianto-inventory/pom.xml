@@ -20,7 +20,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>helianto-process</artifactId>
+			<artifactId>helianto-resource</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

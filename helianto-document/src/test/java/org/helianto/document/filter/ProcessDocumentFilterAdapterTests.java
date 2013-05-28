@@ -13,16 +13,15 @@
  * limitations under the License.
  */
 
-package org.helianto.process.filter;
+package org.helianto.document.filter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.process.def.InheritanceType;
-import org.helianto.process.domain.Operation;
-import org.helianto.process.domain.ProcessDocument;
+import org.helianto.document.def.InheritanceType;
+import org.helianto.document.domain.ProcessDocument;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -54,14 +53,8 @@ public class ProcessDocumentFilterAdapterTests {
     public void empty() {
     	target.setDocCode("");
         assertEquals(C0+OB, filter.createCriteriaAsString());
-    }
-    
-    @Test
-    public void filterClazz() {
-        filter.setClazz(Operation.class);
-        assertEquals(C0+C1+OB, filter.createCriteriaAsString());
-    }
-    
+	}
+
     @Test
     public void select() {
     	target.setDocCode("DOCCODE");

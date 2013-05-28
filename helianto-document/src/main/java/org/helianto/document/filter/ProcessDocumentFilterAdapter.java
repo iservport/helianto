@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.process.filter;
+package org.helianto.document.filter;
 
 import java.util.Collection;
 
@@ -21,10 +21,7 @@ import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.criteria.SelectFromBuilder;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
-import org.helianto.process.domain.ControlMethod;
-import org.helianto.process.domain.Operation;
-import org.helianto.process.domain.Process;
-import org.helianto.process.domain.ProcessDocument;
+import org.helianto.document.domain.ProcessDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -126,28 +123,10 @@ public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<Pro
 	 * Discriminator
 	 */
 	public char getDiscriminator() {
-		if (clazz.equals(ControlMethod.class)) {
-			return 'S'; 
-		}
-		if (clazz.equals(Operation.class)) {
-			return 'O'; 
-		}
-		if (clazz.equals(Process.class)) {
-			return 'P'; 
-		}
 		return ' ';
 	}
 
 	public void setDiscriminator(char discriminator) {
-		if (discriminator=='S') {
-			clazz = ControlMethod.class; 
-		}
-		if (discriminator=='O') {
-			clazz = Operation.class; 
-		}
-		if (discriminator=='P') {
-			clazz = Process.class; 
-		}
 	}
 
 	/**

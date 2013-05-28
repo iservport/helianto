@@ -5,10 +5,11 @@ import java.io.Serializable;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.repository.KeyTypeRepository;
 import org.helianto.core.test.AbstractJpaRepositoryIntegrationTest;
-import org.helianto.process.domain.Operation;
-import org.helianto.process.domain.ProcessDocument;
-import org.helianto.process.domain.ProcessDocumentAssociation;
+import org.helianto.document.domain.ProcessDocument;
+import org.helianto.document.domain.ProcessDocumentAssociation;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.iservport.production.domain.Operation;
 
 /**
  * 

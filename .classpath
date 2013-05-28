@@ -9,12 +9,8 @@
 	<classpathentry excluding="**" kind="src" path="helianto-partner/src/test/resources"/>
 	<classpathentry kind="src" path="helianto-document/src/main/java"/>
 	<classpathentry kind="src" path="helianto-document/src/test/java"/>
-	<classpathentry excluding="**" kind="src" path="helianto-document/src/test/resources"/>
 	<classpathentry kind="src" path="helianto-resource/src/main/java"/>
 	<classpathentry kind="src" path="helianto-resource/src/test/java"/>
-	<classpathentry kind="src" path="helianto-process/src/main/java"/>
-	<classpathentry kind="src" path="helianto-process/src/test/java"/>
-	<classpathentry excluding="**" kind="src" path="helianto-process/src/test/resources"/>
 	<classpathentry kind="src" path="helianto-inventory/src/main/java"/>
 	<classpathentry kind="src" path="helianto-inventory/src/test/java"/>
 	<classpathentry kind="src" path="helianto-message/src/main/java"/>

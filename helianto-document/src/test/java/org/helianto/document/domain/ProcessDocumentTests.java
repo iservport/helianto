@@ -1,4 +1,4 @@
-package org.helianto.process;
+package org.helianto.document.domain;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.document.base.AbstractDocument;
-import org.helianto.process.domain.ProcessDocument;
+import org.helianto.document.domain.ProcessDocument;
 import org.junit.Test;
 
 

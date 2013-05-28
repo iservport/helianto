@@ -1,7 +1,6 @@
 package org.helianto.process.domain.classic;
 
-import org.helianto.process.domain.ProcessDocument;
-// Generated 08/03/2007 19:38:51 by Hibernate Tools 3.2.0.beta8
+import org.helianto.document.domain.ProcessDocument;
 
 
 

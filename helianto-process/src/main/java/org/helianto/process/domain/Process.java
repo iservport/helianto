@@ -15,9 +15,6 @@
 
 package org.helianto.process.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,6 +23,7 @@ import javax.persistence.Transient;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.number.Sequenceable;
+import org.helianto.document.domain.ProcessDocument;
 import org.helianto.partner.domain.Partner;
 
 /**
@@ -39,7 +37,7 @@ import org.helianto.partner.domain.Partner;
  */
 @javax.persistence.Entity
 @Table(name="proc_process")
-public class Process extends DerivedProcessDocument implements Sequenceable {
+public class Process extends ProcessDocument implements Sequenceable {
 
     private static final long serialVersionUID = 1L;
     private long internalNumber;
@@ -73,10 +71,10 @@ public class Process extends DerivedProcessDocument implements Sequenceable {
     public void setInternalNumber(long internalNumber) {
         this.internalNumber = internalNumber;
     }
-    @Transient
-	public String getInternalNumberKey() {
-		return "PROC";
-	}
+//    @Transient
+//	public String getInternalNumberKey() {
+//		return "PROC";
+//	}
  
     @Transient
     public int getStartNumber() {
@@ -95,30 +93,6 @@ public class Process extends DerivedProcessDocument implements Sequenceable {
 		this.partner = partner;
 	}
 
-    @Transient
-    public List<ProcessDocumentAssociation> getOperationAssociations() {
-    	List<ProcessDocumentAssociation> childAssociationList = new ArrayList<ProcessDocumentAssociation>();
-    	for (ProcessDocumentAssociation documentAssociation: this.getChildAssociationList()) {
-    		if (documentAssociation.getChild() instanceof Operation) {
-    			childAssociationList.add(documentAssociation);
-    		}
-    	}
-    	return childAssociationList;
-    }
-    
-	/**
-     * List of child <code>Operation</code>.
-     */
-    @Transient
-    public List<Operation> getOperations() {
-    	List<ProcessDocumentAssociation> operationAssociations = getOperationAssociations();
-    	List<Operation> operations = new ArrayList<Operation>();
-    	for (ProcessDocumentAssociation documentAssociation: operationAssociations) {
-    		operations.add((Operation) documentAssociation.getChild());
-    	}
-    	return operations;
-    }
-    
     public boolean equals(Object other) {
 		 if ( !(other instanceof Process) ) return false;
 		 return super.equals(other);

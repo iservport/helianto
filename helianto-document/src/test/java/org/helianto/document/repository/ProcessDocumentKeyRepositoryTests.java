@@ -1,4 +1,4 @@
-package org.helianto.process.repository;
+package org.helianto.document.repository;
 
 import java.io.Serializable;
 
@@ -6,9 +6,8 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.KeyType;
 import org.helianto.core.repository.KeyTypeRepository;
 import org.helianto.core.test.AbstractJpaRepositoryIntegrationTest;
-import org.helianto.process.domain.Operation;
-import org.helianto.process.domain.ProcessDocument;
-import org.helianto.process.domain.ProcessDocumentKey;
+import org.helianto.document.domain.ProcessDocument;
+import org.helianto.document.domain.ProcessDocumentKey;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -53,7 +52,7 @@ public class ProcessDocumentKeyRepositoryTests
 	@Override
 	protected void setUp() {
 		entity = entityRepository.save(new Entity());
-		processDocument = processDocumentRepository.save(new Operation(entity, "10"));
+		processDocument = processDocumentRepository.save(new ProcessDocument(entity, "10"));
 		keyType = keyTypeRepository.save(new KeyType(operator, "CODE"));
 	}
 

@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.process.domain;
+package org.helianto.document.domain;
 
 import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;

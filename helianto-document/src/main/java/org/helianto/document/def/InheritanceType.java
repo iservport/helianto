@@ -14,7 +14,7 @@
  */
 
 
-package org.helianto.process.def;
+package org.helianto.document.def;
 
 /**
  * Define types of inheritance.

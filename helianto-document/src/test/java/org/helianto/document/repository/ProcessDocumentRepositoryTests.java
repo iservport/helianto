@@ -1,9 +1,9 @@
-package org.helianto.process.repository;
+package org.helianto.document.repository;
 
 import java.io.Serializable;
 
 import org.helianto.core.test.AbstractJpaRepositoryIntegrationTest;
-import org.helianto.process.domain.ProcessDocument;
+import org.helianto.document.domain.ProcessDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

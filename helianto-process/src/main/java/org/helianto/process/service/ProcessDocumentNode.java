@@ -18,7 +18,7 @@ package org.helianto.process.service;
 import java.io.Serializable;
 import java.util.List;
 
-import org.helianto.process.domain.ProcessDocument;
+import org.helianto.document.domain.ProcessDocument;
 
 /**
  * @author Mauricio Fernandes de Castro

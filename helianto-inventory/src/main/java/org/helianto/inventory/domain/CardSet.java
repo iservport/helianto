@@ -29,10 +29,9 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.number.Sequenceable;
+import org.helianto.document.domain.ProcessDocument;
 import org.helianto.inventory.CardType;
 import org.helianto.inventory.InvalidCardException;
-import org.helianto.process.domain.DerivedProcessDocument;
-import org.helianto.process.domain.ProcessDocument;
 
 /**
  * Represents a range of cards.
@@ -185,8 +184,8 @@ public class CardSet implements java.io.Serializable, Sequenceable {
     }
     @Transient
     public String[] getProcessColorChain() {
-    	if (this.process!=null && process instanceof DerivedProcessDocument) {
-    		return ((DerivedProcessDocument) this.process).getProcessColorChain();
+    	if (this.process!=null && process instanceof ProcessDocument) {
+    		return ((ProcessDocument) this.process).getProcessColorChain();
     	}
     	return new String[]{""};
     }

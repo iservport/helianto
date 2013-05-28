@@ -29,10 +29,10 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.Entity;
+import org.helianto.document.domain.ProcessDocument;
 import org.helianto.inventory.RequirementSign;
 import org.helianto.inventory.RequirementState;
 import org.helianto.inventory.domain.internal.AbstractRequirement;
-import org.helianto.process.domain.ProcessDocument;
 
 
 /**

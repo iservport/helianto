@@ -33,10 +33,9 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Unit;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.document.base.AbstractPrivateControl;
+import org.helianto.document.domain.ProcessDocument;
 import org.helianto.inventory.RequirementSign;
 import org.helianto.inventory.RequirementState;
-import org.helianto.process.domain.DerivedProcessDocument;
-import org.helianto.process.domain.ProcessDocument;
 
 
 /**
@@ -131,8 +130,8 @@ public abstract class AbstractRequirement extends AbstractPrivateControl impleme
     }
     @Transient
     public String[] getColorChain() {
-    	if (getProcessDocument()!=null && getProcessDocument() instanceof DerivedProcessDocument) {
-    		return ((DerivedProcessDocument) getProcessDocument()).getProcessColorChain();
+    	if (getProcessDocument()!=null && getProcessDocument() instanceof ProcessDocument) {
+    		return ((ProcessDocument) getProcessDocument()).getProcessColorChain();
     	}
         return new String[] {""};
     }

@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
+import org.helianto.document.domain.ProcessDocument;
 import org.helianto.inventory.CardType;
-import org.helianto.process.domain.Process;
 import org.helianto.user.domain.User;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +39,7 @@ public class CardSetFilterTests {
     
     @Test
     public void filterProcess() {
-        filter.setProcess(new Process());
+        filter.setProcess(new ProcessDocument());
         filter.getProcess().setId(1);
         assertEquals(C0+C3+OB, filter.createCriteriaAsString(false));
     }

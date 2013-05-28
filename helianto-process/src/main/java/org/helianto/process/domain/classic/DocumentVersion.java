@@ -22,7 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.document.base.AbstractVersion;
-import org.helianto.process.domain.ProcessDocument;
+import org.helianto.document.domain.ProcessDocument;
 
 /**
  * <p>

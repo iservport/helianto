@@ -17,13 +17,13 @@ package org.helianto.process.repository;
 
 import org.helianto.core.repository.FilterDao;
 import org.helianto.core.repository.base.AbstractRepositoryConfiguration;
-import org.helianto.process.domain.MeasurementTechnique;
-import org.helianto.process.domain.ProcessDocument;
-import org.helianto.process.domain.ProcessDocumentAssociation;
-import org.helianto.process.domain.Setup;
+import org.helianto.document.domain.ProcessDocument;
 import org.helianto.process.domain.classic.Cause;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.iservport.production.domain.MeasurementTechnique;
+import com.iservport.production.domain.Setup;
 
 /**
  * Java config to the repository.
@@ -47,14 +47,6 @@ public class ProcessRepositoryConfiguration extends AbstractRepositoryConfigurat
 	@Bean
 	public FilterDao<MeasurementTechnique> measurementTechniqueDao() {
 		return getFilterDao(MeasurementTechnique.class, "entity", "measurementTechniqueCode");
-	}
-
-	/**
-	 * Process document association data access.
-	 */
-	@Bean
-	public FilterDao<ProcessDocumentAssociation> processDocumentAssociationDao() {
-		return getFilterDao(ProcessDocumentAssociation.class, "parent", "child");
 	}
 
 	/**

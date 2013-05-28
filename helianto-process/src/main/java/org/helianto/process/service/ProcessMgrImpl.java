@@ -26,20 +26,21 @@ import org.helianto.core.filter.Filter;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.core.repository.BasicDao;
 import org.helianto.core.repository.FilterDao;
+import org.helianto.document.domain.ProcessDocument;
+import org.helianto.document.domain.ProcessDocumentAssociation;
+import org.helianto.document.filter.ProcessDocumentFilterAdapter;
 import org.helianto.partner.service.PartnerMgrImpl;
 import org.helianto.process.ProcessMgr;
 import org.helianto.process.def.AssociationType;
-import org.helianto.process.domain.Operation;
 import org.helianto.process.domain.Process;
-import org.helianto.process.domain.ProcessDocument;
-import org.helianto.process.domain.ProcessDocumentAssociation;
-import org.helianto.process.domain.Setup;
-import org.helianto.process.filter.ProcessDocumentFilterAdapter;
 import org.helianto.user.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.iservport.production.domain.Operation;
+import com.iservport.production.domain.Setup;
 
 /**
  * Default <code>ProcessMgr</code> interface implementation.
@@ -47,7 +48,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Mauricio Fernandes de Castro
  */
 @Service("processMgr")
-public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
+public class ProcessMgrImpl 
+	implements ProcessMgr {
 
 	@Transactional
     public List<Node> prepareTree(ProcessDocument processDocument) {
@@ -85,24 +87,6 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
 		return processDocument;
 	}
 
-	@Transactional
-	public ProcessDocumentAssociation storeDocumentAssociation(ProcessDocumentAssociation documentAssociation) {
-		processDocumentAssociationDao.saveOrUpdate(documentAssociation);
-		return documentAssociation;
-	}
-
-	@Transactional(readOnly=true)
-	public List<ProcessDocumentAssociation> findOperations(User user, Process process) {
-		ProcessDocumentFilterAdapter filter = new ProcessDocumentFilterAdapter(process);
-        logger.debug("Created filter {}", filter);
-		String criteria = createProcessDocumentCriteriaAsString(filter, "documentAssociation");
-		List<ProcessDocumentAssociation> operationList = (List<ProcessDocumentAssociation>) processDocumentAssociationDao.find(criteria);
-        if (logger.isDebugEnabled() && operationList.size()>0) {
-            logger.debug("Found {} item(s)", operationList.size());
-        }
-        return operationList ;
-	}
-
 	/**
 	 * Create a criteria string from a filter.
 	 * 
@@ -125,73 +109,14 @@ public class ProcessMgrImpl extends PartnerMgrImpl  implements ProcessMgr {
         return null;
     }
     
-    public ProcessDocumentAssociation prepareAssociation(ProcessDocument parent, Object child) {
-        logger.debug("Parent class is {}", parent.getClass());
-        if (child==null) {
-        	return new ProcessDocumentAssociation(parent);
-        }
-        logger.debug("Child class is {}", child.getClass());
-    	AssociationType associationType = AssociationType.resolveAssociationType(parent.getClass(), child.getClass());
-    	if (associationType==null) {
-    		logger.warn("Unknown association");
-    		associationType = AssociationType.GENERAL;
-    	}
-    	else if (associationType.equals(AssociationType.GENERAL)) {
-    		logger.warn("Possible invalid association");
-    	}
-    	ProcessDocumentAssociation documentAssociation = parent.documentAssociationFactory((ProcessDocument) child, 0);
-    	return documentAssociation;
-    }
-    
-	@Transactional(readOnly=true)
-    public List<ProcessDocumentAssociation> findCharacteristics(User user, Operation operation) {
-		ProcessDocumentFilterAdapter filter = new ProcessDocumentFilterAdapter((ProcessDocument) operation);
-        logger.debug("Created filter {}", filter);
-		String criteria = createProcessDocumentCriteriaAsString(filter, "documentAssociation");
-		List<ProcessDocumentAssociation> characteristicList = (List<ProcessDocumentAssociation>) processDocumentAssociationDao.find(criteria);
-        logger.debug("Found {} item(s)", characteristicList.size());
-        return characteristicList ;
-    }
-
-	@Transactional
-    public Setup storeSetup(Setup setup) {
-    	setupDao.saveOrUpdate(setup);
-    	setupDao.flush();
-    	return setup;
-    }
-
-	@Transactional
-	public List<Setup> listSetups(Operation operation) {
-		processDocumentDao.saveOrUpdate(operation);
-		List<Setup> listSetups = new ArrayList<Setup>(operation.getSetups());
-	    if (logger.isDebugEnabled() && listSetups!=null) {
-	        logger.debug("Found {} setup(s)", listSetups.size());
-	    }
-	    processDocumentDao.evict(operation);
-	    Collections.sort(listSetups);
-		return listSetups;
-	}
-	
     // collaborators 
 
     private FilterDao<ProcessDocument> processDocumentDao;
-    private BasicDao<Setup> setupDao;
-    private BasicDao<ProcessDocumentAssociation> processDocumentAssociationDao;
     private SequenceMgr sequenceMgr;
     
     @javax.annotation.Resource(name="processDocumentDao")
     public void setProcessDocumentDao(FilterDao<ProcessDocument> processDocumentDao) {
         this.processDocumentDao = processDocumentDao;
-    }
-
-    @javax.annotation.Resource(name="setupDao")
-    public void setSetupDao(BasicDao<Setup> setupDao) {
-        this.setupDao = setupDao;
-    }
-
-    @javax.annotation.Resource(name="processDocumentAssociationDao")
-    public void setProcessDocumentAssociationDao(BasicDao<ProcessDocumentAssociation> processDocumentAssociationDao) {
-        this.processDocumentAssociationDao = processDocumentAssociationDao;
     }
 
     @javax.annotation.Resource
