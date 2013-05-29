@@ -21,7 +21,7 @@ import static org.junit.Assert.assertSame;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.helianto.core.IdentityType;
+import org.helianto.core.def.IdentityType;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.Operator;

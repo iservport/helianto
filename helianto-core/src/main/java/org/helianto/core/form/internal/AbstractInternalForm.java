@@ -1,4 +1,4 @@
-package org.helianto.core.form;
+package org.helianto.core.form.internal;
 
 import org.helianto.core.number.Internal;
 
@@ -7,7 +7,8 @@ import org.helianto.core.number.Internal;
  * 
  * @author mauriciofernandesdecastro
  */
-public abstract class AbstractInternalForm extends AbstractTrunkForm implements Internal {
+public abstract class AbstractInternalForm 
+	extends AbstractTrunkForm implements Internal {
 
 	private static final long serialVersionUID = 1L;
 	private long internalNumber;

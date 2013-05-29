@@ -13,31 +13,35 @@
  * limitations under the License.
  */
 
+package org.helianto.core.service.internal;
 
-package org.helianto.core.service;
-
-import java.util.List;
-
-import org.helianto.core.Node;
+import org.helianto.core.domain.Identity;
 
 /**
- * Interface to create and retrive a tree from
- * a list of <code>Node</code>s.
+ * Strategy to generate a principal to the <code>Identity</code>.
  * 
- * @author Mauricio Fernandes de Castro
+ * @author Maurício Fernandes de Castro
  */
-public interface TreeBuilder {
+public interface PrincipalGenerationStrategy {
 	
 	/**
-	 * Build a tree of <code>Node</code>s.
+	 * Method to generate a principal from <code>Identity</code>
+	 * data.
 	 * 
-	 * @param root
+	 * <p>If attempt greater than zero, append it as a suffix to the 
+	 * principal candidate.
+	 * </p>
+	 * 
+	 * @param identity
+	 * @param attempt
 	 */
-	public void buildTree(Node root);
+	public void generatePrincipal(Identity identity, int attempt);
 	
 	/**
-	 * List the tree.
+	 * Strip forbidden characters from a token.
+	 * 
+	 * @param token
 	 */
-	public List<Node> getTree();
+	public String normalize(String token);
 
 }

@@ -1,6 +1,5 @@
 package org.helianto.document.form;
 
-import org.helianto.core.Resettable;
 import org.helianto.core.form.FolderForm;
 
 /**
@@ -9,8 +8,7 @@ import org.helianto.core.form.FolderForm;
  * @author mauriciofernandesdecastro
  */
 public interface DocumentFolderForm 
-	extends FolderForm
-	, Resettable {
+	extends FolderForm {
 
 	/**
 	 * Content type.

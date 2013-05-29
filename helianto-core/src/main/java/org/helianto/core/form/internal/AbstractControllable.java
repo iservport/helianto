@@ -1,15 +1,17 @@
-package org.helianto.core.form;
+package org.helianto.core.form.internal;
 
 import java.util.Date;
 
 import org.helianto.core.domain.Identity;
+import org.helianto.core.form.ControlForm;
 
 /**
  * Base class to {@link ControlForm} form implementations.
  * 
  * @author mauriciofernandesdecastro
  */
-public class AbstractControllable extends AbstractInternalForm implements ControlForm {
+public abstract class AbstractControllable 
+	extends AbstractInternalForm implements ControlForm {
 
 	private static final long serialVersionUID = 1L;
     private Identity owner;

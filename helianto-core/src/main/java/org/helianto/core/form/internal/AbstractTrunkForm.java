@@ -1,4 +1,4 @@
-package org.helianto.core.form;
+package org.helianto.core.form.internal;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.type.TrunkEntity;
@@ -9,12 +9,7 @@ import org.helianto.core.domain.type.TrunkEntity;
  * @author mauriciofernandesdecastro
  */
 public abstract class AbstractTrunkForm 
-
-	extends AbstractSearchForm
-	
-	implements TrunkEntity 
-
-{
+	extends AbstractSearchForm implements TrunkEntity {
 
 	private static final long serialVersionUID = 1L;
 	private Entity entity;

@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
-import org.helianto.core.service.strategy.ProvinceResourceParserStrategy;
-import org.helianto.core.service.strategy.ProvinceResourceParserStrategyImpl;
+import org.helianto.core.service.internal.ProvinceResourceParserStrategy;
+import org.helianto.core.service.internal.ProvinceResourceParserStrategyImpl;
 import org.helianto.core.test.OperatorTestSupport;
 import org.junit.Before;
 import org.junit.Test;

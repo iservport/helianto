@@ -1,4 +1,4 @@
-package org.helianto.core.form;
+package org.helianto.core.form.internal;
 
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.type.RootEntity;
@@ -9,12 +9,7 @@ import org.helianto.core.domain.type.RootEntity;
  * @author mauriciofernandesdecastro
  */
 public abstract class AbstractRootForm 
-
-	extends AbstractSearchForm
-	
-	implements RootEntity 
-
-{
+	extends AbstractSearchForm implements RootEntity {
 
 	private static final long serialVersionUID = 1L;
 	private Operator operator;

@@ -1,8 +1,10 @@
-package org.helianto.core.form;
+package org.helianto.core.form.internal;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.PublicEntity;
+import org.helianto.core.form.CompositeEntityForm;
+import org.helianto.core.form.PublicEntityForm;
 
 /**
  * Base class to PublicEntityForm interface.

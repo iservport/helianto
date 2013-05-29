@@ -1,4 +1,4 @@
-package org.helianto.core.form;
+package org.helianto.core.form.internal;
 
 import java.io.Serializable;
 
@@ -7,7 +7,8 @@ import java.io.Serializable;
  * 
  * @author mauriciofernandesdecastro
  */
-public abstract class AbstractSearchForm implements Serializable {
+public abstract class AbstractSearchForm 
+	implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String searchString;

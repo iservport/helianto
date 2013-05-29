@@ -23,9 +23,9 @@ import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.helianto.core.PersonalIdentityType;
 import org.helianto.core.def.Appellation;
 import org.helianto.core.def.Gender;
+import org.helianto.core.def.PersonalIdentityType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**

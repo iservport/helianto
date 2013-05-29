@@ -3,6 +3,7 @@ package org.helianto.core.form;
 import java.util.Collection;
 
 import org.helianto.core.domain.Identity;
+import org.helianto.core.form.internal.AbstractControllable;
 import org.helianto.user.domain.UserGroup;
 import org.helianto.user.form.UserRequestForm;
 

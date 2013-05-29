@@ -38,13 +38,6 @@ public class EntityFormFilterAdapter extends AbstractRootFilterAdapter<EntityFor
 		super(form);
 	}
 
-	/**
-	 * Reset.
-	 */
-	public void reset() {
-		getForm().reset();
-	}
-
 	public boolean isSelection() {
 		return getForm().getOperator()!=null && getForm().getOperator().getId()>0 && getForm().getEntityAlias().length()>0;
 	}

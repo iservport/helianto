@@ -1,6 +1,5 @@
 package org.helianto.core.form;
 
-import org.helianto.core.Resettable;
 import org.helianto.core.domain.type.RootEntity;
 import org.helianto.core.domain.type.TrunkEntity;
 
@@ -13,7 +12,6 @@ public interface PublicEntityForm
 	extends TypeForm
 	, TrunkEntity
 	, RootEntity
-	, Resettable 
 {
 	
 	/**

@@ -3,6 +3,7 @@ package org.helianto.core.form;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
+import org.helianto.core.form.internal.AbstractTrunkForm;
 
 /**
  * Composite entity form.

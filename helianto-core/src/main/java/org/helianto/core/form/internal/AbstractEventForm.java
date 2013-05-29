@@ -1,15 +1,17 @@
-package org.helianto.core.form;
+package org.helianto.core.form.internal;
 
 import java.util.Date;
 
 import org.helianto.core.domain.Identity;
+import org.helianto.core.form.ControlForm;
+import org.helianto.core.form.EventForm;
 
 /**
  * Base class to {@link ControlForm} form implementations.
  * 
  * @author mauriciofernandesdecastro
  */
-public class AbstractEventForm 
+public abstract class AbstractEventForm 
 	extends AbstractTrunkForm 
 	implements EventForm {
 

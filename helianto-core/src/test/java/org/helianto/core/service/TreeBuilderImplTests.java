@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Node;
+import org.helianto.core.TreeBuilder;
 import org.helianto.core.base.AbstractNode;
 import org.helianto.core.domain.Identity;
 import org.junit.Before;

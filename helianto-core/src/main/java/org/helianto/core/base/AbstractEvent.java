@@ -18,7 +18,6 @@ package org.helianto.core.base;
 import java.util.Date;
 import java.util.Locale;
 
-import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;

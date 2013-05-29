@@ -4,9 +4,9 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import org.helianto.core.domain.Identity;
-import org.helianto.core.form.AbstractTrunkForm;
 import org.helianto.core.form.IdentityForm;
 import org.helianto.core.form.IdentityIdForm;
+import org.helianto.core.form.internal.AbstractTrunkForm;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserGroup;
 

@@ -4,7 +4,7 @@ import javax.sql.DataSource;
 
 import org.helianto.core.data.FilterRepositoryFactoryBean;
 import org.helianto.core.filter.FilterNamingConventionStrategy;
-import org.helianto.core.naming.DefaultNamingConventionStrategy;
+import org.helianto.core.naming.internal.DefaultNamingConventionStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -36,7 +36,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 @EnableJpaRepositories(
 		basePackages="org.helianto.*.repository"
 		, repositoryFactoryBeanClass=FilterRepositoryFactoryBean.class)
-@ImportResource({ "classpath:META-INF/spring/core-context.xml", "classpath:META-INF/spring/security.xml" })
+@ImportResource("classpath:META-INF/spring/security.xml")
 @PropertySource("classpath:/META-INF/helianto.properties")
 public class HeliantoConfig {
 

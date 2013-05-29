@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 
-import org.helianto.core.form.AbstractControllable;
 import org.helianto.core.form.CompositeIdentityForm;
+import org.helianto.core.form.internal.AbstractControllable;
 import org.helianto.core.test.UserGroupTestSupport;
 import org.helianto.user.domain.UserGroup;
 import org.helianto.user.form.UserRequestForm;

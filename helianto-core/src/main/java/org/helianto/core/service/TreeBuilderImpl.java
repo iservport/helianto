@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.Node;
+import org.helianto.core.TreeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;

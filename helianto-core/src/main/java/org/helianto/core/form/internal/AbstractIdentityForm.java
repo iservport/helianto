@@ -1,22 +1,17 @@
-package org.helianto.core.form;
+package org.helianto.core.form.internal;
 
 import java.util.Collection;
 
 import org.helianto.core.domain.Identity;
+import org.helianto.core.form.IdentityForm;
 
 /**
  * Composite identity form.
  * 
  * @author mauriciofernandesdecastro
  */
-public class AbstractIdentityForm 
-
-	extends AbstractControllable 
-
-	implements 
-	  IdentityForm
-	
-{
+public abstract class AbstractIdentityForm 
+	extends AbstractControllable implements IdentityForm {
 	
 	private static final long serialVersionUID = 1L;
 	private String principal;
@@ -28,15 +23,6 @@ public class AbstractIdentityForm
 	private char notification;
 	private Collection<Identity> exclusions;
 	
-//	/**
-//	 * Construtor principal.
-//	 * 
-//	 * @param principal
-//	 */
-//	public AbstractIdentityForm(String principal) {
-//		setPrincipal(principal);
-//	}
-//	
 	public String getPrincipal() {
 		return principal;
 	}

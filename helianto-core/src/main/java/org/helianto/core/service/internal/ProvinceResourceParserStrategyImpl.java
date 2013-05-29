@@ -1,4 +1,4 @@
-package org.helianto.core.service.strategy;
+package org.helianto.core.service.internal;
 
 import java.io.IOException;
 import java.util.ArrayList;

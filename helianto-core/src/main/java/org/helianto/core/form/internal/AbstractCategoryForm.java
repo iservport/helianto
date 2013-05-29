@@ -1,4 +1,6 @@
-package org.helianto.core.form;
+package org.helianto.core.form.internal;
+
+import org.helianto.core.form.CategoryForm;
 
 
 /**
@@ -7,7 +9,8 @@ package org.helianto.core.form;
  * @author mauriciofernandesdecastro
  * @deprecated
  */
-public class AbstractCategoryForm extends AbstractTrunkForm implements CategoryForm {
+public class AbstractCategoryForm 
+	extends AbstractTrunkForm implements CategoryForm {
 	
 	private static final long serialVersionUID = 1L;
 	private String categoryCode;

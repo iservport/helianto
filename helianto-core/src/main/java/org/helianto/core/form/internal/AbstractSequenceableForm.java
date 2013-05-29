@@ -1,4 +1,4 @@
-package org.helianto.core.form;
+package org.helianto.core.form.internal;
 
 import org.helianto.core.number.Sequenceable;
 
@@ -7,7 +7,8 @@ import org.helianto.core.number.Sequenceable;
  * 
  * @author mauriciofernandesdecastro
  */
-public abstract class AbstractSequenceableForm extends AbstractInternalForm implements Sequenceable {
+public abstract class AbstractSequenceableForm 
+	extends AbstractInternalForm implements Sequenceable {
 
 	private static final long serialVersionUID = 1L;
 	

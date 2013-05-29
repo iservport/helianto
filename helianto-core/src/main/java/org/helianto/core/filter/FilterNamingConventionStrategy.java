@@ -1,6 +1,6 @@
 package org.helianto.core.filter;
 
-import org.helianto.core.naming.AbstractNamingConventionStrategy;
+import org.helianto.core.naming.internal.AbstractNamingConventionStrategy;
 
 /**
  * Implementation to extract alias from the filter class name.

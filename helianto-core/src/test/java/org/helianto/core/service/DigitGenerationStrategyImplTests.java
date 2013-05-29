@@ -3,7 +3,7 @@ package org.helianto.core.service;
 import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.number.DigitGenerationStrategy;
-import org.helianto.core.service.strategy.DefaultDigitGenerationStrategy;
+import org.helianto.core.service.internal.DefaultDigitGenerationStrategy;
 import org.junit.Before;
 import org.junit.Test;
 

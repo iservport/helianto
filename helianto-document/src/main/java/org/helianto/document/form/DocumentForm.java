@@ -1,7 +1,6 @@
 package org.helianto.document.form;
 
 import org.helianto.core.Prioritizable;
-import org.helianto.core.Resettable;
 import org.helianto.core.domain.type.TrunkEntity;
 import org.helianto.core.form.SearchForm;
 
@@ -13,8 +12,7 @@ import org.helianto.core.form.SearchForm;
 public interface DocumentForm 
 	extends TrunkEntity
 	, SearchForm
-	, Prioritizable
-	, Resettable {
+	, Prioritizable {
 
 	/**
 	 * Document code.

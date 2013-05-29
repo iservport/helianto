@@ -40,10 +40,10 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.CreateIdentity;
 import org.helianto.core.NaturalKeyInfo;
 import org.helianto.core.Programmable;
 import org.helianto.core.def.ActivityState;
+import org.helianto.core.def.CreateIdentity;
 import org.helianto.core.def.UserState;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;

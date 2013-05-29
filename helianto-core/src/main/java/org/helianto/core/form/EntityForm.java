@@ -1,6 +1,5 @@
 package org.helianto.core.form;
 
-import org.helianto.core.Resettable;
 import org.helianto.core.domain.type.RootEntity;
 
 /**
@@ -8,7 +7,7 @@ import org.helianto.core.domain.type.RootEntity;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface EntityForm extends RootEntity, Resettable {
+public interface EntityForm extends RootEntity {
 	
 	/**
 	 * Entity alias.

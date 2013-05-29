@@ -13,36 +13,29 @@
  * limitations under the License.
  */
 
-package org.helianto.core.repository;
 
-import java.util.Collection;
+package org.helianto.core.service.internal;
 
+import java.util.List;
+
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.Province;
+import org.springframework.core.io.Resource;
 
 /**
- * A convenient sub-set of persistence operations.
+ * A strategy to parse provinces.
  * 
- * @author Mauricio Fernandes de Castro.
+ * @author Mauricio Fernandes de Castro
  */
-public interface BasicDao<T> extends PersistenceStrategy<T> {
+public interface ProvinceResourceParserStrategy {
 	
 	/**
-	 * The persistent class.
+	 * Parse a resource to return a province list.
+	 * 
+	 * @param operator
+	 * @param rs
+	 * @return
 	 */
-	public Class<? extends T> getClazz();
+	public List<Province> parseProvinces(Operator operator, Resource rs);
 
-    /**
-     * Find by criteria.
-     */
-    public Collection<T> find(StringBuilder selectClause, String whereClause);
-    
-    /**
-     * Find by criteria.
-     */
-    public Collection<T> find(String whereClause);
-    
-    /**
-     * Find unique.
-     */
-    public T findUnique(Object... args);
-    
 }

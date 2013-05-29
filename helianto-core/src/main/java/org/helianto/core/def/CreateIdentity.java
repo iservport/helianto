@@ -14,7 +14,7 @@
  */
 
 
-package org.helianto.core;
+package org.helianto.core.def;
 
 /**
  * Define identity creation modes.

@@ -21,7 +21,7 @@ import org.helianto.core.repository.EntityRepository;
 import org.helianto.core.repository.KeyTypeRepository;
 import org.helianto.core.repository.ProvinceRepository;
 import org.helianto.core.repository.ServiceRepository;
-import org.helianto.core.service.strategy.ProvinceResourceParserStrategy;
+import org.helianto.core.service.internal.ProvinceResourceParserStrategy;
 import org.helianto.user.UserMgr;
 import org.helianto.user.repository.UserGroupRepository;
 import org.helianto.user.repository.UserRoleRepository;

@@ -25,7 +25,7 @@ import java.util.Set;
 
 import javax.mail.MessagingException;
 
-import org.helianto.core.IdentityType;
+import org.helianto.core.def.IdentityType;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.test.OperatorTestSupport;

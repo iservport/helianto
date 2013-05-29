@@ -1,4 +1,4 @@
-package org.helianto.core.service.strategy;
+package org.helianto.core.service.internal;
 
 import org.helianto.core.number.AbstractDigitGenerationStrategy;
 import org.slf4j.Logger;

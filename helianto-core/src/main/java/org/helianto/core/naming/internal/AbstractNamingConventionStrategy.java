@@ -1,7 +1,8 @@
-package org.helianto.core.naming;
+package org.helianto.core.naming.internal;
 
 import java.io.Serializable;
 
+import org.helianto.core.naming.NamingConventionStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

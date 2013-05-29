@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.core.service.strategy;
+package org.helianto.core.service.internal;
 
 import org.helianto.core.domain.Identity;
 import org.springframework.stereotype.Component;

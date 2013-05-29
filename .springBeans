@@ -7,7 +7,6 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>helianto-core/src/main/resources/META-INF/spring/core-context.xml</config>
 		<config>helianto-core/src/main/resources/META-INF/spring/security.xml</config>
 		<config>helianto-message/src/main/resources/META-INF/spring/message-context.xml</config>
 		<config>helianto-admin/src/main/webapps/WEB-INF/spring/root-context.xml</config>

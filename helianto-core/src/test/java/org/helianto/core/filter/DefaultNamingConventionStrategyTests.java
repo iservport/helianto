@@ -2,7 +2,7 @@ package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.naming.DefaultNamingConventionStrategy;
+import org.helianto.core.naming.internal.DefaultNamingConventionStrategy;
 import org.junit.Before;
 import org.junit.Test;
 

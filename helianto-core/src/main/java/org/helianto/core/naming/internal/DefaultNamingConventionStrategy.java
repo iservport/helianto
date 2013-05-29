@@ -1,4 +1,4 @@
-package org.helianto.core.naming;
+package org.helianto.core.naming.internal;
 
 /**
  * Default naming convention strategy.

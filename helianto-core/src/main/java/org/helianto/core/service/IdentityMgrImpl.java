@@ -38,7 +38,7 @@ import org.helianto.core.form.PersonalAddressForm;
 import org.helianto.core.repository.CredentialRepository;
 import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.repository.PersonalAddressRepository;
-import org.helianto.core.service.strategy.PrincipalGenerationStrategy;
+import org.helianto.core.service.internal.PrincipalGenerationStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;

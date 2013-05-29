@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.PersonalData;
-import org.helianto.core.service.strategy.DefaultPrincipalGenerationStrategy;
-import org.helianto.core.service.strategy.PrincipalGenerationStrategy;
+import org.helianto.core.service.internal.DefaultPrincipalGenerationStrategy;
+import org.helianto.core.service.internal.PrincipalGenerationStrategy;
 import org.junit.Before;
 import org.junit.Test;
 

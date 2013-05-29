@@ -34,7 +34,7 @@ import org.helianto.core.domain.Identity;
 import org.helianto.core.filter.IdentityFilterAdapter;
 import org.helianto.core.repository.CredentialRepository;
 import org.helianto.core.repository.IdentityRepository;
-import org.helianto.core.service.strategy.PrincipalGenerationStrategy;
+import org.helianto.core.service.internal.PrincipalGenerationStrategy;
 import org.helianto.user.domain.User;
 import org.junit.After;
 import org.junit.Before;

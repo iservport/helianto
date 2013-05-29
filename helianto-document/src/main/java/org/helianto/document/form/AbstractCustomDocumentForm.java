@@ -9,7 +9,8 @@ import org.helianto.document.domain.DocumentFolder;
  * 
  * @author mauriciofernandesdecastro
  */
-public abstract class AbstractCustomDocumentForm extends AbstractDocumentForm implements CustomDocumentForm {
+public abstract class AbstractCustomDocumentForm 
+	extends AbstractDocumentForm implements CustomDocumentForm {
 	
 	private static final long serialVersionUID = 1L;
 	private DocumentFolder series;

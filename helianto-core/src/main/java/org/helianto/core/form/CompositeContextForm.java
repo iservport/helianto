@@ -2,6 +2,7 @@ package org.helianto.core.form;
 
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
+import org.helianto.core.form.internal.AbstractRootForm;
 
 /**
  * Composite operator form.

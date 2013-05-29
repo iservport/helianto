@@ -112,7 +112,7 @@ public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements S
 		return "partner";
 	}
 
-	/**AbstractHibernateFilterDao
+	/**
 	 * Read entity from the associated partner registry.
 	 */
 	@Override

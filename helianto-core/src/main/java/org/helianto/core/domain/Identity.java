@@ -44,9 +44,9 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.IdentityType;
 import org.helianto.core.def.Appellation;
 import org.helianto.core.def.Gender;
+import org.helianto.core.def.IdentityType;
 import org.helianto.core.def.Notification;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
