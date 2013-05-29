@@ -13,10 +13,13 @@ import java.util.List;
 import org.helianto.core.SequenceMgr;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.repository.FilterDao;
 import org.helianto.inventory.domain.ProcessAgreement;
 import org.helianto.inventory.domain.ProcessRequirement;
+import org.helianto.inventory.domain.Tax;
 import org.helianto.inventory.filter.classic.ProcessRequirementFilter;
+import org.helianto.inventory.repository.ProcessAgreementRepository;
+import org.helianto.inventory.repository.ProcessRequirementRepository;
+import org.helianto.inventory.repository.TaxRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,11 +35,11 @@ public class InventoryMgrImplTests {
 		List<ProcessRequirement> requirementList = new ArrayList<ProcessRequirement>();
 		Filter filter = new ProcessRequirementFilter(new Entity());
 		
-		expect(processRequirementDao.find(filter)).andReturn(requirementList);
-		replay(processRequirementDao);
+		expect(processRequirementRepository.find(filter)).andReturn(requirementList);
+		replay(processRequirementRepository);
 		
 		assertSame(requirementList, inventoryMgr.findProcessRequirements(filter));
-		verify(processRequirementDao);
+		verify(processRequirementRepository);
 	}
 	
 	@Test
@@ -46,36 +49,65 @@ public class InventoryMgrImplTests {
 		sequenceMgr.validateInternalNumber(requirement);
 		replay(sequenceMgr);
 		
-		processRequirementDao.saveOrUpdate(requirement);
-		replay(processRequirementDao);
+		expect(processRequirementRepository.saveAndFlush(requirement)).andReturn(requirement);
+		replay(processRequirementRepository);
 		
 		assertSame(requirement, inventoryMgr.storeProcessRequirement(requirement));
-		verify(processRequirementDao);
+		verify(processRequirementRepository);
+	}
+	
+	@Test
+	public void storeProcessAgreement() {
+		ProcessAgreement agreement = new ProcessAgreement();
+		
+		sequenceMgr.validateInternalNumber(agreement);
+		replay(sequenceMgr);
+		
+		expect(processAgreementRepository.saveAndFlush(agreement)).andReturn(agreement);
+		replay(processAgreementRepository);
+		
+		assertSame(agreement, inventoryMgr.storeProcessAgreement(agreement));
+		verify(processAgreementRepository);
+		verify(sequenceMgr);
+	}
+	
+	@Test
+	public void storeTax() {
+		Tax tax = new Tax();
+		
+		expect(taxRepository.saveAndFlush(tax)).andReturn(tax);
+		replay(taxRepository);
+		
+		assertSame(tax, inventoryMgr.storeTax(tax));
+		verify(taxRepository);
 	}
 	
 	// collabs
 	
 	private InventoryMgrImpl inventoryMgr;
-	private FilterDao<ProcessRequirement> processRequirementDao;
-	private FilterDao<ProcessAgreement> agreementDao;
+	private ProcessRequirementRepository processRequirementRepository;
+	private ProcessAgreementRepository processAgreementRepository;
+	private TaxRepository taxRepository;
 	private SequenceMgr sequenceMgr;
 	
-	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() {
 		inventoryMgr = new InventoryMgrImpl();
-		processRequirementDao = createMock(FilterDao.class);
-		inventoryMgr.setProcessRequirementDao(processRequirementDao);
-		agreementDao = createMock(FilterDao.class);
-		inventoryMgr.setAgreementDao(agreementDao);
+		processRequirementRepository = createMock(ProcessRequirementRepository.class);
+		inventoryMgr.setProcessRequirementRepository(processRequirementRepository);
+		processAgreementRepository = createMock(ProcessAgreementRepository.class);
+		inventoryMgr.setProcessAgreementRepository(processAgreementRepository);
+		taxRepository = createMock(TaxRepository.class);
+		inventoryMgr.setTaxRepository(taxRepository);
 		sequenceMgr = createMock(SequenceMgr.class);
 		inventoryMgr.setSequenceMgr(sequenceMgr);
 	}
 	
 	@After
 	public void tearDown() {
-		reset(processRequirementDao);
-		reset(agreementDao);
+		reset(processRequirementRepository);
+		reset(processAgreementRepository);
+		reset(taxRepository);
 		reset(sequenceMgr);
 	}
 	

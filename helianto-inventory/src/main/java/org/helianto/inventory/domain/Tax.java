@@ -45,7 +45,8 @@ import org.helianto.core.domain.KeyType;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("T")
-public class Tax extends AbstractKeyValue {
+public class Tax 
+	extends AbstractKeyValue {
 
 	/**
 	 * <<Transient>> Delegate to the actual key owner.

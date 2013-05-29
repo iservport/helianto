@@ -46,9 +46,7 @@ public interface ResourceMgr {
     public ResourceGroup installEquipmentTree(Entity entity, String rootEquipentCode);
     
     /**
-     * <p>
-     * Delegates to {@link ResourceDao#persistResourceGroup(ResourceGroup)}.
-     * </p>  
+     * Store a resource group.  
      */
     public ResourceGroup storeResourceGroup(ResourceGroup resourceGroup);
     

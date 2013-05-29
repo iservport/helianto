@@ -28,13 +28,13 @@ import javax.annotation.Resource;
 import org.helianto.core.SequenceMgr;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.repository.FilterDao;
 import org.helianto.message.MessageAdapter;
 import org.helianto.message.MessageMgr;
 import org.helianto.message.MessageSender;
 import org.helianto.message.domain.NotificationEvent;
 import org.helianto.message.filter.NotificationEventFormFilterAdapter;
 import org.helianto.message.form.NotificationEventForm;
+import org.helianto.message.repository.NotificationEventRepository;
 import org.helianto.message.sender.SendGridMessageAdapter;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserGroup;
@@ -94,7 +94,7 @@ public class MessageMgrImpl implements MessageMgr {
 	@Transactional(readOnly=true)
     public List<NotificationEvent> findNotificationEvents(NotificationEventForm form) {
     	Filter filter = new NotificationEventFormFilterAdapter(form);
-    	List<NotificationEvent> notificationEventList = (List<NotificationEvent>) notificationEventDao.find(filter);
+    	List<NotificationEvent> notificationEventList = (List<NotificationEvent>) notificationEventRepository.find(filter);
 		return notificationEventList;
     	
     }
@@ -102,15 +102,14 @@ public class MessageMgrImpl implements MessageMgr {
 	@Transactional
     public NotificationEvent storeNotificationEvent(NotificationEvent target) {
     	sequenceMgr.validateInternalNumber(target);
-    	notificationEventDao.saveOrUpdate(target);
-    	return target;
+    	return notificationEventRepository.saveAndFlush(target);
     }
     
     // collabs
 
     private MessageSender messageSender;
     private UserGroupRepository userGroupRepository;
-    private FilterDao<NotificationEvent> notificationEventDao;
+    private NotificationEventRepository notificationEventRepository;
     private SequenceMgr sequenceMgr;
     
     @Resource
@@ -123,9 +122,10 @@ public class MessageMgrImpl implements MessageMgr {
 		this.userGroupRepository = userGroupRepository;
 	}
     
-    @Resource(name="notificationEventDao")
-    public void setNotificationEventDao(FilterDao<NotificationEvent> notificationEventDao) {
-		this.notificationEventDao = notificationEventDao;
+    @Resource
+    public void setNotificationEventRepository(
+			NotificationEventRepository notificationEventRepository) {
+		this.notificationEventRepository = notificationEventRepository;
 	}
     
     @Resource

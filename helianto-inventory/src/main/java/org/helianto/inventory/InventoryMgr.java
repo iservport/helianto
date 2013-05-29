@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.inventory.service;
+package org.helianto.inventory;
 
 import java.util.List;
 

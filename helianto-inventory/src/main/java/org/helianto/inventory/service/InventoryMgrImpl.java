@@ -22,10 +22,13 @@ import javax.annotation.Resource;
 
 import org.helianto.core.SequenceMgr;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.repository.FilterDao;
+import org.helianto.inventory.InventoryMgr;
 import org.helianto.inventory.domain.ProcessAgreement;
 import org.helianto.inventory.domain.ProcessRequirement;
 import org.helianto.inventory.domain.Tax;
+import org.helianto.inventory.repository.ProcessAgreementRepository;
+import org.helianto.inventory.repository.ProcessRequirementRepository;
+import org.helianto.inventory.repository.TaxRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -41,7 +44,7 @@ public class InventoryMgrImpl implements InventoryMgr {
 
 	@Transactional(readOnly=true)
 	public List<ProcessRequirement> findProcessRequirements(Filter filter) {
-    	List<ProcessRequirement> requirementList = (List<ProcessRequirement>) processRequirementDao.find(filter);
+    	List<ProcessRequirement> requirementList = (List<ProcessRequirement>) processRequirementRepository.find(filter);
     	if (logger.isDebugEnabled() && requirementList!=null) {
     		logger.debug("Found requirement list of size {}", requirementList.size());
     	}
@@ -51,13 +54,12 @@ public class InventoryMgrImpl implements InventoryMgr {
 	@Transactional
 	public ProcessRequirement storeProcessRequirement(ProcessRequirement requirement) {
 		sequenceMgr.validateInternalNumber(requirement);
-		processRequirementDao.saveOrUpdate(requirement);
-		return requirement;
+		return processRequirementRepository.saveAndFlush(requirement);
 	}
 
 	@Transactional(readOnly=true)
 	public List<ProcessAgreement> findProcessAgreement(Filter agreementFilter) {
-    	List<ProcessAgreement> agreementList = (List<ProcessAgreement>) agreementDao.find(agreementFilter);
+    	List<ProcessAgreement> agreementList = (List<ProcessAgreement>) processAgreementRepository.find(agreementFilter);
     	if (logger.isDebugEnabled() && agreementList!=null) {
     		logger.debug("Found agreement list of size {}", agreementList.size());
     	}
@@ -67,14 +69,12 @@ public class InventoryMgrImpl implements InventoryMgr {
 	@Transactional
 	public ProcessAgreement storeProcessAgreement(ProcessAgreement agreement) {
 		sequenceMgr.validateInternalNumber(agreement);
-		agreementDao.saveOrUpdate(agreement);
-		agreementDao.flush();
-		return agreement;
+		return processAgreementRepository.saveAndFlush(agreement);
 	}
 	
 	@Transactional(readOnly=true)
 	public List<Tax> findTaxes(Filter filter) {
-    	List<Tax> taxList = (List<Tax>) taxDao.find(filter);
+    	List<Tax> taxList = (List<Tax>) taxRepository.find(filter);
     	if (logger.isDebugEnabled() && taxList!=null) {
     		logger.debug("Found tax list of size {}", taxList.size());
     	}
@@ -83,31 +83,31 @@ public class InventoryMgrImpl implements InventoryMgr {
 	
 	@Transactional
 	public Tax storeTax(Tax tax) {
-		taxDao.saveOrUpdate(tax);
-		taxDao.flush();
-		return tax;
+		return taxRepository.saveAndFlush(tax);
 	}
 
 	// collabs
 
-	private FilterDao<ProcessRequirement> processRequirementDao;
-	private FilterDao<ProcessAgreement> agreementDao;
-	private FilterDao<Tax> taxDao;
+	private ProcessRequirementRepository processRequirementRepository;
+	private ProcessAgreementRepository processAgreementRepository;
+	private TaxRepository taxRepository;
 	private SequenceMgr sequenceMgr;
 
-	@Resource(name="processRequirementDao")
-	public void setProcessRequirementDao(FilterDao<ProcessRequirement> processRequirementDao) {
-		this.processRequirementDao = processRequirementDao;
+	@Resource
+	public void setProcessRequirementRepository(
+			ProcessRequirementRepository processRequirementRepository) {
+		this.processRequirementRepository = processRequirementRepository;
 	}
 	
-	@Resource(name="agreementDao")
-	public void setAgreementDao(FilterDao<ProcessAgreement> agreementDao) {
-		this.agreementDao = agreementDao;
+	@Resource
+	public void setProcessAgreementRepository(
+			ProcessAgreementRepository processAgreementRepository) {
+		this.processAgreementRepository = processAgreementRepository;
 	}
 	
-	@Resource(name="taxDao")
-	public void setTaxDao(FilterDao<Tax> taxDao) {
-		this.taxDao = taxDao;
+	@Resource
+	public void setTaxRepository(TaxRepository taxRepository) {
+		this.taxRepository = taxRepository;
 	}
 	
 	@Resource

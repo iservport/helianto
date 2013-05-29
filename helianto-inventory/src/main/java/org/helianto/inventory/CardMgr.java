@@ -14,13 +14,12 @@
  */
 
 
-package org.helianto.inventory.service;
+package org.helianto.inventory;
 
 import java.util.List;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.Filter;
-import org.helianto.inventory.InvalidCardException;
 import org.helianto.inventory.domain.Card;
 import org.helianto.inventory.domain.CardSet;
 
@@ -35,17 +34,30 @@ public interface CardMgr {
 	/**
 	 * Find card set list.
 	 */
-	public List<CardSet> findCardSets(Filter cardSetFilter);
+	List<CardSet> findCardSets(Filter cardSetFilter);
 
 	/**
 	 * Store card set.
+	 * 
+	 * @param cardSet
 	 */
-	public CardSet storeCardSet(CardSet cardSet);
+	CardSet storeCardSet(CardSet cardSet);
 
 	/**
 	 * Find or create an unique card.
+	 * 
+	 * @param entity
+	 * @param cardLabel
+	 * @param createIfNecessary
 	 */
-	public Card findCard(Entity entity, String cardLabel, boolean createIfNecessary) 
+	Card findCard(Entity entity, String cardLabel, boolean createIfNecessary) 
 		throws InvalidCardException;
+	
+	/**
+	 * Store card set.
+	 * 
+	 * @param card
+	 */
+	Card storeCard(Card card);
 	
 }

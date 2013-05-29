@@ -44,21 +44,6 @@ import org.helianto.inventory.InvalidCardException;
 )
 public class CardSet implements java.io.Serializable, Sequenceable {
 
-    /**
-     * <code>CardSet</code> factory.
-     * 
-     * @param entity
-     * @param cardType
-     * @param internalNumber
-     */
-    public static CardSet cardSetFactory(Entity entity, CardType cardType, long internalNumber) {
-    	CardSet cardSet = new CardSet();
-    	cardSet.setEntity(entity);
-        cardSet.setInternalNumber(internalNumber);
-        cardSet.setCardType(cardType.getPrefix());
-        return cardSet;
-    }
-
     private static final long serialVersionUID = 1L;
     private int id;
     private Entity entity;
@@ -70,7 +55,7 @@ public class CardSet implements java.io.Serializable, Sequenceable {
     /** 
      * Default constructor.
      */
-    CardSet() {
+    public CardSet() {
     	super();
     	setCardRange(50);
     }
@@ -86,6 +71,18 @@ public class CardSet implements java.io.Serializable, Sequenceable {
     	setEntity(entity);
     	setInternalNumber(internalNumber);
     	setCardRange(50);
+    }
+
+    /**
+     * Type constructor.
+     * 
+     * @param entity
+     * @param cardType
+     * @param internalNumber
+     */
+    public CardSet(Entity entity, CardType cardType, long internalNumber) {
+    	this(entity, internalNumber);
+        setCardType(cardType.getPrefix());
     }
 
     /** 

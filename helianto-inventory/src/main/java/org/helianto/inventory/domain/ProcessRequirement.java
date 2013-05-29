@@ -43,7 +43,8 @@ import org.helianto.inventory.domain.internal.AbstractRequirement;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("A")
-public class ProcessRequirement extends AbstractRequirement {
+public class ProcessRequirement 
+	extends AbstractRequirement {
 
 	private static final long serialVersionUID = 1L;
 

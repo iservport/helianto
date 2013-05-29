@@ -62,7 +62,8 @@ import org.helianto.partner.domain.Partner;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("A")
-public class ProcessAgreement extends AbstractRequirement {
+public class ProcessAgreement 
+	extends AbstractRequirement {
 
 	private static final long serialVersionUID = 1L;
 	private Partner partner;

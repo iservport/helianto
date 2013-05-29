@@ -52,7 +52,7 @@ public class Card implements java.io.Serializable {
     /** 
      * Default constructor.
      */
-    Card() {
+    public Card() {
     	super();
     }
 
