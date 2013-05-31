@@ -12,7 +12,6 @@
         <wb-resource deploy-path="/" source-path="/helianto-inventory/src/main/java"/>
         <wb-resource deploy-path="/" source-path="/helianto-inventory/src/test/java"/>
         <wb-resource deploy-path="/" source-path="/helianto-message/src/main/java"/>
-        <wb-resource deploy-path="/" source-path="/helianto-message/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/helianto-message/src/test/java"/>
         <wb-resource deploy-path="/" source-path="/helianto-admin/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/helianto-admin/src/test/java"/>

@@ -1,5 +1,7 @@
 package org.helianto.core.config;
 
+import java.util.Properties;
+
 import javax.sql.DataSource;
 
 import org.helianto.core.data.FilterRepositoryFactoryBean;
@@ -20,7 +22,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
+import org.springframework.web.client.RestTemplate;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
@@ -36,6 +41,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 @EnableJpaRepositories(
 		basePackages="org.helianto.*.repository"
 		, repositoryFactoryBeanClass=FilterRepositoryFactoryBean.class)
+@EnableScheduling
 @ImportResource("classpath:META-INF/spring/security.xml")
 @PropertySource("classpath:/META-INF/helianto.properties")
 public class HeliantoConfig {
@@ -116,6 +122,30 @@ public class HeliantoConfig {
 	@Bean
 	public FilterNamingConventionStrategy filterNamingConventionStrategy() {
 		return new FilterNamingConventionStrategy();
+	}
+	
+	/**
+	 * Freemarker configuration factory.
+	 */
+	@Bean
+	public FreeMarkerConfigurationFactoryBean freeMarkerConfigurationFactory() {
+		FreeMarkerConfigurationFactoryBean freeMarkerConfigurationFactory = 
+				new FreeMarkerConfigurationFactoryBean();
+		freeMarkerConfigurationFactory.setPreferFileSystemAccess(false);
+		freeMarkerConfigurationFactory.setTemplateLoaderPaths(
+				"classpath*:/freemarker/,/WEB-INF/classes/freemarker/,/WEB-INF/freemarker/"
+		);
+		Properties settings = new Properties();
+		settings.put("default_encoding", "ISO-8859-1");
+		settings.put("number_format", "computer");
+//		settings.put("whitespace_stripping", true);
+		freeMarkerConfigurationFactory.setFreemarkerSettings(settings);
+		return freeMarkerConfigurationFactory;
+	}
+	
+	@Bean
+	public RestTemplate restTamplate() {
+		return new RestTemplate();
 	}
 	
 }

@@ -14,7 +14,6 @@
 	<classpathentry kind="src" path="helianto-inventory/src/main/java"/>
 	<classpathentry kind="src" path="helianto-inventory/src/test/java"/>
 	<classpathentry kind="src" path="helianto-message/src/main/java"/>
-	<classpathentry excluding="**" kind="src" path="helianto-message/src/main/resources"/>
 	<classpathentry kind="src" path="helianto-message/src/test/java"/>
 	<classpathentry excluding="**" kind="src" path="helianto-admin/src/main/resources"/>
 	<classpathentry kind="src" path="helianto-admin/src/test/java"/>
