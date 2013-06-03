@@ -51,6 +51,9 @@ import org.helianto.user.repository.UserRepository;
 import org.helianto.user.repository.UserRoleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -140,7 +143,14 @@ public class UserMgrImpl
 	@Transactional(readOnly=true)
 	public List<? extends UserGroup> findUsers(String userKey) {
 		List<UserGroup> userList = userGroupRepository.findByUserKeyOrderByLastEventDesc(userKey);
-    	logger.debug("Found user list of size {}", userList.size());
+    	logger.debug("Found user list of size {}.", userList.size());
+        return userList;
+	}
+
+	@Transactional(readOnly=true)
+	public List<User> findUsers(String parent, String userKey) {
+		List<User> userList = userRepository.findByParentAndPrincipal(parent, userKey, new Sort(new Order(Direction.DESC, "lastEvent")));
+    	logger.debug("Found user list of size {} from parent {}.", userList.size(), parent);
         return userList;
 	}
 

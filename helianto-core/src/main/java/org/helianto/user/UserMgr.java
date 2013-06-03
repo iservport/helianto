@@ -43,14 +43,22 @@ public interface UserMgr {
      * 
      * @param form
      */
-    public List<? extends UserGroup> findUsers(UserGroupForm form);
+    List<? extends UserGroup> findUsers(UserGroupForm form);
     
     /**
      * Find users sharing the same user key.
      * 
      * @param userKey
      */
-    public List<? extends UserGroup> findUsers(String userKey);
+    List<? extends UserGroup> findUsers(String userKey);
+    
+    /**
+     * Find users sharing the same user key.
+     * 
+     * @param parent
+     * @param userKey
+     */
+    List<User> findUsers(String parent, String userKey);
 
 //    /**
 //     * Find users sharing the same identity.
@@ -64,14 +72,14 @@ public interface UserMgr {
      * 
      * @param userGroup
      */
-    public UserGroup storeUserGroup(UserGroup userGroup);
+    UserGroup storeUserGroup(UserGroup userGroup);
     
     /**
      * Find user associations.
      * 
      * @param userAssociationFilter
      */
-    public List<UserAssociation> findUserAssociations(AssociationForm form);
+    List<UserAssociation> findUserAssociations(AssociationForm form);
     
     /**
      * <p>Create <code>UserAssociation</code> with a new credential.</p>
@@ -80,21 +88,21 @@ public interface UserMgr {
      * @param credential
      * @param accountNonExpired
      */
-    public UserAssociation installUser(UserGroup parent, Credential credential, boolean accountNonExpired);
+    UserAssociation installUser(UserGroup parent, Credential credential, boolean accountNonExpired);
     
     /**
      * <p>Store <code>UserAssociation</code> and return a managed instance.</p>
      * 
      * @param parentAssociation
      */
-    public UserAssociation storeUserAssociation(UserAssociation parentAssociation);
+    UserAssociation storeUserAssociation(UserAssociation parentAssociation);
     
     /**
      * Find a list of parents for a given <code>UserGroup</code>, including itself.
      * 
      * @param userGroup
      */
-    public List<UserGroup> findParentChain(UserGroup userGroup);
+    List<UserGroup> findParentChain(UserGroup userGroup);
     
     /**
      * Store <code>UserLog<code>.
@@ -102,7 +110,7 @@ public interface UserMgr {
      * @param user
      * @param date
      */
-	public UserLog storeUserLog(User user, Date date);
+	UserLog storeUserLog(User user, Date date);
 
 	/**
 	 * Install an UserGroup, if does not exist.
@@ -111,7 +119,7 @@ public interface UserMgr {
 	 * @param userGroupName
 	 * @param reinstall
 	 */
-	public UserGroup installUserGroup(Entity defaultEntity, String userGroupName, boolean reinstall);
+	UserGroup installUserGroup(Entity defaultEntity, String userGroupName, boolean reinstall);
 
 	/**
 	 * Find <code>UserRole</code>(s).
@@ -120,14 +128,14 @@ public interface UserMgr {
 	 * @deprecated
 	 * @see #findUserRoles(UserRoleForm)
 	 */
-	public List<UserRole> findUserRoles(Filter userRoleFilter);
+	List<UserRole> findUserRoles(Filter userRoleFilter);
 	
 	/**
 	 * Find <code>UserRole</code>(s).
 	 * 
 	 * @param form
 	 */
-	public List<UserRole> findUserRoles(UserRoleForm form);
+	List<UserRole> findUserRoles(UserRoleForm form);
 	
 	/**
 	 * Install an UserRole, if does not exist.
@@ -136,14 +144,14 @@ public interface UserMgr {
 	 * @param service
 	 * @param extension
 	 */
-	public UserRole installUserRole(UserGroup userGroup, Service service, String extension);
+	UserRole installUserRole(UserGroup userGroup, Service service, String extension);
 
 	/**
 	 * Store <code>UserRole</code> to the data store.
 	 * 
 	 * @param userRole
 	 */
-	public UserRole storeUserRole(UserRole userRole);
+	UserRole storeUserRole(UserRole userRole);
 
 	/**
 	 * Remove <code>UserRole</code> from the data store.
@@ -151,6 +159,6 @@ public interface UserMgr {
 	 * @param userRole
 	 * @param userGroup
 	 */
-	public void removeUserRole(UserRole userRole, UserGroup userGroup);
+	void removeUserRole(UserRole userRole, UserGroup userGroup);
 
 }

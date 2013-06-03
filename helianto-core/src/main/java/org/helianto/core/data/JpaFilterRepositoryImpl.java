@@ -51,13 +51,20 @@ public class JpaFilterRepositoryImpl<T, ID extends Serializable> extends
 	@SuppressWarnings("unchecked")
 	public Iterable<T> find(Filter filter) {
 		String alias = filter.getObjectAlias()!=null ? filter.getObjectAlias() : "alias";
-		StringBuilder queryString = new StringBuilder("select ")
+		String selectClause = filter.createSelectAsString();
+		StringBuilder queryString = new StringBuilder();
+		if (selectClause!=null) {
+			queryString.append(selectClause);
+		}
+		else {
+			queryString.append("select ")
 			.append(alias)
 			.append(" from ")
 			.append(metadata.getEntityName())
 			.append(" ")
 			.append(alias)
 			.append(" ");
+		}
 		String whereClause = filter.createCriteriaAsString();
         if (whereClause!=null && whereClause.length()>0) {
         	queryString.append("where ").append(whereClause);

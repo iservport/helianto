@@ -68,10 +68,10 @@ public class HeliantoConfig {
 	public DataSource dataSource() {
 		try {
 			ComboPooledDataSource ds = new ComboPooledDataSource();
-			ds.setDriverClass(env.getRequiredProperty("helianto.jdbc.driverClassName"));
-			ds.setJdbcUrl(env.getRequiredProperty("helianto.jdbc.url"));
-			ds.setUser(env.getRequiredProperty("helianto.jdbc.username"));
-			ds.setPassword(env.getRequiredProperty("helianto.jdbc.password"));
+			ds.setDriverClass(env.getProperty("helianto.jdbc.driverClassName", "org.hsqldb.jdbcDriver"));
+			ds.setJdbcUrl(env.getProperty("helianto.jdbc.url", "jdbc:hsqldb:file:target/testdb/db2;shutdown=true"));
+			ds.setUser(env.getProperty("helianto.jdbc.username", "sa"));
+			ds.setPassword(env.getProperty("helianto.jdbc.password", ""));
 			ds.setAcquireIncrement(5);
 			ds.setIdleConnectionTestPeriod(60);
 			ds.setMaxPoolSize(100);
@@ -82,12 +82,12 @@ public class HeliantoConfig {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	@Bean 
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 		em.setDataSource(dataSource());
-		em.setPackagesToScan(env.getRequiredProperty("helianto.entityManager.packagesToScan"));
+		em.setPackagesToScan(env.getProperty("helianto.entityManager.packagesToScan", "org.helianto.*.domain").split(","));
 		em.setJpaVendorAdapter(vendorAdapter());
 		return em;
 	}
@@ -95,8 +95,8 @@ public class HeliantoConfig {
 	@Bean
 	public HibernateJpaVendorAdapter vendorAdapter() {
 		HibernateJpaVendorAdapter vendor = new HibernateJpaVendorAdapter();
-		vendor.setShowSql(env.getRequiredProperty("helianto.sql.showSql", Boolean.class));
-		vendor.setGenerateDdl(env.getRequiredProperty("helianto.sql.generateDdl", Boolean.class));
+		vendor.setShowSql(env.getProperty("helianto.sql.showSql", Boolean.class, Boolean.TRUE));
+		vendor.setGenerateDdl(env.getProperty("helianto.sql.generateDdl", Boolean.class, Boolean.TRUE));
 		return vendor;
 	}
 	
@@ -133,12 +133,13 @@ public class HeliantoConfig {
 				new FreeMarkerConfigurationFactoryBean();
 		freeMarkerConfigurationFactory.setPreferFileSystemAccess(false);
 		freeMarkerConfigurationFactory.setTemplateLoaderPaths(
-				"classpath*:/freemarker/,/WEB-INF/classes/freemarker/,/WEB-INF/freemarker/"
-		);
+				new String[] {"classpath:freemarker/"
+						,"/WEB-INF/classes/freemarker/"
+						,"/WEB-INF/freemarker/"} );
 		Properties settings = new Properties();
-		settings.put("default_encoding", "ISO-8859-1");
-		settings.put("number_format", "computer");
-//		settings.put("whitespace_stripping", true);
+			settings.put("default_encoding", "ISO-8859-1");
+			settings.put("number_format", "computer");
+			settings.put("whitespace_stripping", "true");
 		freeMarkerConfigurationFactory.setFreemarkerSettings(settings);
 		return freeMarkerConfigurationFactory;
 	}

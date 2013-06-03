@@ -1,17 +1,15 @@
-package org.helianto.message.service;
+package org.helianto.message.sender;
 
 import org.helianto.message.MessageAdapter;
 import org.helianto.message.MessageSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 /**
  * Testing mail sender.
  * 
  * @author mauriciofernandesdecastro
  */
-@Component
 public class TestingMailSender implements MessageSender {
 
 	public void prepareMessage(MessageAdapter<?> message) {

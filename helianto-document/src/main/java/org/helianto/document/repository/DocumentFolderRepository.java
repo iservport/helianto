@@ -1,6 +1,7 @@
 package org.helianto.document.repository;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.Entity;
@@ -28,5 +29,12 @@ public interface DocumentFolderRepository extends FilterRepository<DocumentFolde
 	 * @param folderCode
 	 */
 	DocumentFolder findByEntityAliasAndFolderCode(String entityAlias, String folderCode);
+
+	/**
+	 * Find by entity alias.
+	 * 
+	 * @param entityAlias
+	 */
+	List<DocumentFolder> findByEntityAlias(String entityAlias);
 
 }

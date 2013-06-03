@@ -12,14 +12,15 @@ import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.filter.TestingFilter;
-import org.helianto.core.repository.EntityRepository;
 import org.helianto.core.repository.ContextRepository;
+import org.helianto.core.repository.EntityRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,9 +33,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @param <T> target class
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(locations={
-//		"classpath:/META-INF/spring/core-context.xml"})
 @ContextConfiguration(classes=HeliantoConfig.class)
+@ActiveProfiles("standalone")
 @Transactional
 public abstract class AbstractJpaRepositoryIntegrationTest<T, R extends FilterRepository<T, Serializable>> {
 
