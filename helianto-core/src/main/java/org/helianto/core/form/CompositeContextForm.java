@@ -11,19 +11,15 @@ import org.helianto.core.form.internal.AbstractRootForm;
  *
  */
 public class CompositeContextForm 
-
 	extends AbstractRootForm 
-	
 	implements 
 	  ProvinceForm
 	, PublicAddressForm
-	, Cloneable
-
-{
+	, Cloneable {
 
 	private static final long serialVersionUID = 1L;
 	private char type;
-	private String operatorName;
+	private String contextName;
     private Province province;
     private Province parentProvince;
     private String provinceCode;
@@ -60,11 +56,11 @@ public class CompositeContextForm
 		this.type = type;
 	}
     
-    public String getOperatorName() {
-		return operatorName;
+    public String getContextName() {
+		return contextName;
 	}
-    public void setOperatorName(String operatorName) {
-		this.operatorName = operatorName;
+    public void setContextName(String contextName) {
+		this.contextName = contextName;
 	}
     
 	public Province getProvince() {

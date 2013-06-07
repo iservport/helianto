@@ -14,7 +14,7 @@ public interface ProvinceForm
 	  RootEntity
 	, TypeForm 
 	, SearchForm
-	, OperatorForm
+	, ContextForm
 
 {
 	

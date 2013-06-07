@@ -61,16 +61,17 @@ public class ContextMgrImpl
 	implements ContextMgr {
 
 	@Transactional(readOnly=true)
-	public List<Operator> findOperators(Filter operatorFilter) {
-		List<Operator> operatorList = (List<Operator>) contextRepository.find(operatorFilter);
-		if (operatorList!=null && operatorList.size()>0) {
-			logger.debug("Found {} namespace operator(s)", operatorList.size());
-		}
-    	return operatorList;
+	public List<Operator> findAllContexts() {
+    	return contextRepository.findAll();
+	}
+	
+	@Transactional(readOnly=true)
+	public Operator findOneContext(String contextName) {
+    	return contextRepository.findByOperatorName(contextName);
 	}
 	
 	@Transactional
-	public Operator storeOperator(Operator operator) {
+	public Operator storeContext(Operator operator) {
 		return contextRepository.saveAndFlush(operator);
 	}
 

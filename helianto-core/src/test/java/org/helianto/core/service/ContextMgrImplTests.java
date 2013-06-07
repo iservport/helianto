@@ -58,25 +58,35 @@ import org.junit.Test;
 public class ContextMgrImplTests {
 	
 	@Test
-	public void findOperators() {
-		Filter filter = new TestingFilter();
+	public void findAllContexts() {
 		List<Operator> operatorList = OperatorTestSupport.createOperatorList(1);
 		
-		expect(contextRepository.find(filter)).andReturn(operatorList);
+		expect(contextRepository.findAll()).andReturn(operatorList);
 		replay(contextRepository);
 		
-		assertSame(operatorList , contextMgr.findOperators(filter));
+		assertSame(operatorList , contextMgr.findAllContexts());
 		verify(contextRepository);
 	}
 	
 	@Test
-	public void storeOperator() {
+	public void findOneContext() {
+		Operator operator = new Operator();
+		
+		expect(contextRepository.findByOperatorName("NAME")).andReturn(operator);
+		replay(contextRepository);
+		
+		assertSame(operator , contextMgr.findOneContext("NAME"));
+		verify(contextRepository);
+	}
+	
+	@Test
+	public void storeContext() {
 		Operator operator = OperatorTestSupport.createOperator();
 		
 		expect(contextRepository.saveAndFlush(operator)).andReturn(operator);
 		replay(contextRepository);
 		
-		assertSame(operator , contextMgr.storeOperator(operator));
+		assertSame(operator , contextMgr.storeContext(operator));
 		verify(contextRepository);
 	}
 	

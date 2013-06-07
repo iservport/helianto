@@ -80,7 +80,7 @@ public class ProvinceFormFilterAdapterTests  {
     
     @Test
     public void operatorName() {
-    	((CompositeContextForm) form).setOperatorName("OPERATOR");
+    	((CompositeContextForm) form).setContextName("OPERATOR");
         assertEquals(C0+C6+OB, filter.createCriteriaAsString());
     }
     

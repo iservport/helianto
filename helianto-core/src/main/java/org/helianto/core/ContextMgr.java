@@ -56,17 +56,22 @@ public interface ContextMgr {
 
     /**
      * <p>Find <code>Operator</code> list.</p>
-     * 
-     * @param operatorFilter
      */
-    List<Operator> findOperators(Filter operatorFilter);
+    List<Operator> findAllContexts();
+
+    /**
+     * <p>Find <code>Operator</code>.</p>
+     * 
+     * @param contextName
+     */
+    Operator findOneContext(String contextName);
 
     /**
      * Store <code>Operator</code>.
      * 
      * @param operator
      */
-    Operator storeOperator(Operator operator);
+    Operator storeContext(Operator operator);
 
     /**
      * Find <code>Province</code>s.
