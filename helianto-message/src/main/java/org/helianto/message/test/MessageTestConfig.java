@@ -1,4 +1,4 @@
-package org.helianto.message.config;
+package org.helianto.message.test;
 
 import org.helianto.message.MessageSender;
 import org.helianto.message.sender.TestingMailSender;

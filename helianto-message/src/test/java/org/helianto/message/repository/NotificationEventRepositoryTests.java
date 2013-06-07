@@ -3,8 +3,8 @@ package org.helianto.message.repository;
 import java.io.Serializable;
 
 import org.helianto.core.test.AbstractJpaRepositoryIntegrationTest;
-import org.helianto.message.config.MessageTestConfig;
 import org.helianto.message.domain.NotificationEvent;
+import org.helianto.message.test.MessageTestConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
