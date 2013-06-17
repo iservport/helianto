@@ -28,6 +28,9 @@ import org.helianto.core.SecurityMgr;
 import org.helianto.core.domain.ConnectionData;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Identity;
+import org.helianto.core.filter.ConnectionDataFilterAdapter;
+import org.helianto.core.form.ConnectionDataForm;
+import org.helianto.core.repository.ConnectionDataRepository;
 import org.helianto.core.repository.CredentialRepository;
 import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.security.PublicUserDetails;
@@ -42,6 +45,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -167,11 +171,33 @@ public class SecurityMgrImpl implements SecurityMgr {
 		}
 	}
 	
+	@Transactional(readOnly=true)
+	public List<ConnectionData> findConnectionData(ConnectionDataForm form) {
+		return (List<ConnectionData>) connectionDataRepository.find(new ConnectionDataFilterAdapter(form));
+	}
+
+	@Transactional(readOnly=true)
+	public ConnectionData findConnectionData(String consumerKey) {
+		return connectionDataRepository.findByConsumerKey(consumerKey);
+	}
+
+	@Transactional
+	public ConnectionData storeConnectionData(ConnectionData connectionData) {
+		if (connectionData.isPasswordVerified()) {
+			String encodedPassword = passwordEncoder.encode(connectionData.getPassword());
+			connectionData.setConsumerSecret(encodedPassword);
+			return connectionDataRepository.saveAndFlush(connectionData);
+		}
+		throw new PasswordNotVerifiedException();
+	}
+
     // collabs
 
     private IdentityRepository identityRepository;
     private UserRepository userRepository;
     private CredentialRepository credentialRepository;
+    private ConnectionDataRepository connectionDataRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Resource
     public void setIdentityRepository(IdentityRepository identityRepository) {
@@ -186,6 +212,11 @@ public class SecurityMgrImpl implements SecurityMgr {
     @Resource
     public void setCredentialRepository(CredentialRepository credentialRepository) {
 		this.credentialRepository = credentialRepository;
+	}
+    
+    @Resource
+    public void setConnectionDataRepository(ConnectionDataRepository connectionDataRepository) {
+		this.connectionDataRepository = connectionDataRepository;
 	}
 
     private final static Logger logger = LoggerFactory.getLogger(SecurityMgrImpl.class);
