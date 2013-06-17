@@ -25,6 +25,7 @@ import javax.annotation.Resource;
 
 import org.helianto.core.PasswordNotVerifiedException;
 import org.helianto.core.SecurityMgr;
+import org.helianto.core.domain.ConnectionData;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.repository.CredentialRepository;
@@ -141,7 +142,7 @@ public class SecurityMgrImpl implements SecurityMgr {
 //	}
 	
 	public void authenticate(User user, Set<UserRole> roles) {
-		authenticate(new UserDetailsAdapter(user, null, roles));
+		authenticate(new UserDetailsAdapter(user, (ConnectionData) null, roles));
 	}
 	
 	public void authenticate(UserDetailsAdapter userDetails) {

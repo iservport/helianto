@@ -40,8 +40,8 @@ public class IdentityFilterAdapterTests {
     public static String C5 = "(" +
     		"(lower(alias.principal) like '%one%' " +
     		"OR lower(alias.principal) like '%two%' ) " +
-    		"OR (lower(alias.optionalAlias) like '%one%' " +
-    		"OR lower(alias.optionalAlias) like '%two%' ) " +
+    		"OR (lower(alias.displayName) like '%one%' " +
+    		"OR lower(alias.displayName) like '%two%' ) " +
     		"OR (lower(alias.personalData.firstName) like '%one%' " +
     		"OR lower(alias.personalData.firstName) like '%two%' ) " +
     		"OR (lower(alias.personalData.lastName) like '%one%' " +

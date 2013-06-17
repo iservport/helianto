@@ -39,7 +39,7 @@ public class UserFormFilterAdapterTests {
 	static String C9 = "AND ((lower(alias.identity.principal) like '%principal@domain%' ) ) ";
 	static String C10 = "AND (" +
 			"(lower(alias.identity.principal) like '%first%' OR lower(alias.identity.principal) like '%last%' ) OR " +
-			"(lower(alias.identity.optionalAlias) like '%first%' OR lower(alias.identity.optionalAlias) like '%last%' ) OR " +
+			"(lower(alias.identity.displayName) like '%first%' OR lower(alias.identity.displayName) like '%last%' ) OR " +
 			"(lower(alias.identity.personalData.firstName) like '%first%' OR lower(alias.identity.personalData.firstName) like '%last%' ) OR " +
 			"(lower(alias.identity.personalData.lastName) like '%first%' OR lower(alias.identity.personalData.lastName) like '%last%' ) " +
 			") ";

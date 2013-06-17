@@ -42,6 +42,13 @@ public interface UserRepository extends FilterRepository<User, Serializable> {
 	List<User> findByUserKeyOrderByLastEventDesc(String userKey);
 	
 	/**
+	 * Find by identity id order by lastEvent DESC.
+	 * 
+	 * @param identityId
+	 */
+	List<User> findByIdentityIdOrderByLastEventDesc(Long identityId);
+	
+	/**
 	 * Find by parent key.
 	 * 
 	 * @param parentKey

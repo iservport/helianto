@@ -37,15 +37,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class PersonalData implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private String firstName;
-    private String lastName;
-    private char gender;
-    private char appellation;
-    private Date birthDate;
-    private String personalIdentityNumber_1;
-    private char personalIdentityType_1;
-    private String personalIdentityNumber_2;
-    private char personalIdentityType_2;
+    private String firstName = "";
+    private String lastName = "";
+    private char gender = Gender.NOT_SUPPLIED.getValue();
+    private char appellation = Appellation.NOT_SUPPLIED.getValue();
+    private Date birthDate = new Date(0l);
+	private String profileUrl = "";
+	private String imageUrl = "";
+    private String personalIdentityNumber_1 = "";
+    private char personalIdentityType_1 = PersonalIdentityType.NOT_REQUIRED.getValue();
+    private String personalIdentityNumber_2 = "";
+    private char personalIdentityType_2 = PersonalIdentityType.NOT_REQUIRED.getValue();
 
     /** 
      * Default constructor.
@@ -63,13 +65,6 @@ public class PersonalData implements Serializable {
     public PersonalData(String firstName, String lastName) {
         setFirstName(firstName);
         setLastName(lastName);
-        setGenderAsEnum(Gender.NOT_SUPPLIED);
-        setAppellationAsEnum(Appellation.NOT_SUPPLIED);
-        setBirthDate(new Date(0l));
-        setPersonalIdentityNumber_1("");
-        setPersonalIdentityType_1(PersonalIdentityType.NOT_REQUIRED);
-        setPersonalIdentityNumber_2("");
-        setPersonalIdentityType_2(PersonalIdentityType.NOT_REQUIRED);
     }
 
     /**
@@ -130,6 +125,20 @@ public class PersonalData implements Serializable {
 	}
     public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
+	}
+    
+    public String getProfileUrl() {
+		return profileUrl;
+	}
+    public void setProfileUrl(String profileUrl) {
+		this.profileUrl = profileUrl;
+	}
+    
+    public String getImageUrl() {
+		return imageUrl;
+	}
+    public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
     
     /**

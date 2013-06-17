@@ -118,7 +118,7 @@ public class UserFormFilterAdapter
 		if (getForm().getSearchMode()=='P') {
 			return new String[] { "identity.principal" };
 		}
-		return new String[] { "identity.principal", "identity.optionalAlias", "identity.personalData.firstName", "identity.personalData.lastName" };
+		return new String[] { "identity.principal", "identity.displayName", "identity.personalData.firstName", "identity.personalData.lastName" };
 	}
 	
 	@Override

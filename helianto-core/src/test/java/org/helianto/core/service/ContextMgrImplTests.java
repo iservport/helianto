@@ -36,7 +36,7 @@ import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.ServiceFormFilterAdapter;
-import org.helianto.core.filter.classic.TestingFilter;
+import org.helianto.core.form.EntityForm;
 import org.helianto.core.form.KeyTypeForm;
 import org.helianto.core.form.ProvinceForm;
 import org.helianto.core.form.ServiceForm;
@@ -116,13 +116,13 @@ public class ContextMgrImplTests {
 	
 	@Test
 	public void findEntities() {
-		List<Entity> entityList = EntityTestSupport.createEntityList(1);
-		Filter filter = new TestingFilter();
+		EntityForm form = EasyMock.createMock(EntityForm.class);
+		List<Entity> entityList = new ArrayList<Entity>();
 		
-		expect(entityRepository.find(filter)).andReturn(entityList);
+		expect(entityRepository.find(EasyMock.isA(Filter.class))).andReturn(entityList);
 		replay(entityRepository);
 		
-		assertSame(entityList , contextMgr.findEntities(filter));
+		assertSame(entityList , contextMgr.findEntities(form));
 		verify(entityRepository);
 	}
 	

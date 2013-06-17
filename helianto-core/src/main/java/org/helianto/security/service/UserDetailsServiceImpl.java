@@ -7,13 +7,13 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import org.helianto.core.SecurityMgr;
-import org.helianto.core.domain.Credential;
+import org.helianto.core.domain.ConnectionData;
+import org.helianto.core.repository.ConnectionDataRepository;
 import org.helianto.core.security.UserDetailsAdapter;
 import org.helianto.core.security.UserSelectorStrategy;
-import org.helianto.user.UserMgr;
 import org.helianto.user.domain.User;
-import org.helianto.user.domain.UserGroup;
 import org.helianto.user.domain.UserRole;
+import org.helianto.user.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -24,8 +24,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Create an <code>UserDetail</code> instance from the first valid user and the credential that
- * matches username.
+ * Return an <code>UserDetails</code> instance.
+ * 
+ * <p>
+ * This is a custom implementation of <code>org.springframework.security.core.userdetails.UserDetailsService</code>.
+ * </p>
  * 
  * @author mauriciofernandesdecastro
  */
@@ -35,19 +38,41 @@ public class UserDetailsServiceImpl
 	implements UserDetailsService {
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
-		Credential credential = securityMgr.findCredentialByPrincipal(username);
-		if (credential==null) {
-			throw new UsernameNotFoundException("Unable to find credential for "+username);
+		if (username==null) {
+			throw new UsernameNotFoundException("User name must not be null!");
 		}
-		@SuppressWarnings("unchecked")
-		List<UserGroup> userList = (List<UserGroup>) userMgr.findUsers(username);
+		String[] keys =username.split(",");
+		String consumerKey = keys[0];
+		ConnectionData connectionData = null;
+		// user input may be the numeric identity id
+		try {
+			List<ConnectionData> connectionDataList = connectionDataRepository.findByIdentityId(Long.parseLong(consumerKey));
+			if (connectionDataList!=null && connectionDataList.size()>0) {
+				connectionData = connectionDataList.get(0);
+			}
+		}
+		catch(Exception e) {
+			logger.debug("Username is not a number");
+		}
+		if (connectionData==null) {
+			connectionData = connectionDataRepository.findByConsumerKey(consumerKey);			
+		}
+		if (connectionData==null) {
+			logger.info("Unable to load by user name with {}.", consumerKey);
+			throw new UsernameNotFoundException("Unable to find user name for "+consumerKey);
+		}
+		String entityKey = null;
+		if (keys.length>1) {
+			entityKey = keys[1];
+		}
+		List<User> userList = userRepository.findByIdentityIdOrderByLastEventDesc(connectionData.getIdentity().getId());
 		logger.debug("Found {} user(s) matching {}.", userList.size(), username);
 		if (userList!=null && userList.size()>0) {
-			User user = userSelectorStrategy.selectUser(userList);
+			User user = userSelectorStrategy.selectUser(userList, entityKey);
 			user.setLastEvent(new Date());
-			userMgr.storeUserGroup(user);
 			Set<UserRole> roles = securityMgr.findRoles(user, true);
-			return new UserDetailsAdapter((User) userMgr.storeUserGroup(user), credential, roles);
+			user = userRepository.saveAndFlush(user);
+			return new UserDetailsAdapter(user, connectionData, roles);
 		}
 		throw new UsernameNotFoundException("Unable to find any user for "+username);
 	}
@@ -55,8 +80,9 @@ public class UserDetailsServiceImpl
 	//- collabs
 
     private SecurityMgr securityMgr;
-    private UserMgr userMgr;
     private UserSelectorStrategy userSelectorStrategy;
+    private ConnectionDataRepository connectionDataRepository;
+    private UserRepository userRepository;
     
     @Resource
     public void setSecurityMgr(SecurityMgr securityMgr) {
@@ -64,13 +90,18 @@ public class UserDetailsServiceImpl
     }
 
     @Resource
-    public void setUserMgr(UserMgr userMgr) {
-        this.userMgr = userMgr;
-    }
-    
-    @Resource
     public void setUserSelectorStrategy(UserSelectorStrategy userSelectorStrategy) {
 		this.userSelectorStrategy = userSelectorStrategy;
+	}
+    
+    @Resource
+    public void setConnectionDataRepository(ConnectionDataRepository connectionDataRepository) {
+		this.connectionDataRepository = connectionDataRepository;
+	}
+    
+    @Resource
+    public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
 	}
     
     private static Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);

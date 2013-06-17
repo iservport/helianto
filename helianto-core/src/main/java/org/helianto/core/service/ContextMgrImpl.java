@@ -32,11 +32,13 @@ import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
 import org.helianto.core.filter.ContextEventFilterAdapter;
+import org.helianto.core.filter.EntityFormFilterAdapter;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.KeyTypeFormFilterAdapter;
 import org.helianto.core.filter.ProvinceFormFilterAdapter;
 import org.helianto.core.filter.ServiceFormFilterAdapter;
 import org.helianto.core.form.ContextEventForm;
+import org.helianto.core.form.EntityForm;
 import org.helianto.core.form.KeyTypeForm;
 import org.helianto.core.form.ProvinceForm;
 import org.helianto.core.form.ServiceForm;
@@ -91,7 +93,18 @@ public class ContextMgrImpl
 	}
 	
 	@Transactional(readOnly=true)
-	public List<Entity> findEntities(Filter filter) {
+	public Entity findOneEntity(String alias) {
+		return entityRepository.findByContextNameAndAlias("DEFAULT", alias);
+	}
+	
+	@Transactional(readOnly=true)
+	public Entity findOneEntity(String contextName, String alias) {
+		return entityRepository.findByContextNameAndAlias(contextName, alias);
+	}
+	
+	@Transactional(readOnly=true)
+	public List<Entity> findEntities(EntityForm form) {
+		Filter filter = new EntityFormFilterAdapter(form);
 		List<Entity> entityList = (List<Entity>) entityRepository.find(filter);
 		if (entityList!=null && entityList.size()>0) {
 			logger.debug("Found {} entity(ies).", entityList.size());

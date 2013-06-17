@@ -25,8 +25,8 @@ import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
-import org.helianto.core.filter.Filter;
 import org.helianto.core.form.ContextEventForm;
+import org.helianto.core.form.EntityForm;
 import org.helianto.core.form.KeyTypeForm;
 import org.helianto.core.form.ProvinceForm;
 import org.helianto.core.form.ServiceForm;
@@ -88,11 +88,26 @@ public interface ContextMgr {
 	Province storeProvince(Province province);
 	
     /**
-     * Find <code>Entity</code>(ies).
+     * Find <code>Entity</code> in the current context.
      * 
-     * @param filter
+     * @param alias
      */
-	List<Entity> findEntities(Filter filter);
+	Entity findOneEntity(String alias);
+
+    /**
+     * Find <code>Entity</code>.
+     * 
+     * @param contextName
+     * @param alias
+     */
+	Entity findOneEntity(String contextName, String alias);
+
+    /**
+     * Find <code>Entity</code> list.
+     * 
+     * @param form
+     */
+	List<Entity> findEntities(EntityForm form);
 
     /**
      * Store <code>Entity</code> to the data store.

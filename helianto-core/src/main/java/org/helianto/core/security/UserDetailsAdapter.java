@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.helianto.core.def.ActivityState;
+import org.helianto.core.domain.ConnectionData;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
@@ -57,13 +58,13 @@ public class UserDetailsAdapter
       Serializable
     , UserDetails
     , PublicUserDetails
-    , SecureUserDetails
     
 {
 
 	private static final long serialVersionUID = 1L;
     private UserGroup user;
     private Credential credential;
+    private ConnectionData connectionData;
     private List<GrantedAuthority> authorities;
 
     /**
@@ -76,12 +77,30 @@ public class UserDetailsAdapter
      * 
      * @param user
      * @param credential
+     * @param roles
+     * 
+     * @deprecated
      */
     public UserDetailsAdapter(User user, Credential credential, Collection<UserRole> roles) {
         this();
         this.user = user;
         logger.info("Secured user: {}", user);
         this.credential = credential;
+        grantAuthorities(roles, user);
+    }
+    
+    /**
+     * User constructor.
+     * 
+     * @param user
+     * @param connectionData
+     * @param roles
+     */
+    public UserDetailsAdapter(User user, ConnectionData connectionData, Collection<UserRole> roles) {
+        this();
+        this.user = user;
+        logger.info("Secured user: {}", user);
+        this.connectionData = connectionData;
         grantAuthorities(roles, user);
     }
     
@@ -189,10 +208,6 @@ public class UserDetailsAdapter
         return false;
     }
     
-    public Credential getCredential() {
-		return credential;
-	}
-
     public boolean isCredentialsNonExpired() {
     	// delegate to the application
         return true;
@@ -203,7 +218,7 @@ public class UserDetailsAdapter
     		return true;
     	}
         // TODO replace auto-enable
-        char state = getCredential().getCredentialState();
+        char state = credential.getCredentialState();
         if (state==ActivityState.ACTIVE.getValue() || 
                 state==ActivityState.INITIAL.getValue()) {
             return true;
@@ -215,7 +230,10 @@ public class UserDetailsAdapter
     	if (isAnonymous()) {
     		return "";
     	}
-    	if (getCredential()!=null) {
+    	if (connectionData!=null) {
+    		return connectionData.getPassword();
+    	}
+    	if (credential!=null) {
     		return credential.getPassword();
     	}
         return "";

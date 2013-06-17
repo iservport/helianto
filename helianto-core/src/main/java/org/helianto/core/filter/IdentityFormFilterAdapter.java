@@ -56,7 +56,7 @@ public class IdentityFormFilterAdapter extends AbstractFilterAdapter<IdentityFor
 		if (getForm().getSearchString().contains("@")) {
 			return new String[] { "principal" };
 		}
-		return new String[] { "principal", "optionalAlias", "personalData.firstName", "personalData.lastName" };
+		return new String[] { "principal", "displayName", "personalData.firstName", "personalData.lastName" };
 	}
 	
 }

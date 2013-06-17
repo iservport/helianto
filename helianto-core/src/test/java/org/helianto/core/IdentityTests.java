@@ -40,7 +40,7 @@ public class IdentityTests {
         Identity identity = new Identity("PRINCIPAL", "OPTIONAL_ALIAS");
         
         assertEquals("PRINCIPAL".toLowerCase(), identity.getPrincipal());
-        assertEquals("OPTIONAL_ALIAS", identity.getOptionalAlias());
+        assertEquals("OPTIONAL_ALIAS", identity.getDisplayName());
         assertNotNull(identity.getCreated());
         assertTrue(identity.getCreated() instanceof Date);
         assertEquals(IdentityType.PERSONAL_EMAIL .getValue(), identity.getIdentityType());

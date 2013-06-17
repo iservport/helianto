@@ -5,6 +5,7 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.helianto.core.data.FilterRepositoryFactoryBean;
+import org.helianto.core.domain.ConnectionDataConverter;
 import org.helianto.core.filter.FilterNamingConventionStrategy;
 import org.helianto.core.naming.internal.DefaultNamingConventionStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 import org.springframework.web.client.RestTemplate;
@@ -97,6 +100,7 @@ public class HeliantoConfig {
 		HibernateJpaVendorAdapter vendor = new HibernateJpaVendorAdapter();
 		vendor.setShowSql(env.getProperty("helianto.sql.showSql", Boolean.class, Boolean.TRUE));
 		vendor.setGenerateDdl(env.getProperty("helianto.sql.generateDdl", Boolean.class, Boolean.TRUE));
+		vendor.setDatabasePlatform(env.getProperty("helianto.jpa.vendor", String.class, "org.hibernate.dialect.HSQLDialect"));
 		return vendor;
 	}
 	
@@ -105,6 +109,16 @@ public class HeliantoConfig {
 		JpaTransactionManager transactionManager = new JpaTransactionManager();
 		transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
 		return transactionManager;
+	}
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	public ConnectionDataConverter connectionDataConverter() {
+		return new ConnectionDataConverter(passwordEncoder());
 	}
 
 	@Bean

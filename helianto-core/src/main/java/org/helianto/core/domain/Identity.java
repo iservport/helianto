@@ -69,8 +69,8 @@ public class Identity implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     private long id;
+	private String displayName;
     private String principal;
-    private String optionalAlias;
     private PersonalData personalData;
     private Date created;
     private char identityType;
@@ -79,7 +79,7 @@ public class Identity implements java.io.Serializable {
     private String multipartFileContentType;
     private List<Phone> phones = new ArrayList<Phone>();
     private List<ContactInfo> contactInfos = new ArrayList<ContactInfo>();
-    private Set<Credential> credentials = new HashSet<Credential>();
+    private Set<ConnectionData> connections = new HashSet<ConnectionData>();
 
     /** 
      * Default constructor.
@@ -101,22 +101,22 @@ public class Identity implements java.io.Serializable {
      * Principal and optional alias constructor.
      * 
      * @param principal
-     * @param optionalAlias
+     * @param displayName
      */
-    public Identity(String principal, String optionalAlias) {
-    	this(principal, optionalAlias, new PersonalData());
+    public Identity(String principal, String displayName) {
+    	this(principal, displayName, new PersonalData());
     }
 
     /** 
      * Principal and optional alias constructor.
      * 
      * @param principal
-     * @param optionalAlias
+     * @param displayName
      * @param personalData
      */
-    public Identity(String principal, String optionalAlias, PersonalData personalData) {
+    public Identity(String principal, String displayName, PersonalData personalData) {
     	setPrincipal(principal);
-    	setOptionalAlias(optionalAlias);
+    	setDisplayName(displayName);
         setPersonalData(personalData);
         setCreated(new Date());
         setIdentityTypeAsEnum(IdentityType.PERSONAL_EMAIL);
@@ -184,14 +184,27 @@ public class Identity implements java.io.Serializable {
     
     /**
      * Optional alias.
+     * @deprecated
+     * @see #getDisplayName()
      */
-    @Column(length=20)
+    @Transient
     public String getOptionalAlias() {
-        return this.optionalAlias;
+        return getDisplayName();
     }
-    public void setOptionalAlias(String optionalAlias) {
-        this.optionalAlias = optionalAlias;
+    public void setOptionalAlias(String displayName) {
+        setDisplayName(displayName);
     }
+
+    /**
+     * Display name.
+     */
+    @Column(length=64)
+    public String getDisplayName() {
+		return displayName;
+	}
+    public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
 
     /**
      * PersonalData getter.
@@ -406,14 +419,14 @@ public class Identity implements java.io.Serializable {
 	}
 	
     /**
-     * A set of credentials.
+     * A set of connection data.
      */
     @OneToMany(mappedBy="identity")
-    public Set<Credential> getCredentials() {
-		return credentials;
+    public Set<ConnectionData> getConnections() {
+		return connections;
 	}
-    public void setCredentials(Set<Credential> credentials) {
-		this.credentials = credentials;
+    public void setConnections(Set<ConnectionData> connections) {
+		this.connections = connections;
 	}
     
     /**

@@ -81,13 +81,24 @@ public abstract class AbstractEvent
 	public Identity getOwner() {
 		return owner;
 	}
+    
     /**
      * Safe presentation record owner alias.
+     * @deprecated
      */
     @Transient
 	public String getOwnerOptionalAlias() {
-        return getOwner()==null ? "" : owner.getOptionalAlias();
+        return getOwner()==null ? "" : owner.getDisplayName();
 	}
+    
+    /**
+     * Safe presentation record owner display name.
+     */
+    @Transient
+	public String getOwnerDisplayName() {
+        return getOwner()==null ? "" : owner.getDisplayName();
+	}
+    
     /**
      * Safe presentation record owner name.
      */

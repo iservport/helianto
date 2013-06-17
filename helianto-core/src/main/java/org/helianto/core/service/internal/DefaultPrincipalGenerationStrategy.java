@@ -46,9 +46,9 @@ public class DefaultPrincipalGenerationStrategy implements PrincipalGenerationSt
 						.getLastName()));
 			}
 			// try the alias
-			else if (!identity.getOptionalAlias().equals("")) {
+			else if (!identity.getDisplayName().equals("")) {
 				principalCandidate
-						.append(normalize(identity.getOptionalAlias()));
+						.append(normalize(identity.getDisplayName()));
 			}
 			// or throw exception
 			else {

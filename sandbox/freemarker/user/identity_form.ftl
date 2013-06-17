@@ -4,7 +4,7 @@
 	
 	<tr>
 		<td>Optional alias</td>
-		<td><@spring.formInput "formObject.target.child.identity.optionalAlias", "size='20'"/></td>
+		<td><@spring.formInput "formObject.target.child.identity.displayName", "size='20'"/></td>
 	</tr>
 	<tr>
 		<td>First name</td>

@@ -38,7 +38,7 @@ public final class UserDetailsUtils {
 	 * Construct a Spring Security Authentication token.
 	 */
 	public static Authentication authenticationTokenFor(UserDetailsAdapter userDetailsAdapter) {
-		return new UsernamePasswordAuthenticationToken(userDetailsAdapter, userDetailsAdapter.getCredential().getCurrentPassword(), userDetailsAdapter.getAuthorities());		
+		return new UsernamePasswordAuthenticationToken(userDetailsAdapter, null, userDetailsAdapter.getAuthorities());		
 	}
 	
 	/**

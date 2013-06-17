@@ -23,7 +23,9 @@
         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 	<security:authentication-manager id="authenticationManager">
-		<security:authentication-provider user-service-ref="userDetailsService"/>
+		<security:authentication-provider user-service-ref="userDetailsService">
+			<security:password-encoder ref="passwordEncoder"/>
+		</security:authentication-provider>
 	</security:authentication-manager>
 	
 	<security:global-method-security pre-post-annotations="enabled" />

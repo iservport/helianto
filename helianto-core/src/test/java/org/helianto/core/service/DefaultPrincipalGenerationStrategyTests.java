@@ -17,7 +17,7 @@ public class DefaultPrincipalGenerationStrategyTests {
 	public void principalGeneration() {
 		Identity identity = new Identity();
 		identity.setPrincipal("");
-		identity.setOptionalAlias("alias");
+		identity.setDisplayName("alias");
 		identity.setPersonalData(new PersonalData());
 		identity.getPersonalData().setLastName("lastName");
 		identity.getPersonalData().setFirstName("firstName");

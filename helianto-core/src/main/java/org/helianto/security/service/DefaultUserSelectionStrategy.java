@@ -12,21 +12,31 @@ import org.springframework.stereotype.Component;
 /**
  * Default implementation for <code>UserSelectionStrategy</code> interface.
  * 
+ * <p>
+ * This implementation assumes preferences as the entityKey and returns the first matching user.
+ * If entityKey is null, it simply returns the first user in the list.
+ * </p>
+ * 
  * @author mauriciofernandesdecastro
  */
 @Component("userSelectionStrategy")
 public class DefaultUserSelectionStrategy 
 	implements UserSelectorStrategy {
 
-	/**
-	 * Selects the first user on the list.
-	 */
-	public User selectUser(List<UserGroup> userList) throws IllegalArgumentException {
+	public User selectUser(List<? extends UserGroup> userList, String preferences) throws IllegalArgumentException {
 		if (userList!=null && userList.size()>0) {
 			UserGroup user = userList.get(0);
 			if (user instanceof User) {
-				logger.info("Selected {}.", user);
-				return (User) user;
+				if (preferences!=null) {
+					if (user.getEntity().getAlias().equalsIgnoreCase(preferences)) {
+						logger.info("Selected {}.", user);
+						return (User) user;
+					}
+				}
+				else {
+					logger.info("Selected {}.", user);
+					return (User) user;
+				}
 			}
 			throw new IllegalArgumentException("Not an instance of org.helianto.core.User.");
 		}

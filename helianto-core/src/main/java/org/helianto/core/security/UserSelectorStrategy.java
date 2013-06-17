@@ -16,7 +16,8 @@ public interface UserSelectorStrategy {
 	 * Select an user from a list.
 	 * 
 	 * @param userList
+	 * @param preferences
 	 */
-	public User selectUser(List<UserGroup> userList);
+	public User selectUser(List<? extends UserGroup> userList, String preferences);
 
 }
