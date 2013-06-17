@@ -9,10 +9,10 @@ import java.util.Set;
 
 import org.easymock.EasyMock;
 import org.helianto.core.SecurityMgr;
-import org.helianto.core.domain.ConnectionData;
+import org.helianto.core.domain.IdentitySecurity;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
-import org.helianto.core.repository.ConnectionDataRepository;
+import org.helianto.core.repository.IdentitySecurityRepository;
 import org.helianto.core.security.UserSelectorStrategy;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserRole;
@@ -36,11 +36,11 @@ public class UserDetailsServiceTests {
 	
 	@Test(expected=UsernameNotFoundException.class)
 	public void identityIdNotFound() {
-		List<ConnectionData> connectionDataList = new ArrayList<ConnectionData>();
+		List<IdentitySecurity> identitySecurityList = new ArrayList<IdentitySecurity>();
 				
-		EasyMock.expect(connectionDataRepository.findByIdentityId(123)).andReturn(connectionDataList);
-		EasyMock.expect(connectionDataRepository.findByConsumerKey("123")).andReturn(null);
-		EasyMock.replay(connectionDataRepository);
+		EasyMock.expect(identitySecurityRepository.findByIdentityId(123)).andReturn(identitySecurityList);
+		EasyMock.expect(identitySecurityRepository.findByConsumerKey("123")).andReturn(null);
+		EasyMock.replay(identitySecurityRepository);
 		
 		userDetailsService.loadUserByUsername("123");
 	}
@@ -49,15 +49,15 @@ public class UserDetailsServiceTests {
 	public void identityIdFound() {
 		Identity identity = new Identity("123");
 		identity.setId(123);
-		List<ConnectionData> connectionDataList = new ArrayList<ConnectionData>();
-		connectionDataList.add(new ConnectionData(identity, "secret"));
+		List<IdentitySecurity> identitySecurityList = new ArrayList<IdentitySecurity>();
+		identitySecurityList.add(new IdentitySecurity(identity, "secret"));
 		List<User> userList = new ArrayList<User>();
 		User user = new User(new Entity(), identity);
 		userList.add(user);
 		Set<UserRole> roles = new HashSet<UserRole>();
 				
-		EasyMock.expect(connectionDataRepository.findByIdentityId(123L)).andReturn(connectionDataList);
-		EasyMock.replay(connectionDataRepository);
+		EasyMock.expect(identitySecurityRepository.findByIdentityId(123L)).andReturn(identitySecurityList);
+		EasyMock.replay(identitySecurityRepository);
 		
 		EasyMock.expect(userRepository.findByIdentityIdOrderByLastEventDesc(123L)).andReturn(userList);
 		EasyMock.expect(userRepository.saveAndFlush(user)).andReturn(user);
@@ -78,16 +78,16 @@ public class UserDetailsServiceTests {
 	public void usernameFound() {
 		Identity identity = new Identity("123");
 		identity.setId(123);
-		List<ConnectionData> connectionDataList = new ArrayList<ConnectionData>();
-		connectionDataList.add(new ConnectionData(identity, "secret"));
+		List<IdentitySecurity> identitySecurityaList = new ArrayList<IdentitySecurity>();
+		identitySecurityaList.add(new IdentitySecurity(identity, "secret"));
 		List<User> userList = new ArrayList<User>();
 		User user = new User(new Entity(), identity);
 		userList.add(user);
 		Set<UserRole> roles = new HashSet<UserRole>();
 				
-		EasyMock.expect(connectionDataRepository.findByIdentityId(123L)).andReturn(null);
-		EasyMock.expect(connectionDataRepository.findByConsumerKey("123")).andReturn(connectionDataList.get(0));
-		EasyMock.replay(connectionDataRepository);
+		EasyMock.expect(identitySecurityRepository.findByIdentityId(123L)).andReturn(null);
+		EasyMock.expect(identitySecurityRepository.findByConsumerKey("123")).andReturn(identitySecurityaList.get(0));
+		EasyMock.replay(identitySecurityRepository);
 		
 		EasyMock.expect(userRepository.findByIdentityIdOrderByLastEventDesc(123L)).andReturn(userList);
 		EasyMock.expect(userRepository.saveAndFlush(user)).andReturn(user);
@@ -109,7 +109,7 @@ public class UserDetailsServiceTests {
 	//- collabs
     private SecurityMgr securityMgr;
     private UserSelectorStrategy userSelectorStrategy;
-    private ConnectionDataRepository connectionDataRepository;
+    private IdentitySecurityRepository identitySecurityRepository;
     private UserRepository userRepository;
     
     @Before
@@ -119,15 +119,15 @@ public class UserDetailsServiceTests {
         userDetailsService.setSecurityMgr(securityMgr);
         userSelectorStrategy = EasyMock.createMock(UserSelectorStrategy.class);
         userDetailsService.setUserSelectorStrategy(userSelectorStrategy);
-        connectionDataRepository = EasyMock.createMock(ConnectionDataRepository.class);
-        userDetailsService.setConnectionDataRepository(connectionDataRepository);
+        identitySecurityRepository = EasyMock.createMock(IdentitySecurityRepository.class);
+        userDetailsService.setIdentitySecurityRepository(identitySecurityRepository);
         userRepository = EasyMock.createMock(UserRepository.class);
         userDetailsService.setUserRepository(userRepository);
     }
     
     @After
     public void tearDown() {
-    	EasyMock.reset(securityMgr, userSelectorStrategy, connectionDataRepository, userRepository);
+    	EasyMock.reset(securityMgr, userSelectorStrategy, identitySecurityRepository, userRepository);
     }
     
 }

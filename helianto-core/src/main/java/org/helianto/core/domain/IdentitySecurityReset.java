@@ -12,11 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
-
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Temporary tokens to reset consumer secrets. 
@@ -24,16 +21,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="core_connection",
+@Table(name="core_reset",
     uniqueConstraints = @UniqueConstraint(columnNames={"resetToken"})
 )
-public class ConnectionDataReset implements Serializable {
+public class IdentitySecurityReset implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
     private long id;
     private int version;
-    private ConnectionData connectionData;
+    private IdentitySecurity identitySecurity;
     private String resetToken;
     private Date issueDate;
     private Date expirationDate;
@@ -41,25 +38,19 @@ public class ConnectionDataReset implements Serializable {
     /**
      * Default constructor.
      */
-    public ConnectionDataReset() {
+    public IdentitySecurityReset() {
 		super();
 	}
 
     /**
-     * Connection data constructor.
+     * Identity security constructor.
      * 
-     * @param connectionData
+     * @param identitySecurity
      */
-    public ConnectionDataReset(ConnectionData connectionData) {
+    public IdentitySecurityReset(IdentitySecurity identitySecurity) {
 		this();
 	}
     
-    //TODO move to ConnectionDataMgr.
-    @Transient
-    public void initToken(PasswordEncoder encoder) {
-    	encoder.encode(String.valueOf(getConnectionData().getId()));
-    }
-
     /**
      * Primary key.
      */
@@ -86,12 +77,12 @@ public class ConnectionDataReset implements Serializable {
      * Connection data.
      */
     @ManyToOne
-    @JoinColumn(name="connectionDataId")
-	public ConnectionData getConnectionData() {
-		return connectionData;
+    @JoinColumn(name="identitySecurityId")
+	public IdentitySecurity getIdentitySecurity() {
+		return identitySecurity;
 	}
-	public void setConnectionData(ConnectionData connectionData) {
-		this.connectionData = connectionData;
+    public void setIdentitySecurity(IdentitySecurity identitySecurity) {
+		this.identitySecurity = identitySecurity;
 	}
 
 	/**
@@ -144,10 +135,10 @@ public class ConnectionDataReset implements Serializable {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof ConnectionDataReset)) {
+		if (!(obj instanceof IdentitySecurityReset)) {
 			return false;
 		}
-		ConnectionDataReset other = (ConnectionDataReset) obj;
+		IdentitySecurityReset other = (IdentitySecurityReset) obj;
 		if (resetToken == null) {
 			if (other.resetToken != null) {
 				return false;

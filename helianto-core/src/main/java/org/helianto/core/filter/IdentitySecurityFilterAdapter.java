@@ -2,19 +2,19 @@ package org.helianto.core.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilterAdapter;
-import org.helianto.core.form.ConnectionDataForm;
+import org.helianto.core.form.IdentitySecurityForm;
 
 /**
  * Connection data filter.
  * 
  * @author mauriciofernandesdecastro
  */
-public class ConnectionDataFilterAdapter 
-	extends AbstractFilterAdapter<ConnectionDataForm> {
+public class IdentitySecurityFilterAdapter 
+	extends AbstractFilterAdapter<IdentitySecurityForm> {
 
 	private static final long serialVersionUID = 1L;
 
-	public ConnectionDataFilterAdapter(ConnectionDataForm form) {
+	public IdentitySecurityFilterAdapter(IdentitySecurityForm form) {
 		super(form);
 	}
 	

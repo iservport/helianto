@@ -79,7 +79,7 @@ public class Identity implements java.io.Serializable {
     private String multipartFileContentType;
     private List<Phone> phones = new ArrayList<Phone>();
     private List<ContactInfo> contactInfos = new ArrayList<ContactInfo>();
-    private Set<ConnectionData> connections = new HashSet<ConnectionData>();
+    private Set<IdentitySecurity> connections = new HashSet<IdentitySecurity>();
 
     /** 
      * Default constructor.
@@ -422,10 +422,10 @@ public class Identity implements java.io.Serializable {
      * A set of connection data.
      */
     @OneToMany(mappedBy="identity")
-    public Set<ConnectionData> getConnections() {
+    public Set<IdentitySecurity> getConnections() {
 		return connections;
 	}
-    public void setConnections(Set<ConnectionData> connections) {
+    public void setConnections(Set<IdentitySecurity> connections) {
 		this.connections = connections;
 	}
     

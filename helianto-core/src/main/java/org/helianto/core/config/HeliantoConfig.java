@@ -5,7 +5,7 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.helianto.core.data.FilterRepositoryFactoryBean;
-import org.helianto.core.domain.ConnectionDataConverter;
+import org.helianto.core.domain.IdentitySecurityConverter;
 import org.helianto.core.filter.FilterNamingConventionStrategy;
 import org.helianto.core.naming.internal.DefaultNamingConventionStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,8 +117,8 @@ public class HeliantoConfig {
 	}
 
 	@Bean
-	public ConnectionDataConverter connectionDataConverter() {
-		return new ConnectionDataConverter(passwordEncoder());
+	public IdentitySecurityConverter identitySecurityConverter() {
+		return new IdentitySecurityConverter(passwordEncoder());
 	}
 
 	@Bean

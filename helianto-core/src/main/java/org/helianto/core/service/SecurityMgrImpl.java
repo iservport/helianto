@@ -25,12 +25,12 @@ import javax.annotation.Resource;
 
 import org.helianto.core.PasswordNotVerifiedException;
 import org.helianto.core.SecurityMgr;
-import org.helianto.core.domain.ConnectionData;
+import org.helianto.core.domain.IdentitySecurity;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Identity;
-import org.helianto.core.filter.ConnectionDataFilterAdapter;
-import org.helianto.core.form.ConnectionDataForm;
-import org.helianto.core.repository.ConnectionDataRepository;
+import org.helianto.core.filter.IdentitySecurityFilterAdapter;
+import org.helianto.core.form.IdentitySecurityForm;
+import org.helianto.core.repository.IdentitySecurityRepository;
 import org.helianto.core.repository.CredentialRepository;
 import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.security.PublicUserDetails;
@@ -146,7 +146,7 @@ public class SecurityMgrImpl implements SecurityMgr {
 //	}
 	
 	public void authenticate(User user, Set<UserRole> roles) {
-		authenticate(new UserDetailsAdapter(user, (ConnectionData) null, roles));
+		authenticate(new UserDetailsAdapter(user, (IdentitySecurity) null, roles));
 	}
 	
 	public void authenticate(UserDetailsAdapter userDetails) {
@@ -172,21 +172,21 @@ public class SecurityMgrImpl implements SecurityMgr {
 	}
 	
 	@Transactional(readOnly=true)
-	public List<ConnectionData> findConnectionData(ConnectionDataForm form) {
-		return (List<ConnectionData>) connectionDataRepository.find(new ConnectionDataFilterAdapter(form));
+	public List<IdentitySecurity> findIdentitySecurity(IdentitySecurityForm form) {
+		return (List<IdentitySecurity>) identitySecurityRepository.find(new IdentitySecurityFilterAdapter(form));
 	}
 
 	@Transactional(readOnly=true)
-	public ConnectionData findConnectionData(String consumerKey) {
-		return connectionDataRepository.findByConsumerKey(consumerKey);
+	public IdentitySecurity findIdentitySecurity(String consumerKey) {
+		return identitySecurityRepository.findByConsumerKey(consumerKey);
 	}
 
 	@Transactional
-	public ConnectionData storeConnectionData(ConnectionData connectionData) {
-		if (connectionData.isPasswordVerified()) {
-			String encodedPassword = passwordEncoder.encode(connectionData.getPassword());
-			connectionData.setConsumerSecret(encodedPassword);
-			return connectionDataRepository.saveAndFlush(connectionData);
+	public IdentitySecurity storeIdentitySecurity(IdentitySecurity identitySecurity) {
+		if (identitySecurity.isPasswordVerified()) {
+			String encodedPassword = passwordEncoder.encode(identitySecurity.getPassword());
+			identitySecurity.setConsumerSecret(encodedPassword);
+			return identitySecurityRepository.saveAndFlush(identitySecurity);
 		}
 		throw new PasswordNotVerifiedException();
 	}
@@ -196,7 +196,7 @@ public class SecurityMgrImpl implements SecurityMgr {
     private IdentityRepository identityRepository;
     private UserRepository userRepository;
     private CredentialRepository credentialRepository;
-    private ConnectionDataRepository connectionDataRepository;
+    private IdentitySecurityRepository identitySecurityRepository;
     private PasswordEncoder passwordEncoder;
 
     @Resource
@@ -215,8 +215,8 @@ public class SecurityMgrImpl implements SecurityMgr {
 	}
     
     @Resource
-    public void setConnectionDataRepository(ConnectionDataRepository connectionDataRepository) {
-		this.connectionDataRepository = connectionDataRepository;
+    public void setIdentitySecurityRepository(IdentitySecurityRepository identitySecurityRepository) {
+		this.identitySecurityRepository = identitySecurityRepository;
 	}
 
     private final static Logger logger = LoggerFactory.getLogger(SecurityMgrImpl.class);

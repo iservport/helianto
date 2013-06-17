@@ -7,7 +7,7 @@ import org.helianto.core.def.ProviderType;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface ConnectionDataForm 
+public interface IdentitySecurityForm 
 	extends IdentityIdForm {
 
     /**

@@ -46,13 +46,13 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="core_connection",
+@Table(name="core_security",
     uniqueConstraints = {
 		 @UniqueConstraint(columnNames={"identityId", "providerType"})
 		,@UniqueConstraint(columnNames={"consumerKey"})
     }
 )
-public class ConnectionData implements Serializable {
+public class IdentitySecurity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     public static final String ALLOWED_CHARS_IN_PASSWORD = 
@@ -81,7 +81,7 @@ public class ConnectionData implements Serializable {
     /** 
      * Default constructor.
      */
-    public ConnectionData() {
+    public IdentitySecurity() {
         setLastModified(new Date());
         setExpirationDate(getLastModified());
     }
@@ -92,7 +92,7 @@ public class ConnectionData implements Serializable {
      * @param identity
      * @param providerType
      */
-    public ConnectionData(Identity identity, ProviderType providerType) {
+    public IdentitySecurity(Identity identity, ProviderType providerType) {
     	this();
     	setIdentity(identity);
     	setProviderType(providerType);
@@ -104,7 +104,7 @@ public class ConnectionData implements Serializable {
      * @param identity
      * @param password
      */
-    public ConnectionData(Identity identity, String password) {
+    public IdentitySecurity(Identity identity, String password) {
     	this(identity, ProviderType.email);
         setPassword(password);
         setCredentialState(ActivityState.INITIAL);
@@ -116,7 +116,7 @@ public class ConnectionData implements Serializable {
      * @param identity
      * @param activityState
      */
-    public ConnectionData(Identity identity, char activityState) {
+    public IdentitySecurity(Identity identity, char activityState) {
     	this(identity, ProviderType.email);
         setPassword("");
         setCredentialState(activityState);
@@ -128,7 +128,7 @@ public class ConnectionData implements Serializable {
      * @param principal
      * @param password
      */
-    public ConnectionData(String principal, String password) {
+    public IdentitySecurity(String principal, String password) {
     	this(new Identity(principal), password);
     }
 
@@ -230,7 +230,7 @@ public class ConnectionData implements Serializable {
      */
     @Transient
     public void generatePassword() {
-        this.password = ConnectionData.passwordFactory();
+        this.password = IdentitySecurity.passwordFactory();
     }
 
     /**
@@ -467,8 +467,8 @@ public class ConnectionData implements Serializable {
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
          if ( (other == null ) ) return false;
-         if ( !(other instanceof ConnectionData) ) return false;
-         ConnectionData castOther = (ConnectionData) other; 
+         if ( !(other instanceof IdentitySecurity) ) return false;
+         IdentitySecurity castOther = (IdentitySecurity) other; 
          
          return ((this.getIdentity()==castOther.getIdentity()) || ( this.getIdentity()!=null && castOther.getIdentity()!=null && this.getIdentity().equals(castOther.getIdentity()) ));
    }

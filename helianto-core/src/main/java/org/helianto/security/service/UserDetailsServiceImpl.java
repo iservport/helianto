@@ -7,8 +7,8 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import org.helianto.core.SecurityMgr;
-import org.helianto.core.domain.ConnectionData;
-import org.helianto.core.repository.ConnectionDataRepository;
+import org.helianto.core.domain.IdentitySecurity;
+import org.helianto.core.repository.IdentitySecurityRepository;
 import org.helianto.core.security.UserDetailsAdapter;
 import org.helianto.core.security.UserSelectorStrategy;
 import org.helianto.user.domain.User;
@@ -43,21 +43,21 @@ public class UserDetailsServiceImpl
 		}
 		String[] keys =username.split(",");
 		String consumerKey = keys[0];
-		ConnectionData connectionData = null;
+		IdentitySecurity identitySecurity = null;
 		// user input may be the numeric identity id
 		try {
-			List<ConnectionData> connectionDataList = connectionDataRepository.findByIdentityId(Long.parseLong(consumerKey));
-			if (connectionDataList!=null && connectionDataList.size()>0) {
-				connectionData = connectionDataList.get(0);
+			List<IdentitySecurity> identitySecurityList = identitySecurityRepository.findByIdentityId(Long.parseLong(consumerKey));
+			if (identitySecurityList!=null && identitySecurityList.size()>0) {
+				identitySecurity = identitySecurityList.get(0);
 			}
 		}
 		catch(Exception e) {
 			logger.debug("Username is not a number");
 		}
-		if (connectionData==null) {
-			connectionData = connectionDataRepository.findByConsumerKey(consumerKey);			
+		if (identitySecurity==null) {
+			identitySecurity = identitySecurityRepository.findByConsumerKey(consumerKey);			
 		}
-		if (connectionData==null) {
+		if (identitySecurity==null) {
 			logger.info("Unable to load by user name with {}.", consumerKey);
 			throw new UsernameNotFoundException("Unable to find user name for "+consumerKey);
 		}
@@ -65,14 +65,14 @@ public class UserDetailsServiceImpl
 		if (keys.length>1) {
 			entityKey = keys[1];
 		}
-		List<User> userList = userRepository.findByIdentityIdOrderByLastEventDesc(connectionData.getIdentity().getId());
+		List<User> userList = userRepository.findByIdentityIdOrderByLastEventDesc(identitySecurity.getIdentity().getId());
 		logger.debug("Found {} user(s) matching {}.", userList.size(), username);
 		if (userList!=null && userList.size()>0) {
 			User user = userSelectorStrategy.selectUser(userList, entityKey);
 			user.setLastEvent(new Date());
 			Set<UserRole> roles = securityMgr.findRoles(user, true);
 			user = userRepository.saveAndFlush(user);
-			return new UserDetailsAdapter(user, connectionData, roles);
+			return new UserDetailsAdapter(user, identitySecurity, roles);
 		}
 		throw new UsernameNotFoundException("Unable to find any user for "+username);
 	}
@@ -81,7 +81,7 @@ public class UserDetailsServiceImpl
 
     private SecurityMgr securityMgr;
     private UserSelectorStrategy userSelectorStrategy;
-    private ConnectionDataRepository connectionDataRepository;
+    private IdentitySecurityRepository identitySecurityRepository;
     private UserRepository userRepository;
     
     @Resource
@@ -95,8 +95,8 @@ public class UserDetailsServiceImpl
 	}
     
     @Resource
-    public void setConnectionDataRepository(ConnectionDataRepository connectionDataRepository) {
-		this.connectionDataRepository = connectionDataRepository;
+    public void setIdentitySecurityRepository(IdentitySecurityRepository identitySecurityRepository) {
+		this.identitySecurityRepository = identitySecurityRepository;
 	}
     
     @Resource

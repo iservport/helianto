@@ -18,10 +18,10 @@ package org.helianto.core;
 import java.util.List;
 import java.util.Set;
 
-import org.helianto.core.domain.ConnectionData;
+import org.helianto.core.domain.IdentitySecurity;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Identity;
-import org.helianto.core.form.ConnectionDataForm;
+import org.helianto.core.form.IdentitySecurityForm;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
 import org.helianto.user.domain.User;
@@ -101,24 +101,24 @@ public interface SecurityMgr {
 	PublicUserDetails findAuthenticatedUser();
 	
 	/**
-	 *  Find ConnectionData.
+	 *  Find IdentitySecurity.
 	 *  
 	 *  @param form
 	 */
-	List<ConnectionData> findConnectionData(ConnectionDataForm form);
+	List<IdentitySecurity> findIdentitySecurity(IdentitySecurityForm form);
 	
 	/**
-	 * Find ConnectionData by consumerKey.
+	 * Find IdentitySecurity by consumerKey.
 	 * 
 	 * @param consumerKey
 	 */
-	ConnectionData findConnectionData(String consumerKey);
+	IdentitySecurity findIdentitySecurity(String consumerKey);
 	
 	/**
-	 * Store ConnectionData.
+	 * Store IdentitySecurity.
 	 * 
-	 * @param connectionData
+	 * @param identitySecurity
 	 */
-	ConnectionData storeConnectionData(ConnectionData connectionData);
+	IdentitySecurity storeIdentitySecurity(IdentitySecurity identitySecurity);
 	
 }
