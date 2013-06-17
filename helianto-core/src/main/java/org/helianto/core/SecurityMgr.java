@@ -24,6 +24,7 @@ import org.helianto.core.security.UserDetailsAdapter;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserGroup;
 import org.helianto.user.domain.UserRole;
+import org.springframework.social.connect.ConnectionData;
 
 /**
  * Default security service layer interface for the core package.
@@ -44,6 +45,7 @@ public interface SecurityMgr {
      * 
      * @param principal
      */
+	
 	Credential findCredentialByPrincipal(String principal);
 	
     /**
@@ -95,5 +97,20 @@ public interface SecurityMgr {
 	 * Find the authenticated user.
 	 */
 	PublicUserDetails findAuthenticatedUser();
-    
+	/**
+	 *  Find ConnectionData by ConnectionDataForm
+	 */
+	ConnectionData findConnectionData(ConnectionDataForm form);
+	
+	/**
+	 * Find ConnectionData by consumerKey
+	 */
+	ConnectionData findConnectionData(String consumerKey);
+	
+	/**
+	 * Store ConnectionData 
+	 * @param connectionData
+	 * 
+	 */
+	ConnectionData storeConnectionData(ConnectionData connectionData);
 }
