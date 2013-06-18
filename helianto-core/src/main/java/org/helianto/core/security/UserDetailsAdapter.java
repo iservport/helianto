@@ -23,9 +23,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.helianto.core.def.ActivityState;
-import org.helianto.core.domain.IdentitySecurity;
-import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.IdentitySecurity;
 import org.helianto.core.domain.Operator;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserGroup;
@@ -53,17 +52,13 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @author Mauricio Fernandes de Castro
  */
 public class UserDetailsAdapter
-
 	implements
       Serializable
     , UserDetails
-    , PublicUserDetails
-    
-{
+    , PublicUserDetails {
 
 	private static final long serialVersionUID = 1L;
     private UserGroup user;
-    private Credential credential;
     private IdentitySecurity identitySecurity;
     private List<GrantedAuthority> authorities;
 
@@ -71,23 +66,6 @@ public class UserDetailsAdapter
      * Package default constructor
      */
     UserDetailsAdapter() {}
-    
-    /**
-     * User constructor.
-     * 
-     * @param user
-     * @param credential
-     * @param roles
-     * 
-     * @deprecated
-     */
-    public UserDetailsAdapter(User user, Credential credential, Collection<UserRole> roles) {
-        this();
-        this.user = user;
-        logger.info("Secured user: {}", user);
-        this.credential = credential;
-        grantAuthorities(roles, user);
-    }
     
     /**
      * User constructor.
@@ -218,7 +196,7 @@ public class UserDetailsAdapter
     		return true;
     	}
         // TODO replace auto-enable
-        char state = credential.getCredentialState();
+        char state = identitySecurity.getCredentialState();
         if (state==ActivityState.ACTIVE.getValue() || 
                 state==ActivityState.INITIAL.getValue()) {
             return true;
@@ -232,9 +210,6 @@ public class UserDetailsAdapter
     	}
     	if (identitySecurity!=null) {
     		return identitySecurity.getPassword();
-    	}
-    	if (credential!=null) {
-    		return credential.getPassword();
     	}
         return "";
      }

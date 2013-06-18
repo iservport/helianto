@@ -17,9 +17,9 @@ package org.helianto.core.test;
 
 import java.util.HashSet;
 
-import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.IdentitySecurity;
 import org.helianto.core.security.UserDetailsAdapter;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserRole;
@@ -40,8 +40,8 @@ public class SecurityTestSupport {
     }
     
     public static Authentication createAuthentication(User user) {
-        Credential credential = new Credential(user.getIdentity());
-        UserDetailsAdapter secureUser = new UserDetailsAdapter(user, credential, new HashSet<UserRole>());
+        IdentitySecurity identitySecurity = new IdentitySecurity(user.getIdentity(), "");
+        UserDetailsAdapter secureUser = new UserDetailsAdapter(user, identitySecurity, new HashSet<UserRole>());
     	return new LocalTestingAuthenticationToken(secureUser);
     }
     
