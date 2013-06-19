@@ -200,7 +200,7 @@ public class IdentitySecurity implements Serializable {
     /**
      * Encoded consumer secret.
      */
-    @Column(length=256)
+    @Column(length=60)
     public String getConsumerSecret() {
 		return consumerSecret;
 	}
