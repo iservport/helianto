@@ -50,7 +50,9 @@ public class UserDetailsServiceTests {
 		Identity identity = new Identity("123");
 		identity.setId(123);
 		List<IdentitySecurity> identitySecurityList = new ArrayList<IdentitySecurity>();
-		identitySecurityList.add(new IdentitySecurity(identity, "secret"));
+		IdentitySecurity identitySecurity = new IdentitySecurity(identity, "secret");
+		identitySecurity.setConsumerSecret("hashedSecret"); // after encryption
+		identitySecurityList.add(identitySecurity);
 		List<User> userList = new ArrayList<User>();
 		User user = new User(new Entity(), identity);
 		userList.add(user);
@@ -71,22 +73,24 @@ public class UserDetailsServiceTests {
 		
 		UserDetails ud = userDetailsService.loadUserByUsername("123");
 		assertEquals("123", ud.getUsername());
-		assertEquals("secret", ud.getPassword());
+		assertEquals("hashedSecret", ud.getPassword());
 	}
 	
 	@Test
 	public void usernameFound() {
 		Identity identity = new Identity("123");
 		identity.setId(123);
-		List<IdentitySecurity> identitySecurityaList = new ArrayList<IdentitySecurity>();
-		identitySecurityaList.add(new IdentitySecurity(identity, "secret"));
+		List<IdentitySecurity> identitySecurityList = new ArrayList<IdentitySecurity>();
+		IdentitySecurity identitySecurity = new IdentitySecurity(identity, "secret");
+		identitySecurity.setConsumerSecret("hashedSecret"); // after encryption
+		identitySecurityList.add(identitySecurity);
 		List<User> userList = new ArrayList<User>();
 		User user = new User(new Entity(), identity);
 		userList.add(user);
 		Set<UserRole> roles = new HashSet<UserRole>();
 				
 		EasyMock.expect(identitySecurityRepository.findByIdentityId(123L)).andReturn(null);
-		EasyMock.expect(identitySecurityRepository.findByConsumerKey("123")).andReturn(identitySecurityaList.get(0));
+		EasyMock.expect(identitySecurityRepository.findByConsumerKey("123")).andReturn(identitySecurityList.get(0));
 		EasyMock.replay(identitySecurityRepository);
 		
 		EasyMock.expect(userRepository.findByIdentityIdOrderByLastEventDesc(123L)).andReturn(userList);
@@ -101,7 +105,7 @@ public class UserDetailsServiceTests {
 		
 		UserDetails ud = userDetailsService.loadUserByUsername("123");
 		assertEquals("123", ud.getUsername());
-		assertEquals("secret", ud.getPassword());
+		assertEquals("hashedSecret", ud.getPassword());
 	}
 	
 	private UserDetailsServiceImpl userDetailsService;

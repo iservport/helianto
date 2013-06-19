@@ -209,7 +209,7 @@ public class UserDetailsAdapter
     		return "";
     	}
     	if (identitySecurity!=null) {
-    		return identitySecurity.getPassword();
+    		return identitySecurity.getConsumerSecret();
     	}
         return "";
      }
