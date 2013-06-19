@@ -25,20 +25,18 @@ public class DefaultUserSelectionStrategy
 
 	public User selectUser(List<? extends UserGroup> userList, String preferences) throws IllegalArgumentException {
 		if (userList!=null && userList.size()>0) {
-			UserGroup user = userList.get(0);
-			if (user instanceof User) {
-				if (preferences!=null) {
+			if (preferences!=null) {
+				for (UserGroup user: userList) {
 					if (user.getEntity().getAlias().equalsIgnoreCase(preferences)) {
 						logger.info("Selected {}.", user);
 						return (User) user;
 					}
 				}
-				else {
-					logger.info("Selected {}.", user);
-					return (User) user;
-				}
 			}
-			throw new IllegalArgumentException("Not an instance of org.helianto.core.User.");
+			else {
+				logger.info("Selected {}.", userList.get(0));
+				return (User) userList.get(0);
+			}
 		}
 		throw new IllegalArgumentException("Unable to extract valid user from a list.");
 	}
