@@ -35,71 +35,6 @@ import org.helianto.user.domain.UserRole;
  */
 public interface SecurityMgr {
 	
-    /**
-     * Find <core>Credential</core> by <core>Identity</core>.
-     * 
-     * @param identity
-     */
-	Credential findCredentialByIdentity(Identity identity);
-	
-    /**
-     * Find <core>Credential</core> by principal.
-     * 
-     * @param principal
-     */
-	
-	Credential findCredentialByPrincipal(String principal);
-	
-    /**
-     * Re-attach <core>Credential</core> to a session.
-     * 
-     * @param credential
-     */
-	Credential loadCredential(Credential credential);
-	
-    /**
-     * Store the given <code>Credential</code> and return a managed object.
-     * 
-     * @param identity
-     * @exception PasswordNotVerifiedException
-     */
-    Credential storeCredential(Credential credential) 
-        throws PasswordNotVerifiedException;
-    
-    /**
-     * Find user roles by user group.
-     * 
-     * @param userGroup
-     * @param recursively
-     */
-    Set<UserRole> findRoles(UserGroup userGroup, boolean recursively);
-    
-    /**
-     * Used to authenticate a known <code>User</code> with a set of <code>UserRole</code>s.
-     * 
-     * @param user
-     * @param roles
-     * @deprecated 
-     */
-    void authenticate(User user, Set<UserRole> roles);
-    
-    /**
-     * Used to authenticate an instance of <code>UserDetailsAdapter</code>s.
-     * 
-     * @param userDetails
-     */
-    void authenticate(UserDetailsAdapter userDetails);
-	
-    /**
-     * Clear the current authentication.
-     */
-	void clearAuthentication();
-	
-	/**
-	 * Find the authenticated user.
-	 */
-	PublicUserDetails findAuthenticatedUser();
-	
 	/**
 	 *  Find IdentitySecurity.
 	 *  
@@ -119,6 +54,82 @@ public interface SecurityMgr {
 	 * 
 	 * @param identitySecurity
 	 */
+	
 	IdentitySecurity storeIdentitySecurity(IdentitySecurity identitySecurity);
 	
+	/**
+	 * Load <core>IdentitySecurity</core>.
+	 * 
+	 * @param identitySecurity
+	 */
+	IdentitySecurity loadIdentitySecurity(IdentitySecurity identitySecurity);
+	
+    /**
+     * Find user roles by user group.
+     * 
+     * @param userGroup
+     * @param recursively
+     */
+    Set<UserRole> findRoles(UserGroup userGroup, boolean recursively);
+    
+    /**
+     * Used to authenticate an instance of <code>UserDetailsAdapter</code>s.
+     * 
+     * @param userDetails
+     */
+    void authenticate(UserDetailsAdapter userDetails);
+	
+    /**
+     * Clear the current authentication.
+     */
+	void clearAuthentication();
+	
+	/**
+	 * Find the authenticated user.
+	 */
+	PublicUserDetails findAuthenticatedUser();
+	
+    /**
+     * Find <core>Credential</core> by <core>Identity</core>.
+     * 
+     * @param identity
+     * @deprecated
+     */
+	Credential findCredentialByIdentity(Identity identity);
+	
+    /**
+     * Find <core>Credential</core> by principal.
+     * 
+     * @param principal
+     * @deprecated
+     */
+	Credential findCredentialByPrincipal(String principal);
+	
+    /**
+     * Re-attach <core>Credential</core> to a session.
+     * 
+     * @param credential
+     * @deprecated
+     */
+	Credential loadCredential(Credential credential);
+	
+    /**
+     * Store the given <code>Credential</code> and return a managed object.
+     * 
+     * @param identity
+     * @deprecated
+     * @exception PasswordNotVerifiedException
+     */
+    Credential storeCredential(Credential credential) 
+        throws PasswordNotVerifiedException;
+    
+    /**
+     * Used to authenticate a known <code>User</code> with a set of <code>UserRole</code>s.
+     * 
+     * @param user
+     * @param roles
+     * @deprecated 
+     */
+    void authenticate(User user, Set<UserRole> roles);
+    
 }
