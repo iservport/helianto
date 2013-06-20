@@ -77,9 +77,16 @@ public interface UserMgr {
     /**
      * Find user associations.
      * 
-     * @param userAssociationFilter
+     * @param form
      */
     List<UserAssociation> findUserAssociations(AssociationForm form);
+    
+    /**
+     * Find user associations.
+     * 
+     * @param parent
+     */
+    List<UserAssociation> findUserAssociations(UserGroup parent);
     
     /**
      * <p>Create <code>UserAssociation</code> with a new credential.</p>

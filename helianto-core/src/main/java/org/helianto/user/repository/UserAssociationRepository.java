@@ -1,10 +1,12 @@
 package org.helianto.user.repository;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.helianto.core.data.FilterRepository;
 import org.helianto.user.domain.UserAssociation;
 import org.helianto.user.domain.UserGroup;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 
 /**
@@ -22,6 +24,15 @@ public interface UserAssociationRepository
 	 * @param child
 	 */
 	UserAssociation findByParentAndChild(UserGroup parent, UserGroup child);
+	
+	/**
+	 * Find by parent.
+	 * 
+	 * @param parent
+	 * @param sort
+	 */
+	@Query("select userAssociation from UserAssociation userAssociation where userAssociation.parent = ?1 ")
+	List<UserAssociation> findByParent(UserGroup parent, Sort sort);
 	
 	/**
 	 * Find by parent user key.

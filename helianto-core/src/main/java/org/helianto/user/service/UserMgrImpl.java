@@ -154,6 +154,13 @@ public class UserMgrImpl
         return userList;
 	}
 
+	@Transactional(readOnly=true)
+	public List<UserAssociation> findUserAssociations(UserGroup parent) {
+		List<UserAssociation> userAssociationList = userAssociationRepository.findByParent(parent, new Sort(new Order(Direction.ASC, "child.userKey")));
+    	logger.debug("Found user association list of size {} from parent {}.", userAssociationList.size(), parent);
+        return userAssociationList;
+	}
+
 //    public List<? extends UserGroup> findUsers(Identity identity) {
 //    	CompositeUserForm form = new CompositeUserForm();
 //		form.setIdentity(identity);
