@@ -60,9 +60,9 @@ public interface SecurityMgr {
 	/**
 	 * Load <core>IdentitySecurity</core>.
 	 * 
-	 * @param identitySecurity
+	 * @param identitySecurityId
 	 */
-	IdentitySecurity loadIdentitySecurity(IdentitySecurity identitySecurity);
+	IdentitySecurity loadIdentitySecurity(PublicUserDetails userDetails);
 	
     /**
      * Find user roles by user group.

@@ -94,6 +94,16 @@ public class UserDetailsAdapter
     }
     
     /**
+     * Identity security id.
+     */
+    public long getIdentitySecurityId() {
+    	if (identitySecurity!=null) {
+    		return identitySecurity.getId();
+    	}
+		return 0;
+	}
+    
+    /**
      * Not null if anonymous user is valid.
      * 
      * <p>

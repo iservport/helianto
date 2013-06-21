@@ -29,17 +29,22 @@ public interface PublicUserDetails {
     /**
      * Return the <code>User</code>.
      */
-    public User getUser();
+    User getUser();
     
     /**
      * Convenience to retrieve the entity from the user.
      */
-    public Entity getEntity();
+    Entity getEntity();
     
     /**
      * Convenience to retrieve the operator from the user.
      */
-    public Operator getOperator();
+    Operator getOperator();
+    
+    /**
+     * Identity security id.
+     */
+    long getIdentitySecurityId();
     
     
 }

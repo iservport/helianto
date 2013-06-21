@@ -55,7 +55,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Mauricio Fernandes de Castro
  */
 @Service("securityMgr")
-public class SecurityMgrImpl implements SecurityMgr {
+public class SecurityMgrImpl 
+	implements SecurityMgr {
 
 	@Transactional(readOnly = true)
 	public List<IdentitySecurity> findIdentitySecurity(IdentitySecurityForm form) {
@@ -81,10 +82,12 @@ public class SecurityMgrImpl implements SecurityMgr {
 	}
 
 	@Transactional(readOnly = true)
-	public IdentitySecurity loadIdentitySecurity(IdentitySecurity identitySecurity) {
-		return identitySecurityRepository.findOne(identitySecurity.getId());
+	public IdentitySecurity loadIdentitySecurity(PublicUserDetails userDetails) {
+		return identitySecurityRepository.findOne(userDetails.getIdentitySecurityId());
 	}
 
+	//@deprecated
+	
 	@Transactional(readOnly = true)
 	public Credential findCredentialByIdentity(Identity identity) {
 		return credentialRepository.findByIdentity(identity);
@@ -110,6 +113,8 @@ public class SecurityMgrImpl implements SecurityMgr {
 		}
 		throw new PasswordNotVerifiedException();
 	}
+	
+	//--
 
 	protected Collection<UserRole> loadAndValidateRoles(User user) {
 		// role list
