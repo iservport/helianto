@@ -1,4 +1,5 @@
-package org.helianto.message;
+package org.helianto.core;
+
 
 /**
  * Mail sender interface.

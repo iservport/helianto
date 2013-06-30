@@ -7,8 +7,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import org.helianto.message.MessageAdapter;
-import org.helianto.message.MessageSender;
+import org.helianto.core.MessageAdapter;
+import org.helianto.core.MessageSender;
 
 /**
  * SendGrid Web API message sender.

@@ -1,4 +1,4 @@
-package org.helianto.message;
+package org.helianto.core;
 
 import java.util.Date;
 import java.util.Set;

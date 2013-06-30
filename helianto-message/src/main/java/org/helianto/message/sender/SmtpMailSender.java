@@ -3,8 +3,8 @@ package org.helianto.message.sender;
 import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
 
-import org.helianto.message.MessageAdapter;
-import org.helianto.message.MessageSender;
+import org.helianto.core.MessageAdapter;
+import org.helianto.core.MessageSender;
 import org.springframework.mail.javamail.JavaMailSender;
 
 /**

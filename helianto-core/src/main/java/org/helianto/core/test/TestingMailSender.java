@@ -1,7 +1,7 @@
-package org.helianto.message.sender;
+package org.helianto.core.test;
 
-import org.helianto.message.MessageAdapter;
-import org.helianto.message.MessageSender;
+import org.helianto.core.MessageAdapter;
+import org.helianto.core.MessageSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

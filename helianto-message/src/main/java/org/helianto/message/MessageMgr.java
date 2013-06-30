@@ -18,6 +18,7 @@ package org.helianto.message;
 
 import java.util.List;
 
+import org.helianto.core.MessageAdapter;
 import org.helianto.message.domain.NotificationEvent;
 import org.helianto.message.form.NotificationEventForm;
 
