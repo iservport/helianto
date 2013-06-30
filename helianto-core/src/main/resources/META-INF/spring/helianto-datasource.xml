@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+ Copyright 2005 I Serv Consultoria Empresarial Ltda.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+		-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+	<description>Default datasource definition.</description>
+	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+        destroy-method="close">
+        <property name="driverClass" value="${helianto.jdbc.driverClassName:org.hsqldb.jdbcDriver}"/>
+        <property name="jdbcUrl" value="${helianto.jdbc.url}"/>
+        <property name="user" value="${helianto.jdbc.username:'sa'}" />
+        <property name="password" value="${helianto.jdbc.password:''}" />
+        <property name="properties">
+            <props>
+                <prop key="c3p0.acquire_increment">5</prop>
+                <prop key="c3p0.idle_test_period">100</prop>
+                <prop key="c3p0.max_size">100</prop>
+                <prop key="c3p0.max_statements">0</prop>
+                <prop key="c3p0.min_size">10</prop>
+             </props>
+        </property>
+    </bean>
+    
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
+        <property name="packagesToScan" value="org.helianto.*.domain" />
+    </bean>
+ 
+	<bean id="jpaVendorAdapter" 
+	    class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" >
+		<property name="databasePlatform" value="${helianto.jpa.vendor:org.hibernate.dialect.HSQLDialect}" />
+		<property name="generateDdl" value="${helianto.sql.generateDdl:true}" />
+		<property name="showSql" value="${helianto.sql.showSql:true}" />
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+    
+	<!-- to use in production
+	<beans profile="production">
+	<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/datasource"/>
+	</beans>
+	 -->
+	
+</beans>

@@ -2,12 +2,14 @@ package org.helianto.core.config;
 
 import java.util.Properties;
 
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.helianto.core.data.FilterRepositoryFactoryBean;
 import org.helianto.core.domain.IdentitySecurityConverter;
 import org.helianto.core.filter.FilterNamingConventionStrategy;
 import org.helianto.core.naming.internal.DefaultNamingConventionStrategy;
+import org.hibernate.ejb.HibernatePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -20,6 +22,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.hibernate3.HibernateExceptionTranslator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -45,7 +48,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 		basePackages="org.helianto.*.repository"
 		, repositoryFactoryBeanClass=FilterRepositoryFactoryBean.class)
 @EnableScheduling
-@ImportResource("classpath:META-INF/spring/security.xml")
+@ImportResource({"classpath:META-INF/spring/security.xml","classpath:META-INF/spring/helianto-datasource.xml"})
 @PropertySource("classpath:/META-INF/helianto.properties")
 public class HeliantoConfig {
 
@@ -64,51 +67,58 @@ public class HeliantoConfig {
 		return propertySources;
 	}
 	
-	/**
-	 * Data source.
-	 */
-	@Bean
-	public DataSource dataSource() {
-		try {
-			ComboPooledDataSource ds = new ComboPooledDataSource();
-			ds.setDriverClass(env.getProperty("helianto.jdbc.driverClassName", "org.hsqldb.jdbcDriver"));
-			ds.setJdbcUrl(env.getProperty("helianto.jdbc.url", "jdbc:hsqldb:file:target/testdb/db2;shutdown=true"));
-			ds.setUser(env.getProperty("helianto.jdbc.username", "sa"));
-			ds.setPassword(env.getProperty("helianto.jdbc.password", ""));
-			ds.setAcquireIncrement(5);
-			ds.setIdleConnectionTestPeriod(60);
-			ds.setMaxPoolSize(100);
-			ds.setMaxStatements(50);
-			ds.setMinPoolSize(10);
-			return ds;
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+//	/**
+//	 * Data source.
+//	 */
+//	@Bean
+//	public DataSource dataSource() {
+//		try {
+//			ComboPooledDataSource ds = new ComboPooledDataSource();
+//			ds.setDriverClass(env.getProperty("helianto.jdbc.driverClassName", "org.hsqldb.jdbcDriver"));
+//			ds.setJdbcUrl(env.getProperty("helianto.jdbc.url", "jdbc:hsqldb:file:target/testdb/db2;shutdown=true"));
+//			ds.setUser(env.getProperty("helianto.jdbc.username", "sa"));
+//			ds.setPassword(env.getProperty("helianto.jdbc.password", ""));
+//			ds.setAcquireIncrement(5);
+//			ds.setIdleConnectionTestPeriod(60);
+//			ds.setMaxPoolSize(100);
+//			ds.setMaxStatements(50);
+//			ds.setMinPoolSize(10);
+//			return ds;
+//		} catch (Exception e) {
+//			throw new RuntimeException(e);
+//		}
+//	}
 
-	@Bean 
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-		em.setDataSource(dataSource());
-		em.setPackagesToScan(env.getProperty("helianto.entityManager.packagesToScan", "org.helianto.*.domain").split(","));
-		em.setJpaVendorAdapter(vendorAdapter());
-		return em;
-	}
+//	@Bean 
+//	public EntityManagerFactory entityManagerFactory() {
+//		LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
+//		bean.setDataSource(dataSource());
+//		bean.setPackagesToScan(env.getProperty("helianto.entityManager.packagesToScan", "org.helianto.*.domain").split(","));
+//		bean.setJpaVendorAdapter(vendorAdapter());
+//		bean.setPersistenceProvider(new HibernatePersistence());
+//		bean.afterPropertiesSet();
+//        return bean.getObject();
+//	}
+	
+//	@Bean
+//	public HibernateJpaVendorAdapter vendorAdapter() {
+//		HibernateJpaVendorAdapter vendor = new HibernateJpaVendorAdapter();
+//		vendor.setShowSql(env.getProperty("helianto.sql.showSql", Boolean.class, Boolean.TRUE));
+//		vendor.setGenerateDdl(env.getProperty("helianto.sql.generateDdl", Boolean.class, Boolean.TRUE));
+//		vendor.setDatabasePlatform(env.getProperty("helianto.jpa.vendor", String.class, "org.hibernate.dialect.HSQLDialect"));
+//		return vendor;
+//	}
+	
+//	@Bean 
+//	public JpaTransactionManager transactionManager() {
+//		JpaTransactionManager transactionManager = new JpaTransactionManager();
+//		transactionManager.setEntityManagerFactory(entityManagerFactory());
+//		return transactionManager;
+//	}
 	
 	@Bean
-	public HibernateJpaVendorAdapter vendorAdapter() {
-		HibernateJpaVendorAdapter vendor = new HibernateJpaVendorAdapter();
-		vendor.setShowSql(env.getProperty("helianto.sql.showSql", Boolean.class, Boolean.TRUE));
-		vendor.setGenerateDdl(env.getProperty("helianto.sql.generateDdl", Boolean.class, Boolean.TRUE));
-		vendor.setDatabasePlatform(env.getProperty("helianto.jpa.vendor", String.class, "org.hibernate.dialect.HSQLDialect"));
-		return vendor;
-	}
-	
-	@Bean 
-	public JpaTransactionManager transactionManager() {
-		JpaTransactionManager transactionManager = new JpaTransactionManager();
-		transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
-		return transactionManager;
+	public HibernateExceptionTranslator hibernateExceptionTranslator() {
+	    return new HibernateExceptionTranslator();
 	}
 	
 	@Bean
