@@ -69,10 +69,11 @@ public class Identity implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     private long id;
-	private String displayName;
-    private String principal;
+	private String displayName = "";
+	private String optionalSourceAlias = "";
+    private String principal = "";
     private PersonalData personalData;
-    private Date created;
+    private Date created = new Date();
     private char identityType;
     private char notification;
 	private byte[] photo;
@@ -181,6 +182,21 @@ public class Identity implements java.io.Serializable {
     	}
         return "";
     }
+    
+    /**
+     * Optional source alias.
+     * 
+     * <p>
+     * May be used to create an user in the future.
+     * </p>
+     */
+    @Column(length=20)
+    public String getOptionalSourceAlias() {
+		return optionalSourceAlias;
+	}
+    public void setOptionalSourceAlias(String optionalSourceAlias) {
+		this.optionalSourceAlias = optionalSourceAlias;
+	}
     
     /**
      * Optional alias.

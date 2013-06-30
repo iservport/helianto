@@ -17,6 +17,9 @@ import org.helianto.user.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.authentication.CredentialsExpiredException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,10 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Return an <code>UserDetails</code> instance.
  * 
- * <p>
- * This is a custom implementation of <code>org.springframework.security.core.userdetails.UserDetailsService</code>.
- * </p>
- * 
  * @author mauriciofernandesdecastro
  */
 @Service("userDetailsService")
@@ -38,6 +37,7 @@ public class UserDetailsServiceImpl
 	implements UserDetailsService {
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
+
 		if (username==null) {
 			throw new UsernameNotFoundException("User name must not be null!");
 		}
@@ -54,6 +54,7 @@ public class UserDetailsServiceImpl
 		catch(Exception e) {
 			logger.debug("Username is not a number");
 		}
+		
 		if (identitySecurity==null) {
 			identitySecurity = identitySecurityRepository.findByConsumerKey(consumerKey);			
 		}
@@ -67,14 +68,34 @@ public class UserDetailsServiceImpl
 		}
 		List<User> userList = userRepository.findByIdentityIdOrderByLastEventDesc(identitySecurity.getIdentity().getId());
 		logger.debug("Found {} user(s) matching {}.", userList.size(), username);
-		if (userList!=null && userList.size()>0) {
-			User user = userSelectorStrategy.selectUser(userList, entityKey);
-			user.setLastEvent(new Date());
-			Set<UserRole> roles = securityMgr.findRoles(user, true);
-			user = userRepository.saveAndFlush(user);
-			return new UserDetailsAdapter(user, identitySecurity, roles);
+		
+		if (userList==null || userList.size()==0) {
+			throw new UsernameNotFoundException("Unable to find any user for "+username);
 		}
-		throw new UsernameNotFoundException("Unable to find any user for "+username);
+		
+		User user = userSelectorStrategy.selectUser(userList, entityKey);
+		user.setLastEvent(new Date());
+		Set<UserRole> roles = securityMgr.findRoles(user, true);
+		user = userRepository.saveAndFlush(user);
+		
+		UserDetails userDetails = new UserDetailsAdapter(user, identitySecurity, roles);
+		
+		if (!userDetails.isEnabled()) {
+			logger.error("User not enabled");
+			throw new DisabledException("User not enabled");
+		}
+
+		if (!userDetails.isAccountNonLocked()) {
+			logger.error("User is Locked");
+			throw new LockedException("User is Locked");
+		}
+		
+		if (!userDetails.isCredentialsNonExpired()) {
+			logger.error("Password Expired");
+			throw new CredentialsExpiredException("Password Expired");
+		}
+		
+		return userDetails;
 	}
 	
 	//- collabs

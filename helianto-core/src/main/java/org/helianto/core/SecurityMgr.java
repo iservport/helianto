@@ -50,12 +50,13 @@ public interface SecurityMgr {
 	IdentitySecurity findIdentitySecurity(String consumerKey);
 	
 	/**
-	 * Store IdentitySecurity.
+	 * Store IdentitySecurity, optionally verifying the password.
 	 * 
 	 * @param identitySecurity
+	 * @param verify
 	 */
 	
-	IdentitySecurity storeIdentitySecurity(IdentitySecurity identitySecurity);
+	IdentitySecurity storeIdentitySecurity(IdentitySecurity identitySecurity, boolean verify);
 	
 	/**
 	 * Load <core>IdentitySecurity</core>.

@@ -66,6 +66,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserMgrImpl 
 	implements UserMgr {
     
+	@Transactional(readOnly=true)
+	public UserGroup findRootGroup(Entity entity) {
+        return userGroupRepository.findByEntityAndUserKey(entity, "USER");
+	}
+
+	@Transactional(readOnly=true)
+	public UserGroup findAdminGroup(Entity entity) {
+        return userGroupRepository.findByEntityAndUserKey(entity, "ADMIN");
+	}
+
     /**
 	 * Recurse into parent user groups to create a complete userRole List.
 	 */
@@ -254,12 +264,37 @@ public class UserMgrImpl
 	}
 	
 	@Transactional
+	public UserAssociation installUser(UserGroup parent, Identity identity, boolean accountNonExpired) {
+
+		logger.info("Check user installation with 'principal={}' as member of {}.", identity.getPrincipal(), parent);
+
+		User user = (User) userRepository.findByEntityAndUserKey(parent.getEntity(), identity.getPrincipal());
+		if (user==null) {
+			user = (User) userRepository.save(new User(parent.getEntity(), identity));
+			logger.debug("New user created as {}.", user);
+		}
+		
+		UserAssociation association = userAssociationRepository.findByParentAndChild(parent, user);
+		if(association==null) {
+			association = userAssociationRepository.saveAndFlush(new UserAssociation(parent, user));
+			logger.info("New association for user group {} and {}.", parent, user);
+		}
+		
+		return association;
+		
+	}
+	
+	/**
+	 * @deprecated
+	 */
+	@Transactional
 	public UserAssociation installUser(UserGroup parent, Credential credential, boolean accountNonExpired) {
 		
-		logger.info("Check user installation with 'principal={}' as member of {}.", credential.getPrincipal(), parent);
+		logger.debug("Check user installation with 'principal={}' as member of {}.", credential.getPrincipal(), parent);
 		User user = (User) userRepository.findByEntityAndUserKey(parent.getEntity(), credential.getPrincipal());
 		if (user==null) {
 			user = (User) userRepository.save(new User(parent.getEntity(), credential));
+			logger.debug("New user created asf {}.", user);
 		}
 		
 		user.setAccountNonExpired(true);

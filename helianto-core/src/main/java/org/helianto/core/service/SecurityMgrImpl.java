@@ -70,15 +70,15 @@ public class SecurityMgrImpl
 	}
 
 	@Transactional
-	public IdentitySecurity storeIdentitySecurity(
-			IdentitySecurity identitySecurity) {
-		if (identitySecurity.isPasswordVerified()) {
-			String encodedPassword = passwordEncoder.encode(identitySecurity
-					.getPassword());
-			identitySecurity.setConsumerSecret(encodedPassword);
-			return identitySecurityRepository.saveAndFlush(identitySecurity);
+	public IdentitySecurity storeIdentitySecurity(IdentitySecurity identitySecurity, boolean verify) {
+		if (verify && !identitySecurity.isRawPasswordVerified()) {
+			throw new PasswordNotVerifiedException();
 		}
-		throw new PasswordNotVerifiedException();
+		if (identitySecurity.isRawPasswordNotEmpty()) {
+			String encodedPassword = passwordEncoder.encode(identitySecurity.getRawPassword());
+			identitySecurity.setConsumerSecret(encodedPassword);
+		}
+		return identitySecurityRepository.saveAndFlush(identitySecurity);
 	}
 
 	@Transactional(readOnly = true)
@@ -238,18 +238,20 @@ public class SecurityMgrImpl
 	}
 
 	@Resource
-	public void setCredentialRepository(
-			CredentialRepository credentialRepository) {
+	public void setCredentialRepository(CredentialRepository credentialRepository) {
 		this.credentialRepository = credentialRepository;
 	}
 
 	@Resource
-	public void setIdentitySecurityRepository(
-			IdentitySecurityRepository identitySecurityRepository) {
+	public void setIdentitySecurityRepository(IdentitySecurityRepository identitySecurityRepository) {
 		this.identitySecurityRepository = identitySecurityRepository;
 	}
+	
+	@Resource
+	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+		this.passwordEncoder = passwordEncoder;
+	}
 
-	private final static Logger logger = LoggerFactory
-			.getLogger(SecurityMgrImpl.class);
+	private final static Logger logger = LoggerFactory.getLogger(SecurityMgrImpl.class);
 
 }

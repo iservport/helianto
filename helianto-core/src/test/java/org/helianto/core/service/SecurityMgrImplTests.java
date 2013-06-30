@@ -32,9 +32,11 @@ import java.util.Set;
 import org.helianto.core.PasswordNotVerifiedException;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.IdentitySecurity;
 import org.helianto.core.domain.Service;
 import org.helianto.core.repository.CredentialRepository;
 import org.helianto.core.repository.IdentityRepository;
+import org.helianto.core.repository.IdentitySecurityRepository;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
 import org.helianto.user.domain.User;
@@ -44,6 +46,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * @author Mauricio Fernandes de Castro
@@ -70,8 +73,7 @@ public class SecurityMgrImplTests {
         Credential credential = new Credential();
         Identity identity = new Identity();
         
-        expect(identityRepository.findByPrincipal("PRINCIPAL"))
-            .andReturn(identity);
+        expect(identityRepository.findByPrincipal("PRINCIPAL")).andReturn(identity);
         replay(identityRepository);
         
         expect(credentialRepository.findByIdentity(identity)).andReturn(credential);
@@ -89,23 +91,33 @@ public class SecurityMgrImplTests {
 //        assertSame(pud, securityMgr.findSecureUser());
 //    }
     
-    @Test(expected=PasswordNotVerifiedException.class)
-    public void storeCredentialNotVerified() {
-        Credential credential = new Credential();
+    @Test
+    public void storeIdentitySecurityNotRequired() {
+        IdentitySecurity identitySecurity = new IdentitySecurity(new Identity(), "PASSWORD");
         
-        securityMgr.storeCredential(credential);
+        securityMgr.storeIdentitySecurity(identitySecurity, false);
+    }
+    
+    @Test(expected=PasswordNotVerifiedException.class)
+    public void storeIdentitySecurityRequiredNotVerified() {
+        IdentitySecurity identitySecurity = new IdentitySecurity();
+        
+        securityMgr.storeIdentitySecurity(identitySecurity, true);
     }
     
     @Test
-    public void storeCredentialVerified() {
-        Credential credential = new Credential("PRINCIPAL", "PASSWORD");
-        credential.setVerifyPassword("PASSWORD");
+    public void storeIdentitySecurityRequiredVerified() {
+    	IdentitySecurity identitySecurity = new IdentitySecurity(new Identity(), "PASSWORD");
+        identitySecurity.setVerifyPassword("PASSWORD");
         
-        expect(credentialRepository.saveAndFlush(credential)).andReturn(credential);
-        replay(credentialRepository);
+        expect(identitySecurityRepository.saveAndFlush(identitySecurity)).andReturn(identitySecurity);
+        replay(identitySecurityRepository);
         
-        assertSame(credential, securityMgr.storeCredential(credential));
-        verify(credentialRepository);
+        expect(passwordEncoder.encode(identitySecurity.getRawPassword())).andReturn("ENCODED");
+        replay(passwordEncoder);
+        
+        assertSame(identitySecurity, securityMgr.storeIdentitySecurity(identitySecurity, true));
+        verify(identitySecurityRepository);
     }
     
     @Test
@@ -142,6 +154,8 @@ public class SecurityMgrImplTests {
 	private UserRepository userRepository;
 	private IdentityRepository identityRepository;
     private CredentialRepository credentialRepository;
+	private IdentitySecurityRepository identitySecurityRepository;
+	private PasswordEncoder passwordEncoder;
     
     //~ setup
     
@@ -154,13 +168,16 @@ public class SecurityMgrImplTests {
         securityMgr.setIdentityRepository(identityRepository);
         credentialRepository = createMock(CredentialRepository.class);
         securityMgr.setCredentialRepository(credentialRepository);
+        identitySecurityRepository = createMock(IdentitySecurityRepository.class);
+        securityMgr.setIdentitySecurityRepository(identitySecurityRepository);
+        passwordEncoder = createMock(PasswordEncoder.class);
+        securityMgr.setPasswordEncoder(passwordEncoder);
     }
     
     @After
     public void tearDown() {
-        reset(userRepository);
-        reset(identityRepository);
-        reset(credentialRepository);
+        reset(userRepository, identityRepository, credentialRepository
+        		, identitySecurityRepository, passwordEncoder);
     }
 
 }

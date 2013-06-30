@@ -37,7 +37,6 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.helianto.core.def.ActivityState;
-import org.helianto.core.def.Encription;
 import org.helianto.core.def.ProviderType;
 import org.springframework.format.annotation.DateTimeFormat;
 /**
@@ -69,11 +68,9 @@ public class IdentitySecurity implements Serializable {
     private char credentialState = ActivityState.ACTIVE.getValue();
     private Date lastModified;
     private Date expirationDate;
-    private char encription = Encription.PLAIN_PASSWORD.getValue();
     
     //transient fields
-    private String currentPassword = "";
-    private String newPassword = "";
+    private String rawPassword = "";
     private String verifyPassword = "";
     private boolean passwordDirty = false;
 
@@ -96,17 +93,18 @@ public class IdentitySecurity implements Serializable {
     	this();
     	setIdentity(identity);
     	setProviderType(providerType);
+    	setConsumerKey(identity.getPrincipal());
     }
 
     /** 
      * Password constructor.
      * 
      * @param identity
-     * @param password
+     * @param rawPassword
      */
-    public IdentitySecurity(Identity identity, String password) {
+    public IdentitySecurity(Identity identity, String rawPassword) {
     	this(identity, ProviderType.email);
-        setPassword(password);
+        setRawPassword(rawPassword);
         setCredentialState(ActivityState.INITIAL);
     }
 
@@ -118,7 +116,6 @@ public class IdentitySecurity implements Serializable {
      */
     public IdentitySecurity(Identity identity, char activityState) {
     	this(identity, ProviderType.email);
-        setPassword("");
         setCredentialState(activityState);
     }
 
@@ -210,28 +207,26 @@ public class IdentitySecurity implements Serializable {
 
     /**
      * Plain text password.
+     * @deprecated
      */
     @Column(length=20)
     public String getPassword() {
         return this.password;
     }
+    /**
+     * @deprecated
+     */
     public void setPassword(String password) {
         this.password = password;
     }
-    /**
-     * Password reset.
-     */
-    @Transient
-    public void resetPassword() {
-        this.password = "";
-    }
-    /**
-     * Password generator.
-     */
-    @Transient
-    public void generatePassword() {
-        this.password = IdentitySecurity.passwordFactory();
-    }
+
+//    /**
+//     * Password generator.
+//     */
+//    @Transient
+//    public void generatePassword() {
+//        this.password = IdentitySecurity.passwordFactory();
+//    }
 
     /**
      * Credential state.
@@ -311,19 +306,6 @@ public class IdentitySecurity implements Serializable {
     }
 
     /**
-     * Encription.
-     */
-    public char getEncription() {
-        return this.encription;
-    }
-    public void setEncription(char encription) {
-        this.encription = encription;
-    }
-    public void setEncriptionAsEnum(Encription encription) {
-        this.encription = encription.getValue();
-    }
-    
-    /**
      * Create a random password of size <code>DEFAULT_PASSWORD_SIZE</code>
      * containing only characters in <code>ALLOWED_CHARS_IN_PASSWORD</code>.
      */
@@ -337,31 +319,20 @@ public class IdentitySecurity implements Serializable {
     }
 
     /**
-     * <<Transient>> Current password.
+     * <<Transient>> Raw password.
      * 
      * <p>
      * Required before a new password is to be set.
      * </p>
      */
     @Transient
-	public String getCurrentPassword() {
-		return currentPassword;
+	public String getRawPassword() {
+		return rawPassword;
 	}
-	public void setCurrentPassword(String currentPassword) {
-		this.currentPassword = currentPassword;
+	public void setRawPassword(String currentPassword) {
+		this.rawPassword = currentPassword;
 	}
 	
-    /**
-     * <<Transient>> New password.
-     */
-    @Transient
-	public String getNewPassword() {
-		return newPassword;
-	}
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
-	}
-
     /**
      * <<Transient>> Verify password.
      */
@@ -392,56 +363,26 @@ public class IdentitySecurity implements Serializable {
     }
 
     /**
-     * Verify <code>password</code>.
-     * 
-     * <p>
-     * True if <code>password</code> and <code>verifyPassword</code> transient field match.
-     * </p>
+     * True if the raw password is not empty.
      */
     @Transient
-    public boolean isPasswordVerified() {
-    	if (getPassword()==null 
-    			|| getPassword().length()==0 
-    			|| getPassword().compareTo(getVerifyPassword())!=0) {
-            setPassword("");
-            setVerifyPassword("");
-            setPasswordDirty(true);
-            setCredentialState(ActivityState.SUSPENDED.getValue());
-            return false;
-        }
-        setVerifyPassword("");
-        setPasswordDirty(false);
-        setCredentialState(ActivityState.ACTIVE.getValue());
-        return true;
+    public boolean isRawPasswordNotEmpty() {
+    	return getRawPassword()!=null && getRawPassword().length()>0;
     }
     
     /**
-     * Verify <code>password</code> field against transient <code>verifyPassword</code> transient field.
-     * 
-     * <p>
-     * Updates the <code>password</code> field and returns true if:
-     * </p>
-     * <ol>
-     * <li><code>currentPassword</code> transient field matches <code>password</code> field, and</li>
-     * <li><code>newPassword</code> transient field matches <code>verifyPassword</code> transient field.</li>
-     * </ol>
+     * True if the raw password matches the verified password field.
      */
     @Transient
-    public boolean isNewPasswordVerified() {
-    	if (getCurrentPassword()!=null 
-    			&& getCurrentPassword().length()>0 
-    			&& getPassword().compareTo(getCurrentPassword())==0) {
-    		// current password and password match
-    		if (getNewPassword()!=null 
-        			&& getNewPassword().length()>0
-        			&& getVerifyPassword()!=null
-        			&& getVerifyPassword().length()>0
-        			&& getNewPassword().compareTo(getVerifyPassword())==0) {
-        		// new password and verify password match
-    			setPassword(getNewPassword());
-    			return true;
-    		}
-    	}
+    public boolean isRawPasswordVerified() {
+    	if (isRawPasswordNotEmpty() && getRawPassword().compareTo(getVerifyPassword())==0) {
+            setVerifyPassword("");
+            setPasswordDirty(false);
+            return true;
+        }
+        setRawPassword("");
+        setVerifyPassword("");
+        setPasswordDirty(true);
         return false;
     }
     

@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.Service;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.form.AssociationForm;
@@ -38,7 +39,21 @@ import org.helianto.user.form.UserRoleForm;
  */
 public interface UserMgr {
 	
-    /**
+	/**
+	 * Find a user group named "USER", expected to hold all users in the given entity.
+	 * 
+	 * @param entity
+	 */
+	UserGroup findRootGroup(Entity entity);
+	
+	/**
+	 * Find a user group named "ADMIN", expected to hold administrators for the given entity.
+	 * 
+	 * @param entity
+	 */
+	UserGroup findAdminGroup(Entity entity);
+	
+	/**
      * <p>List <code>UserGroup</code> by string criteria.</p>
      * 
      * @param form
@@ -87,6 +102,15 @@ public interface UserMgr {
      * @param parent
      */
     List<UserAssociation> findUserAssociations(UserGroup parent);
+    
+    /**
+     * Install user.
+     * 
+     * @param parent
+     * @param identity
+     * @param accountNonExpired
+     */
+    UserAssociation installUser(UserGroup parent, Identity identity, boolean accountNonExpired);
     
     /**
      * <p>Create <code>UserAssociation</code> with a new credential.</p>
