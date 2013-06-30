@@ -27,6 +27,13 @@ public interface MessageAdapter<T> {
 	MessageAdapter<T> setTo(Set<Identity> to);
 
 	/**
+	 * Recipient.
+	 * 
+	 * @param to
+	 */
+	MessageAdapter<T> setTo(Identity to);
+
+	/**
 	 * Copied address.
 	 * 
 	 * @param cc

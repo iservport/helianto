@@ -13,12 +13,13 @@ import org.slf4j.LoggerFactory;
  * 
  * @author mauriciofernandesdecastro
  */
-public abstract class AbstractMessageAdapter<T> implements MessageAdapter<T> {
+public abstract class AbstractMessageAdapter<T> 
+	implements MessageAdapter<T> {
 	
 	private T message;
 
 	private Identity from;
-	private Set<Identity> to;
+	private Set<Identity> to = new HashSet<Identity>();
 	private Set<Identity> cc;
 	private String replyTo;
 	private String subject;
@@ -39,6 +40,11 @@ public abstract class AbstractMessageAdapter<T> implements MessageAdapter<T> {
 	}
 	public MessageAdapter<T> setTo(Set<Identity> to) {
 		this.to = to;
+		return this;
+	}
+	
+	public MessageAdapter<T> setTo(Identity to) {
+		this.to.add(to);
 		return this;
 	}
 	
