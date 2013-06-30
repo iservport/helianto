@@ -41,6 +41,7 @@ import org.helianto.partner.domain.PartnerPhone;
 import org.helianto.partner.domain.PrivateAddress;
 import org.helianto.partner.domain.PrivateEntity;
 import org.helianto.partner.domain.PrivateEntityKey;
+import org.helianto.partner.domain.PrivateSegment;
 import org.helianto.partner.domain.nature.Agent;
 import org.helianto.partner.domain.nature.Customer;
 import org.helianto.partner.domain.nature.Division;
@@ -56,6 +57,7 @@ import org.helianto.partner.filter.PartnerPhoneFormFilterAdapter;
 import org.helianto.partner.filter.PrivateAddressFormFilterAdapter;
 import org.helianto.partner.filter.PrivateEntityFormFilterAdapter;
 import org.helianto.partner.filter.PrivateEntityKeyFormFilterAdapter;
+import org.helianto.partner.filter.PrivateSegmentFilterAdapter;
 import org.helianto.partner.form.ContactGroupForm;
 import org.helianto.partner.form.PartnerCategoryForm;
 import org.helianto.partner.form.PartnerForm;
@@ -63,6 +65,7 @@ import org.helianto.partner.form.PartnerPhoneForm;
 import org.helianto.partner.form.PrivateAddressForm;
 import org.helianto.partner.form.PrivateEntityForm;
 import org.helianto.partner.form.PrivateEntityKeyForm;
+import org.helianto.partner.form.PrivateSegmentForm;
 import org.helianto.partner.repository.PartnerCategoryRepository;
 import org.helianto.partner.repository.PartnerKeyRepository;
 import org.helianto.partner.repository.PartnerPhoneRepository;
@@ -70,10 +73,12 @@ import org.helianto.partner.repository.PartnerRepository;
 import org.helianto.partner.repository.PrivateAddressRepository;
 import org.helianto.partner.repository.PrivateEntityKeyRepository;
 import org.helianto.partner.repository.PrivateEntityRepository;
+import org.helianto.partner.repository.PrivateSegmentRepository;
 import org.helianto.user.domain.UserGroup;
 import org.helianto.user.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -171,6 +176,18 @@ public class PartnerMgrImpl implements PartnerMgr {
     public void removePrivateEntity(PrivateEntity privateEntity) {
     	privateEntityRepository.delete(privateEntity);
     }
+
+	public List<PrivateSegment> findPrivateSegments(Entity entity) {
+		return privateSegmentRepository.findByEntity(entity, new Sort(Sort.Direction.ASC, "segmentAlias"));
+	}
+
+	public List<PrivateSegment> findPrivateSegments(PrivateSegmentForm form) {
+		return (List<PrivateSegment>) privateSegmentRepository.find(new PrivateSegmentFilterAdapter(form));
+	}
+
+	public PrivateSegment storePrivateSegment(PrivateSegment privateSegment) {
+		return privateSegmentRepository.saveAndFlush(privateSegment);
+	}
 
 	@Transactional(readOnly=true)
 	public List<? extends Partner> findPartners(PartnerForm form) {
@@ -406,6 +423,7 @@ public class PartnerMgrImpl implements PartnerMgr {
     //- collaborators
     
     private PrivateEntityRepository privateEntityRepository;
+    private PrivateSegmentRepository privateSegmentRepository;
     private PartnerRepository partnerRepository;
     private PrivateAddressRepository privateAddressRepository;
     private PrivateEntityKeyRepository privateEntityKeyRepository;
@@ -420,6 +438,11 @@ public class PartnerMgrImpl implements PartnerMgr {
     @Resource
     public void setPrivateEntityRepository(PrivateEntityRepository privateEntityRepository) {
 		this.privateEntityRepository = privateEntityRepository;
+	}
+    
+    @Resource
+    public void setPrivateSegmentRepository(PrivateSegmentRepository privateSegmentRepository) {
+		this.privateSegmentRepository = privateSegmentRepository;
 	}
 
     @Resource

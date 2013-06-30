@@ -66,12 +66,9 @@ import org.helianto.partner.PartnerState;
 @DiscriminatorValue("P")
 
 public class Partner 
-
 	implements 
 	  TrunkEntity
-	, BusinessAddress 
-
-{
+	, BusinessAddress {
 
     private static final long serialVersionUID = 1L;
     private int id;

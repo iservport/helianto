@@ -37,6 +37,7 @@ import org.helianto.partner.domain.PartnerKey;
 import org.helianto.partner.domain.PartnerPhone;
 import org.helianto.partner.domain.PrivateEntity;
 import org.helianto.partner.domain.PrivateEntityKey;
+import org.helianto.partner.domain.PrivateSegment;
 import org.helianto.partner.domain.nature.Customer;
 import org.helianto.partner.filter.classic.PartnerFilter;
 import org.helianto.partner.repository.PartnerCategoryRepository;
@@ -45,6 +46,7 @@ import org.helianto.partner.repository.PartnerPhoneRepository;
 import org.helianto.partner.repository.PartnerRepository;
 import org.helianto.partner.repository.PrivateEntityKeyRepository;
 import org.helianto.partner.repository.PrivateEntityRepository;
+import org.helianto.partner.repository.PrivateSegmentRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -97,6 +99,17 @@ public class PartnerMgrImplTests {
     	verify(privateEntityRepository);
     }
 	
+	@Test
+	public void storePrivateSegment() {
+		PrivateSegment privateSegment = new PrivateSegment();
+		
+    	expect(privateSegmentRepository.saveAndFlush(privateSegment)).andReturn(privateSegment);
+    	replay(privateSegmentRepository);
+		
+    	assertSame(privateSegment, partnerMgr.storePrivateSegment(privateSegment));
+    	verify(privateSegmentRepository);
+	}
+    
 	// partner...
 	
 	@Test
@@ -265,6 +278,7 @@ public class PartnerMgrImplTests {
     }
     
     private PrivateEntityRepository privateEntityRepository;
+    private PrivateSegmentRepository privateSegmentRepository;
     private PrivateEntityKeyRepository privateEntityKeyRepository;
     private PartnerRepository partnerRepository;
     private ProvinceRepository provinceRepository;
@@ -285,6 +299,7 @@ public class PartnerMgrImplTests {
 		entity = new Entity(operator, "ALIAS");
         partnerMgr = new PartnerMgrImpl();
         privateEntityRepository = EasyMock.createMock(PrivateEntityRepository.class);
+        privateSegmentRepository = EasyMock.createMock(PrivateSegmentRepository.class);
         privateEntityKeyRepository = EasyMock.createMock(PrivateEntityKeyRepository.class);
         partnerRepository = EasyMock.createMock(PartnerRepository.class);
         provinceRepository = EasyMock.createMock(ProvinceRepository.class);
@@ -293,6 +308,7 @@ public class PartnerMgrImplTests {
         partnerCategoryRepository = EasyMock.createMock(PartnerCategoryRepository.class);
         sequenceMgr = EasyMock.createMock(SequenceMgr.class);
         partnerMgr.setPrivateEntityRepository(privateEntityRepository);
+        partnerMgr.setPrivateSegmentRepository(privateSegmentRepository);
         partnerMgr.setPrivateEntityKeyRepository(privateEntityKeyRepository);
         partnerMgr.setPartnerRepository(partnerRepository);
         partnerMgr.setProvinceRepository(provinceRepository);
@@ -314,6 +330,7 @@ public class PartnerMgrImplTests {
     @After
     public void tearDown() {
     	EasyMock.reset(privateEntityRepository);
+    	EasyMock.reset(privateSegmentRepository);
     	EasyMock.reset(privateEntityKeyRepository);
     	EasyMock.reset(partnerRepository);
     	EasyMock.reset(provinceRepository);
