@@ -105,6 +105,7 @@ public class Entity
     private String customColors;
     private String customStyle;
     private String customProperties;
+    private String summary;
     private Identity manager;
     private String externalLogoUrl;
     private char activityState;
@@ -320,6 +321,14 @@ public class Entity
 	}
 	public void setCustomProperties(String customProperties) {
 		this.customProperties = customProperties;
+	}
+	
+	@Column(length=1024)
+	public String getSummary() {
+		return summary;
+	}
+	public void setSummary(String summary) {
+		this.summary = summary;
 	}
 	
     @Transient
