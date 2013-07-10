@@ -14,6 +14,7 @@ import javax.persistence.Version;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.type.TrunkEntity;
+import org.helianto.partner.def.SegmentType;
 
 /**
  * Segments to apply to Customers, Suppliers, etc.
@@ -34,6 +35,7 @@ public class PrivateSegment
 	private String segmentAlias = "";
 	private String segmentName = "";
 	private byte[] content = "".getBytes();
+	private char sgmentType = SegmentType.Z.getValue();
 	
 	/**
 	 * Constructor.
@@ -133,6 +135,16 @@ public class PrivateSegment
 	}
 	public void setContentAsString(String content) {
 		setContent(content.getBytes());
+	}
+	
+	/**
+	 * Tipo de segmento.
+	 */
+	public char getSgmentType() {
+		return sgmentType;
+	}
+	public void setSgmentType(char sgmentType) {
+		this.sgmentType = sgmentType;
 	}
 
 	@Override
