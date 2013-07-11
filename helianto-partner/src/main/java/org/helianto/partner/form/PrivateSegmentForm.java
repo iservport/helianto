@@ -18,5 +18,10 @@ public interface PrivateSegmentForm extends TrunkEntity {
 	 * Segment name.
 	 */
 	String getSegmentName();
+	
+	/**
+	 * Segment type.
+	 */
+	char getSegmentType();
 
 }

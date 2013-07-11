@@ -35,7 +35,7 @@ public class PrivateSegment
 	private String segmentAlias = "";
 	private String segmentName = "";
 	private byte[] content = "".getBytes();
-	private char sgmentType = SegmentType.Z.getValue();
+	private char segmentType = SegmentType.Z.getValue();
 	
 	/**
 	 * Constructor.
@@ -138,13 +138,13 @@ public class PrivateSegment
 	}
 	
 	/**
-	 * Tipo de segmento.
+	 * Segment type.
 	 */
-	public char getSgmentType() {
-		return sgmentType;
+	public char getSegmentType() {
+		return segmentType;
 	}
-	public void setSgmentType(char sgmentType) {
-		this.sgmentType = sgmentType;
+	public void setSegmentType(char segmentType) {
+		this.segmentType = segmentType;
 	}
 
 	@Override

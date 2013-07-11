@@ -18,6 +18,7 @@ public class PrivateSegmentFilterAdapterTests {
     public static String C1 = "alias.entity.id = 0 ";
     public static String C2 = "AND alias.segmentAlias = 'CODE' ";
     public static String C3 = "AND lower(alias.segmentName) like '%name%' ";
+    public static String C4 = "AND alias.segmentType = 'X' ";
 
     @Test
     public void empty() {
@@ -35,6 +36,12 @@ public class PrivateSegmentFilterAdapterTests {
     public void filterName() {
     	Mockito.when(form.getSegmentName()).thenReturn("NAME");
         assertEquals(C1+C3+OB, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void type() {
+    	Mockito.when(form.getSegmentType()).thenReturn('X');
+        assertEquals(C1+C4+OB, filter.createCriteriaAsString());
     }
     
     private PrivateSegmentForm form;

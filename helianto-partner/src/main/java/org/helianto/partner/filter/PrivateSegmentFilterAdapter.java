@@ -51,6 +51,7 @@ public class PrivateSegmentFilterAdapter
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		doSelect(mainCriteriaBuilder);
 		appendLikeFilter("segmentName", getForm().getSegmentName(), mainCriteriaBuilder);
+		appendEqualFilter("segmentType", getForm().getSegmentType(), mainCriteriaBuilder);
 	}
 	
 	@Override
