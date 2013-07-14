@@ -37,17 +37,14 @@ import org.helianto.user.domain.UserRole;
  * 
  * <p>
  * A context arranges entities into a logical unit of management. Classes share 
- * instances between two or more entities of a namespace 
- * if are related to the operator. Such classes are provinces, services and key types, 
- * to say a few. Data from one namespace are not accessible from an external
- * namespace.
+ * instances between two or more entities of a context. Such classes are provinces, 
+ * services and key types, to say a few. 
+ * Data from one context must not be accessible from other contexts, if they exist.
  * </p>
  * 
  * <p>
- * The datastore must have at least one namespace, i.e. one operator. If no one
- * exists, a default is created. The creation of a namespace implies in the creation of
- * basic namespace defaults, namely, two default services, two default user groups and
- * the corresponding roles to bind each of the services above to its user groups.
+ * Note: The class Context was originally named Operator; some references to the name
+ * Operator may exist but, for all purposes, Context and Operator are the same.
  * </p>
  * 
  * @author Mauricio Fernandes de Castro
