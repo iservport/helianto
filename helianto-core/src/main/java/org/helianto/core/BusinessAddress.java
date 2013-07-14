@@ -9,26 +9,27 @@ import org.helianto.core.domain.Phone;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface BusinessAddress extends Address {
+public interface BusinessAddress 
+	extends Address {
 	
 	/**
 	 * Alias to uniquely identify the business unit within a context.
 	 */
-	public String getEntityAlias();
+	String getEntityAlias();
 	
 	/**
 	 * Business unit name.
 	 */
-	public String getEntityName();
+	String getEntityName();
 	
 	/**
 	 * Business main phone.
 	 */
-	public Phone getMainPhone();
+	Phone getMainPhone();
 
 	/**
 	 * Business main email.
 	 */
-	public String getMainEmail();
+	String getMainEmail();
 
 }

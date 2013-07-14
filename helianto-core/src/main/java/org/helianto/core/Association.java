@@ -26,21 +26,21 @@ public interface Association<P, C> {
 	/**
 	 * Association id.
 	 */
-	public int getId();
+	int getId();
 	
 	/**
 	 * Simple sequential number.
 	 */
-	public int getSequence();
+	int getSequence();
 	
 	/**
 	 * The association parent.
 	 */
-	public P getParent();
+	P getParent();
 	
 	/**
 	 * The association child.
 	 */
-	public C getChild();
+	C getChild();
 
 }
