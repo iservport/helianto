@@ -13,16 +13,16 @@ public interface AddressLocation {
     /**
      * Postal code.
      */
-    public String getPostalCode();
+    String getPostalCode();
 
     /**
      * Province or a descendant class like City.
      */
-    public Province getProvince();
+    Province getProvince();
 
     /**
      * City name.
      */
-    public String getCityName();
+    String getCityName();
 
 }

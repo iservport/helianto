@@ -7,41 +7,42 @@ package org.helianto.core;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface Address extends AddressLocation {
+public interface Address 
+	extends AddressLocation {
 
     /**
      * The first segment of an address, usually representing a street, road, etc..
      */
-    public String getAddress1();
+    String getAddress1();
     
     /**
      * Address classifier (or blank), like St. (street), Rd. (road), etc..
      */
-    public String getAddressClassifier();
+    String getAddressClassifier();
 
     /**
      * Optional address street number.
      */
-    public String getAddressNumber();
+    String getAddressNumber();
 
     /**
      * Optional address street number detail, like room number, etc..
      */
-	public String getAddressDetail();
+	String getAddressDetail();
 
     /**
      * Address segment to show region, county, etc..
      */
-    public String getAddress2();
+    String getAddress2();
 
     /**
      * Any other address information, if any.
      */
-    public String getAddress3();
+    String getAddress3();
 
     /**
      * Convenience to show the address as a short string.
      */
-    public String getShortAddress();
+    String getShortAddress();
 
 }
