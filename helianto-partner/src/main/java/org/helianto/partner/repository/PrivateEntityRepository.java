@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.Entity;
 import org.helianto.partner.domain.PrivateEntity;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 /**
@@ -28,6 +29,6 @@ public interface PrivateEntityRepository extends FilterRepository<PrivateEntity,
 	 * @param entity
 	 * @param pageable
 	 */
-	Iterable<PrivateEntity> findByEntity(Entity entity, Pageable pageable);
+	Page<PrivateEntity> findByEntity(Entity entity, Pageable pageable);
 	
 }
