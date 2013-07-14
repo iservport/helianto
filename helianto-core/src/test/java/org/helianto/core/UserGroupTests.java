@@ -29,7 +29,6 @@ public class UserGroupTests {
 		UserGroup userGroup = new UserGroup();
 		assertTrue(userGroup instanceof Serializable);
 		assertTrue(userGroup instanceof Comparable<?>);
-		assertTrue(userGroup instanceof NaturalKeyInfo);
 		assertEquals('G', userGroup.getDiscriminator());
 		assertEquals("", userGroup.getUserKey());
 		assertTrue(userGroup.getLastEvent() instanceof Date);

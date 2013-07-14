@@ -23,11 +23,12 @@ import org.helianto.core.number.Internal;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface Controllable extends Internal, Verifiable {
+public interface Controllable 
+	extends Internal, Verifiable {
 
     /**
      * Progress indicator as percentual.
      */
-    public int getComplete();
+    int getComplete();
     
 }

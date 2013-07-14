@@ -5,11 +5,11 @@ package org.helianto.core;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface Privacy extends Ownership {
+public interface Privacy {
 	
 	/**
 	 * Privacy level.
 	 */
-	public char getPrivacyLevel();
+	char getPrivacyLevel();
 
 }

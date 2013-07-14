@@ -33,11 +33,11 @@ import org.helianto.core.form.ServiceForm;
 import org.helianto.user.domain.UserRole;
 
 /**
- * Namespace management interface.
+ * Context management interface.
  * 
  * <p>
- * Namespaces group entites into a logical unit of management and are controlled by
- * an operator. Classes share instances between two or more entities of a namespace 
+ * A context arranges entities into a logical unit of management. Classes share 
+ * instances between two or more entities of a namespace 
  * if are related to the operator. Such classes are provinces, services and key types, 
  * to say a few. Data from one namespace are not accessible from an external
  * namespace.

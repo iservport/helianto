@@ -16,11 +16,17 @@
 package org.helianto.core;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
 import org.helianto.core.base.AbstractAddress;
+import org.helianto.core.domain.City;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.Province;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -28,19 +34,62 @@ import org.junit.Test;
  */
 public class AddressTests {
 	
-	@SuppressWarnings("serial")
+	private AbstractAddress address;
+	
 	@Test
 	public void constructor() {
-		AbstractAddress abstractAddress = new AbstractAddress() {};
-		assertTrue(abstractAddress instanceof Serializable);
-		assertEquals("", abstractAddress.getAddress1());
-		assertEquals("", abstractAddress.getAddressNumber());
-		assertEquals("", abstractAddress.getAddressDetail());
-		assertEquals("", abstractAddress.getAddress2());
-		assertEquals("", abstractAddress.getAddress3());
-		assertEquals("", abstractAddress.getCityName());
-		assertEquals("", abstractAddress.getPostalCode());
-		assertEquals("", abstractAddress.getPostOfficeBox());
+		assertTrue(address instanceof Serializable);
+		assertEquals("", address.getAddress1());
+		assertEquals("", address.getAddressNumber());
+		assertEquals("", address.getAddressDetail());
+		assertEquals("", address.getAddress2());
+		assertEquals("", address.getAddress3());
+		assertEquals("", address.getCityName());
+		assertEquals("", address.getPostalCode());
+		assertEquals("", address.getPostOfficeBox());
+	}
+
+	@Test
+	public void nullProvince() {
+		assertNull(address.getProvince());
+		assertEquals("", address.getProvinceCode());
+		assertEquals("", address.getProvinceName());
+		assertNull(address.getCity());
+		assertNull(address.getParentProvince());
+		assertEquals("", address.getCityName());
+	}
+	
+	@Test
+	public void hasProvince() {
+		Operator operator = new Operator("DEFAULT");
+		Province province = new Province(operator , "PROVINCECODE", "PROVINCENAME");
+		address.setProvince(province);
+		assertSame(province, address.getProvince());
+		assertEquals("PROVINCECODE", address.getProvinceCode());
+		assertEquals("PROVINCENAME", address.getProvinceName());
+		assertNull(address.getCity());
+		assertNull(address.getParentProvince());
+		assertEquals("", address.getCityName());
+	}
+	
+	@Test
+	public void hasCity() {
+		Operator operator = new Operator("DEFAULT");
+		Province province = new Province(operator , "PROVINCECODE", "PROVINCENAME");
+		City city = new City("CITYCODE", "CITYNAME", province);
+		address.setProvince(city);
+		assertSame(city, address.getProvince());
+		assertSame(city, address.getCity());
+		assertEquals("PROVINCECODE", address.getProvinceCode());
+		assertEquals("PROVINCENAME", address.getProvinceName());
+		assertSame(province, address.getParentProvince());
+		assertEquals("CITYNAME", address.getCityName());
+	}
+	
+	@SuppressWarnings("serial")
+	@Before
+	public void setUp() {
+		address = new AbstractAddress() { };
 	}
 
 }

@@ -24,7 +24,8 @@ import java.util.Date;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface Verifiable extends Resolvable {
+public interface Verifiable 
+	extends Resolvable {
 
     /**
      * Date to be controlled.

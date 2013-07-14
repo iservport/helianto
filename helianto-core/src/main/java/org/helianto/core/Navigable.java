@@ -10,11 +10,11 @@ public interface Navigable {
 	/**
 	 * Parent path.
 	 */
-	public String getParentPath();
+	String getParentPath();
 
 	/**
 	 * Node path, typically transient.
 	 */
-	public String getCurrentPath();
+	String getCurrentPath();
 
 }

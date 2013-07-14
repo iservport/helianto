@@ -5,7 +5,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.base.AbstractPartialAddress;
+import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.domain.type.RootEntity;
 
 /**
@@ -17,7 +17,9 @@ import org.helianto.core.domain.type.RootEntity;
 @Table(name="core_publicaddress",
     uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "postalCode"})}
 )
-public class PublicAddress extends AbstractPartialAddress implements RootEntity {
+public class PublicAddress 
+	extends AbstractAddress 
+	implements RootEntity {
 
 	private static final long serialVersionUID = 1L;
 	private Operator operator;

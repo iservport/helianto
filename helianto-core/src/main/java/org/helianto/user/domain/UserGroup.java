@@ -40,7 +40,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.NaturalKeyInfo;
 import org.helianto.core.Programmable;
 import org.helianto.core.def.ActivityState;
 import org.helianto.core.def.CreateIdentity;
@@ -71,7 +70,6 @@ public class UserGroup
 	implements 
 	  TrunkEntity
 	, Comparable<UserGroup>
-	, NaturalKeyInfo
 	, Programmable
 
 {

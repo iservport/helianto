@@ -34,21 +34,21 @@ public interface CategoryMgr {
 	 * 
 	 * @param form
 	 */
-	public List<Category> findCategories(CategoryForm form);
+	List<Category> findCategories(CategoryForm form);
 
 	/**
 	 * Store category.
 	 * 
 	 * @param category
 	 */
-	public Category storeCategory(Category category);
+	Category storeCategory(Category category);
 
 	/**
 	 * Remove category.
 	 * 
 	 * @param category
 	 */
-	public void removeCategory(Category category);
+	void removeCategory(Category category);
 
 	/**
 	 * Install category.
@@ -57,6 +57,6 @@ public interface CategoryMgr {
      * @param categoryGroup
      * @param categoryCode
 	 */
-	public Category installCategory(Entity entity, CategoryGroup categoryGroup, String categoryCode, String categoryName);
+	Category installCategory(Entity entity, CategoryGroup categoryGroup, String categoryCode, String categoryName);
 
 }

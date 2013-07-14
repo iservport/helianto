@@ -25,7 +25,6 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 import org.helianto.core.Association;
-import org.helianto.core.NaturalKeyInfo;
 
 /**
  * Base class to generic associations.
@@ -33,7 +32,8 @@ import org.helianto.core.NaturalKeyInfo;
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public abstract class AbstractAssociation<P, C> implements Association<P, C>, Serializable, NaturalKeyInfo, Comparable<AbstractAssociation<P,C>> {
+public abstract class AbstractAssociation<P, C> 
+	implements Association<P, C>, Serializable, Comparable<AbstractAssociation<P,C>> {
 	
 	private static final long serialVersionUID = 1L;
 	private int id;

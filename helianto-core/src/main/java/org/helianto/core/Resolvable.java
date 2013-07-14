@@ -12,7 +12,8 @@ import java.io.Serializable;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface Resolvable extends Serializable {
+public interface Resolvable 
+	extends Serializable {
 
     /**
      * Resolution.
