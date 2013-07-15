@@ -129,7 +129,7 @@ public class PrivateSegment
 	@Transient
 	public String getContentAsString() {
 		if (getContent()!=null) {
-			return getContent().toString();
+			return new String(getContent());
 		}
 		return "";
 	}
