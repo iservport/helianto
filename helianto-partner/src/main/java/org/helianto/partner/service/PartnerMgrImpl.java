@@ -176,6 +176,10 @@ public class PartnerMgrImpl implements PartnerMgr {
     public void removePrivateEntity(PrivateEntity privateEntity) {
     	privateEntityRepository.delete(privateEntity);
     }
+	
+	public PrivateSegment loadPrivateSegment(Entity entity, String segmentAlias) {
+		return privateSegmentRepository.findByEntityAndSegmentAlias(entity, segmentAlias);
+	}
 
 	public List<PrivateSegment> findPrivateSegments(Entity entity) {
 		return privateSegmentRepository.findByEntity(entity, new Sort(Sort.Direction.ASC, "segmentAlias"));

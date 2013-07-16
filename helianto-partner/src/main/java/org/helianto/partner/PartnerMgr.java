@@ -70,6 +70,13 @@ public interface PartnerMgr {
     void removePrivateEntity(PrivateEntity privateEntity);
     
 	/**
+     * Load <code>PrivateSegment</code>.
+     * 
+     * @param entity
+     */
+	PrivateSegment loadPrivateSegment(Entity entity, String segmentAlias);
+	
+	/**
      * Find <code>PrivateSegment</code>.
      * 
      * @param entity
