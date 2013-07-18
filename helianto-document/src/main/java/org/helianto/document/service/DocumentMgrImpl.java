@@ -21,6 +21,7 @@ import javax.annotation.Resource;
 
 import org.helianto.core.NonUniqueResultException;
 import org.helianto.core.SequenceMgr;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.Filter;
 import org.helianto.document.DocumentMgr;
 import org.helianto.document.domain.Document;
@@ -106,9 +107,8 @@ public class DocumentMgrImpl
     	logger.info("Removed document "+document);
 	}
 	
-	@Transactional
-	public DocumentFolder storeDocumentFolder(DocumentFolder serializer) {
-		return documentFolderRepository.saveAndFlush(serializer);
+	public DocumentFolder loadDocumentFolder(Entity entity, String folderCode) {
+		return documentFolderRepository.findByEntityAndFolderCode(entity, folderCode);
 	}
 	
 	@Transactional(readOnly=true)
@@ -119,6 +119,11 @@ public class DocumentMgrImpl
     		logger.debug("Found serializer list of size {}", serializerList.size());
     	}
     	return serializerList;
+	}
+	
+	@Transactional
+	public DocumentFolder storeDocumentFolder(DocumentFolder serializer) {
+		return documentFolderRepository.saveAndFlush(serializer);
 	}
 	
 	// collabs

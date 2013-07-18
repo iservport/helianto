@@ -62,10 +62,10 @@ public class DocumentFolder
      * Key constructor.
      * 
      * @param entity
-     * @param builderCode
+     * @param folderCode
      */
-    public DocumentFolder(Entity entity, String builderCode) {
-    	super(entity, builderCode);
+    public DocumentFolder(Entity entity, String folderCode) {
+    	super(entity, folderCode);
     	setNumberPattern("0000");
     	setFolderName("");
     	setContentType(' ');

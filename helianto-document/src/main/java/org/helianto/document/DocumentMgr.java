@@ -18,6 +18,7 @@ package org.helianto.document;
 import java.util.List;
 
 import org.helianto.core.NonUniqueResultException;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.Filter;
 import org.helianto.document.domain.Document;
 import org.helianto.document.domain.DocumentFolder;
@@ -73,19 +74,27 @@ public interface DocumentMgr {
 	 * @param document
 	 */
 	void removeDocument(Document document);
-
+	
 	/**
-	 * Store a <code>Serializer</code>.
+	 * Load a <code>DocumentFolder</code>.
 	 * 
-	 * @param serializer
+	 * @param entity
+	 * @param folderCode
 	 */
-	DocumentFolder storeDocumentFolder(DocumentFolder serializer);
+	DocumentFolder loadDocumentFolder(Entity entity, String folderCode);
 
 	/**
-	 * Find a <code>Serializer</code> list.
+	 * Find a <code>DocumentFolder</code> list.
 	 * 
 	 * @param serializerFilter
 	 */
 	List<? extends DocumentFolder> findDocumentFolders(DocumentFolderForm form);
 	
+	/**
+	 * Store a <code>DocumentFolder</code>.
+	 * 
+	 * @param documentFolder
+	 */
+	DocumentFolder storeDocumentFolder(DocumentFolder documentFolder);
+
 }
