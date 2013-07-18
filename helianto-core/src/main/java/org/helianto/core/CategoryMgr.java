@@ -30,6 +30,15 @@ import org.helianto.core.form.CategoryForm;
 public interface CategoryMgr {
 
 	/**
+	 * Load category.
+	 * 
+     * @param entity
+     * @param categoryGroup
+     * @param categoryCode
+	 */
+	Category loadCategory(Entity entity, char categoryGroup, String categoryCode);
+
+	/**
 	 * List categories.
 	 * 
 	 * @param form

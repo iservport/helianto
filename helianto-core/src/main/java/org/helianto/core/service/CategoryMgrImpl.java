@@ -38,6 +38,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @org.springframework.stereotype.Service("categoryMgr")
 public class CategoryMgrImpl implements CategoryMgr {
+	
+	@Transactional(readOnly=true)
+	public Category loadCategory(Entity entity, char categoryGroup, String categoryCode) {
+		return categoryRepository.findByEntityAndCategoryGroupAndCategoryCode(
+				entity, categoryGroup, categoryCode);
+	}
     
 	@Transactional(readOnly=true)
 	public List<Category> findCategories(CategoryForm form) {
