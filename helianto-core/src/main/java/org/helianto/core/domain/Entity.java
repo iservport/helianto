@@ -285,7 +285,7 @@ public class Entity
 	 * Up to 6 colors in the hex format #rrggbb,#rrggbb, etc.
 	 * </p>
 	 */
-	@Column(length=48)
+	@Column(length=128)
 	public String getCustomColors() {
 		return customColors;
 	}
