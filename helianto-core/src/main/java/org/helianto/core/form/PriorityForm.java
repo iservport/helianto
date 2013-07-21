@@ -1,11 +1,11 @@
-package org.helianto.core;
+package org.helianto.core.form;
 
 /**
- * Interface to objects including a priority field.
+ * Priority form.
  * 
  * @author mauriciofernandesdecastro
  */
-public interface Prioritizable {
+public interface PriorityForm {
 	
 	/**
 	 * The priority filter field.

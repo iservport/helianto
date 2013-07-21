@@ -1,7 +1,7 @@
 package org.helianto.core.utils;
 
-import org.helianto.core.base.AbstractAddress;
-import org.helianto.core.domain.Province;
+import org.helianto.core.domain.City;
+import org.helianto.core.internal.AbstractAddress;
 
 /**
  * Helper class to handle addresses.
@@ -40,12 +40,13 @@ public class AddressUtils {
 	 * <li>county, if a detail was already supplied.</li>
 	 * </ol>
 	 * 
-	 * @param province
+	 * @param city
 	 * @param addressSegment
 	 */
 	@SuppressWarnings("serial")
-	public static AbstractAddress createAddress(Province province, String... addressSegment) {
-		AbstractAddress address = new AbstractAddress(province) {};
+	public static AbstractAddress createAddress(City city, String... addressSegment) {
+		AbstractAddress address = new AbstractAddress() {};
+		address.setCity(city);
 		if (addressSegment.length>0) {
 			address.setAddress1(addressSegment[0]);
 		}

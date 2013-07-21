@@ -18,9 +18,9 @@ package org.helianto.partner;
 import java.util.List;
 import java.util.Map;
 
-import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.internal.AbstractAddress;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PartnerCategory;
 import org.helianto.partner.domain.PartnerKey;

@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.helianto.core.Prioritizable;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.form.PriorityForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -112,7 +112,7 @@ public abstract class AbstractFilter
      * @param sample
      * @param mainCriteriaBuilder
      */
-	protected void appendPriorityRange(Prioritizable sample, OrmCriteriaBuilder mainCriteriaBuilder) {
+	protected void appendPriorityRange(PriorityForm sample, OrmCriteriaBuilder mainCriteriaBuilder) {
 		String priorityChain = "0123456789";
 		int priority = priorityChain.indexOf(sample.getPriority());
 		if (logger.isDebugEnabled()) {

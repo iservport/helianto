@@ -26,11 +26,12 @@ import java.util.List;
 
 import org.easymock.EasyMock;
 import org.helianto.core.SequenceMgr;
-import org.helianto.core.base.AbstractAddress;
+import org.helianto.core.domain.City;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
-import org.helianto.core.repository.ProvinceRepository;
+import org.helianto.core.internal.AbstractAddress;
+import org.helianto.core.repository.CityRepository;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PartnerCategory;
 import org.helianto.partner.domain.PartnerKey;
@@ -202,8 +203,8 @@ public class PartnerMgrImplTests {
 		EasyMock.expect(privateEntityRepository.saveAndFlush(EasyMock.isA(PrivateEntity.class))).andReturn(privateEntity);
 		EasyMock.replay(privateEntityRepository);
 		
-		EasyMock.expect(provinceRepository.findByOperatorAndProvinceCode(entity.getOperator(), partnerAddress.getProvinceCode())).andReturn(province);
-		EasyMock.replay(provinceRepository);
+		EasyMock.expect(cityRepository.findByContextAndCityCode(entity.getOperator(), partnerAddress.getCityCode())).andReturn(city);
+		EasyMock.replay(cityRepository);
 		
 		EasyMock.expect(partnerRepository.findByPrivateEntityAndType(privateEntity, 'C')).andReturn(null);
     	expect(partnerRepository.saveAndFlush(EasyMock.isA(Customer.class))).andReturn(newCustomer);
@@ -222,8 +223,8 @@ public class PartnerMgrImplTests {
 		EasyMock.expect(privateEntityRepository.saveAndFlush(privateEntity)).andReturn(privateEntity);
 		EasyMock.replay(privateEntityRepository);
 		
-		EasyMock.expect(provinceRepository.findByOperatorAndProvinceCode(entity.getOperator(), partnerAddress.getProvinceCode())).andReturn(province);
-		EasyMock.replay(provinceRepository);
+		EasyMock.expect(cityRepository.findByContextAndCityCode(entity.getOperator(), partnerAddress.getCityCode())).andReturn(city);
+		EasyMock.replay(cityRepository);
 		
 		EasyMock.expect(partnerRepository.findByPrivateEntityAndType(privateEntity, 'C')).andReturn(null);
     	expect(partnerRepository.saveAndFlush(EasyMock.isA(Customer.class))).andReturn(newCustomer);
@@ -243,8 +244,8 @@ public class PartnerMgrImplTests {
 		EasyMock.expect(privateEntityRepository.saveAndFlush(privateEntity)).andReturn(privateEntity);
 		EasyMock.replay(privateEntityRepository);
 		
-		EasyMock.expect(provinceRepository.findByOperatorAndProvinceCode(entity.getOperator(), partnerAddress.getProvinceCode())).andReturn(province);
-		EasyMock.replay(provinceRepository);
+		EasyMock.expect(cityRepository.findByContextAndCityCode(entity.getOperator(), partnerAddress.getCityCode())).andReturn(city);
+		EasyMock.replay(cityRepository);
 		
 		Partner customer = new Customer(privateEntity);
 		
@@ -281,12 +282,12 @@ public class PartnerMgrImplTests {
     private PrivateSegmentRepository privateSegmentRepository;
     private PrivateEntityKeyRepository privateEntityKeyRepository;
     private PartnerRepository partnerRepository;
-    private ProvinceRepository provinceRepository;
+    private CityRepository cityRepository;
     private PartnerKeyRepository partnerKeyRepository;
     private PartnerPhoneRepository partnerPhoneRepository;
     private PartnerCategoryRepository partnerCategoryRepository;
 
-    private Province province;
+    private City city;
     private AbstractAddress partnerAddress;
 	private SequenceMgr sequenceMgr;
     
@@ -302,7 +303,7 @@ public class PartnerMgrImplTests {
         privateSegmentRepository = EasyMock.createMock(PrivateSegmentRepository.class);
         privateEntityKeyRepository = EasyMock.createMock(PrivateEntityKeyRepository.class);
         partnerRepository = EasyMock.createMock(PartnerRepository.class);
-        provinceRepository = EasyMock.createMock(ProvinceRepository.class);
+        cityRepository = EasyMock.createMock(CityRepository.class);
         partnerKeyRepository = EasyMock.createMock(PartnerKeyRepository.class);
         partnerPhoneRepository = EasyMock.createMock(PartnerPhoneRepository.class);
         partnerCategoryRepository = EasyMock.createMock(PartnerCategoryRepository.class);
@@ -311,14 +312,15 @@ public class PartnerMgrImplTests {
         partnerMgr.setPrivateSegmentRepository(privateSegmentRepository);
         partnerMgr.setPrivateEntityKeyRepository(privateEntityKeyRepository);
         partnerMgr.setPartnerRepository(partnerRepository);
-        partnerMgr.setProvinceRepository(provinceRepository);
+        partnerMgr.setCityRepository(cityRepository);
         partnerMgr.setPartnerKeyRepository(partnerKeyRepository);
         partnerMgr.setPartnerPhoneRepository(partnerPhoneRepository);
         partnerMgr.setPartnerCategoryRepository(partnerCategoryRepository);
         partnerMgr.setSequenceMgr(sequenceMgr);
         
-		province = new Province(entity.getOperator(), "CODE");
-        partnerAddress = new AbstractAddress(province) {};
+		city = new City(entity.getOperator(), "CODE");
+        partnerAddress = new AbstractAddress() {};
+        partnerAddress.setCity(city);
         partnerAddress.appendStreet("address1", "addressNumber", "addressDetail", "county");
 
 		assertEquals("address1", partnerAddress.getAddress1());
@@ -333,7 +335,7 @@ public class PartnerMgrImplTests {
     	EasyMock.reset(privateSegmentRepository);
     	EasyMock.reset(privateEntityKeyRepository);
     	EasyMock.reset(partnerRepository);
-    	EasyMock.reset(provinceRepository);
+    	EasyMock.reset(cityRepository);
     	EasyMock.reset(partnerKeyRepository);
     	EasyMock.reset(partnerPhoneRepository);
     	EasyMock.reset(partnerCategoryRepository);

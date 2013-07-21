@@ -25,36 +25,31 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.persistence.Version;
-
 
 /**
- * City.
+ * State of a union or federation.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="core_city",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"contextId", "cityCode"})
-    	,@UniqueConstraint(columnNames={"stateId", "cityCode"})}
+@Table(name="core_state",
+    uniqueConstraints = {@UniqueConstraint(columnNames={"contextId", "stateCode"})}
 )
-public class City 
-	implements Serializable, Comparable<City> {
+public class State  
+	implements Serializable, Comparable<State> {
 
     private static final long serialVersionUID = 1L;
     private int id;
-    private int version;
     private Operator context;
-    private String cityCode = "";
-    private String cityName = "";
-    private State state;
-    private boolean capital;
+    private String stateCode = "";
+    private String stateName = "";
+    private Country country;
     private char priority;
 
 	/**
-	 * Default constructor.
+	 * Empty constructor.
 	 */
-    public City() {
+    public State() {
         super();
     }
 
@@ -62,37 +57,26 @@ public class City
      * Key constructor.
      * 
      * @param context
-     * @param cityCode
+     * @param stateCode
      */
-    public City(Operator context, String cityCode) {
-    	this();
-    	setContext(context);
-    	setCityCode(cityCode);
+    public State(Operator context, String stateCode) {
+        this();
+        setContext(context);
+        setStateCode(stateCode);
     }
-    
-    /**
-     * State constructor.
-     * 
-     * @param state
-     * @param cityCode
-     */
-    public City(State state, String cityCode) {
-    	this(state.getContext(), cityCode);
-    	setState(state);
-    }
-    
+
     /**
      * Name constructor.
      * 
-     * @param state
-     * @param cityCode
-     * @param cityName
+     * @param operator
+     * @param provinceCode
+     * @param stateName
      */
-    public City(State state, String cityCode, String cityName) {
-    	this(state, cityCode);
-    	setCityName(cityName);
+    public State(Operator operator, String provinceCode, String stateName) {
+    	this(operator, provinceCode);
+    	setStateName(stateName);
     }
-    
+
     /**
      * Primary key.
      */
@@ -103,17 +87,6 @@ public class City
     public void setId(int id) {
         this.id = id;
     }
-    
-    /**
-     * Version.
-     */
-    @Version
-    public int getVersion() {
-		return version;
-	}
-    public void setVersion(int version) {
-		this.version = version;
-	}
     
     /**
      * Context.
@@ -128,47 +101,37 @@ public class City
 	}
     
     /**
-     * State.
-     */
-    @ManyToOne
-    @JoinColumn(name="stateId", nullable=true)
-    public State getState() {
-		return state;
-	}
-    public void setState(State state) {
-		this.state = state;
-	}
-    
-    /**
-     * City code.
+     * State code.
      */
     @Column(length=12)
-    public String getCityCode() {
-    	return cityCode;
-    }
-    public void setCityCode(String cityCode) {
-		this.cityCode = cityCode;
+    public String getStateCode() {
+		return stateCode;
+	}
+    public void setStateCode(String stateCode) {
+		this.stateCode = stateCode;
 	}
     
     /**
-     * City name.
+     * State name.
      */
     @Column(length=64)
-    public String getCityName() {
-    	return cityName;
-    }
-    public void setCityName(String cityName) {
-		this.cityName = cityName;
+    public String getStateName() {
+		return stateName;
 	}
-    
+    public void setStateName(String stateName) {
+		this.stateName = stateName;
+	}
+
     /**
-	 * True if capital.
-	 */
-	public boolean isCapital() {
-		return capital;
+     * Country.
+     */
+    @ManyToOne
+    @JoinColumn(name="countryId")
+    public Country getCountry() {
+		return country;
 	}
-	public void setCapital(boolean capital) {
-		this.capital = capital;
+	public void setCountry(Country country) {
+		this.country = country;
 	}
 
 	/**
@@ -181,10 +144,10 @@ public class City
 		this.priority = priority;
 	}
 
-	public int compareTo(City next) {
+	public int compareTo(State next) {
 		if (getPriority()==next.getPriority()) {
-			if (getCityCode()!=null && next.getCityCode()!=null) {
-				return getCityCode().compareTo(next.getCityCode());
+			if (getStateCode()!=null && next.getStateCode()!=null) {
+				return getStateCode().compareTo(next.getStateCode());
 			}
 			return 0;
 		}
@@ -196,16 +159,16 @@ public class City
      * @return String
      */
 	public String toString() {
-    	 return getCityCode();
+    	 return getStateCode();
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((cityCode == null) ? 0 : cityCode.hashCode());
 		result = prime * result + ((context == null) ? 0 : context.hashCode());
+		result = prime * result
+				+ ((stateCode == null) ? 0 : stateCode.hashCode());
 		return result;
 	}
 
@@ -217,17 +180,10 @@ public class City
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof City)) {
+		if (!(obj instanceof State)) {
 			return false;
 		}
-		City other = (City) obj;
-		if (cityCode == null) {
-			if (other.cityCode != null) {
-				return false;
-			}
-		} else if (!cityCode.equals(other.cityCode)) {
-			return false;
-		}
+		State other = (State) obj;
 		if (context == null) {
 			if (other.context != null) {
 				return false;
@@ -235,8 +191,17 @@ public class City
 		} else if (!context.equals(other.context)) {
 			return false;
 		}
+		if (stateCode == null) {
+			if (other.stateCode != null) {
+				return false;
+			}
+		} else if (!stateCode.equals(other.stateCode)) {
+			return false;
+		}
 		return true;
 	}
+	
+	
 
 }
 

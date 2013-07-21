@@ -19,11 +19,11 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 
-import org.helianto.core.base.AbstractEvent;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.base.AbstractEventFilterAdapter;
 import org.helianto.core.form.EventForm;
+import org.helianto.core.internal.AbstractEvent;
 import org.helianto.core.test.EntityTestSupport;
 import org.junit.Before;
 import org.junit.Test;

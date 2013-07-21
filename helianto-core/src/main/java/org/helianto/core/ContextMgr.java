@@ -25,11 +25,13 @@ import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
+import org.helianto.core.domain.State;
 import org.helianto.core.form.ContextEventForm;
 import org.helianto.core.form.EntityForm;
 import org.helianto.core.form.KeyTypeForm;
 import org.helianto.core.form.ProvinceForm;
 import org.helianto.core.form.ServiceForm;
+import org.helianto.core.form.StateForm;
 import org.helianto.user.domain.UserRole;
 
 /**
@@ -71,18 +73,18 @@ public interface ContextMgr {
     Operator storeContext(Operator operator);
 
     /**
-     * Find <code>Province</code>s.
+     * Find <code>State</code>s.
      * 
      * @param form
      */
-	List<Province> findProvinces(ProvinceForm form);
+	List<State> findStates(StateForm form);
 	
     /**
-     * Store <code>Province</code> to the data store.
+     * Store <code>State</code> to the data store.
      * 
-     * @param province
+     * @param state
      */
-	Province storeProvince(Province province);
+	State storeState(State state);
 	
     /**
      * Find <code>Entity</code> in the current context.
@@ -174,4 +176,18 @@ public interface ContextMgr {
 	 */
 	Map<String, String> loadServiceNameMap(Operator operator, UserRole userRole);
 
+    /**
+     * Find <code>Province</code>s.
+     * 
+     * @param form
+     */
+	List<Province> findProvinces(ProvinceForm form);
+	
+    /**
+     * Store <code>Province</code> to the data store.
+     * 
+     * @param province
+     */
+	Province storeProvince(Province province);
+	
 }

@@ -21,8 +21,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.base.AbstractKeyStringValue;
 import org.helianto.core.domain.KeyType;
+import org.helianto.core.internal.AbstractKeyStringValue;
 /**
  * Represents the relationship between the organization and other entities.  
  * 

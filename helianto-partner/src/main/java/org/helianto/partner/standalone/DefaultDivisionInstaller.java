@@ -18,8 +18,10 @@ package org.helianto.partner.standalone;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.base.AbstractAddress;
+import org.helianto.core.domain.City;
 import org.helianto.core.domain.Province;
+import org.helianto.core.internal.AbstractAddress;
+import org.helianto.core.repository.CityRepository;
 import org.helianto.core.repository.ProvinceRepository;
 import org.helianto.core.standalone.DefaultEntityInstaller;
 import org.helianto.core.standalone.NamespaceDefaults;
@@ -58,12 +60,12 @@ public class DefaultDivisionInstaller implements InitializingBean {
 		if (!(namespace instanceof ExtendedNamespaceDefaults)) {
 			throw new IllegalArgumentException("Requires extended namespace defaults");
 		}
-		Province province =  provinceRepository.findByOperatorAndProvinceCode(namespace.getDefaultEntity().getOperator(), getProvinceCode());
-		if (province==null) {
+		City city = cityRepository.findByContextAndCityCode(namespace.getDefaultEntity().getOperator(), partnerAddress.getCityCode());
+		if (city==null) {
 			throw new IllegalArgumentException("Requires valid province or city code");
 		}
-		getPartnerAddress().setProvince(province);
-		logger.debug("Default division province is {}.", province.getProvinceCode());
+		getPartnerAddress().setCity(city);
+		logger.debug("Default division province is {}.", city.getCityCode());
 		logger.debug("Ready to install default division with allias {} and name {}.", namespace.getDefaultEntity(), getPartnerName());
 		Division defaultDivision = partnerMgr.installDivision(namespace.getDefaultEntity(), getPartnerName(), getPartnerAddress(), reinstall);
 		((ExtendedNamespaceDefaults) namespace).setDefaultDivision(defaultDivision);
@@ -117,7 +119,7 @@ public class DefaultDivisionInstaller implements InitializingBean {
 	// collabs
 	protected NamespaceDefaults namespace;
 	private DefaultEntityInstaller defaultEntityInstaller;
-	private ProvinceRepository provinceRepository;
+	private CityRepository cityRepository;
 	private PartnerMgr partnerMgr; 
 
 	@Resource
@@ -131,8 +133,8 @@ public class DefaultDivisionInstaller implements InitializingBean {
 	}
 
 	@javax.annotation.Resource
-	public void setProvinceRepository(ProvinceRepository provinceRepository) {
-		this.provinceRepository = provinceRepository;
+	public void setCityRepository(CityRepository cityRepository) {
+		this.cityRepository = cityRepository;
 	}
 	
 	@javax.annotation.Resource(name="partnerMgr")

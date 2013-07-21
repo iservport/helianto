@@ -39,6 +39,8 @@ import org.helianto.core.domain.type.RootEntity;
  * Province may be extended to represent also a city.
  * </p>
  * 
+ * @deprecated
+ * @see State
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity

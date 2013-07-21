@@ -19,9 +19,9 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import org.helianto.core.Prioritizable;
 import org.helianto.core.def.ReferenceEnabled;
 import org.helianto.core.domain.Entity;
+import org.helianto.core.form.PriorityForm;
 import org.helianto.core.utils.StringListUtils;
 import org.helianto.document.Documentable;
 /**
@@ -35,7 +35,7 @@ public abstract class AbstractDocument
 	implements 
 	  Documentable
 	, ReferenceEnabled
-	, Prioritizable 
+	, PriorityForm 
 
 {
 

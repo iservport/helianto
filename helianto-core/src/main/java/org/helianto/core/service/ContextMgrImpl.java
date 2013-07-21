@@ -31,23 +31,27 @@ import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
+import org.helianto.core.domain.State;
 import org.helianto.core.filter.ContextEventFilterAdapter;
 import org.helianto.core.filter.EntityFormFilterAdapter;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.KeyTypeFormFilterAdapter;
 import org.helianto.core.filter.ProvinceFormFilterAdapter;
 import org.helianto.core.filter.ServiceFormFilterAdapter;
+import org.helianto.core.filter.StateFilterAdapter;
 import org.helianto.core.form.ContextEventForm;
 import org.helianto.core.form.EntityForm;
 import org.helianto.core.form.KeyTypeForm;
 import org.helianto.core.form.ProvinceForm;
 import org.helianto.core.form.ServiceForm;
+import org.helianto.core.form.StateForm;
 import org.helianto.core.repository.ContextEventRepository;
 import org.helianto.core.repository.ContextRepository;
 import org.helianto.core.repository.EntityRepository;
 import org.helianto.core.repository.KeyTypeRepository;
 import org.helianto.core.repository.ProvinceRepository;
 import org.helianto.core.repository.ServiceRepository;
+import org.helianto.core.repository.StateRepository;
 import org.helianto.user.domain.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,22 +80,15 @@ public class ContextMgrImpl
 	public Operator storeContext(Operator operator) {
 		return contextRepository.saveAndFlush(operator);
 	}
-
-	@Transactional(readOnly=true)
-	public List<Province> findProvinces(ProvinceForm form) {
-		Filter filter = new ProvinceFormFilterAdapter(form);
-    	List<Province> provinceList = (List<Province>) provinceRepository.find(filter);
-    	if (provinceList!=null && provinceList.size()>0) {
-        	logger.debug("Found province list of size {}", provinceList.size());
-    	}
-    	return provinceList;
-	}
-
-	@Transactional
-	public Province storeProvince(Province province) {
-		return provinceRepository.saveAndFlush(province);
+	
+	public List<State> findStates(StateForm form) {
+		return (List<State>) stateRepository.find(new StateFilterAdapter(form));
 	}
 	
+	public State storeState(State state) {
+		return stateRepository.saveAndFlush(state);
+	}
+
 	@Transactional(readOnly=true)
 	public Entity findOneEntity(String alias) {
 		return entityRepository.findByContextNameAndAlias("DEFAULT", alias);
@@ -193,16 +190,33 @@ public class ContextMgrImpl
 		return serviceNameMap;
 	}
 
+	@Transactional(readOnly=true)
+	public List<Province> findProvinces(ProvinceForm form) {
+		Filter filter = new ProvinceFormFilterAdapter(form);
+    	List<Province> provinceList = (List<Province>) provinceRepository.find(filter);
+    	if (provinceList!=null && provinceList.size()>0) {
+        	logger.debug("Found province list of size {}", provinceList.size());
+    	}
+    	return provinceList;
+	}
+
+	@Transactional
+	public Province storeProvince(Province province) {
+		return provinceRepository.saveAndFlush(province);
+	}
+	
 	// collabs
 	
 	private ContextRepository contextRepository;
-	private ProvinceRepository provinceRepository;
+	private StateRepository stateRepository;
 	private EntityRepository entityRepository;
 	private KeyTypeRepository keyTypeRepository;
 	private ServiceRepository serviceRepository;
 	private ContextEventRepository contextEventRepository;
 	private SequenceMgr sequenceMgr;
 	
+	private ProvinceRepository provinceRepository;
+
 	@Resource
 	public void setContextRepository(ContextRepository contextRepository) {
 		this.contextRepository = contextRepository;

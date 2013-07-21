@@ -7,9 +7,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
-import org.helianto.core.domain.Operator;
-import org.helianto.core.domain.Province;
-import org.helianto.core.domain.PublicAddress;
 import org.junit.Test;
 
 /**
@@ -28,11 +25,6 @@ public class PublicAddressTests {
 		assertSame(operator, publicAddress.getOperator());
 		assertEquals("POSTALCODE", publicAddress.getPostalCode());
 		
-		Province province = new Province(operator, "XX"); 
-		publicAddress = new PublicAddress(province, "POSTALCODE");
-		assertSame(operator, publicAddress.getOperator());
-		assertEquals("POSTALCODE", publicAddress.getPostalCode());
-		assertSame(province, publicAddress.getProvince());
 	}
 	
 	@Test

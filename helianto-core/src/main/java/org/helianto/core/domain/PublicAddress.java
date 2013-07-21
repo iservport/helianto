@@ -5,8 +5,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.domain.type.RootEntity;
+import org.helianto.core.internal.AbstractAddress;
 
 /**
  * Address databases in a common environment searchable by postal code.  
@@ -28,9 +28,7 @@ public class PublicAddress
 	 * Empty constructor.
 	 */
 	public PublicAddress() {
-		setAddress1("");
-		setAddress2("");
-		setPostalCode("");
+		super();
 	}
 
 	/**
@@ -46,14 +44,14 @@ public class PublicAddress
 	}
 	
 	/**
-	 * Province constructor.
+	 * State constructor.
 	 * 
-	 * @param operator
+	 * @param state
 	 * @param postalCode
 	 */
-	public PublicAddress(Province province, String postalCode) {
-		this(province.getOperator(), postalCode);
-		setProvince(province);
+	public PublicAddress(State state, String postalCode) {
+		this(state.getContext(), postalCode);
+		setState(state);
 	}
 	
 	/**

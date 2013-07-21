@@ -6,6 +6,7 @@ import org.helianto.core.domain.type.RootEntity;
 /**
  * Province form.
  * 
+ * @deprecated
  * @author mauriciofernandesdecastro
  */
 public interface ProvinceForm 

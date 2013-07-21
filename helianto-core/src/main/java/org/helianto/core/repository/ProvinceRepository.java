@@ -9,6 +9,8 @@ import org.helianto.core.domain.Province;
 /**
  * Province repository.
  * 
+ * @deprecated
+ * @see StateRepository
  * @author mauriciofernandesdecastro
  */
 public interface ProvinceRepository extends FilterRepository<Province, Serializable> {

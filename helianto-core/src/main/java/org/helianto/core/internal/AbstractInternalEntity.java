@@ -1,4 +1,4 @@
-package org.helianto.core.base;
+package org.helianto.core.internal;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.number.Internal;

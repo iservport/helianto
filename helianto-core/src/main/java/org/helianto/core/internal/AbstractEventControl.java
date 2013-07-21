@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.core.base;
+package org.helianto.core.internal;
 
 import java.util.Calendar;
 import java.util.Date;

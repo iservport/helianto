@@ -27,7 +27,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
-import org.helianto.core.BusinessAddress;
+import org.helianto.core.EntityAddress;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Phone;
 import org.helianto.core.domain.PublicEntity;
@@ -46,7 +46,7 @@ public class PrivateEntity
 	extends PublicEntity
 	implements 
 	  Sequenceable
-	, BusinessAddress {
+	, EntityAddress {
 
 	/**
 	 * Exposes the discriminator.
@@ -57,15 +57,9 @@ public class PrivateEntity
 	}
 
     private static final long serialVersionUID = 1L;
-//    private Entity entity; superclasse
     private PublicEntity publicEntity;
     private boolean autoNumber = false;
-//    private String partnerAlias; superclasse
     private long internalNumber;
-//    private String partnerName; superclasse
-//    private Phone mainPhone;
-//    private String mainEmail;
-//    private String nature; superclasse
     private String parsedContent;
     private Set<Partner> partners = new HashSet<Partner>(0);
     private Set<PrivateAddress> addresses = new HashSet<PrivateAddress>(0);

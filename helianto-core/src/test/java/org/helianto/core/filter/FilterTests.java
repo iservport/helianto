@@ -6,10 +6,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
-import org.helianto.core.Prioritizable;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.base.AbstractFilter;
+import org.helianto.core.form.PriorityForm;
 import org.helianto.core.test.EntityTestSupport;
 import org.junit.Before;
 import org.junit.Test;
@@ -131,7 +131,7 @@ public class FilterTests {
 	
 	@Test
 	public void appendPriorityRange() {
-		Prioritizable priorityFilter = new Prioritizable() {
+		PriorityForm priorityFilter = new PriorityForm() {
 			public char getPriority() { return '2'; }
 		};
 		filter.appendPriorityRange(priorityFilter, createdCriteriaBuilder);
@@ -220,7 +220,7 @@ public class FilterTests {
 		}
 		
 		@Override
-		protected void appendPriorityRange(Prioritizable sample, OrmCriteriaBuilder mainCriteriaBuilder) {
+		protected void appendPriorityRange(PriorityForm sample, OrmCriteriaBuilder mainCriteriaBuilder) {
 			super.appendPriorityRange(sample, mainCriteriaBuilder);
 		}
 		

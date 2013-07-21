@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.core.base;
+package org.helianto.core.internal;
 
 import java.io.Serializable;
 
@@ -27,7 +27,7 @@ import javax.persistence.Transient;
 
 import org.helianto.core.Address;
 import org.helianto.core.domain.City;
-import org.helianto.core.domain.Province;
+import org.helianto.core.domain.State;
 
 /**
  * Base class to instances having an Address.
@@ -44,7 +44,8 @@ public abstract class AbstractAddress
     private String addressClassifier = "";
     private String address2 = "";
     private String postalCode = "";
-    private Province province;
+    private State state;
+    private City city;
     private String cityName = "";
 
     private String addressNumber = "";
@@ -57,16 +58,6 @@ public abstract class AbstractAddress
 	 */
     public AbstractAddress() {
     	super();
-    }
-    
-    /** 
-     * Province constructor.
-     * 
-     * @param province
-	 */
-    public AbstractAddress(Province province) {
-    	this();
-        setProvince(province);
     }
     
     /**
@@ -112,14 +103,13 @@ public abstract class AbstractAddress
     }
 
     /**
-     * Convenience to chain a city or province.
+     * Convenience to chain a city.
      * 
-     * @param address1
-     * @param addressNumber
-     * @param addressDetail
+     * @param city
+     * @param postalCode
      */
-    public AbstractAddress appendCity(Province province, String postalCode) {
-        setProvince(province);
+    public AbstractAddress appendCity(City city, String postalCode) {
+        setCity(city);
         setPostalCode(postalCode);
         return this;
     }
@@ -180,113 +170,72 @@ public abstract class AbstractAddress
     }
 
     /**
-     * Province.
+     * State.
      */
     @ManyToOne
-    @JoinColumn(name="provinceId", nullable=true)
-    public Province getProvince() {
-        return this.province;
-    }
-    public void setProvince(Province province) {
-        this.province = province;
-    }
-    
-    /**
-     * <<Transient>> Convenience method to expose the city.
-     * 
-     * <p>
-     * Return null when {@link #getProvince()} is not an instance
-     * of the class <code>City</code>.
-     * </p>
-     */
-    @Transient
-    public City getCity() {
-    	if (getProvince() instanceof City) {
-    		return (City) getProvince();
-    	}
-    	return null;
-    }
-    
-    /**
-     * <<Transient>> Convenience method to expose the parent province.
-     * 
-     * <p>
-     * Return null when {@link #getProvince()} is not an instance
-     * of the class <code>City</code>.
-     * </p>
-     */
-    @Transient
-    public Province getParentProvince() {
+    @JoinColumn(name="stateId")
+    public State getState() {
     	if (getCity()!=null) {
-    		return getCity().getParent();
+    		return getCity().getState();
     	}
-    	return null;
-    }
+		return state;
+	}
+    public void setState(State state) {
+		this.state = state;
+	}
     
     /**
-     * <<Transient>> Convenience method to expose the province code.
-     * 
-     * <p>
-     * Select the most appropriate code based on {@link #getProvince()}.
-     * </p>
+     * <<Transient>> Convenience method to expose the state code.
      */
     @Transient
-    public String getProvinceCode() {
-    	if (getParentProvince()!=null) {
-    		return getParentProvince().getProvinceCode();
-    	}
-    	if (getProvince()!=null) {
-    		return getProvince().getProvinceCode();
+    public String getStateCode() {
+    	if (getState()!=null) {
+    		return getState().getStateCode();
     	}
     	return "";
     }
     
     /**
-     * <<Transient>> Convenience method to expose the province name.
-     * 
-     * <p>
-     * Select the most appropriate code based on {@link #getProvince()}.
-     * </p>
+     * <<Transient>> Convenience method to expose the state name.
      */
     @Transient
-    public String getProvinceName() {
-    	if (getParentProvince()!=null) {
-    		return getParentProvince().getProvinceName();
-    	}
-    	if (getProvince()!=null) {
-    		return getProvince().getProvinceName();
+    public String getStateName() {
+    	if (getState()!=null) {
+    		return getState().getStateName();
     	}
     	return "";
     }
+    
+    /**
+     * City.
+     */
+    @ManyToOne
+    @JoinColumn(name="cityId")
+    public City getCity() {
+		return city;
+	}
+    public void setCity(City city) {
+		this.city = city;
+	}
     
     /**
      * <<Transient>> Convenience method to expose the city code.
-     * 
-     * <p>
-     * Select the most appropriate code based on {@link #getCity()}.
-     * </p>
      */
     @Transient
     public String getCityCode() {
     	if (getCity()!=null) {
-    		return getCity().getProvinceCode();
+    		return getCity().getCityCode();
     	}
     	return "";
     }
     
     /**
      * The city name.
-     * 
-     * <p>
-     * Invokes {@link #getCity()} to return either the actual content from the <code>cityName</code> field or 
-     * the corresponding property when {@link #getProvince()} is an instance
-     * of the class <code>City</code>.
-     * </p>
      */
-    @Column(length=32)
+    @Column(length=64)
     public String getCityName() {
     	if (getCity()!=null) {
-    		return getCity().getProvinceName();
+    		return getCity().getCityName();
     	}
         return this.cityName;
     }

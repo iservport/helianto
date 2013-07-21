@@ -19,10 +19,10 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.helianto.core.BusinessAddress;
-import org.helianto.core.base.AbstractAddress;
+import org.helianto.core.EntityAddress;
 import org.helianto.core.def.PhoneType;
 import org.helianto.core.domain.type.RootEntity;
+import org.helianto.core.internal.AbstractAddress;
 
 /**
  * A registry for public entities.
@@ -39,7 +39,7 @@ public class PublicEntity
 	extends AbstractAddress 
 	implements 
 	  RootEntity
-	, BusinessAddress {
+	, EntityAddress {
 	
 	/**
 	 * Exposes the discriminator.
@@ -52,12 +52,11 @@ public class PublicEntity
 	private static final long serialVersionUID = 1L;
 	private int version;
 	private Entity entity;
-	private String entityAlias;
-//	private Identity newEntityManager; retirar se possível
-	private String entityName;
-    private String nature;
+	private String entityAlias = "";
+	private String entityName = "";
+    private String nature = "";
     private Phone mainPhone;
-    private String mainEmail;
+    private String mainEmail = "";
 	private Set<PublicEntityKey> publicEntityKeys = new HashSet<PublicEntityKey>();
 
 	/**
@@ -65,8 +64,6 @@ public class PublicEntity
 	 */
 	public PublicEntity() {
 		super();
-//		setPublicEntityTypeEnum(PublicEntityType.NOT_INFORMED);
-//		setPublicEntityVisibility(PublicEntityVisibility.REGISTERED);
 		setMainPhone(new Phone());
 		setMainEmail("");
 	}
@@ -156,34 +153,6 @@ public class PublicEntity
 	protected String getInternalEntityAlias() {
 		return entityAlias;
 	}
-	
-//	/**
-//	 * <<Transient>> Should be used only to install a new Entity.
-//	 * 
-//	 * @see PublicEntity#isEntityInstalled()
-//	 */
-//	@Transient
-//	public Identity getNewEntityManager() {
-//		return newEntityManager;
-//	}
-//	public void setNewEntityManager(Identity newEntityManager) {
-//		this.newEntityManager = newEntityManager;
-//	}
-//	
-//	/**
-//	 * <<Transient>> Should be used only to install a new Entity.
-//	 * 
-//	 * @see PublicEntity#isEntityInstalled()
-//	 */
-//	@Transient
-//	public boolean preProcessEntityInstallation() {
-//		if (!isEntityInstalled()) {
-////			getEntity().setAlias(getNewEntityAlias());
-//			getEntity().setManager(getNewEntityManager());
-//			return true;
-//		}
-//		return false;
-//	}
 	
 	/**
 	 * Entity name.
@@ -370,7 +339,7 @@ public class PublicEntity
 			setAddress1(publicAddress.getAddress1());
 			setAddress2(publicAddress.getAddress2());
 			setPostalCode(publicAddress.getPostalCode());
-			setProvince(publicAddress.getProvince());
+			setCity(publicAddress.getCity());
 		}
 	}
 	

@@ -50,27 +50,6 @@ public abstract class AbstractFilterAdapter<F>
 		this.form = form;
 	}
 	
-	// TODO implement this later
-	
-//	/**
-//	 * True if the form is assignable from ParentForm.
-//	 */
-//	@Override
-//	protected boolean hasParentCriterion() {
-//		if (ParentForm.class.isAssignableFrom(getForm().getClass())) {
-//			return true;
-//		}
-//		return super.hasParentCriterion();
-//	}
-//		
-//	@Override
-//	public void preProcessParentFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-//		mainCriteriaBuilder.appendAnd(hasPolimorphicCriterion());
-//		appendEqualFilter(new StringBuilder(((ParentForm<?>) getForm()).getParentName()).append(".id").toString(), 
-//				((ParentForm<?>) getForm()).getParentId(), mainCriteriaBuilder);
-//	}
-	
-	
 	/**
 	 * True if the form is assignable from TypeForm.
 	 */
@@ -126,6 +105,22 @@ public abstract class AbstractFilterAdapter<F>
 			return (SearchForm) getForm();
 		}
 		return null;
+	}
+	
+	@Override
+	public boolean isSelection() {
+		return isSelection(getForm());
+	}
+	
+    /**
+     * When true, switch filter to SELECT mode.
+     * 
+     * <p>
+     * Convenient when filter properties correspond to the natural key. By default, filters do not return an unique result.
+     * </p>
+     */
+	public boolean isSelection(F form) {
+		return false;
 	}
 	
 	@Override

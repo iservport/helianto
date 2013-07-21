@@ -22,10 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
-import org.helianto.core.base.AbstractAddress;
-import org.helianto.core.domain.City;
-import org.helianto.core.domain.Operator;
-import org.helianto.core.domain.Province;
+import org.helianto.core.internal.AbstractAddress;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -50,39 +47,36 @@ public class AddressTests {
 	}
 
 	@Test
-	public void nullProvince() {
-		assertNull(address.getProvince());
-		assertEquals("", address.getProvinceCode());
-		assertEquals("", address.getProvinceName());
+	public void nullCity() {
 		assertNull(address.getCity());
-		assertNull(address.getParentProvince());
+		assertEquals("", address.getCityCode());
 		assertEquals("", address.getCityName());
+		assertNull(address.getState());
+		assertEquals("", address.getStateName());
 	}
 	
 	@Test
-	public void hasProvince() {
+	public void hasState() {
 		Operator operator = new Operator("DEFAULT");
-		Province province = new Province(operator , "PROVINCECODE", "PROVINCENAME");
-		address.setProvince(province);
-		assertSame(province, address.getProvince());
-		assertEquals("PROVINCECODE", address.getProvinceCode());
-		assertEquals("PROVINCENAME", address.getProvinceName());
+		State state = new State(operator , "CODE", "NAME");
+		address.setState(state);
+		assertSame(state, address.getState());
+		assertEquals("CODE", address.getStateCode());
+		assertEquals("NAME", address.getStateName());
 		assertNull(address.getCity());
-		assertNull(address.getParentProvince());
-		assertEquals("", address.getCityName());
 	}
 	
 	@Test
 	public void hasCity() {
 		Operator operator = new Operator("DEFAULT");
-		Province province = new Province(operator , "PROVINCECODE", "PROVINCENAME");
-		City city = new City("CITYCODE", "CITYNAME", province);
-		address.setProvince(city);
-		assertSame(city, address.getProvince());
+		State state = new State(operator , "CODE", "NAME");
+		City city = new City(state, "CITYCODE", "CITYNAME");
+		address.setCity(city);
+		assertSame(state, address.getState());
 		assertSame(city, address.getCity());
-		assertEquals("PROVINCECODE", address.getProvinceCode());
-		assertEquals("PROVINCENAME", address.getProvinceName());
-		assertSame(province, address.getParentProvince());
+		assertEquals("CODE", address.getStateCode());
+		assertEquals("NAME", address.getStateName());
+		assertEquals("CITYCODE", address.getCityCode());
 		assertEquals("CITYNAME", address.getCityName());
 	}
 	

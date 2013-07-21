@@ -14,11 +14,13 @@
  */
 
 
-package org.helianto.core.filter;
+package org.helianto.core.filter.classic;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
+import org.helianto.core.filter.ParentFilter;
+import org.helianto.core.filter.ProvinceFormFilterAdapter;
 import org.helianto.core.filter.base.AbstractRootFilterAdapter;
 
 /**

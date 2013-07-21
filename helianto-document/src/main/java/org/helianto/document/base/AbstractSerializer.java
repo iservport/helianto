@@ -21,8 +21,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.OneToMany;
 
-import org.helianto.core.base.AbstractFolder;
 import org.helianto.core.domain.Entity;
+import org.helianto.core.internal.AbstractFolder;
 
 /**
  * Base class to wrap a number pattern to be used to generate a sequence of documents.

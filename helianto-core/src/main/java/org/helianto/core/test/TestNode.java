@@ -19,7 +19,7 @@ package org.helianto.core.test;
 import java.util.List;
 
 import org.helianto.core.Node;
-import org.helianto.core.base.AbstractNode;
+import org.helianto.core.internal.AbstractNode;
 
 /**
  * Simple test node.

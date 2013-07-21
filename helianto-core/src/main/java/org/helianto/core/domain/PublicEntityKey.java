@@ -21,7 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.base.AbstractKeyStringValue;
+import org.helianto.core.internal.AbstractKeyStringValue;
 /**
  * The content of a key associated to the public entity.
  * 

@@ -14,7 +14,7 @@
  */
 
 
-package org.helianto.core.base;
+package org.helianto.core.internal;
 
 import java.io.Serializable;
 

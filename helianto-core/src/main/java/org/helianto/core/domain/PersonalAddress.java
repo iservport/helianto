@@ -7,9 +7,9 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.helianto.core.base.AbstractAddress;
 import org.helianto.core.def.AddressType;
 import org.helianto.core.form.PersonalForm;
+import org.helianto.core.internal.AbstractAddress;
 
 
 /**

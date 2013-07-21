@@ -20,8 +20,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.base.AbstractEnumerator;
 import org.helianto.core.domain.type.RootEntity;
+import org.helianto.core.internal.AbstractEnumerator;
 /**
  * A class to hold last value for public number lists.
  * 

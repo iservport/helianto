@@ -32,10 +32,10 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Programmable;
 import org.helianto.core.PropertyMappable;
-import org.helianto.core.base.AbstractHumanReadable;
 import org.helianto.core.def.CategoryGroup;
 import org.helianto.core.def.ReferenceEnabled;
 import org.helianto.core.domain.type.TrunkEntity;
+import org.helianto.core.internal.AbstractHumanReadable;
 import org.helianto.core.utils.StringListUtils;
 
 /**

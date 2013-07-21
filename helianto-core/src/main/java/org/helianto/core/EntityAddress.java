@@ -5,15 +5,15 @@ import org.helianto.core.domain.Phone;
 
 
 /**
- * General business unit interface.
+ * General entity address interface.
  * 
  * @author mauriciofernandesdecastro
  */
-public interface BusinessAddress 
+public interface EntityAddress 
 	extends Address {
 	
 	/**
-	 * Alias to uniquely identify the business unit within a context.
+	 * Alias to uniquely identify the entity within a context.
 	 */
 	String getEntityAlias();
 	

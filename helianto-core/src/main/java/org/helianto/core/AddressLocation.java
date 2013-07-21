@@ -1,6 +1,6 @@
 package org.helianto.core;
 
-import org.helianto.core.domain.Province;
+import org.helianto.core.domain.City;
 
 
 /**
@@ -11,18 +11,13 @@ import org.helianto.core.domain.Province;
 public interface AddressLocation {
 
     /**
+     * City.
+     */
+    City getCity();
+
+    /**
      * Postal code.
      */
     String getPostalCode();
-
-    /**
-     * Province or a descendant class like City.
-     */
-    Province getProvince();
-
-    /**
-     * City name.
-     */
-    String getCityName();
 
 }

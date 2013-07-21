@@ -24,12 +24,14 @@ import javax.annotation.Resource;
 
 import org.helianto.core.ContextMgr;
 import org.helianto.core.SequenceMgr;
-import org.helianto.core.base.AbstractAddress;
+import org.helianto.core.domain.City;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.internal.AbstractAddress;
+import org.helianto.core.repository.CityRepository;
 import org.helianto.core.repository.ProvinceRepository;
 import org.helianto.core.utils.AddressUtils;
 import org.helianto.partner.PartnerMgr;
@@ -280,12 +282,12 @@ public class PartnerMgrImpl implements PartnerMgr {
 			privateEntity = new PrivateEntity(entity, partnerAlias);
 			privateEntity.setEntityName(entityName);
 			AddressUtils.copyAddress(partnerAddress, privateEntity);
-			Province province = provinceRepository.findByOperatorAndProvinceCode(entity.getOperator(), partnerAddress.getProvinceCode());
-			if (province==null) {
-				logger.error("A province was not found in database for {}, please, install first.", partnerAddress.getProvinceCode());
+			City city = cityRepository.findByContextAndCityCode(entity.getOperator(), partnerAddress.getCityCode());
+			if (city==null) {
+				logger.error("A province was not found in database for {}, please, install first.", partnerAddress.getCityCode());
 				throw new IllegalArgumentException("A province is required here.");
 			}
-			privateEntity.setProvince(province);
+			privateEntity.setCity(city);
 			privateEntity = privateEntityRepository.saveAndFlush(privateEntity);
 		}
 		else {
@@ -311,12 +313,12 @@ public class PartnerMgrImpl implements PartnerMgr {
 			privateEntity = new PrivateEntity(entity, partnerAlias);
 			privateEntity.setEntityName(entityName);
 			AddressUtils.copyAddress(partnerAddress, privateEntity);
-			Province province = provinceRepository.findByOperatorAndProvinceCode(entity.getOperator(), partnerAddress.getProvinceCode());
-			if (province==null) {
-				logger.error("A province was not found in database for {}, please, install first.", partnerAddress.getProvinceCode());
+			City city = cityRepository.findByContextAndCityCode(entity.getOperator(), partnerAddress.getCityCode());
+			if (city==null) {
+				logger.error("A province was not found in database for {}, please, install first.", partnerAddress.getCityCode());
 				throw new IllegalArgumentException("A province is required here.");
 			}
-			privateEntity.setProvince(partnerAddress.getProvince());
+			privateEntity.setCity(partnerAddress.getCity());
 			privateEntity = privateEntityRepository.saveAndFlush(privateEntity);
 		}
 		else {
@@ -432,7 +434,7 @@ public class PartnerMgrImpl implements PartnerMgr {
     private PrivateAddressRepository privateAddressRepository;
     private PrivateEntityKeyRepository privateEntityKeyRepository;
     private PartnerKeyRepository partnerKeyRepository;
-    private ProvinceRepository provinceRepository;
+    private CityRepository cityRepository;
     private PartnerPhoneRepository partnerPhoneRepository;
     private PartnerCategoryRepository partnerCategoryRepository;
     private UserRepository userRepository;
@@ -471,8 +473,8 @@ public class PartnerMgrImpl implements PartnerMgr {
 }
     
     @Resource
-    public void setProvinceRepository(ProvinceRepository provinceRepository) {
-		this.provinceRepository = provinceRepository;
+    public void setCityRepository(CityRepository cityRepository) {
+		this.cityRepository = cityRepository;
 	}
     
     @Resource
