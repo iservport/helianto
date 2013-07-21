@@ -1,4 +1,4 @@
-package org.helianto.core;
+package org.helianto.core.domain;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.helianto.core.Programmable;
 import org.helianto.core.def.CategoryGroup;
 import org.helianto.core.def.HumanReadable;
 import org.helianto.core.domain.Category;

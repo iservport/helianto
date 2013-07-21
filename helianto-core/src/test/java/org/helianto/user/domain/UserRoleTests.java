@@ -1,4 +1,4 @@
-package org.helianto.core;
+package org.helianto.user.domain;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
