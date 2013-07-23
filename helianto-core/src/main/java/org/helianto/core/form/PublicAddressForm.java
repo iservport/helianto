@@ -1,6 +1,5 @@
 package org.helianto.core.form;
 
-import org.helianto.core.domain.Province;
 import org.helianto.core.domain.type.RootEntity;
 
 /**
@@ -8,12 +7,11 @@ import org.helianto.core.domain.type.RootEntity;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface PublicAddressForm extends RootEntity {
-	
-	/**
-	 * Province code filter.
-	 */
-	Province getProvince();
+public interface PublicAddressForm 
+	extends RootEntity
+	, StateForm
+	, CityForm 
+{
 	
 	/**
 	 * Postal code filter.

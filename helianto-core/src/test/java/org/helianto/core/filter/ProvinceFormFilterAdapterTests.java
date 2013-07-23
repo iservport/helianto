@@ -19,11 +19,11 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
-import org.helianto.core.form.CompositeContextForm;
 import org.helianto.core.form.ProvinceForm;
-import org.helianto.core.form.internal.AbstractSearchForm;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * 
@@ -48,25 +48,25 @@ public class ProvinceFormFilterAdapterTests  {
     
     @Test
     public void type() {
-    	form.setType('C');
+    	Mockito.when(form.getType()).thenReturn('C');
         assertEquals(C1+C0+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void select() {
-    	((CompositeContextForm) form).setProvinceCode("CODE");
+    	Mockito.when(form.getProvinceCode()).thenReturn("CODE");
         assertEquals(C0+C2, filter.createCriteriaAsString());
     }
     
     @Test
     public void search() {
-    	((AbstractSearchForm) form).setSearchString("NAME_LIKE");
+    	Mockito.when(form.getSearchString()).thenReturn("NAME_LIKE");
         assertEquals(C0+C3+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void stateCode() {
-    	((CompositeContextForm) form).setStateCode("XX");
+    	Mockito.when(form.getStateCode()).thenReturn("XX");
         assertEquals(C0+C4+OB, filter.createCriteriaAsString());
     }
     
@@ -74,13 +74,13 @@ public class ProvinceFormFilterAdapterTests  {
     public void parent() {
     	Province parent = new Province(form.getOperator(), "PARENT");
     	parent.setId(1);
-    	((CompositeContextForm) form).setParentProvince(parent);
+    	Mockito.when(form.getParentProvince()).thenReturn(parent);
         assertEquals(C0+C5+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void operatorName() {
-    	((CompositeContextForm) form).setContextName("OPERATOR");
+    	Mockito.when(form.getContextName()).thenReturn("OPERATOR");
         assertEquals(C0+C6+OB, filter.createCriteriaAsString());
     }
     
@@ -93,8 +93,14 @@ public class ProvinceFormFilterAdapterTests  {
     public void setUp() {
     	Operator operator = new Operator("DEFAULT");
     	operator.setId(1);
-    	form = new CompositeContextForm(operator);
+    	form = Mockito.mock(ProvinceForm.class);
     	filter = new ProvinceFormFilterAdapter(form);
+    	Mockito.when(form.getOperator()).thenReturn(operator);
+    }
+    
+    @After
+    public void tearDown() {
+    	Mockito.reset(form);
     }
     
 }

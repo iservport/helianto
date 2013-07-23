@@ -9,7 +9,7 @@ import org.helianto.core.form.PublicAddressForm;
  * 
  * @author Maurício Fernandes de Castro
  */
-public class PublicAddressFormFilterAdapter extends AbstractRootFilterAdapter<PublicAddressForm> {
+public class PublicAddressFilterAdapter extends AbstractRootFilterAdapter<PublicAddressForm> {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -18,28 +18,24 @@ public class PublicAddressFormFilterAdapter extends AbstractRootFilterAdapter<Pu
 	 * 
 	 * @param form
 	 */
-	public PublicAddressFormFilterAdapter(PublicAddressForm form) {
+	public PublicAddressFilterAdapter(PublicAddressForm form) {
 		super(form);
 	}
 	
 	/**
 	 * True (return a single <code>PostalCodeAddressDatabase<code> instance) if
-	 * the posta code filter has content.
+	 * the postal code filter has content.
 	 */
 	@Override
 	public boolean isSelection() {
-		return getForm().getPostalCode()!=null && getForm().getPostalCode().length()>0;
+		return super.isSelection() && isEnabled(getForm().getPostalCode());
 	}
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		if (getForm().getProvince()!=null) {
-			appendEqualFilter("province.id", getForm().getProvince().getId(), mainCriteriaBuilder);
-		}
-		else {
-			appendEqualFilter("province.provinceCode", getForm().getProvinceCode(), mainCriteriaBuilder);
-		}
-//		appendLikeFilter("address1", getAddressLike(), mainCriteriaBuilder);
+		appendEqualFilter("state.id", getForm().getStateId(), mainCriteriaBuilder);
+		appendEqualFilter("state.stateCode", getForm().getStateCode(), mainCriteriaBuilder);
+		appendEqualFilter("city.cityCode", getForm().getCityCode(), mainCriteriaBuilder);
 	}
 	
 	/**
@@ -57,7 +53,7 @@ public class PublicAddressFormFilterAdapter extends AbstractRootFilterAdapter<Pu
 	
 	@Override
 	public String getOrderByString() {
-		return "province.provinceCode ASC,address1 ASC ";
+		return "province.postalCode ASC";
 	}
 
 }

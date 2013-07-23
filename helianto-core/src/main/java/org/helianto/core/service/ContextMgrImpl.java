@@ -25,6 +25,7 @@ import javax.annotation.Resource;
 
 import org.helianto.core.ContextMgr;
 import org.helianto.core.SequenceMgr;
+import org.helianto.core.domain.City;
 import org.helianto.core.domain.ContextEvent;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.KeyType;
@@ -32,6 +33,7 @@ import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
 import org.helianto.core.domain.State;
+import org.helianto.core.filter.CityFilterAdapter;
 import org.helianto.core.filter.ContextEventFilterAdapter;
 import org.helianto.core.filter.EntityFormFilterAdapter;
 import org.helianto.core.filter.Filter;
@@ -39,12 +41,14 @@ import org.helianto.core.filter.KeyTypeFormFilterAdapter;
 import org.helianto.core.filter.ProvinceFormFilterAdapter;
 import org.helianto.core.filter.ServiceFormFilterAdapter;
 import org.helianto.core.filter.StateFilterAdapter;
+import org.helianto.core.form.CityForm;
 import org.helianto.core.form.ContextEventForm;
 import org.helianto.core.form.EntityForm;
 import org.helianto.core.form.KeyTypeForm;
 import org.helianto.core.form.ProvinceForm;
 import org.helianto.core.form.ServiceForm;
 import org.helianto.core.form.StateForm;
+import org.helianto.core.repository.CityRepository;
 import org.helianto.core.repository.ContextEventRepository;
 import org.helianto.core.repository.ContextRepository;
 import org.helianto.core.repository.EntityRepository;
@@ -55,6 +59,8 @@ import org.helianto.core.repository.StateRepository;
 import org.helianto.user.domain.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -81,12 +87,28 @@ public class ContextMgrImpl
 		return contextRepository.saveAndFlush(operator);
 	}
 	
+	public List<State> findStates(Operator context) {
+		return (List<State>) stateRepository.findByContext(context, new Sort(Direction.ASC, "stateName"));
+	}
+	
 	public List<State> findStates(StateForm form) {
 		return (List<State>) stateRepository.find(new StateFilterAdapter(form));
 	}
 	
 	public State storeState(State state) {
 		return stateRepository.saveAndFlush(state);
+	}
+
+	public List<City> findCities(State state) {
+		return (List<City>) cityRepository.findByState(state, new Sort(Direction.ASC, "cityName"));
+	}
+	
+	public List<City> findCities(CityForm form) {
+		return (List<City>) cityRepository.find(new CityFilterAdapter(form));
+	}
+	
+	public City storeCity(City city) {
+		return cityRepository.saveAndFlush(city);
 	}
 
 	@Transactional(readOnly=true)
@@ -209,6 +231,7 @@ public class ContextMgrImpl
 	
 	private ContextRepository contextRepository;
 	private StateRepository stateRepository;
+	private CityRepository cityRepository;
 	private EntityRepository entityRepository;
 	private KeyTypeRepository keyTypeRepository;
 	private ServiceRepository serviceRepository;
@@ -221,10 +244,15 @@ public class ContextMgrImpl
 	public void setContextRepository(ContextRepository contextRepository) {
 		this.contextRepository = contextRepository;
 	}
-
-    @Resource
-    public void setProvinceRepository(ProvinceRepository provinceRepository) {
-		this.provinceRepository = provinceRepository;
+	
+	@Resource
+	public void setStateRepository(StateRepository stateRepository) {
+		this.stateRepository = stateRepository;
+	}
+	
+	@Resource
+	public void setCityRepository(CityRepository cityRepository) {
+		this.cityRepository = cityRepository;
 	}
 
     @Resource
@@ -252,6 +280,11 @@ public class ContextMgrImpl
 		this.sequenceMgr = sequenceMgr;
 	}
     
+    @Resource
+    public void setProvinceRepository(ProvinceRepository provinceRepository) {
+		this.provinceRepository = provinceRepository;
+	}
+
     private final Logger logger = LoggerFactory.getLogger(CategoryMgrImpl.class);
 
 }

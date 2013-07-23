@@ -13,7 +13,7 @@ import org.helianto.core.domain.PublicAddress;
 import org.helianto.core.domain.PublicEntity;
 import org.helianto.core.domain.PublicEntityKey;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.PublicAddressFormFilterAdapter;
+import org.helianto.core.filter.PublicAddressFilterAdapter;
 import org.helianto.core.filter.PublicEntityFormFilterAdapter;
 import org.helianto.core.form.CompositeEntityForm;
 import org.helianto.core.form.PublicAddressForm;
@@ -36,7 +36,7 @@ public class PublicEntityMgrImpl implements PublicEntityMgr {
 
 	@Transactional(readOnly=true)
 	public List<PublicAddress> findPublicAddress(PublicAddressForm form) {
-		Filter filter = new PublicAddressFormFilterAdapter(form);
+		Filter filter = new PublicAddressFilterAdapter(form);
 		List<PublicAddress> publicAddressList = (List<PublicAddress>) publicAddressRepository.find(filter);
 		if (publicAddressList!=null) {
 			logger.debug("Found {} public addresses.", publicAddressList.size());

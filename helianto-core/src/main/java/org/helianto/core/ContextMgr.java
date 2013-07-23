@@ -19,6 +19,7 @@ package org.helianto.core;
 import java.util.List;
 import java.util.Map;
 
+import org.helianto.core.domain.City;
 import org.helianto.core.domain.ContextEvent;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.KeyType;
@@ -26,6 +27,7 @@ import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
 import org.helianto.core.domain.State;
+import org.helianto.core.form.CityForm;
 import org.helianto.core.form.ContextEventForm;
 import org.helianto.core.form.EntityForm;
 import org.helianto.core.form.KeyTypeForm;
@@ -75,6 +77,13 @@ public interface ContextMgr {
     /**
      * Find <code>State</code>s.
      * 
+     * @param context
+     */
+	List<State> findStates(Operator context);
+	
+    /**
+     * Find <code>State</code>s.
+     * 
      * @param form
      */
 	List<State> findStates(StateForm form);
@@ -86,7 +95,28 @@ public interface ContextMgr {
      */
 	State storeState(State state);
 	
+	/**
+     * Find <code>City</code>.
+     * 
+     * @param state
+     */
+	List<City> findCities(State state);
+	
+	/**
+     * Find <code>City</code>.
+     * 
+     * @param form
+     */
+	List<City> findCities(CityForm form);
+	
     /**
+     * Store <code>City</code>.
+     * 
+     * @param city
+     */
+	City storeCity(City city);
+	
+	/**
      * Find <code>Entity</code> in the current context.
      * 
      * @param alias

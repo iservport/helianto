@@ -2,7 +2,7 @@ package org.helianto.core.form;
 
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
-import org.helianto.core.form.internal.AbstractRootForm;
+import org.helianto.core.form.internal.AbstractAddressForm;
 
 /**
  * Composite operator form.
@@ -11,9 +11,9 @@ import org.helianto.core.form.internal.AbstractRootForm;
  *
  */
 public class CompositeContextForm 
-	extends AbstractRootForm 
+	extends AbstractAddressForm 
 	implements 
-	  ProvinceForm
+	  ContextForm
 	, PublicAddressForm
 	, Cloneable {
 
@@ -23,8 +23,6 @@ public class CompositeContextForm
     private Province province;
     private Province parentProvince;
     private String provinceCode;
-    private String stateCode;
-    private String cityCode;
 	private String postalCode;
 	private boolean selection = false;
     
@@ -83,20 +81,6 @@ public class CompositeContextForm
     public void setProvinceCode(String provinceCode) {
         this.provinceCode = provinceCode;
     }
-    
-    public String getStateCode() {
-		return stateCode;
-	}
-    public void setStateCode(String stateCode) {
-		this.stateCode = stateCode;
-	}
-    
-    public String getCityCode() {
-		return cityCode;
-	}
-    public void setCityCode(String cityCode) {
-		this.cityCode = cityCode;
-	}
     
 	public String getPostalCode() {
 		return postalCode;

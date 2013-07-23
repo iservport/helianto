@@ -3,7 +3,7 @@ package org.helianto.core.form;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
-import org.helianto.core.form.internal.AbstractTrunkForm;
+import org.helianto.core.form.internal.AbstractAddressForm;
 
 /**
  * Composite entity form.
@@ -11,28 +11,26 @@ import org.helianto.core.form.internal.AbstractTrunkForm;
  * @author mauriciofernandesdecastro
  */
 public class CompositeEntityForm 
-	extends AbstractTrunkForm
+	extends AbstractAddressForm
 	implements 
 	  EntityForm
 	, PublicEntityForm
 	, PublicAddressForm
 	, KeyTypeForm
-	, Cloneable
-	
-{
+	, Cloneable {
 
 	private static final long serialVersionUID = 1L;
-	private Operator operator;
+	private Entity entity;
 	private char type;
-	private String entityName;
-	private String entityAlias;
-	private String entityAliasLike;
+	private String entityName = "";
+	private String entityAlias = "";
+	private String entityAliasLike = "";
 	private char publicEntityType;
 	private Province province;
-	private String provinceCode;
-	private String postalCode;
-	private String keyCode;
-	private String keyName;
+	private String provinceCode = "";
+	private String postalCode = "";
+	private String keyCode = "";
+	private String keyName = "";
 	private char activityState;
 	private char nature;
 	
@@ -83,18 +81,13 @@ public class CompositeEntityForm
 		setKeyCode(keyCode);
 	}
 	
-	public void reset() {
-		setPublicEntityType(' ');
-		setEntityAliasLike("");
+	public Entity getEntity() {
+		return entity;
 	}
-	
-	public Operator getOperator() {
-		return operator;
+	public void setEntity(Entity entity) {
+		this.entity = entity;
 	}
-	public void setOperator(Operator operator) {
-		this.operator = operator;
-	}
-	
+
 	public char getType() {
 		return type;
 	}

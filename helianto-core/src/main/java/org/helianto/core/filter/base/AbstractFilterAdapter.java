@@ -24,6 +24,33 @@ public abstract class AbstractFilterAdapter<F>
 	
 	private static final long serialVersionUID = 1L;
 	private F form; 
+	
+	/**
+	 * True if field is not null and not empty.
+	 * 
+	 * @param field
+	 */
+	protected boolean isEnabled(String field) {
+		return field!=null && field.length()>0;
+	}
+
+	/**
+	 * True if field has a meaningful character.
+	 * 
+	 * @param field
+	 */
+	protected boolean isEnabled(char field) {
+		return field>0 || field != ' ' || field != '-';
+	}
+
+	/**
+	 * True if field is positive.
+	 * 
+	 * @param field
+	 */
+	protected boolean isEnabled(long field) {
+		return field>0;
+	}
 
 	/**
 	 * Constructor.

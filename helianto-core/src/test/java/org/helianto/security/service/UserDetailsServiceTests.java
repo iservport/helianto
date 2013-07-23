@@ -9,9 +9,9 @@ import java.util.Set;
 
 import org.easymock.EasyMock;
 import org.helianto.core.SecurityMgr;
-import org.helianto.core.domain.IdentitySecurity;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.IdentitySecurity;
 import org.helianto.core.repository.IdentitySecurityRepository;
 import org.helianto.core.security.UserSelectorStrategy;
 import org.helianto.user.domain.User;
