@@ -103,6 +103,10 @@ public class ContextMgrImpl
 		return (List<City>) cityRepository.findByState(state, new Sort(Direction.ASC, "cityName"));
 	}
 	
+	public List<City> findCities(Operator context, String stateCode) {
+		return (List<City>) cityRepository.findByContextAndStateStateCode(context, stateCode, new Sort(Direction.ASC, "cityName"));
+	}
+	
 	public List<City> findCities(CityForm form) {
 		return (List<City>) cityRepository.find(new CityFilterAdapter(form));
 	}

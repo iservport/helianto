@@ -61,6 +61,7 @@ public class CityFilterAdapter extends AbstractContextFilterAdapter<CityForm> {
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		doSelect(mainCriteriaBuilder);
+		appendEqualFilter("state.stateCode", getForm().getStateCode(), mainCriteriaBuilder);
 		appendEqualFilter("state.id", getForm().getStateId(), mainCriteriaBuilder);
 		appendEqualFilter("priority", getForm().getPriority(), mainCriteriaBuilder);
 	}

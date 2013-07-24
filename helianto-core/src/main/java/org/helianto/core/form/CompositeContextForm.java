@@ -27,12 +27,19 @@ public class CompositeContextForm
 	private boolean selection = false;
     
     /**
+     * Default constructor.
+     */
+    public CompositeContextForm() {
+    	super();
+	}
+    
+    /**
      * Operator constructor.
      * 
      * @param operator
      */
     public CompositeContextForm(Operator operator) {
-    	super();
+    	this();
 		setOperator(operator);
 	}
     

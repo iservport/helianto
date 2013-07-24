@@ -16,6 +16,11 @@ public interface CityForm
 	String getCityCode();
 	
 	/**
+	 * State code.
+	 */
+	String getStateCode();
+
+	/**
 	 * State id.
 	 */
 	int getStateId();

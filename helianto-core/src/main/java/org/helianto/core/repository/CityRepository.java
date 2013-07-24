@@ -25,6 +25,15 @@ public interface CityRepository extends FilterRepository<City, Serializable> {
 	City findByContextAndCityCode(Operator context, String cityCode);
 	
 	/**
+	 * Find by state code.
+	 * 
+	 * @param context
+	 * @param state
+	 * @param sort
+	 */
+	List<City> findByContextAndStateStateCode(Operator context, String stateCode, Sort sort);
+	
+	/**
 	 * Find by state.
 	 * 
 	 * @param state

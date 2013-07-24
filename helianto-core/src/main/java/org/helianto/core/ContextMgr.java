@@ -105,6 +105,14 @@ public interface ContextMgr {
 	/**
      * Find <code>City</code>.
      * 
+     * @param context
+     * @param stateCode
+     */
+	List<City> findCities(Operator context, String stateCode);
+	
+	/**
+     * Find <code>City</code>.
+     * 
      * @param form
      */
 	List<City> findCities(CityForm form);
