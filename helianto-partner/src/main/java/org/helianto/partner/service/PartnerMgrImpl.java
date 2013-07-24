@@ -28,11 +28,9 @@ import org.helianto.core.domain.City;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Operator;
-import org.helianto.core.domain.Province;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.internal.AbstractAddress;
 import org.helianto.core.repository.CityRepository;
-import org.helianto.core.repository.ProvinceRepository;
 import org.helianto.core.utils.AddressUtils;
 import org.helianto.partner.PartnerMgr;
 import org.helianto.partner.PartnerState;
@@ -68,6 +66,7 @@ import org.helianto.partner.form.PrivateAddressForm;
 import org.helianto.partner.form.PrivateEntityForm;
 import org.helianto.partner.form.PrivateEntityKeyForm;
 import org.helianto.partner.form.PrivateSegmentForm;
+import org.helianto.partner.repository.ContactGroupRepository;
 import org.helianto.partner.repository.PartnerCategoryRepository;
 import org.helianto.partner.repository.PartnerKeyRepository;
 import org.helianto.partner.repository.PartnerPhoneRepository;
@@ -77,7 +76,6 @@ import org.helianto.partner.repository.PrivateEntityKeyRepository;
 import org.helianto.partner.repository.PrivateEntityRepository;
 import org.helianto.partner.repository.PrivateSegmentRepository;
 import org.helianto.user.domain.UserGroup;
-import org.helianto.user.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
@@ -419,7 +417,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 	@Transactional(readOnly=true)
 	public List<? extends UserGroup> findContactGroups(ContactGroupForm form) {
 		Filter filter = new ContactGroupFormFilterAdapter(form);
-		List<? extends UserGroup> contactGroupList = (List<? extends UserGroup>) userRepository.find(filter);
+		List<? extends UserGroup> contactGroupList = (List<? extends UserGroup>) contactGroupRepository.find(filter);
     	if (logger.isDebugEnabled() && contactGroupList!=null) {
     		logger.debug("Found contact group list of size {}", contactGroupList.size());
     	}
@@ -437,7 +435,7 @@ public class PartnerMgrImpl implements PartnerMgr {
     private CityRepository cityRepository;
     private PartnerPhoneRepository partnerPhoneRepository;
     private PartnerCategoryRepository partnerCategoryRepository;
-    private UserRepository userRepository;
+    private ContactGroupRepository contactGroupRepository;
 	private ContextMgr contextMgr;
 	private SequenceMgr sequenceMgr;
 
@@ -488,8 +486,8 @@ public class PartnerMgrImpl implements PartnerMgr {
 	}
     
     @Resource
-    public void setUserRepository(UserRepository userRepository) {
-		this.userRepository = userRepository;
+    public void setContactGroupRepository(ContactGroupRepository contactGroupRepository) {
+		this.contactGroupRepository = contactGroupRepository;
 	}
     
 	@Resource(name="namespaceMgr")

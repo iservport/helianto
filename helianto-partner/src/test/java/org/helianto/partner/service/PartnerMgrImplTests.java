@@ -29,7 +29,6 @@ import org.helianto.core.SequenceMgr;
 import org.helianto.core.domain.City;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
-import org.helianto.core.domain.Province;
 import org.helianto.core.internal.AbstractAddress;
 import org.helianto.core.repository.CityRepository;
 import org.helianto.partner.domain.Partner;
@@ -41,6 +40,7 @@ import org.helianto.partner.domain.PrivateEntityKey;
 import org.helianto.partner.domain.PrivateSegment;
 import org.helianto.partner.domain.nature.Customer;
 import org.helianto.partner.filter.classic.PartnerFilter;
+import org.helianto.partner.repository.ContactGroupRepository;
 import org.helianto.partner.repository.PartnerCategoryRepository;
 import org.helianto.partner.repository.PartnerKeyRepository;
 import org.helianto.partner.repository.PartnerPhoneRepository;
@@ -286,6 +286,7 @@ public class PartnerMgrImplTests {
     private PartnerKeyRepository partnerKeyRepository;
     private PartnerPhoneRepository partnerPhoneRepository;
     private PartnerCategoryRepository partnerCategoryRepository;
+    private ContactGroupRepository contactGroupRepository;
 
     private City city;
     private AbstractAddress partnerAddress;
@@ -307,6 +308,7 @@ public class PartnerMgrImplTests {
         partnerKeyRepository = EasyMock.createMock(PartnerKeyRepository.class);
         partnerPhoneRepository = EasyMock.createMock(PartnerPhoneRepository.class);
         partnerCategoryRepository = EasyMock.createMock(PartnerCategoryRepository.class);
+        contactGroupRepository = EasyMock.createMock(ContactGroupRepository.class);
         sequenceMgr = EasyMock.createMock(SequenceMgr.class);
         partnerMgr.setPrivateEntityRepository(privateEntityRepository);
         partnerMgr.setPrivateSegmentRepository(privateSegmentRepository);
@@ -316,6 +318,7 @@ public class PartnerMgrImplTests {
         partnerMgr.setPartnerKeyRepository(partnerKeyRepository);
         partnerMgr.setPartnerPhoneRepository(partnerPhoneRepository);
         partnerMgr.setPartnerCategoryRepository(partnerCategoryRepository);
+        partnerMgr.setContactGroupRepository(contactGroupRepository);
         partnerMgr.setSequenceMgr(sequenceMgr);
         
 		city = new City(entity.getOperator(), "CODE");
@@ -339,6 +342,7 @@ public class PartnerMgrImplTests {
     	EasyMock.reset(partnerKeyRepository);
     	EasyMock.reset(partnerPhoneRepository);
     	EasyMock.reset(partnerCategoryRepository);
+    	EasyMock.reset(contactGroupRepository);
     	EasyMock.reset(sequenceMgr);
     }
 
