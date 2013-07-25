@@ -30,7 +30,7 @@ import org.helianto.core.internal.AbstractKeyStringValue;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="proc_docKey",
+@Table(name="doc_processKey",
     uniqueConstraints = {@UniqueConstraint(columnNames={"processDocumentId", "keyTypeId"})}
 )
 public class ProcessDocumentKey 

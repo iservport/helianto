@@ -37,7 +37,7 @@ import org.helianto.document.def.InheritanceType;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="proc_document")
+@Table(name="doc_process")
 public class ProcessDocument 
 	extends Document 
 	implements Comparator<DocumentAssociation> {
