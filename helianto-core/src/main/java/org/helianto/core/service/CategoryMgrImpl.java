@@ -40,9 +40,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class CategoryMgrImpl implements CategoryMgr {
 	
 	@Transactional(readOnly=true)
-	public Category loadCategory(Entity entity, char categoryGroup, String categoryCode) {
-		return categoryRepository.findByEntityAndCategoryGroupAndCategoryCode(
-				entity, categoryGroup, categoryCode);
+	public long countCategory(final Entity entity, final char categoryGroup, final String searchString) {
+		@SuppressWarnings("serial")
+		CategoryForm form = new CategoryForm() {
+			public Entity getEntity() { return entity; }
+			public char getCategoryGroup() { return categoryGroup; }
+			public String getCategoryCode() { return searchString; }
+			public String getCategoryName() { return "";}
+		};
+		return categoryRepository.count(new CategoryFormFilterAdapter(form));
 	}
     
 	@Transactional(readOnly=true)

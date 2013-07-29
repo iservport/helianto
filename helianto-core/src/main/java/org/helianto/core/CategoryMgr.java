@@ -30,13 +30,13 @@ import org.helianto.core.form.CategoryForm;
 public interface CategoryMgr {
 
 	/**
-	 * Load category.
+	 * Count categories.
 	 * 
      * @param entity
      * @param categoryGroup
      * @param categoryCode
 	 */
-	Category loadCategory(Entity entity, char categoryGroup, String categoryCode);
+	long countCategory(Entity entity, char categoryGroup, String searchString);
 
 	/**
 	 * List categories.
