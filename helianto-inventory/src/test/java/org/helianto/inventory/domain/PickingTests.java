@@ -24,7 +24,6 @@ import java.io.Serializable;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.inventory.domain.Picking;
 import org.junit.Test;
 
 

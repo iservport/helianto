@@ -4,6 +4,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.helianto.message.AbstractMessageAdapter;
+import org.springframework.core.io.Resource;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
 /**
@@ -37,6 +38,9 @@ public class JavaMailMessageAdapter extends AbstractMessageAdapter<MimeMessage> 
 			helper.setFrom(getFrom().getPrincipal());
 			helper.setSubject(getSubject());
 			helper.setText(getHtml(), true);
+			for (Resource file: getAttachments()) {
+				helper.addAttachment(file.getFilename(), file);
+			}
 			return getMessage();
 		} catch (MessagingException e) {
 			throw new IllegalArgumentException();

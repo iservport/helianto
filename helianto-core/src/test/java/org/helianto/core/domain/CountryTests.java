@@ -18,8 +18,6 @@ package org.helianto.core.domain;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.helianto.core.domain.Country;
-import org.helianto.core.domain.Operator;
 import org.helianto.core.test.DomainTestSupport;
 import org.junit.Test;
 

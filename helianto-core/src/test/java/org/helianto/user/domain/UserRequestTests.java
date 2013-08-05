@@ -6,8 +6,6 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.test.UserGroupTestSupport;
-import org.helianto.user.domain.UserGroup;
-import org.helianto.user.domain.UserRequest;
 import org.junit.Test;
 
 /**

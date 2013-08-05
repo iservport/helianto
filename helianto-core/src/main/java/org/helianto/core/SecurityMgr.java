@@ -18,9 +18,9 @@ package org.helianto.core;
 import java.util.List;
 import java.util.Set;
 
-import org.helianto.core.domain.IdentitySecurity;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.IdentitySecurity;
 import org.helianto.core.form.IdentitySecurityForm;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;

@@ -8,6 +8,7 @@ import org.helianto.core.MessageAdapter;
 import org.helianto.core.domain.Identity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
 
 /**
  * Message adapter base class.
@@ -27,6 +28,7 @@ public abstract class AbstractMessageAdapter<T>
 	private String text;
 	private String html;
 	private Date sentDate;
+	private Set<Resource> attachments;
 	
 	public Identity getFrom() {
 		return from;
@@ -125,6 +127,13 @@ public abstract class AbstractMessageAdapter<T>
 	@SuppressWarnings("unchecked")
 	public void setMessage(Object message) {
 		this.message = (T) message;
+	}
+	
+	public Set<Resource> getAttachments() {
+		return attachments;
+	}
+	public void setAttachments(Set<Resource> attachments) {
+		this.attachments = attachments;
 	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(AbstractMessageAdapter.class);

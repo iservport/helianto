@@ -21,10 +21,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
-import org.helianto.inventory.domain.Inventory;
-import org.helianto.inventory.domain.InventoryTransaction;
-import org.helianto.inventory.domain.Movement;
-import org.helianto.inventory.domain.Shipment;
 import org.junit.Test;
 
 

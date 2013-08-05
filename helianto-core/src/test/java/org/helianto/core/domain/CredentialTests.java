@@ -10,8 +10,6 @@ import java.util.Date;
 
 import org.helianto.core.def.ActivityState;
 import org.helianto.core.def.Encription;
-import org.helianto.core.domain.Credential;
-import org.helianto.core.domain.Identity;
 import org.helianto.core.test.DomainTestSupport;
 import org.junit.Test;
 

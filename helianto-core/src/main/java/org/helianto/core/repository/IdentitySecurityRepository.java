@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.helianto.core.data.FilterRepository;
 import org.helianto.core.def.ProviderType;
-import org.helianto.core.domain.IdentitySecurity;
 import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.IdentitySecurity;
 
 /**
  * Authorization repository.

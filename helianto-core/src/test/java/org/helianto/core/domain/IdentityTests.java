@@ -11,7 +11,6 @@ import org.helianto.core.def.Appellation;
 import org.helianto.core.def.Gender;
 import org.helianto.core.def.IdentityType;
 import org.helianto.core.def.Notification;
-import org.helianto.core.domain.Identity;
 import org.helianto.core.test.DomainTestSupport;
 import org.junit.Test;
 

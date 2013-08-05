@@ -19,7 +19,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
-import org.helianto.inventory.domain.InventoryTransaction;
 import org.junit.Test;
 
 

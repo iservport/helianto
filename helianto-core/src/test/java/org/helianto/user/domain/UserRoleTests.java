@@ -8,8 +8,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.domain.Service;
 import org.helianto.core.test.DomainTestSupport;
-import org.helianto.user.domain.UserGroup;
-import org.helianto.user.domain.UserRole;
 import org.junit.Test;
 
 /**

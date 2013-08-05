@@ -19,10 +19,8 @@ package org.helianto.partner.standalone;
 import javax.annotation.Resource;
 
 import org.helianto.core.domain.City;
-import org.helianto.core.domain.Province;
 import org.helianto.core.internal.AbstractAddress;
 import org.helianto.core.repository.CityRepository;
-import org.helianto.core.repository.ProvinceRepository;
 import org.helianto.core.standalone.DefaultEntityInstaller;
 import org.helianto.core.standalone.NamespaceDefaults;
 import org.helianto.partner.PartnerMgr;

@@ -25,8 +25,6 @@ import java.util.Date;
 import org.helianto.core.def.EventType;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.test.DomainTestSupport;
-import org.helianto.user.domain.User;
-import org.helianto.user.domain.UserLog;
 import org.junit.Test;
 
 /**

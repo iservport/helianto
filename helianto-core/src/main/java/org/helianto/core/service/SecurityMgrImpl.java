@@ -25,14 +25,14 @@ import javax.annotation.Resource;
 
 import org.helianto.core.PasswordNotVerifiedException;
 import org.helianto.core.SecurityMgr;
-import org.helianto.core.domain.IdentitySecurity;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.IdentitySecurity;
 import org.helianto.core.filter.IdentitySecurityFilterAdapter;
 import org.helianto.core.form.IdentitySecurityForm;
-import org.helianto.core.repository.IdentitySecurityRepository;
 import org.helianto.core.repository.CredentialRepository;
 import org.helianto.core.repository.IdentityRepository;
+import org.helianto.core.repository.IdentitySecurityRepository;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
 import org.helianto.user.domain.User;

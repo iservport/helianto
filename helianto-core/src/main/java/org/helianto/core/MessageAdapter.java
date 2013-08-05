@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Set;
 
 import org.helianto.core.domain.Identity;
+import org.springframework.core.io.Resource;
 
 /**
  * Message adapter interface.
@@ -86,5 +87,9 @@ public interface MessageAdapter<T> {
      * @param message
      */
     void setMessage(Object message);
+    
+    Set<Resource> getAttachments();
+    
+    
     
 }
