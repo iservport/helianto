@@ -22,13 +22,15 @@ public abstract class AbstractMessageAdapter<T>
 
 	private Identity from;
 	private Set<Identity> to = new HashSet<Identity>();
-	private Set<Identity> cc;
+	private Set<Identity> cc  = new HashSet<Identity>();
+	private Set<Identity> bcc = new HashSet<Identity>();
 	private String replyTo;
 	private String subject;
 	private String text;
 	private String html;
 	private Date sentDate;
 	private Set<Resource> attachments;
+	
 	
 	public Identity getFrom() {
 		return from;
@@ -80,7 +82,13 @@ public abstract class AbstractMessageAdapter<T>
 		this.cc = cc;
 		return this;
 	}
-	
+	public MessageAdapter<T> setBcc(Set<Identity> bcc) {
+		this.bcc = bcc;
+		return this;
+	}
+	public Set<Identity> getBcc() {
+		return bcc;
+	}
 	public String getReplyTo() {
 		return replyTo;
 	}
