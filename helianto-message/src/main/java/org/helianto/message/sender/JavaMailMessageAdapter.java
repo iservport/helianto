@@ -33,7 +33,7 @@ public class JavaMailMessageAdapter extends AbstractMessageAdapter<MimeMessage> 
 	
 	public MimeMessage getMessage() {
 		try {
-			MimeMessageHelper helper = new MimeMessageHelper(getMessage(), true);
+			MimeMessageHelper helper = new MimeMessageHelper(super.getMessage(), true);
 			helper.setTo(getToAsStringArray());
 			helper.setFrom(getFrom().getPrincipal());
 			helper.setSubject(getSubject());
