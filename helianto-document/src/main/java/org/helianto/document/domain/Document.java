@@ -23,6 +23,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.Entity;
@@ -50,7 +51,11 @@ public class Document
     private static final long serialVersionUID = 1L;
     private Set<DocumentAssociation> parents = new HashSet<DocumentAssociation>(0);
     private Set<DocumentAssociation> children = new HashSet<DocumentAssociation>(0);
-
+    
+    // optional non-persistent fields to display at the human interface.
+    private boolean visited;
+    private long views;
+    
 	/** 
 	 * Default constructor 
 	 */
@@ -102,5 +107,27 @@ public class Document
 		 if ( !(other instanceof Document) ) return false;
 		 return super.equals(other);
     }
+
+    /**
+     * Optional non-persistent flag to be true when user has visited.
+     */
+    @Transient
+    public boolean isVisited() {
+		return visited;
+	}
+    public void setVisited(boolean visited) {
+		this.visited = visited;
+	}
+    
+    /**
+     * Optional non-persistent counter to views.
+     */
+    @Transient
+    public long getViews() {
+		return views;
+	}
+    public void setViews(long views) {
+		this.views = views;
+	}
 
 }
