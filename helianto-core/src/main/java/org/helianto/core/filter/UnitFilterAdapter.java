@@ -50,8 +50,6 @@ public class UnitFilterAdapter
 	
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("category.categoryGroup", getForm().getCategoryGroup(), mainCriteriaBuilder);
-		appendEqualFilter("category.id", getForm().getCategoryId(), mainCriteriaBuilder);
     	appendEqualFilter("unitSymbol", getForm().getUnitSymbol(), mainCriteriaBuilder);
 		if (getForm().getNature()!=' ' && getForm().getNature()!='_' && getForm().getNature()>0) {
 			mainCriteriaBuilder.appendAnd().appendSegment("nature", "like", "lower")

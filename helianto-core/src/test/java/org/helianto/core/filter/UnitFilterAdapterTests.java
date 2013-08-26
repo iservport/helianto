@@ -2,7 +2,6 @@ package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.def.CategoryGroup;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.form.UnitForm;
 import org.helianto.core.test.EntityTestSupport;
@@ -18,7 +17,6 @@ public class UnitFilterAdapterTests {
 	
     public static String O0 = "order by alias.unitCode ";
     public static String C1 = "alias.entity.id = 1 ";
-    public static String C2 = "AND alias.category.categoryGroup = 'U' ";
     public static String C3 = "AND alias.unitCode = 'CODE' ";
     public static String C4 = "AND alias.unitSymbol = 'mm' ";
     public static String C5 = "AND lower(alias.nature) like '%X%' ";
@@ -32,12 +30,6 @@ public class UnitFilterAdapterTests {
     public void select() {
     	Mockito.when(form.getUnitCode()).thenReturn("CODE");
         assertEquals(C1+C3, filter.createCriteriaAsString());
-    }
-    
-    @Test
-    public void filterCategoryGroup() {
-    	Mockito.when(form.getCategoryGroup()).thenReturn(CategoryGroup.UNIT.getValue());
-        assertEquals(C1+C2+O0, filter.createCriteriaAsString());
     }
     
     @Test

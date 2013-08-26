@@ -1,5 +1,7 @@
 package org.helianto.core.form;
 
+import org.helianto.core.domain.type.TrunkEntity;
+
 
 /**
  * Unit form.
@@ -7,13 +9,8 @@ package org.helianto.core.form;
  * @author mauriciofernandesdecastro
  */
 public interface UnitForm 
-	extends CategoryForm 
+	extends TrunkEntity 
 {
-	
-	/**
-	 * Category id filter.
-	 */
-	int getCategoryId();
 	
 	/**
 	 * Unit code filter.
