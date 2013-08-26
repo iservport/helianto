@@ -1,87 +1,71 @@
 package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
 
 import org.helianto.core.def.CategoryGroup;
-import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
-import org.helianto.core.domain.Operator;
-import org.helianto.core.domain.Unit;
+import org.helianto.core.form.UnitForm;
+import org.helianto.core.test.EntityTestSupport;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * @author Mauricio Fernandes de Castro
  */
 public class UnitFilterAdapterTests {
 	
-	@Test
-	public void constructor() {
-		assertSame(entity, filter.getEntity());
-		
-		Entity newEntity = new Entity();
-		filter = new UnitFilterAdapter(newEntity, "CODE");
-		assertSame(newEntity, filter.getEntity());
-		assertEquals("CODE", filter.getForm().getUnitCode());
-	}
-
-    public static String C1 = "alias.entity.id = 0 ";
+    public static String O0 = "order by alias.unitCode ";
+    public static String C1 = "alias.entity.id = 1 ";
     public static String C2 = "AND alias.category.categoryGroup = 'U' ";
     public static String C3 = "AND alias.unitCode = 'CODE' ";
-    public static String C4 = "AND alias.category.id = 1 ";
-    public static String C5 = "AND lower(alias.unitName) like '%name%' ";
-    public static String C6 = "alias.category.id = 100 ";
+    public static String C4 = "AND alias.unitSymbol = 'mm' ";
+    public static String C5 = "AND lower(alias.nature) like '%X%' ";
 
     @Test
     public void empty() {
-        assertEquals(C1, filter.createCriteriaAsString());
+        assertEquals(C1+O0, filter.createCriteriaAsString());
     }
     
     @Test
     public void select() {
-    	form.setUnitCode("CODE");
+    	Mockito.when(form.getUnitCode()).thenReturn("CODE");
         assertEquals(C1+C3, filter.createCriteriaAsString());
     }
     
     @Test
     public void filterCategoryGroup() {
-    	filter.setCategoryGroup(CategoryGroup.UNIT);
-        assertEquals(C1+C2, filter.createCriteriaAsString());
+    	Mockito.when(form.getCategoryGroup()).thenReturn(CategoryGroup.UNIT.getValue());
+        assertEquals(C1+C2+O0, filter.createCriteriaAsString());
     }
     
     @Test
-    public void filterCategory() {
-    	Category category = new Category();
-    	category.setId(1);
-    	form.setCategory(category);
-        assertEquals(C1+C4, filter.createCriteriaAsString());
+    public void symbol() {
+    	Mockito.when(form.getUnitSymbol()).thenReturn("mm");
+        assertEquals(C1+C4+O0, filter.createCriteriaAsString());
     }
     
     @Test
-    public void filterUnitName() {
-        form.setUnitName("NAME");
-        assertEquals(C1+C5, filter.createCriteriaAsString());
-    }
-    
-    @Test
-    public void parent() {
-        filter.setParent(parent);
-        parent.setId(100);
-        assertEquals(C6, filter.createCriteriaAsString());
+    public void nature() {
+    	Mockito.when(form.getNature()).thenReturn('X');
+        assertEquals(C1+C5+O0, filter.createCriteriaAsString());
     }
     
     private UnitFilterAdapter filter;
-    private Unit form;
-    private Entity entity;
-    private Category parent;
+    private UnitForm form;
     
     @Before
     public void setUp() {
-    	entity = new Entity(new Operator("DEFAULT"), "ALIAS");
-    	form = new Unit(entity, "");
+    	Entity entity = EntityTestSupport.createEntity(1);
+    	form = Mockito.mock(UnitForm.class);
     	filter = new UnitFilterAdapter(form);
-    	parent = new Category(entity, CategoryGroup.NOT_DEFINED, "");
+    	Mockito.when(form.getEntity()).thenReturn(entity);
+    }
+    
+    @After
+    public void tearDown() {
+    	Mockito.reset(form);
     }
 }
 

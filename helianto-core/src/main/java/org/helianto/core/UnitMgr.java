@@ -17,9 +17,9 @@ package org.helianto.core;
 
 import java.util.List;
 
-import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Unit;
-import org.helianto.core.filter.Filter;
+import org.helianto.core.form.UnitForm;
 
 /**
  * Service interface to units.
@@ -31,31 +31,32 @@ public interface UnitMgr {
 	/**
 	 * List units.
 	 * 
-	 * @param unitFilter
+	 * @param form
 	 */
-	public List<Unit> findUnits(Filter unitFilter);
+	List<Unit> findUnits(UnitForm form);
 
 	/**
 	 * Store unit.
 	 * 
 	 * @param unit
 	 */
-	public Unit storeUnit(Unit unit);
+	Unit storeUnit(Unit unit);
 
 	/**
 	 * Remove unit.
 	 * 
 	 * @param unit
 	 */
-	public void removeUnit(Unit unit);
+	void removeUnit(Unit unit);
 	
 	/**
 	 * Install a unit if does not exist.
 	 * 
-	 * @param category
+	 * @param entity
 	 * @param unitCode
+	 * @param unitSymbol
 	 * @param unitName
 	 */
-	public Unit installUnit(Category category, String unitCode, String unitName);
+	Unit installUnit(Entity entity, String unitCode, String unitSymbol, String unitName);
 
 }

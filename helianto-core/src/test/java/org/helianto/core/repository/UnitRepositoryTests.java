@@ -2,8 +2,6 @@ package org.helianto.core.repository;
 
 import java.io.Serializable;
 
-import org.helianto.core.def.CategoryGroup;
-import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Unit;
 import org.helianto.core.test.AbstractJpaRepositoryIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class UnitRepositoryTests extends AbstractJpaRepositoryIntegrationTest<Unit, UnitRepository> {
 
 	@Autowired
-	private CategoryRepository categoryRepository;
-	
-	private Category category;
-	
-	@Autowired
 	private UnitRepository repository;
 	
 	protected UnitRepository getRepository() {
@@ -27,7 +20,7 @@ public class UnitRepositoryTests extends AbstractJpaRepositoryIntegrationTest<Un
 	}
 	
 	protected Unit getNewTarget() {
-		return new Unit(category, "CODE");
+		return new Unit(entity, "CODE");
 	}
 	
 	protected Serializable getTargetId(Unit target) {
@@ -35,12 +28,7 @@ public class UnitRepositoryTests extends AbstractJpaRepositoryIntegrationTest<Un
 	}
 	
 	protected Unit findByKey() {
-		return getRepository().findByCategoryAndUnitCode(category, "CODE");
-	}
-	
-	@Override
-	protected void setUp() {
-		category = categoryRepository.save(new Category(entity, CategoryGroup.NOT_DEFINED, "CAT"));
+		return getRepository().findByEntityAndUnitCode(entity, "CODE");
 	}
 	
 }

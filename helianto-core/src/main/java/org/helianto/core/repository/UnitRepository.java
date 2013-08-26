@@ -3,7 +3,7 @@ package org.helianto.core.repository;
 import java.io.Serializable;
 
 import org.helianto.core.data.FilterRepository;
-import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Unit;
 
 /**
@@ -16,9 +16,9 @@ public interface UnitRepository extends FilterRepository<Unit, Serializable> {
 	/**
 	 * Find by natural key.
 	 * 
-	 * @param category
+	 * @param entity
 	 * @param unitCode
 	 */
-	Unit findByCategoryAndUnitCode(Category category, String unitCode);
+	Unit findByEntityAndUnitCode(Entity entity, String unitCode);
 	
 }

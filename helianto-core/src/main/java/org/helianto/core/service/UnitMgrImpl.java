@@ -20,9 +20,11 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.helianto.core.UnitMgr;
-import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Unit;
 import org.helianto.core.filter.Filter;
+import org.helianto.core.filter.UnitFilterAdapter;
+import org.helianto.core.form.UnitForm;
 import org.helianto.core.repository.UnitRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,10 +36,13 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Mauricio Fernandes de Castro
  */
 @org.springframework.stereotype.Service("unitMgr")
-public class UnitMgrImpl implements UnitMgr {
+public class UnitMgrImpl 
+	implements UnitMgr 
+{
 	
 	@Transactional(readOnly=true)
-	public List<Unit> findUnits(Filter unitFilter) {
+	public List<Unit> findUnits(UnitForm form) {
+		Filter unitFilter = new UnitFilterAdapter(form);;
     	List<Unit> unitList = (List<Unit>) unitRepository.find(unitFilter);
     	logger.debug("Found unit list of size {}", unitList.size());
     	return unitList;
@@ -57,13 +62,13 @@ public class UnitMgrImpl implements UnitMgr {
 	}
 
 	@Transactional
-	public Unit installUnit(Category category, String unitCode, String unitName) {
-		Unit unit = unitRepository.findByCategoryAndUnitCode(category, unitCode);
+	public Unit installUnit(Entity entity, String unitCode, String unitSymbol, String unitName) {
+		Unit unit = unitRepository.findByEntityAndUnitCode(entity, unitCode);
     	if (unit!=null) {
         	logger.debug("Found existing unit  {}", unit);
     		return unit;
     	}
-    	unit = unitRepository.saveAndFlush(new Unit(category, unitCode, unitName));
+    	unit = unitRepository.saveAndFlush(new Unit(entity, unitCode, unitSymbol, unitName));
     	logger.debug("Installed unit  {}", unit);
 		return unit;
 	}

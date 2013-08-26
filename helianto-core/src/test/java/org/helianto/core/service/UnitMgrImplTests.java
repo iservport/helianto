@@ -22,31 +22,28 @@ import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.assertSame;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.helianto.core.domain.Unit;
-import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.classic.TestingFilter;
 import org.helianto.core.repository.UnitRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-
+/**
+ * 
+ * @author mauriciofernandesdecastro
+ */
 public class UnitMgrImplTests {
     
     private UnitMgrImpl unitMgr;
     
     @Test
     public void findUnits() {
-    	Filter unitFilter = new TestingFilter();
-    	List<Unit> unitList = new ArrayList<Unit>();
+    	Unit unit = new Unit();
     	
-    	expect(unitRepository.find(unitFilter)).andReturn(unitList);
+    	expect(unitRepository.saveAndFlush(unit)).andReturn(unit);
     	replay(unitRepository);
     	
-    	assertSame(unitList, unitMgr.findUnits(unitFilter));
+    	assertSame(unit, unitMgr.storeUnit(unit));
     	verify(unitRepository);
     }
     

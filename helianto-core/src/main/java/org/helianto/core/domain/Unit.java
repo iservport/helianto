@@ -24,8 +24,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
 
 import org.helianto.core.domain.type.TrunkEntity;
+import org.helianto.core.utils.StringListUtils;
 
 /**
  * <p>
@@ -34,26 +36,26 @@ import org.helianto.core.domain.type.TrunkEntity;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="core_unit",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"categoryId", "unitCode"})}
+@Table(name="core_unit2",
+    uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "unitCode"})}
 )
 public class Unit implements TrunkEntity {
 
     private static final long serialVersionUID = 1L;
     private int id;
+    private int version;
     private Entity entity;
-    private Category category;
-    private String unitCode;
-    private String unitName;
-    private char priority;
+    private String unitCode = "";
+    private String unitSymbol = "";
+    private String unitName = "";
+    private String nature = "";
+    private char priority = '1';
 
     /** 
      * Default constructor
      */
     public Unit() {
-    	setUnitCode("");
-    	setUnitName("");
-        setPriority('1');
+    	super();
     }
 
     /**
@@ -73,33 +75,12 @@ public class Unit implements TrunkEntity {
      * 
      * @param entity
      * @param unitCode
+     * @param unitSymbol
      * @param unitName
      */
-    public Unit(Entity entity, String unitCode, String unitName) {
+    public Unit(Entity entity, String unitCode, String unitSymbol, String unitName) {
     	this(entity, unitCode);
-    	setUnitName(unitName);
-    }
-
-    /**
-     * Category constructor.
-     * 
-     * @param category
-     * @param unitCode
-     */
-    public Unit(Category category, String unitCode) {
-    	this(category.getEntity(), unitCode);
-    	setCategory(category);
-    }
-
-    /**
-     * Name constructor.
-     * 
-     * @param category
-     * @param unitCode
-     * @param unitName
-     */
-    public Unit(Category category, String unitCode, String unitName) {
-    	this(category, unitCode);
+    	setUnitSymbol(unitSymbol);
     	setUnitName(unitName);
     }
 
@@ -113,6 +94,17 @@ public class Unit implements TrunkEntity {
     public void setId(int id) {
         this.id = id;
     }
+    
+    /**
+     * Optimistic lock version.
+     */
+    @Version
+    public int getVersion() {
+		return version;
+	}
+    public void setVersion(int version) {
+		this.version = version;
+	}
 
     /**
      * Entity getter.
@@ -127,24 +119,7 @@ public class Unit implements TrunkEntity {
     }
 
     /**
-     * Category getter.
-     */
-    @ManyToOne
-    @JoinColumn(name="categoryId", nullable=true)
-    public Category getCategory() {
-        return this.category;
-    }
-    @Transient
-    public String getCategoryName() {
-    	if (this.category==null) return "";
-    	return this.category.getCategoryName();
-    }
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    /**
-     * UnitCode getter.
+     * Unique unit code.
      */
     @Column(length=20)
     public String getUnitCode() {
@@ -155,7 +130,18 @@ public class Unit implements TrunkEntity {
     }
 
     /**
-     * UnitName getter.
+     * Symbol (mm, m, Ton, etc.).
+     */
+    @Column(length=20)
+    public String getUnitSymbol() {
+		return unitSymbol;
+	}
+    public void setUnitSymbol(String unitSymbol) {
+		this.unitSymbol = unitSymbol;
+	}
+
+    /**
+     * Unit name.
      */
     @Column(length=64)
     public String getUnitName() {
@@ -165,6 +151,38 @@ public class Unit implements TrunkEntity {
         this.unitName = unitName;
     }
 
+	/**
+	 * Unit nature.
+	 */
+	@Column(length=32)
+	public String getNature() {
+		return nature;
+	}
+	public void setNature(String nature) {
+		this.nature = nature;
+	}
+	
+	/**
+	 * <<Transient>> True if nature already exists.
+	 * 
+	 * @param nature
+	 */
+	@Transient
+	public boolean hasNature(char nature) {
+		return (getNature()!=null && getNature().indexOf(nature)>=0);
+	}
+	
+	/**
+	 * <<Transient>> Nature as array.
+	 */
+	@Transient
+	public String[] getNatureAsArray() {
+		return StringListUtils.stringToArray(getNature());
+	}
+	public void setNatureAsArray(String[] natureArray) {
+		setNature(StringListUtils.arrayToString(natureArray));
+	}
+	
     /**
      * Priority.
      */
@@ -189,26 +207,43 @@ public class Unit implements TrunkEntity {
         return buffer.toString();
     }
 
-   /**
-    * equals
-    */
-   public boolean equals(Object other) {
-         if ( (this == other ) ) return true;
-         if ( (other == null ) ) return false;
-         if ( !(other instanceof Unit) ) return false;
-         Unit castOther = (Unit) other; 
-         
-         return ((this.getEntity()==castOther.getEntity()) || ( this.getEntity()!=null && castOther.getEntity()!=null && this.getEntity().equals(castOther.getEntity()) ))
-             && ((this.getUnitCode()==castOther.getUnitCode()) || ( this.getUnitCode()!=null && castOther.getUnitCode()!=null && this.getUnitCode().equals(castOther.getUnitCode()) ));
-   }
-   
-   /**
-    * hashCode
-    */
-   public int hashCode() {
-         int result = 17;
-         result = 37 * result + ( getUnitCode() == null ? 0 : this.getUnitCode().hashCode() );
-         return result;
-   }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((entity == null) ? 0 : entity.hashCode());
+		result = prime * result
+				+ ((unitCode == null) ? 0 : unitCode.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Unit)) {
+			return false;
+		}
+		Unit other = (Unit) obj;
+		if (entity == null) {
+			if (other.entity != null) {
+				return false;
+			}
+		} else if (!entity.equals(other.entity)) {
+			return false;
+		}
+		if (unitCode == null) {
+			if (other.unitCode != null) {
+				return false;
+			}
+		} else if (!unitCode.equals(other.unitCode)) {
+			return false;
+		}
+		return true;
+	}
 
 }

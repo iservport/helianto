@@ -7,7 +7,8 @@ package org.helianto.core.form;
  * @author mauriciofernandesdecastro
  */
 public interface UnitForm 
-	extends CategoryForm {
+	extends CategoryForm 
+{
 	
 	/**
 	 * Category id filter.
@@ -20,8 +21,18 @@ public interface UnitForm
 	String getUnitCode();
 
 	/**
+	 * Unit symbol filter.
+	 */
+	String getUnitSymbol();
+
+	/**
 	 * Unit name filter.
 	 */
 	String getUnitName();
+
+	/**
+	 * Unit nature filter.
+	 */
+	char getNature();
 
 }

@@ -16,70 +16,31 @@
 package org.helianto.core.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.def.CategoryGroup;
-import org.helianto.core.domain.Category;
-import org.helianto.core.domain.Entity;
-import org.helianto.core.domain.Unit;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
+import org.helianto.core.form.UnitForm;
 
 /**
  * Unit filter adapter.
  * 
  * @author Maurício Fernandes de Castro
  */
-public class UnitFilterAdapter extends AbstractTrunkFilterAdapter<Unit> implements ParentFilter {
+public class UnitFilterAdapter 
+	extends AbstractTrunkFilterAdapter<UnitForm> 
+{
 	
 	private static final long serialVersionUID = 1L;
-	private Category parent;
-	private CategoryGroup categoryGroup;
 	
 	/**
 	 * Default constructor.
 	 * 
-	 * @param unit
+	 * @param form
 	 */
-	public UnitFilterAdapter(Unit unit) {
-		super(unit);
+	public UnitFilterAdapter(UnitForm form) {
+		super(form);
 	}
 	
-	/**
-	 * Key constructor.
-	 * 
-	 * @param entity
-	 * @param unitCode
-	 */
-	public UnitFilterAdapter(Entity entity, String unitCode) {
-		this(new Unit(entity, unitCode));
-	}
-	
-	/**
-	 * Convenience constructor.
-	 * 
-	 * @param category
-	 * @param unitCode
-	 */
-	public UnitFilterAdapter(Category category, String unitCode) {
-		this(new Unit(category, unitCode));
-	}
-	
-	public void reset() {
-		getForm().setUnitName("");
-		getForm().setPriority(' ');
-	}
-
 	public boolean isSelection() {
-		return getForm().getUnitCode().length()>0;
-	}
-
-	@Override
-	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-    	if (getCategoryGroup()!=null) {
-        	appendEqualFilter("category.categoryGroup", getCategoryGroup().getValue(), mainCriteriaBuilder);
-    	}
-    	if (getForm().getCategory()!=null) {
-        	appendEqualFilter("category.id", getForm().getCategory().getId(), mainCriteriaBuilder);
-    	}
-    	appendLikeFilter("unitName", getForm().getUnitName(), mainCriteriaBuilder);
+		return super.isSelection() && getForm().getUnitCode()!=null && getForm().getUnitCode().length()>0;
 	}
 
 	@Override
@@ -87,34 +48,21 @@ public class UnitFilterAdapter extends AbstractTrunkFilterAdapter<Unit> implemen
     	appendEqualFilter("unitCode", getForm().getUnitCode(), mainCriteriaBuilder);
 	}
 	
-	@SuppressWarnings("unchecked")
-	public Category getParent() {
-		return parent;
-	}
-	public void setParent(Category parent) {
-		this.parent = parent;
-	}
-	
-	public long getParentId() {
-		if (getParent()!=null) {
-			return getParent().getId();
+	@Override
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("category.categoryGroup", getForm().getCategoryGroup(), mainCriteriaBuilder);
+		appendEqualFilter("category.id", getForm().getCategoryId(), mainCriteriaBuilder);
+    	appendEqualFilter("unitSymbol", getForm().getUnitSymbol(), mainCriteriaBuilder);
+		if (getForm().getNature()!=' ' && getForm().getNature()!='_' && getForm().getNature()>0) {
+			mainCriteriaBuilder.appendAnd().appendSegment("nature", "like", "lower")
+				.appendLike(String.valueOf(getForm().getNature()));
 		}
-		return 0;
 	}
+
 	
 	@Override
-	protected StringBuilder getParentName() {
-		return new StringBuilder("category");
+	public String getOrderByString() {
+		return "unitCode";
 	}
-
-	/**
-	 * Category group.
-	 */
-	public CategoryGroup getCategoryGroup() {
-		return categoryGroup;
-	}
-	public void setCategoryGroup(CategoryGroup categoryGroup) {
-		this.categoryGroup = categoryGroup;
-	}
-
+	
 }
