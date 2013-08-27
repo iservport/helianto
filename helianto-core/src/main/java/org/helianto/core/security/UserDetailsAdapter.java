@@ -18,6 +18,7 @@ package org.helianto.core.security;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -65,21 +66,34 @@ public class UserDetailsAdapter
     /**
      * Package default constructor
      */
-    UserDetailsAdapter() {}
+    UserDetailsAdapter() {
+    	super();
+    }
     
     /**
      * User constructor.
      * 
      * @param user
      * @param identitySecurity
+     */
+    public UserDetailsAdapter(User user, IdentitySecurity identitySecurity) {
+        this();
+        this.user = user;
+        this.identitySecurity = identitySecurity;
+        this.user.setLastEvent(new Date());
+        logger.info("Secured user: {}", user);
+    }
+    
+    /**
+     * Roles constructor.
+     * 
+     * @param user
+     * @param identitySecurity
      * @param roles
      */
     public UserDetailsAdapter(User user, IdentitySecurity identitySecurity, Collection<UserRole> roles) {
-        this();
-        this.user = user;
-        logger.info("Secured user: {}", user);
-        this.identitySecurity = identitySecurity;
-        grantAuthorities(roles, user);
+        this(user, identitySecurity);
+        grantAuthorities(roles);
     }
     
     /**
@@ -90,7 +104,7 @@ public class UserDetailsAdapter
     public UserDetailsAdapter(UserGroup userGroup) {
         this();
         this.user = isAnonymousUserValid(userGroup);
-        logger.info("Anonymous user for entity: {}", user.getEntity());
+        logger.info("Anonymous user: {}", userGroup);
     }
     
     /**
@@ -123,14 +137,13 @@ public class UserDetailsAdapter
      * Iterates through user roles to grant authorities.
      * 
      * @param roles
-     * @param user
      */
-    protected void grantAuthorities(Collection<UserRole> roles, User user) {
+    public void grantAuthorities(Collection<UserRole> roles) {
         authorities = new ArrayList<GrantedAuthority>();
         Set<String> roleNames = new HashSet<String>();
         for (UserRole r : roles) {
         	if (r.getActivityState()==ActivityState.ACTIVE.getValue()) {
-               roleNames.addAll(getUserRolesAsString(r, user));
+               roleNames.addAll(getUserRolesAsString(r, getUser()));
         	}
         }
         for (String roleName: roleNames) {

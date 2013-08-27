@@ -13,6 +13,7 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.IdentitySecurity;
 import org.helianto.core.repository.IdentitySecurityRepository;
+import org.helianto.core.security.UserDetailsAdapter;
 import org.helianto.core.security.UserSelectorStrategy;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserRole;
@@ -56,6 +57,7 @@ public class UserDetailsServiceTests {
 		List<User> userList = new ArrayList<User>();
 		User user = new User(new Entity(), identity);
 		userList.add(user);
+		UserDetailsAdapter userDetailsAdapter = new UserDetailsAdapter(user, identitySecurity);
 		Set<UserRole> roles = new HashSet<UserRole>();
 				
 		EasyMock.expect(identitySecurityRepository.findByIdentityId(123L)).andReturn(identitySecurityList);
@@ -65,7 +67,7 @@ public class UserDetailsServiceTests {
 		EasyMock.expect(userRepository.saveAndFlush(user)).andReturn(user);
 		EasyMock.replay(userRepository);
 		
-		EasyMock.expect(userSelectorStrategy.selectUser(userList, null)).andReturn(user);
+		EasyMock.expect(userSelectorStrategy.selectUser(userList, identitySecurity, null)).andReturn(userDetailsAdapter);
 		EasyMock.replay(userSelectorStrategy);
 		
 		EasyMock.expect(securityMgr.findRoles(user, true)).andReturn(roles);
@@ -87,6 +89,7 @@ public class UserDetailsServiceTests {
 		List<User> userList = new ArrayList<User>();
 		User user = new User(new Entity(), identity);
 		userList.add(user);
+		UserDetailsAdapter userDetailsAdapter = new UserDetailsAdapter(user, identitySecurity);
 		Set<UserRole> roles = new HashSet<UserRole>();
 				
 		EasyMock.expect(identitySecurityRepository.findByIdentityId(123L)).andReturn(null);
@@ -97,7 +100,7 @@ public class UserDetailsServiceTests {
 		EasyMock.expect(userRepository.saveAndFlush(user)).andReturn(user);
 		EasyMock.replay(userRepository);
 		
-		EasyMock.expect(userSelectorStrategy.selectUser(userList, null)).andReturn(user);
+		EasyMock.expect(userSelectorStrategy.selectUser(userList, identitySecurity, null)).andReturn(userDetailsAdapter);
 		EasyMock.replay(userSelectorStrategy);
 		
 		EasyMock.expect(securityMgr.findRoles(user, true)).andReturn(roles);

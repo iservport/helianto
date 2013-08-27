@@ -2,7 +2,7 @@ package org.helianto.core.security;
 
 import java.util.List;
 
-import org.helianto.user.domain.User;
+import org.helianto.core.domain.IdentitySecurity;
 import org.helianto.user.domain.UserGroup;
 
 /**
@@ -13,11 +13,12 @@ import org.helianto.user.domain.UserGroup;
 public interface UserSelectorStrategy {
 	
 	/**
-	 * Select an user from a list.
+	 * Create UserDetailsAdapter from the first valid user in a list.
 	 * 
 	 * @param userList
+	 * @param identitySecurity
 	 * @param preferences
 	 */
-	public User selectUser(List<? extends UserGroup> userList, String preferences);
+	public UserDetailsAdapter selectUser(List<? extends UserGroup> userList, IdentitySecurity identitySecurity, String preferences);
 
 }
