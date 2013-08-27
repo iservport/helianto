@@ -29,6 +29,14 @@ import org.helianto.core.form.UnitForm;
 public interface UnitMgr {
 	
 	/**
+	 * Find unit by unique key.
+	 * 
+	 * @param entity
+	 * @param unitCode
+	 */
+	Unit findUnit(Entity entity, String unitCode);
+
+	/**
 	 * List units.
 	 * 
 	 * @param form

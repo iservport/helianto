@@ -41,6 +41,11 @@ public class UnitMgrImpl
 {
 	
 	@Transactional(readOnly=true)
+	public Unit findUnit(Entity entity, String unitCode) {
+    	return unitRepository.findByEntityAndUnitCode(entity, unitCode);
+	}
+
+	@Transactional(readOnly=true)
 	public List<Unit> findUnits(UnitForm form) {
 		Filter unitFilter = new UnitFilterAdapter(form);;
     	List<Unit> unitList = (List<Unit>) unitRepository.find(unitFilter);
