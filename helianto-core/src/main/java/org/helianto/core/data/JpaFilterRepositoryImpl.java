@@ -8,6 +8,7 @@ import javax.persistence.Query;
 import org.helianto.core.filter.Filter;
 import org.hibernate.Session;
 import org.hibernate.ejb.HibernateEntityManager;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,7 +50,7 @@ public class JpaFilterRepositoryImpl<T, ID extends Serializable> extends
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Iterable<T> find(Filter filter) {
+	public Iterable<T> find(Filter filter, Pageable pageable) {
 		String alias = filter.getObjectAlias()!=null ? filter.getObjectAlias() : "alias";
 		String selectClause = filter.createSelectAsString();
 		StringBuilder queryString = new StringBuilder();
@@ -71,6 +72,10 @@ public class JpaFilterRepositoryImpl<T, ID extends Serializable> extends
         }
 		Query query = entityManager.createQuery(queryString.toString());
 		return query.getResultList();
+	}
+	
+	public Iterable<T> find(Filter filter) {
+		return find(filter, null);
 	}
 	
 	@Override

@@ -3,6 +3,7 @@ package org.helianto.core.data;
 import java.io.Serializable;
 
 import org.helianto.core.filter.Filter;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
@@ -24,6 +25,13 @@ public interface FilterRepository<T, ID extends Serializable> extends JpaReposit
 	 * @param filter
 	 */
 	Iterable<T> find(Filter filter);
+	
+	/**
+	 * Add find by filter.
+	 * 
+	 * @param filter
+	 */
+	Iterable<T> find(Filter filter, Pageable pageable);
 	
 	/**
 	 * Add count by filter.

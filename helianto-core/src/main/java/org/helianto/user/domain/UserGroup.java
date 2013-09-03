@@ -46,7 +46,7 @@ import org.helianto.core.def.CreateIdentity;
 import org.helianto.core.def.UserState;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
-import org.helianto.core.domain.type.TrunkEntity;
+import org.helianto.core.domain.type.FolderEntity;
 import org.helianto.core.utils.StringListUtils;
 /**
  * 			
@@ -66,9 +66,8 @@ import org.helianto.core.utils.StringListUtils;
 @DiscriminatorValue("G")
 
 public class UserGroup 
-
 	implements 
-	  TrunkEntity
+	  FolderEntity
 	, Comparable<UserGroup>
 	, Programmable
 
@@ -85,17 +84,17 @@ public class UserGroup
     private static final long serialVersionUID = 1L;
     private int id;
     private Entity entity;
-    private String userKey;
-    private String userName;
+    private String userKey = "";
+    private String userName = "";
     private Date lastEvent;
     private char userState;
     private boolean accountNonExpired;
     private char createIdentity;
-    private String userDesc;
-    private String nature;
+    private String userDesc = "";
+    private String nature = "";
     private int minimalEducationRequirement;
     private int minimalExperienceRequirement;
-    private String scriptItems;
+    private String scriptItems = "";
 
     private Set<UserAssociation> parentAssociations = new HashSet<UserAssociation>();
     private Set<UserAssociation> childAssociations = new HashSet<UserAssociation>();
@@ -107,7 +106,6 @@ public class UserGroup
 	 * Empty constructor.
 	 */
     public UserGroup() {
-    	setUserKey("");
     	setLastEvent(new Date());
     	setUserStateAsEnum(UserState.ACTIVE);
     	setAccountNonExpired(true);
@@ -180,9 +178,21 @@ public class UserGroup
     public void setUserKey(String userKey) {
         this.userKey = userKey;
     }
+    
     @Transient
     public boolean isUserKeyEmpty() {
-    	return getUserKey().length()==0;
+    	return getUserKey()==null || (getUserKey()!=null && getUserKey().length()==0);
+    }
+    
+    /**
+     * Satisfies <code>FoderEntity</code> interface to show groups as folders.
+     */
+    @Transient
+    public String getFolderCode() {
+    	if (!isUserKeyEmpty()) {
+    		return getUserKey();
+    	}
+    	return "";
     }
 
     /**
@@ -196,6 +206,25 @@ public class UserGroup
 		this.userName = userName;
 	}
 	
+    /**
+     * Satisfies <code>FoderEntity</code> interface to show groups as folders.
+     */
+    @Transient
+    public String getFolderName() {
+    	if (getUserName()!=null && getUserName().length()>0) {
+    		return getUserName();
+    	}
+    	return "";
+    }
+    
+    /**
+     * Satisfies <code>FoderEntity</code> interface to show groups as folders.
+     */
+    @Transient
+    public String getFolderDecorationUrl() {
+    	return "";
+    }
+    
 	/**
 	 * Defaults to userName field.
 	 */

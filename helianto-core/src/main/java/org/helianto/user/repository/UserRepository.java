@@ -82,4 +82,19 @@ public interface UserRepository extends FilterRepository<User, Serializable> {
     			"and lower(child.identity.principal) like lower(?2) ")
 	List<User> findByParentAndPrincipal(String parentKey, String principal, Sort sort);
 	
+	/**
+	 * Find by parent key and principal.
+	 * 
+	 * @param parentKey
+	 * @param principal
+	 * @param entityType
+	 * @param sort
+	 */
+	@Query(value="select distinct child from User child " +
+		   		"join child.parentAssociations parents " +
+    			"where lower(parents.parent.userKey) = lower(?1) " +
+    			"and lower(child.identity.principal) like lower(?2) " +
+    			"and parents.parent.entity.entityType = ?3 ")
+	List<User> findByParentAndPrincipalAndEntityType(String parentKey, String principal, char entityType, Sort sort);
+	
 }

@@ -165,6 +165,13 @@ public class UserMgrImpl
 	}
 
 	@Transactional(readOnly=true)
+	public List<User> findUsers(String parent, String userKey, char entityType) {
+		List<User> userList = userRepository.findByParentAndPrincipalAndEntityType(parent, userKey, entityType, new Sort(new Order(Direction.DESC, "lastEvent")));
+    	logger.debug("Found user list of size {} from parent {}.", userList.size(), parent);
+        return userList;
+	}
+
+	@Transactional(readOnly=true)
 	public List<UserAssociation> findUserAssociations(UserGroup parent) {
 		List<UserAssociation> userAssociationList = userAssociationRepository.findByParent(parent, new Sort(new Order(Direction.ASC, "child.userKey")));
     	logger.debug("Found user association list of size {} from parent {}.", userAssociationList.size(), parent);

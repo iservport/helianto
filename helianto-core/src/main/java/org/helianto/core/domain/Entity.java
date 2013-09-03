@@ -99,15 +99,16 @@ public class Entity
     private long id;
     private int version;
     private Operator operator;
-    private String alias;
+    private String alias = "";
     private Date installDate;
-    private String nature;
-    private String customColors;
-    private String customStyle;
-    private String customProperties;
-    private String summary;
+    private char entityType = 'C';
+    private String nature = "";
+    private String customColors = "";
+    private String customStyle = "";
+    private String customProperties = "";
+    private String summary = "";
     private Identity manager;
-    private String externalLogoUrl;
+    private String externalLogoUrl = "";
     private char activityState;
     private Set<UserGroup> users = new HashSet<UserGroup>(0);
     private Set<PublicEntity> publicEntities = new HashSet<PublicEntity>(0);
@@ -117,11 +118,7 @@ public class Entity
      * Default constructor.
      */
     public Entity() {
-    	setAlias("");
-    	setNature("");
-    	setCustomStyle("");
-    	setCustomProperties("");
-    	setExternalLogoUrl("");
+    	super();
     }
 
     /** 
@@ -222,6 +219,13 @@ public class Entity
 	@Transient
 	public boolean isInstalled() {
 		return getInstallDate()!=null;
+	}
+	
+	public char getEntityType() {
+		return entityType;
+	}
+	public void setEntityType(char entityType) {
+		this.entityType = entityType;
 	}
 	
 	/**

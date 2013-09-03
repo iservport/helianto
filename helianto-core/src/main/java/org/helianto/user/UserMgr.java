@@ -74,6 +74,15 @@ public interface UserMgr {
      * @param userKey
      */
     List<User> findUsers(String parent, String userKey);
+    
+    /**
+     * Find users sharing the same user key.
+     * 
+     * @param parent
+     * @param userKey
+     * @param entityType
+     */
+    List<User> findUsers(String parent, String userKey, char entityType);
 
 //    /**
 //     * Find users sharing the same identity.
