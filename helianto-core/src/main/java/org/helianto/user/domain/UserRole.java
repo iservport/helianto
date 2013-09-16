@@ -15,6 +15,10 @@
 
 package org.helianto.user.domain;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -145,7 +149,59 @@ public class UserRole
      */
     @Transient
     public String getUserRoleName() {
-        return "ROLE_"+service.getServiceName().toUpperCase()+"_"+serviceExtension;
+        return formatRole(service.getServiceName(), serviceExtension);
+    }
+    
+    /**
+     * Converts user roles to authorities, including "ROLE_SELF_ID_x", where
+     * x is the authorized user identity primary key.
+     * 
+     * @param userRole
+     * @param identityId
+     */
+    public static Set<String> getRoleNames(Collection<UserRole> roles, long identityId) {
+        Set<String> roleNames = new HashSet<String>();
+        for (UserRole r : roles) {
+        	if (r.getActivityState()==ActivityState.ACTIVE.getValue()) {
+               roleNames.addAll(UserRole.getUserRolesAsString(r, identityId));
+        	}
+        }
+        return roleNames;
+    }
+    
+    /**
+     * Converts user roles to authorities, including "ROLE_SELF_ID_x", where
+     * x is the authorized user identity primary key.
+     * 
+     * @param userRole
+     * @param identityId
+     */
+    private static Set<String> getUserRolesAsString(UserRole userRole, long identityId) {
+        Set<String> roleNames = new HashSet<String>();
+        if (identityId>0) {
+            roleNames.add(formatRole("SELF", new StringBuilder("ID_").append(identityId).toString()));
+        }
+        roleNames.add(formatRole(userRole.getService().getServiceName(), null));
+
+        String[] extensions = userRole.getServiceExtension().split(",");
+        for (String extension: extensions) {
+        	roleNames.add(formatRole(userRole.getService().getServiceName(), extension));
+        }
+        return roleNames;
+    }
+    
+    /**
+     * Internal role formatter.
+     * 
+     * @param serviceName
+     * @param extension
+     */
+    public static String formatRole(String serviceName, String extension) {
+        StringBuilder sb = new StringBuilder("ROLE_").append(serviceName.toUpperCase());
+        if (extension!=null && extension.length()>0) {
+        	sb.append("_").append(extension.trim());
+        }
+        return sb.toString();
     }
     
     /**

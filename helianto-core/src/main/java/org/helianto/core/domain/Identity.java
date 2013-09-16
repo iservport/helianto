@@ -324,6 +324,29 @@ public class Identity implements java.io.Serializable {
 	}
     
     /**
+     * <<Transient>> True if image url is available.
+     */
+    @Transient
+    public boolean isImageAvailable() {
+    	if (getPersonalData()!=null && getPersonalData().getImageUrl()!=null 
+    			&& getPersonalData().getImageUrl().length()>0) {
+    		return true;
+    	}
+    	return false;
+	}
+    
+    /**
+     * <<Transient>> Safe image url getter.
+     */
+    @Transient
+    public String getImageUrl() {
+    	if (isImageAvailable()) {
+    		return getPersonalData().getImageUrl();
+    	}
+		return "";
+	}
+    
+    /**
      * <<Transient>> Safe identity alias.
      */
     @Transient

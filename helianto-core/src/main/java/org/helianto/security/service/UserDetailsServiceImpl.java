@@ -4,15 +4,10 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.SecurityMgr;
 import org.helianto.core.domain.IdentitySecurity;
-import org.helianto.core.repository.IdentitySecurityRepository;
 import org.helianto.core.security.UserDetailsAdapter;
 import org.helianto.core.security.UserSelectorStrategy;
 import org.helianto.user.domain.User;
-import org.helianto.user.repository.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,79 +22,36 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service("userDetailsService")
 public class UserDetailsServiceImpl
-	implements UserDetailsService {
+	extends AbstractDetailsService
+	implements UserDetailsService 
+{
 
 	@Transactional
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
+	public UserDetails loadUserByUsername(String userKey) throws UsernameNotFoundException, DataAccessException {
 
-		if (username==null) {
-			throw new UsernameNotFoundException("User name must not be null!");
-		}
-		String[] keys =username.split(",");
-		String consumerKey = keys[0];
-		IdentitySecurity identitySecurity = null;
-		// user input may be the numeric identity id
-		try {
-			List<IdentitySecurity> identitySecurityList = identitySecurityRepository.findByIdentityId(Long.parseLong(consumerKey));
-			if (identitySecurityList!=null && identitySecurityList.size()>0) {
-				identitySecurity = identitySecurityList.get(0);
-			}
-		}
-		catch(Exception e) {
-			logger.debug("Username is not a number");
-		}
+		String[] keys = split(userKey);
 		
-		if (identitySecurity==null) {
-			identitySecurity = identitySecurityRepository.findByConsumerKey(consumerKey);			
-		}
-		if (identitySecurity==null) {
-			logger.info("Unable to load by user name with {}.", consumerKey);
-			throw new UsernameNotFoundException("Unable to find user name for "+consumerKey);
-		}
+		IdentitySecurity identitySecurity = loadIdentitySecurityByKey(keys);
+		List<User> userList = loadUserListByIdentity(identitySecurity.getIdentity());
+		
 		String entityKey = null;
 		if (keys.length>1) {
 			entityKey = keys[1];
-		}
-		List<User> userList = userRepository.findByIdentityIdOrderByLastEventDesc(identitySecurity.getIdentity().getId());
-		logger.debug("Found {} user(s) matching {}.", userList.size(), username);
-		
-		if (userList==null || userList.size()==0) {
-			throw new UsernameNotFoundException("Unable to find any user for "+username);
 		}
 		
 		UserDetailsAdapter userDetails = userSelectorStrategy.selectUser(userList, identitySecurity, entityKey);
 		User user = userRepository.saveAndFlush(userDetails.getUser());
 		userDetails.grantAuthorities(securityMgr.findRoles(user, true));
 		return userDetails;
+		
 	}
 	
-	//- collabs
-
-    private SecurityMgr securityMgr;
-    private UserSelectorStrategy userSelectorStrategy;
-    private IdentitySecurityRepository identitySecurityRepository;
-    private UserRepository userRepository;
+	// collabs
+    protected UserSelectorStrategy userSelectorStrategy;
     
-    @Resource
-    public void setSecurityMgr(SecurityMgr securityMgr) {
-        this.securityMgr = securityMgr;
-    }
-
     @Resource
     public void setUserSelectorStrategy(UserSelectorStrategy userSelectorStrategy) {
 		this.userSelectorStrategy = userSelectorStrategy;
 	}
-    
-    @Resource
-    public void setIdentitySecurityRepository(IdentitySecurityRepository identitySecurityRepository) {
-		this.identitySecurityRepository = identitySecurityRepository;
-	}
-    
-    @Resource
-    public void setUserRepository(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
-    
-    private static Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
     
 }

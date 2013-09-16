@@ -19,7 +19,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -139,49 +138,13 @@ public class UserDetailsAdapter
      * @param roles
      */
     public void grantAuthorities(Collection<UserRole> roles) {
+        long identityId = isAnonymous() ? 0 : ((User) user).getIdentity().getId();
+        Set<String> roleNames = UserRole.getRoleNames(roles, identityId);
         authorities = new ArrayList<GrantedAuthority>();
-        Set<String> roleNames = new HashSet<String>();
-        for (UserRole r : roles) {
-        	if (r.getActivityState()==ActivityState.ACTIVE.getValue()) {
-               roleNames.addAll(getUserRolesAsString(r, getUser()));
-        	}
-        }
         for (String roleName: roleNames) {
             authorities.add(new GrantedAuthorityImpl(roleName));
             logger.info("Granted authority: {}.", roleName);
         }
-    }
-    
-    /**
-     * Converts user roles to authorities, including "ROLE_SELF_ID_x", where
-     * x is the authorized user identity primary key.
-     * 
-     * @param userRole
-     * @param user
-     */
-    protected Set<String> getUserRolesAsString(UserRole userRole, User user) {
-        Set<String> roleNames = new HashSet<String>();
-        roleNames.add(formatRole("SELF", new StringBuilder("ID_").append(user.getIdentity().getId()).toString()));
-        String[] extensions = userRole.getServiceExtension().split(",");
-        roleNames.add(formatRole(userRole.getService().getServiceName(), null));
-        for (String extension: extensions) {
-        	roleNames.add(formatRole(userRole.getService().getServiceName(), extension));
-        }
-        return roleNames;
-    }
-    
-    /**
-     * Internal role formatter.
-     * 
-     * @param serviceName
-     * @param extension
-     */
-    protected String formatRole(String serviceName, String extension) {
-        StringBuilder sb = new StringBuilder("ROLE_").append(serviceName);
-        if (extension!=null && extension.length()>0) {
-        	sb.append("_").append(extension.trim());
-        }
-        return sb.toString();
     }
     
     /**
