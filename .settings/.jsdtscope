@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="helianto-partner/src/main/java"/>
+	<classpathentry kind="src" path="helianto-inventory/src/main/java"/>
+	<classpathentry kind="src" path="helianto-resource/src/main/java"/>
+	<classpathentry kind="src" path="helianto-document/src/test/java"/>
+	<classpathentry kind="src" path="helianto-resource/src/test/java"/>
+	<classpathentry kind="src" path="helianto-inventory/src/test/java"/>
+	<classpathentry kind="src" path="helianto-core/src/test/resources"/>
+	<classpathentry kind="src" path="helianto-partner/src/test/java"/>
+	<classpathentry kind="src" path="helianto-admin/src/main/resources"/>
+	<classpathentry kind="src" path="helianto-core/src/main/resources"/>
+	<classpathentry kind="src" path="helianto-core/src/test/java"/>
+	<classpathentry kind="src" path="helianto-partner/src/test/resources"/>
+	<classpathentry kind="src" path="helianto-core/src/main/java"/>
+	<classpathentry kind="src" path="helianto-admin/src/main/java"/>
+	<classpathentry kind="src" path="helianto-message/src/test/java"/>
+	<classpathentry kind="src" path="helianto-message/src/main/java"/>
+	<classpathentry kind="src" path="helianto-document/src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.WebProject">
+		<attributes>
+			<attribute name="hide" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.baseBrowserLibrary"/>
+	<classpathentry kind="output" path=""/>
+</classpath>

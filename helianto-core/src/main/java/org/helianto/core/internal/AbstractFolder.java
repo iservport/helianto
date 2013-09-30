@@ -36,6 +36,10 @@ public abstract class AbstractFolder
 	private String folderName;
 	private String folderDecorationUrl;
     
+	// Transients.
+	private int countItems;
+	private int countAlerts;
+	
     /** 
      * Empty constructor.
      * 
@@ -113,6 +117,28 @@ public abstract class AbstractFolder
 		return false;
 	}
 
+    /**
+     * Count items.
+     */
+    @Transient
+    public int getCountItems() {
+		return countItems;
+	}
+    public void setCountItems(int countItems) {
+		this.countItems = countItems;
+	}
+    
+    /**
+     * Count alerts.
+     */
+    @Transient
+    public int getCountAlerts() {
+		return countAlerts;
+	}
+    public void setCountAlerts(int countAlerts) {
+		this.countAlerts = countAlerts;
+	}
+    
     /**
      * toString
      * @return String

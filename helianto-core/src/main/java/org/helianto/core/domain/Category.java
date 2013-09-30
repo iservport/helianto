@@ -73,6 +73,11 @@ public class Category
     private String partnerFilterPattern = "";
     private String scriptItems = "";
 
+	// Transients.
+	private List<String> scriptList = new ArrayList<String>();
+	private int countItems;
+	private int countAlerts;
+    
     /** 
      * Default constructor
      */
@@ -360,11 +365,6 @@ public class Category
 		setScriptItems(StringListUtils.arrayToString(scriptItemsArray));
 	}
 	
-	/*
-	 * Transient field to hold actual script list.
-	 */
-	private List<String> scriptList = new ArrayList<String>();
-    
     /**
      * <<Transient>> Script list, likely to be loaded at runtime.
      */
@@ -385,6 +385,28 @@ public class Category
     	getScriptList().add(scriptContent);
 	}
 
+    /**
+     * Count items.
+     */
+    @Transient
+    public int getCountItems() {
+		return countItems;
+	}
+    public void setCountItems(int countItems) {
+		this.countItems = countItems;
+	}
+    
+    /**
+     * Count alerts.
+     */
+    @Transient
+    public int getCountAlerts() {
+		return countAlerts;
+	}
+    public void setCountAlerts(int countAlerts) {
+		this.countAlerts = countAlerts;
+	}
+    
     /**
      * toString
      * @return String
