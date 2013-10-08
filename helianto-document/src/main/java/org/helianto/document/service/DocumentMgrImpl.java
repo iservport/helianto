@@ -55,7 +55,13 @@ public class DocumentMgrImpl
 		}
 		document = documentRepository.save(document);
 		if (document.getSeries()!=null) {
-			sequenceMgr.validateInternalNumber(document);
+			Long lastNumber = documentRepository.findLastNumber(document.getEntity(), document.getInternalNumberKey());
+			if (lastNumber==null) {
+				document.setInternalNumber(1);
+			}
+			else {
+				document.setInternalNumber(lastNumber+1);
+			}
 		}
 		documentRepository.flush();
 		return document;

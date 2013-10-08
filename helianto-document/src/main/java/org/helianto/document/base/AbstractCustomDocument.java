@@ -18,6 +18,7 @@ package org.helianto.document.base;
 import java.text.DecimalFormat;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
@@ -42,6 +43,7 @@ public abstract class AbstractCustomDocument
 	private static final long serialVersionUID = 1L;
 	private DocumentFolder series;
 	private long internalNumber;
+	private String internalNumberKey;
     private Category category;
 	
 	/**
@@ -97,15 +99,38 @@ public abstract class AbstractCustomDocument
 	 */
 	@Transient
 	public StringBuilder getPrefix() {
-		return new StringBuilder(getSeries().getFolderCode());
+		if (getSeries()!=null) {
+			return new StringBuilder(getSeries().getFolderCode());
+		}
+		return new StringBuilder();
 	}
 
 	/**
 	 * Required by {@link Sequenceable}.
 	 */
-	@Transient
-	public final String getInternalNumberKey() {
-		return getPrefix().toString();
+	@Column(length=48)
+	public String getInternalNumberKey() {
+		return validateInternalNumberKey(internalNumberKey);
+	}
+	public void setInternalNumberKey(String internalNumberKey) {
+		this.internalNumberKey = internalNumberKey;
+	}
+	
+	/**
+	 * <<Transient>> Allow subclasses to override internal number key.
+	 * 
+	 * <p>
+	 * Defaults to ${prefix}.
+	 * </p>
+	 * 
+	 * @param internalNumberKey
+	 */
+    @Transient
+	protected String validateInternalNumberKey(String internalNumberKey) {
+    	if (getPrefix()!=null) {
+    		return getPrefix().toString();
+    	}
+    	return internalNumberKey;
 	}
 	
     @Transient
