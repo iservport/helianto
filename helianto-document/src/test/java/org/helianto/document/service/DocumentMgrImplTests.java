@@ -15,6 +15,7 @@
 
 package org.helianto.document.service;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import java.util.List;
 import org.easymock.EasyMock;
 import org.helianto.core.SequenceMgr;
 import org.helianto.core.domain.Entity;
+import org.helianto.core.test.EntityTestSupport;
 import org.helianto.document.domain.Document;
 import org.helianto.document.domain.DocumentFolder;
 import org.helianto.document.domain.PrivateDocument;
@@ -57,18 +59,21 @@ public class DocumentMgrImplTests {
 	
 	@Test
 	public void storeDocument() {
-		Document document= new Document();
-		document.setSeries(new DocumentFolder());
+		Entity entity = EntityTestSupport.createEntity();
+		Document document= new Document(entity, "");
+		document.setSeries(new DocumentFolder(entity, "KEY"));
 		
 		EasyMock.expect(documentRepository.save(document)).andReturn(document);
+		EasyMock.expect(documentRepository.findLastNumber(entity, "KEY")).andReturn(new Long(1000));
 		documentRepository.flush();
 		EasyMock.replay(documentRepository);
-		sequenceMgr.validateInternalNumber(document);
-		EasyMock.replay(sequenceMgr);
+//		sequenceMgr.validateInternalNumber(document);
+//		EasyMock.replay(sequenceMgr);
 		
 		assertSame(document, documentMgr.storeDocument(document));
 		EasyMock.verify(documentRepository);
-		EasyMock.verify(sequenceMgr);
+		assertEquals(1001, document.getInternalNumber());
+//		EasyMock.verify(sequenceMgr);
 	}
 	
 	@Test
