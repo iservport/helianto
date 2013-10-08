@@ -15,7 +15,6 @@
 	<classpathentry kind="src" path="helianto-inventory/src/test/java"/>
 	<classpathentry kind="src" path="helianto-message/src/main/java"/>
 	<classpathentry kind="src" path="helianto-message/src/test/java"/>
-	<classpathentry excluding="**" kind="src" path="helianto-admin/src/main/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v6.0"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
@@ -23,7 +22,16 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/com.springsource.sts.ide.tomcat.runtimeTarget/SpringSource tc Server (Runtime) v6.0"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/com.springsource.sts.ide.tomcat.runtimeTarget/VMware vFabric tc Server Developer Edition (Runtime) v2.7">
+		<attributes>
+			<attribute name="owner.project.facets" value="jst.web"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/Java SE 7 (MacOS X Default)">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

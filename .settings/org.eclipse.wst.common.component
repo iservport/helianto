@@ -16,5 +16,8 @@
         <wb-resource deploy-path="/" source-path="/helianto-admin/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/helianto-core/src/test/java"/>
         <wb-resource deploy-path="/" source-path="/helianto-core/src/test/resources"/>
+        <wb-resource deploy-path="/" source-path="/helianto-admin/src/main/java"/>
+        <property name="context-root" value="helianto"/>
+        <property name="java-output-path" value="/helianto/target/classes"/>
     </wb-module>
 </project-modules>
