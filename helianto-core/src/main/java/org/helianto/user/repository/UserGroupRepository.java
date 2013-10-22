@@ -41,7 +41,7 @@ public interface UserGroupRepository extends FilterRepository<UserGroup, Seriali
 	List<UserGroup> findByUserKeyOrderByLastEventDesc(String userKey);
 	
 	/**
-	 * Find by parent key.
+	 * Find children by parent key.
 	 * 
 	 * @param parentKey
 	 */
@@ -49,4 +49,14 @@ public interface UserGroupRepository extends FilterRepository<UserGroup, Seriali
     		   	"join child.parentAssociations parents " +
     			"where lower(parents.parent.userKey) like ?1 ")
 	List<UserGroup> findByParent(String parentKey);
+
+	/**
+	 * Find parents by child.
+	 * 
+	 * @param child
+	 */
+	@Query(value="select association.parent from UserAssociation association " +
+    		   	"where association.child = ?1 ")
+	List<UserGroup> findParentsByChild(UserGroup child);
+
 }

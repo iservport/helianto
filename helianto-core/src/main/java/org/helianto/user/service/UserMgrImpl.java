@@ -211,21 +211,21 @@ public class UserMgrImpl
      */
 	@Transactional
     public List<UserGroup> findParentChain(UserGroup userGroup) {
-		userGroupRepository.refresh(userGroup);
-    	List<UserGroup> parentList = new ArrayList<UserGroup>();
-//    	parentList.add(userGroup);
-    	if(userGroup.getParentAssociations()!=null) {
-    		for (UserAssociation association: userGroup.getParentAssociations()) {
-    			if (association.getParent()!=null) {
-        			parentList.add(association.getParent());
-            		logger.debug("{} is child of {}.", userGroup,  association.getParent());
-    			}
-    		}
-    	}
-    	else {
-    		logger.warn("Parent list for {} is null.", userGroup);
-    	}
-    	return parentList;
+//		userGroupRepository.refresh(userGroup);
+//    	List<UserGroup> parentList = new ArrayList<UserGroup>();
+////    	parentList.add(userGroup);
+//    	if(userGroup.getParentAssociations()!=null) {
+//    		for (UserAssociation association: userGroup.getParentAssociations()) {
+//    			if (association.getParent()!=null) {
+//        			parentList.add(association.getParent());
+//            		logger.debug("{} is child of {}.", userGroup,  association.getParent());
+//    			}
+//    		}
+//    	}
+//    	else {
+//    		logger.warn("Parent list for {} is null.", userGroup);
+//    	}
+    	return userGroupRepository.findParentsByChild(userGroup);
     }
 
 	@Transactional

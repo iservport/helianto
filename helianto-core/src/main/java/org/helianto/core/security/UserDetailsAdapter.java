@@ -31,6 +31,7 @@ import org.helianto.user.domain.UserGroup;
 import org.helianto.user.domain.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -221,7 +222,11 @@ public class UserDetailsAdapter
      * Convenience to retrieve user details from context.
      */
     public static UserDetailsAdapter getUserDetailsFromContext() {
-    	return ((UserDetailsAdapter) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	if (authentication!=null) {
+    		return (UserDetailsAdapter) authentication.getPrincipal();
+    	}
+    	return null;
     }
     
     /**

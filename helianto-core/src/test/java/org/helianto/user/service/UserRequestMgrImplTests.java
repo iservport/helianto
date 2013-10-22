@@ -1,4 +1,4 @@
-package org.helianto.core.service;
+package org.helianto.user.service;
 
 import static org.junit.Assert.assertSame;
 
@@ -9,6 +9,7 @@ import org.easymock.EasyMock;
 import org.helianto.core.SequenceMgr;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.form.CompositeIdentityForm;
+import org.helianto.core.service.UserRequestMgrImpl;
 import org.helianto.user.domain.UserRequest;
 import org.helianto.user.form.UserRequestForm;
 import org.helianto.user.repository.UserRequestRepository;

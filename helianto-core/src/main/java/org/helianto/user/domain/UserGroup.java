@@ -86,6 +86,7 @@ public class UserGroup
     private Entity entity;
     private String userKey = "";
     private String userName = "";
+    private Locale locale;
     private Date lastEvent;
     private char userState;
     private boolean accountNonExpired;
@@ -151,10 +152,6 @@ public class UserGroup
     public Entity getEntity() {
         return this.entity;
     }
-    @Transient
-    public Locale getLocale() {
-		return getEntity().getLocale();
-	}
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
@@ -243,6 +240,16 @@ public class UserGroup
     protected String getInternalUserKey() {
     	return this.userKey;
     }
+
+    /**
+     * Locale.
+     */
+    public Locale getLocale() {
+		return locale;
+	}
+    public void setLocale(Locale locale) {
+		this.locale = locale;
+	}
 
     /**
      * Last event

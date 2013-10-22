@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.core.service;
+package org.helianto.security.service;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
@@ -39,6 +39,7 @@ import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.repository.IdentitySecurityRepository;
 import org.helianto.core.security.PublicUserDetails;
 import org.helianto.core.security.UserDetailsAdapter;
+import org.helianto.core.service.SecurityMgrImpl;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserRole;
 import org.helianto.user.repository.UserRepository;

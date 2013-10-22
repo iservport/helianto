@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.core.service;
+package org.helianto.user.service;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
@@ -118,31 +118,15 @@ public class UserMgrImplTests {
 	
 	@Test
 	public void findUserGroupParentRoot() {
-    	UserGroup userGroup = UserGroupTestSupport.createUserGroup();
+    	UserGroup child = UserGroupTestSupport.createUserGroup();
+    	List<UserGroup> parents = new ArrayList<UserGroup>();
 		
-    	userGroupRepository.refresh(userGroup);
+    	expect(userGroupRepository.findParentsByChild(child)).andReturn(parents);
     	replay(userGroupRepository);
     	
-    	List<UserGroup> expectedUserGroupList = userMgr.findParentChain(userGroup);
+    	assertSame(parents, userMgr.findParentChain(child));
     	verify(userGroupRepository);
     	
-    	assertEquals(0, expectedUserGroupList.size());
-	}
-    
-	@Test
-	public void findUserGroupParentLevel1() {
-    	UserGroup userGroup = UserGroupTestSupport.createUserGroup();
-		User user = new User(new Entity(), new Identity("p"));
-		UserAssociation association = new UserAssociation(userGroup, user);
-		user.getParentAssociations().add(association);
-		
-    	userGroupRepository.refresh(user);
-    	replay(userGroupRepository);
-    	
-    	List<UserGroup> expectedUserGroupList = userMgr.findParentChain(user);
-    	verify(userGroupRepository);
-    	
-    	assertSame(userGroup, expectedUserGroupList.get(0));
 	}
     
 	@Test
