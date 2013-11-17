@@ -175,7 +175,7 @@ public class Entity
     /**
      * Operator, lazy loaded.
      */
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne //(fetch=FetchType.LAZY)
     @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
         return this.operator;

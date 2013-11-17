@@ -36,6 +36,7 @@ import org.helianto.core.def.CategoryGroup;
 import org.helianto.core.def.ReferenceEnabled;
 import org.helianto.core.domain.type.TrunkEntity;
 import org.helianto.core.internal.AbstractHumanReadable;
+import org.helianto.core.number.Sequencer;
 import org.helianto.core.utils.StringListUtils;
 
 /**
@@ -51,10 +52,10 @@ public class Category
 	extends AbstractHumanReadable
 	implements 
 	  TrunkEntity
+	, Sequencer
 	, ReferenceEnabled
 	, PropertyMappable
 	, Programmable
-
 {
 
     private static final long serialVersionUID = 1L;
@@ -70,6 +71,9 @@ public class Category
     private String customWorkflowRoles = "";
     private String customProperties = "";
     private String customNumberPattern = "";
+	private String patternPrefix = "";
+	private String patternSuffix = "";
+	private int numberOfDigits = 2;
     private String partnerFilterPattern = "";
     private String scriptItems = "";
 
@@ -317,6 +321,28 @@ public class Category
 		this.customNumberPattern = customNumberPattern;
 	}
 	
+    @Override
+    public String getPatternPrefix() {
+		return patternPrefix;
+	}
+    public void setPatternPrefix(String patternPrefix) {
+		this.patternPrefix = patternPrefix;
+	}
+    
+    public String getPatternSuffix() {
+		return patternSuffix;
+	}
+    public void setPatternSuffix(String patternSuffix) {
+		this.patternSuffix = patternSuffix;
+	}
+    
+    public int getNumberOfDigits() {
+		return numberOfDigits;
+	}
+    public void setNumberOfDigits(int numberOfDigits) {
+		this.numberOfDigits = numberOfDigits;
+	}
+    
     /**
      * Partner (if any) filter pattern.
      * 

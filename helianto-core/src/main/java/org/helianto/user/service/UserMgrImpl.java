@@ -15,7 +15,6 @@
 
 package org.helianto.user.service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -318,6 +317,10 @@ public class UserMgrImpl
 		}
 		logger.info("User {} available as part of association {}.", user, association);
 		return association;
+	}
+	
+	public List<UserGroup> findUsersByRole(Entity entity, String serviceName, String extension) {
+		return userRoleRepository.findChildrenByEntityAndUserRoleServiceName(entity, serviceName, extension);
 	}
 	
 	@Transactional

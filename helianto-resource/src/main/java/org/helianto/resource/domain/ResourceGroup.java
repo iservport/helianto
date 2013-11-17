@@ -34,6 +34,7 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.Controllable;
 import org.helianto.core.Navigable;
 import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.type.FolderEntity;
 import org.helianto.core.domain.type.TrunkEntity;
 import org.helianto.resource.def.ResourceType;
 
@@ -56,6 +57,7 @@ import org.helianto.resource.def.ResourceType;
 public class ResourceGroup 
 
 	implements TrunkEntity
+	, FolderEntity
 	, Navigable
 	, Comparable<ResourceGroup> 
 
@@ -64,19 +66,17 @@ public class ResourceGroup
 	private static final long serialVersionUID = 1L;
 	private int id;
     private Entity entity;
-    private String resourceCode;
-    private String resourceName;
-    private String parentPath;
-    private char resourceType;
+    private String resourceCode = "";
+    private String resourceName = "";
+	private String folderDecorationUrl = "";
+    private String parentPath = "";
+    private char resourceType = ResourceType.EQUIPMENT.getValue();
 
     /** 
      * Default constructor.
      */
     public ResourceGroup() {
     	super();
-    	setResourceTypeAsEnum(ResourceType.EQUIPMENT);
-    	setResourceCode("");
-    	setResourceName("");
     }
 
     /** 
@@ -122,6 +122,11 @@ public class ResourceGroup
         this.resourceCode = resourceCode;
     }
     
+	@Transient
+	public String getFolderCode() {
+		return getResourceCode();
+	}
+	
     /**
      * <<Transient>> Make discriminator value available.
      */
@@ -141,6 +146,22 @@ public class ResourceGroup
         this.resourceName = resourceName;
     }
     
+	@Transient
+	public String getFolderName() {
+		return getResourceName();
+	}
+	
+    /**
+     * Folder decoration url.
+     */
+    @Column(length=128)
+	public String getFolderDecorationUrl() {
+		return folderDecorationUrl;
+	}
+    public void setFolderDecorationUrl(String folderDecorationUrl) {
+		this.folderDecorationUrl = folderDecorationUrl;
+	}
+	
     @Column(length=64)
     public String getParentPath() {
 		return getInternalParentPath(parentPath);
@@ -230,6 +251,7 @@ public class ResourceGroup
          result = 37 * result + ( getResourceCode() == null ? 0 : this.getResourceCode().hashCode() );
          return result;
    }
+
 
 }
 

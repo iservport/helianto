@@ -131,6 +131,15 @@ public interface UserMgr {
     UserAssociation installUser(UserGroup parent, Credential credential, boolean accountNonExpired);
     
     /**
+     * List users having a role defined by service and extension.
+     * 
+     * @param entity
+     * @param serviceName
+     * @param extension (use %extensionName% for better results).
+     */
+    List<UserGroup> findUsersByRole(Entity entity, String serviceName, String extension);
+    
+    /**
      * <p>Store <code>UserAssociation</code> and return a managed instance.</p>
      * 
      * @param parentAssociation

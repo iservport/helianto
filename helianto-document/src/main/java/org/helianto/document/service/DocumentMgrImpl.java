@@ -113,6 +113,7 @@ public class DocumentMgrImpl
     	logger.info("Removed document "+document);
 	}
 	
+	@Transactional
 	public DocumentFolder loadDocumentFolder(Entity entity, String folderCode) {
 		return documentFolderRepository.findByEntityAndFolderCode(entity, folderCode);
 	}
