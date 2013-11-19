@@ -34,6 +34,8 @@ import org.helianto.inventory.RequirementSign;
 import org.helianto.inventory.RequirementState;
 import org.helianto.inventory.domain.internal.AbstractRequirement;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 /**
  * A base class for "on-hand" quantities.
@@ -110,6 +112,7 @@ public class Inventory extends AbstractRequirement {
 	/**
 	 * Set of movements.
 	 */
+	@JsonManagedReference 
 	@OneToMany(mappedBy="inventory")
 	public Set<Movement> getMovements() {
 		return movements;

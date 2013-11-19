@@ -39,6 +39,8 @@ import org.helianto.core.internal.AbstractHumanReadable;
 import org.helianto.core.number.Sequencer;
 import org.helianto.core.utils.StringListUtils;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Categories.  
  * 
@@ -128,6 +130,7 @@ public class Category
     /**
      * Category entity.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="entityId")
     public Entity getEntity() {

@@ -27,6 +27,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 /**
  * City.
@@ -118,6 +120,7 @@ public class City
     /**
      * Context.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="contextId", nullable=true)
     public Operator getContext() {
@@ -130,6 +133,7 @@ public class City
     /**
      * State.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="stateId", nullable=true)
     public State getState() {

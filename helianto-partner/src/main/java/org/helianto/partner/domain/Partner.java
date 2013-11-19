@@ -41,6 +41,9 @@ import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Phone;
 import org.helianto.core.domain.type.TrunkEntity;
 import org.helianto.partner.PartnerState;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 /**
  * Base class to represent the relationship between the organization and other entities.
  * 
@@ -151,6 +154,7 @@ public class Partner
      * Never null.
      * </p>
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="partnerRegistryId", nullable=true)
     public PrivateEntity getPrivateEntity() {
@@ -409,7 +413,7 @@ public class Partner
     /**
      * Account.
      */
-    @ManyToOne
+    @JsonBackReference @ManyToOne
     @JoinColumn(name="accountId", nullable=true)
     public Account getAccount() {
         return this.account;
@@ -454,6 +458,7 @@ public class Partner
     /**
      * Partner keys.
      */
+    @JsonManagedReference 
     @OneToMany(mappedBy="partner")
     public Set<PartnerKey> getPartnerKeys() {
 		return partnerKeys;
@@ -465,6 +470,7 @@ public class Partner
     /**
      * Partner categories.
      */
+    @JsonManagedReference 
     @OneToMany(mappedBy="partner")
 	public Set<PartnerCategory> getPartnerCategories() {
 		return partnerCategories;

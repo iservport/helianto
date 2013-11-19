@@ -15,6 +15,8 @@ import javax.persistence.Version;
 import org.helianto.core.domain.Service;
 import org.helianto.message.def.NotificationAddressType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * 
  * @author mauriciofernandesdecastro
@@ -86,6 +88,7 @@ public class ServiceNotification implements Serializable {
     /**
      * Service notifications.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="serviceNotificationId")
     public ServiceEvent getServiceNotification() {

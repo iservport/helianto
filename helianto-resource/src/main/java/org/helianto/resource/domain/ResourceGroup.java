@@ -38,6 +38,8 @@ import org.helianto.core.domain.type.FolderEntity;
 import org.helianto.core.domain.type.TrunkEntity;
 import org.helianto.resource.def.ResourceType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * <p>
  * A class to represent a process resource group.
@@ -102,6 +104,7 @@ public class ResourceGroup
     /**
      * Entity getter.
      */
+    @JsonBackReference 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {

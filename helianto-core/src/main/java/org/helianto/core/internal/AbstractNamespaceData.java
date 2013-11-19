@@ -26,6 +26,8 @@ import javax.persistence.MappedSuperclass;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.type.RootEntity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Base class to namespace data.
  * 
@@ -77,6 +79,7 @@ public class AbstractNamespaceData implements RootEntity {
     /**
      * Namespace operator.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {

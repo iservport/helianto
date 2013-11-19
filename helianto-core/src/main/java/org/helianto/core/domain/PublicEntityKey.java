@@ -22,6 +22,8 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.internal.AbstractKeyStringValue;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 /**
  * The content of a key associated to the public entity.
  * 
@@ -88,6 +90,7 @@ public class PublicEntityKey extends AbstractKeyStringValue {
     /**
      * Public entity.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="publicEntityId", nullable=true)
     public PublicEntity getPublicEntity() {

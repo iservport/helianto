@@ -26,6 +26,8 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.type.RootEntity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Countries.
  * 
@@ -88,6 +90,7 @@ public class Country implements RootEntity {
     /**
      * Namespace operator.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {

@@ -41,6 +41,9 @@ import org.helianto.inventory.ProcurementOption;
 import org.helianto.inventory.domain.internal.AbstractRequirement;
 import org.helianto.partner.domain.Partner;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 /**
  * Join a partner to a requirement to represent an agreement to buy
@@ -118,6 +121,7 @@ public class ProcessAgreement
     /**
      * Customer or supplier.
      */
+    @JsonBackReference 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="partnerId", nullable=true)
     public Partner getPartner() {
@@ -226,6 +230,7 @@ public class ProcessAgreement
 	/**
 	 * A map of taxes.
 	 */
+	@JsonManagedReference 
 	@OneToMany(mappedBy="processAgreement", cascade=CascadeType.ALL)
 	@MapKey(name="taxCode")
 	public Map<String, Tax> getTaxes() {

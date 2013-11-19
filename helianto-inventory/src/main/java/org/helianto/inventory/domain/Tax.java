@@ -31,6 +31,8 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.domain.KeyType;
 import org.helianto.core.internal.AbstractKeyValue;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Simple tax calculation.
  * 
@@ -122,6 +124,7 @@ public class Tax
     /**
      * Process agreement.
      */
+    @JsonBackReference 
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="processAgreementId")
     public ProcessAgreement getProcessAgreement() {

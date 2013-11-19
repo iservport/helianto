@@ -22,6 +22,8 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.type.RootEntity;
 import org.helianto.core.internal.AbstractEnumerator;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 /**
  * A class to hold last value for public number lists.
  * 
@@ -58,6 +60,7 @@ public class PublicSequence extends AbstractEnumerator implements RootEntity {
     /**
      * Entity.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {

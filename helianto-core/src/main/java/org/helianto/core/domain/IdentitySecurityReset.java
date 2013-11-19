@@ -15,6 +15,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Temporary tokens to reset consumer secrets. 
  * 
@@ -76,6 +78,7 @@ public class IdentitySecurityReset implements Serializable {
     /**
      * Connection data.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="identitySecurityId")
 	public IdentitySecurity getIdentitySecurity() {

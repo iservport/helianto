@@ -37,6 +37,8 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.number.Sequenceable;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * A simple picking report.
  * 
@@ -119,6 +121,7 @@ public class Picking implements Serializable, Sequenceable {
      * <<NaturalKey>> Owning entity.
      * @see {@link Entity}
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
@@ -141,6 +144,7 @@ public class Picking implements Serializable, Sequenceable {
 	/**
 	 * Invoice.
 	 */
+	@JsonBackReference 
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="invoiceId")
 	public Invoice getInvoice() {

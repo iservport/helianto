@@ -28,6 +28,8 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.type.TrunkEntity;
 import org.helianto.partner.AccountType;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 /**
  * Represents accounts.  
  * 
@@ -79,6 +81,7 @@ public class Account implements TrunkEntity {
     /**
      * Entity getter.
      */
+    @JsonBackReference 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {

@@ -29,6 +29,8 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.document.domain.DocumentFolder;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Extends <code>AbstractDocument</code> to control how docCode
  * is created.
@@ -66,6 +68,7 @@ public abstract class AbstractCustomDocument
 	/**
 	 * The document series.
 	 */
+	@JsonBackReference 
 	@ManyToOne(cascade={CascadeType.ALL})
 	@JoinColumn(name="serializerId")
 	public DocumentFolder getSeries() {
@@ -220,7 +223,7 @@ public abstract class AbstractCustomDocument
      * Category.
      * @see {@link Category}
      */
-    @ManyToOne
+    @JsonBackReference @ManyToOne
     @JoinColumn(name="categoryId", nullable=true)
     public Category getCategory() {
 		return getInternalCategory(category);

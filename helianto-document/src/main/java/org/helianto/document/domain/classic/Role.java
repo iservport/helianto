@@ -31,6 +31,8 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.domain.Entity;
 import org.helianto.document.base.AbstractDocument;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * Base class to roles.
  * 
@@ -75,6 +77,7 @@ public class Role extends AbstractDocument {
 	/**
      * Parent associations.
      */
+    @JsonManagedReference 
     @OneToMany(mappedBy="child")
     public Set<FunctionAssociation> getParentAssociations() {
         return this.parentAssociations;
@@ -86,6 +89,7 @@ public class Role extends AbstractDocument {
     /**
      * Child associations.
      */
+    @JsonManagedReference 
     @OneToMany(mappedBy="parent", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     public Set<FunctionAssociation> getChildAssociations() {
         return this.childAssociations;

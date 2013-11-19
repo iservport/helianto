@@ -34,6 +34,8 @@ import org.helianto.inventory.domain.Inventory;
 import org.helianto.inventory.domain.InventoryTransaction;
 import org.helianto.inventory.domain.Movement;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 /**
  * Extends the document hierarchy to wrap an InventoryTransaction.
@@ -62,6 +64,7 @@ public class AbstractInventoryDocument extends AbstractNumberedDocument {
     /**
 	 * The wrapped inventory transaction
 	 */
+    @JsonBackReference 
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="inventoryTransactionId")
 	public InventoryTransaction getInventoryTransaction() {

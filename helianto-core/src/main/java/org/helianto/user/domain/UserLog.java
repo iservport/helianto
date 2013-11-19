@@ -28,6 +28,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.def.EventType;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 /**
  * Represent the memory of main user actions, as
  * login, logout, and so forth.
@@ -90,6 +92,7 @@ public class UserLog implements java.io.Serializable {
     /**
      * User.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="userId", nullable=true)
     public User getUser() {

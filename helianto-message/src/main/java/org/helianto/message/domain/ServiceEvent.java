@@ -15,6 +15,8 @@ import javax.persistence.Version;
 
 import org.helianto.core.domain.Service;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Define notification events per service.
  * 
@@ -91,6 +93,7 @@ public class ServiceEvent implements Serializable {
     /**
      * Service where notifications come from.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="serviceId")
     public Service getService() {

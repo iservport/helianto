@@ -22,6 +22,8 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.type.TrunkEntity;
 import org.helianto.core.internal.AbstractEnumerator;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 /**
  * A class to hold last value for internal number lists.
  * 
@@ -95,6 +97,7 @@ public class PrivateSequence
     /**
      * Entity.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {

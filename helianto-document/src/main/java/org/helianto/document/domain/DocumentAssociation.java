@@ -25,6 +25,8 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.internal.AbstractAssociation;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 /**
  * Document parent-child associations.
@@ -54,6 +56,7 @@ public class DocumentAssociation extends AbstractAssociation<Document, Document>
     /**
      * Associated parent document.
      */
+    @JsonBackReference 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="parentId", nullable=true)
 	public Document getParent() {
@@ -63,6 +66,7 @@ public class DocumentAssociation extends AbstractAssociation<Document, Document>
     /**
      * Associated child document.
      */
+    @JsonBackReference 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="childId", nullable=true)
 	public Document getChild() {

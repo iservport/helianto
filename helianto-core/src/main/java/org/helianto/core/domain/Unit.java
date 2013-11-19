@@ -29,6 +29,8 @@ import javax.persistence.Version;
 import org.helianto.core.domain.type.TrunkEntity;
 import org.helianto.core.utils.StringListUtils;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * <p>
  * Represents scale <code>Unit</code>s .  
@@ -109,6 +111,7 @@ public class Unit implements TrunkEntity {
     /**
      * Entity getter.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {

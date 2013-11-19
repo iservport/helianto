@@ -32,6 +32,8 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.def.ActivityState;
 import org.helianto.core.domain.Service;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Roles represent the authorization given to access a service.
  * 
@@ -88,6 +90,7 @@ public class UserRole
     /**
      * User group.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="userId", nullable=true)
     public UserGroup getUserGroup() {
@@ -100,6 +103,7 @@ public class UserRole
     /**
      * Service.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="serviceId", nullable=true)
     public Service getService() {

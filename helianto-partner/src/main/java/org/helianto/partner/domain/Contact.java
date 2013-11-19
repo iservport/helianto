@@ -26,6 +26,8 @@ import org.helianto.core.def.AddressType;
 import org.helianto.core.def.PrivacyLevel;
 import org.helianto.core.domain.Identity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Contact
  * 
@@ -85,6 +87,7 @@ public class Contact extends PrivateAddress implements Privacy {
     /**
      * Owner.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="identityId", nullable=true)
     public Identity getOwner() {

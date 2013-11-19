@@ -30,6 +30,8 @@ import org.helianto.core.domain.Entity;
 import org.helianto.document.Event;
 import org.helianto.document.base.AbstractCustomDocument;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 /**
  * Concrete documents.
@@ -76,6 +78,7 @@ public class Document
     /**
      * Parent document associations.
      */
+    @JsonManagedReference 
     @OneToMany(mappedBy="child")
     public Set<DocumentAssociation> getParents() {
         return this.parents;
@@ -87,6 +90,7 @@ public class Document
     /**
      * Child document associations.
      */
+    @JsonManagedReference 
     @OneToMany(mappedBy="parent", cascade={CascadeType.ALL})
     public Set<DocumentAssociation> getChildren() {
         return this.children;

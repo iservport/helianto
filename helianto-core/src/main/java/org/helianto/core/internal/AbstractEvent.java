@@ -31,6 +31,8 @@ import org.helianto.core.form.EventForm;
 import org.helianto.core.form.PrivacyForm;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 
 /**
@@ -76,6 +78,7 @@ public abstract class AbstractEvent
      * Record owner.
      * @see {@link Identity}
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="ownerId", nullable=true)
 	public Identity getOwner() {

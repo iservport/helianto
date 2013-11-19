@@ -53,6 +53,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Years;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * An uniquely identified actor.
  * 
@@ -460,6 +462,7 @@ public class Identity implements java.io.Serializable {
     /**
      * A set of connection data.
      */
+    @JsonManagedReference 
     @OneToMany(mappedBy="identity")
     public Set<IdentitySecurity> getConnections() {
 		return connections;

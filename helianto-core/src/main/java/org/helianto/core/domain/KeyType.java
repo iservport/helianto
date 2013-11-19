@@ -26,6 +26,8 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.type.RootEntity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Represent key types like customer, supplier or government assigned numbers.
  * 
@@ -79,6 +81,7 @@ public class KeyType implements RootEntity {
     /**
      * <<NaturalKey>> Operator.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {

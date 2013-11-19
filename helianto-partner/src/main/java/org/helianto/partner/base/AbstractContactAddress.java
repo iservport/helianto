@@ -10,6 +10,8 @@ import javax.persistence.Version;
 
 import org.helianto.core.domain.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Base class to instances having a contact address.
  * 
@@ -51,6 +53,7 @@ public abstract class AbstractContactAddress implements java.io.Serializable {
 	/**
 	 * Entity.
 	 */
+	@JsonBackReference 
 	@ManyToOne
 	@JoinColumn(name = "entityId")
 	public Entity getEntity() {

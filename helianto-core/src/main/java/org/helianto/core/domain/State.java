@@ -26,6 +26,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * State of a union or federation.
  * 
@@ -91,6 +93,7 @@ public class State
     /**
      * Context.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="contextId", nullable=true)
     public Operator getContext() {
@@ -125,6 +128,7 @@ public class State
     /**
      * Country.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="countryId")
     public Country getCountry() {

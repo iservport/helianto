@@ -24,6 +24,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
 import org.helianto.core.domain.KeyType;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 /**
  * Subclasses overriding this may hold the content of a key to 
  * be associated to an owner.
@@ -67,6 +69,7 @@ public abstract class AbstractKeyValue implements java.io.Serializable {
     /**
      * Key type.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="keyTypeId", nullable=true)
     public KeyType getKeyType() {

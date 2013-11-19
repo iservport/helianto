@@ -49,6 +49,10 @@ import org.helianto.core.utils.StringListUtils;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserGroup;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 /**
  *              
  * <p>
@@ -175,7 +179,9 @@ public class Entity
     /**
      * Operator, lazy loaded.
      */
-    @ManyToOne //(fetch=FetchType.LAZY)
+    @JsonIgnore
+    @JsonBackReference 
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
         return this.operator;
@@ -386,6 +392,7 @@ public class Entity
     /**
      * User group set.
      */
+    @JsonManagedReference 
     @OneToMany(mappedBy="entity")
     public Set<UserGroup> getUsers() {
 		return users;
@@ -397,6 +404,7 @@ public class Entity
     /**
      * Public entity set.
      */
+    @JsonManagedReference 
     @OneToMany(mappedBy="entity")
 	public Set<PublicEntity> getPublicEntities() {
 		return publicEntities;

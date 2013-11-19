@@ -30,6 +30,8 @@ import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
 import org.helianto.document.base.AbstractSerializer;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Wraps a number pattern to be used to generate a sequence of documents.
  * 
@@ -75,6 +77,7 @@ public class DocumentFolder
      * Category.
      * @see {@link Category}
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="categoryId", nullable=true)
     public Category getCategory() {

@@ -31,6 +31,8 @@ import org.helianto.document.domain.ProcessDocument;
 import org.helianto.inventory.CardState;
 import org.helianto.inventory.InvalidCardException;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Cards are companions to transactions.
  * 
@@ -114,6 +116,7 @@ public class Card implements java.io.Serializable {
 	/**
 	 * <<NaturalKey>>Card set.
 	 */
+    @JsonBackReference 
     @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="cardSetId", nullable=true)
 	public CardSet getCardSet() {

@@ -39,6 +39,8 @@ import javax.persistence.Version;
 import org.helianto.core.def.ActivityState;
 import org.helianto.core.def.ProviderType;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 /**
  * Provides <code>Identity</code> with authentication information. 
  * 
@@ -154,6 +156,7 @@ public class IdentitySecurity implements Serializable {
     /**
      * <<Cascading>> Identity owning this credential.
      */
+    @JsonBackReference 
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="identityId", nullable=true)
     public Identity getIdentity() {

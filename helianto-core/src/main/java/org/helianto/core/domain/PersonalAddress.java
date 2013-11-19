@@ -11,6 +11,8 @@ import org.helianto.core.def.AddressType;
 import org.helianto.core.form.PersonalForm;
 import org.helianto.core.internal.AbstractAddress;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 /**
  * Personal address.
@@ -76,6 +78,7 @@ public class PersonalAddress extends AbstractAddress implements PersonalForm {
 	/**
 	 * Identity.
 	 */
+	@JsonBackReference 
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "identityId")
 	public Identity getIdentity() {

@@ -17,6 +17,8 @@ import javax.persistence.Version;
 
 import org.helianto.core.domain.type.RootEntity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * A group of parameters.
  * 
@@ -81,6 +83,7 @@ public class ParameterGroup implements RootEntity {
     /**
      * Operator.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {

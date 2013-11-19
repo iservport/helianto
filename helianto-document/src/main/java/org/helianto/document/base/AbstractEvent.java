@@ -37,6 +37,8 @@ import org.helianto.core.domain.Identity;
 import org.helianto.document.Event;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 
 /**
@@ -105,6 +107,7 @@ public abstract class AbstractEvent implements Privacy, Event {
      * <<NaturalKey>> Entity owning the control.
      * @see {@link Entity}
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
@@ -130,6 +133,7 @@ public abstract class AbstractEvent implements Privacy, Event {
      * Record owner.
      * @see {@link Identity}
      */
+    @JsonBackReference 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="ownerId", nullable=true)
 	public Identity getOwner() {

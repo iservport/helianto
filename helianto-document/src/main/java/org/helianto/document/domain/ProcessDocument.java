@@ -31,6 +31,9 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Unit;
 import org.helianto.document.def.InheritanceType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * Base class to a document hierarchy to be used in engineering structures.
  * 
@@ -77,6 +80,7 @@ public class ProcessDocument
      * the Inventory class.
      * </p>
      */
+    @JsonBackReference 
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="unitId")
     public Unit getUnit() {
@@ -89,6 +93,7 @@ public class ProcessDocument
     /**
      * Process document keys.
      */
+    @JsonManagedReference 
     @OneToMany(mappedBy="processDocument", cascade={CascadeType.ALL})
     public Set<ProcessDocumentKey> getProcessDocumentKeys() {
         return this.processDocumentKeys;

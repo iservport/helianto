@@ -25,6 +25,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Private Key.
  * 
@@ -73,6 +75,7 @@ public class PrivateKey implements java.io.Serializable {
     /**
      * Credential.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="credentialId", nullable=true)
     public Credential getCredential() {

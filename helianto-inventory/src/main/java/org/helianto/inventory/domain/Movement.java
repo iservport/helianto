@@ -34,6 +34,8 @@ import javax.persistence.Version;
 
 import org.helianto.inventory.MovementDirection;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 /**
  * Join transactions and inventory.
@@ -122,6 +124,7 @@ public class Movement implements Serializable {
 	/**
 	 * Inventory transaction.
 	 */
+    @JsonBackReference 
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="inventoryTransactionId")
 	public InventoryTransaction getInventoryTransaction() {
@@ -134,6 +137,7 @@ public class Movement implements Serializable {
 	/**
 	 * Source or destination inventory.
 	 */
+    @JsonBackReference 
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="inventoryId")
 	public Inventory getInventory() {

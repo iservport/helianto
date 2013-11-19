@@ -30,6 +30,8 @@ import org.helianto.core.def.AddressType;
 import org.helianto.core.def.PrivacyLevel;
 import org.helianto.core.internal.AbstractAddress;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Address.
  * 
@@ -90,6 +92,7 @@ public class PrivateAddress extends AbstractAddress implements Comparable<Privat
     /**
      * Private entity.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="partnerRegistryId", nullable=true)
     public PrivateEntity getPrivateEntity() {

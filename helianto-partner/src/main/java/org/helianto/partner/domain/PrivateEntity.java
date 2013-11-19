@@ -33,6 +33,9 @@ import org.helianto.core.domain.Phone;
 import org.helianto.core.domain.PublicEntity;
 import org.helianto.core.number.Sequenceable;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * Partner registry, a common class to represent Customers, Suppliers and other parties that relate to the owning
  * entity.
@@ -103,6 +106,7 @@ public class PrivateEntity
 //    /**
 //     * Entity.
 //     */
+//    @JsonBackReference 
 //    @ManyToOne
 //    @JoinColumn(name="entityId", nullable=true)
 //    public Entity getEntity() {
@@ -182,6 +186,7 @@ public class PrivateEntity
     /**
      * Public entity.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="publicEntityId", nullable=true)
     public PublicEntity getPublicEntity() {
@@ -372,6 +377,7 @@ public class PrivateEntity
     /**
      * Partners.
      */
+    @JsonManagedReference 
     @OneToMany(mappedBy="privateEntity")
     public Set<Partner> getPartners() {
         return this.partners;
@@ -383,6 +389,7 @@ public class PrivateEntity
     /**
      * Addresses.
      */
+    @JsonManagedReference 
     @OneToMany(mappedBy="privateEntity")
     public Set<PrivateAddress> getAddresses() {
         return this.addresses;
@@ -404,6 +411,7 @@ public class PrivateEntity
     /**
      * Partner registry keys.
      */
+    @JsonManagedReference 
     @OneToMany(mappedBy="privateEntity", cascade=CascadeType.ALL)
     public Set<PrivateEntityKey> getPartnerRegistryKeys() {
 		return partnerRegistryKeys;
@@ -415,6 +423,7 @@ public class PrivateEntity
     /**
      * Phones.
      */
+    @JsonManagedReference 
     @OneToMany(mappedBy="privateEntity")
     public Set<PartnerPhone> getPhones() {
         return this.phones;
@@ -426,7 +435,7 @@ public class PrivateEntity
     /**
      * Contact groups.
      */
-    @OneToMany(mappedBy="privateEntity")
+    @JsonManagedReference @OneToMany(mappedBy="privateEntity")
     public Set<ContactGroup> getContactGroups() {
 		return contactGroups;
 	}

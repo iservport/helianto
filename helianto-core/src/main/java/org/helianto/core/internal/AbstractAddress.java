@@ -29,6 +29,8 @@ import org.helianto.core.Address;
 import org.helianto.core.domain.City;
 import org.helianto.core.domain.State;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Base class to instances having an Address.
  * 
@@ -172,6 +174,7 @@ public abstract class AbstractAddress
     /**
      * State.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="stateId")
     public State getState() {
@@ -209,6 +212,7 @@ public abstract class AbstractAddress
     /**
      * City.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="cityId")
     public City getCity() {

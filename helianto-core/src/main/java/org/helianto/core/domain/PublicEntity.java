@@ -24,6 +24,9 @@ import org.helianto.core.def.PhoneType;
 import org.helianto.core.domain.type.RootEntity;
 import org.helianto.core.internal.AbstractAddress;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * A registry for public entities.
  * 
@@ -103,6 +106,7 @@ public class PublicEntity
 	/**
 	 * Entity.
 	 */
+	@JsonBackReference 
 	@ManyToOne
 	@JoinColumn(name = "entityId")
 	public Entity getEntity() {
@@ -320,6 +324,7 @@ public class PublicEntity
     /**
      * Keys.
      */
+	@JsonManagedReference 
 	@OneToMany(mappedBy="publicEntity")
 	public Set<PublicEntityKey> getPublicEntityKeys() {
 		return publicEntityKeys;

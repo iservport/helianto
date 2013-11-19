@@ -22,6 +22,8 @@ import javax.persistence.Transient;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.user.domain.UserGroup;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 /**
  * A contact group.
  * 
@@ -84,6 +86,7 @@ public class ContactGroup extends UserGroup {
     /**
      * Private entity.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="partnerRegistryId", nullable=true)
     public PrivateEntity getPrivateEntity() {

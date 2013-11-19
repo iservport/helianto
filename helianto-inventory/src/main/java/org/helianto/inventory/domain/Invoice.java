@@ -36,6 +36,9 @@ import org.helianto.inventory.InvoiceType;
 import org.helianto.inventory.domain.internal.AbstractInventoryDocument;
 import org.helianto.partner.domain.Partner;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * Represents invoices.
  * 
@@ -103,6 +106,7 @@ public class Invoice extends AbstractInventoryDocument {
     /**
 	 * Partner sending or receiving the invoice.
 	 */
+    @JsonBackReference 
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="partnerId")
     public Partner getPartner() {
@@ -115,6 +119,7 @@ public class Invoice extends AbstractInventoryDocument {
     /**
 	 * Picking set.
 	 */
+    @JsonManagedReference 
     @OneToMany(mappedBy="invoice", cascade=CascadeType.ALL)
 	public Set<Picking> getPickingSet() {
 		return pickingSet;

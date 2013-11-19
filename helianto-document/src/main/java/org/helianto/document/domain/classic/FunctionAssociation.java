@@ -28,6 +28,8 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.internal.AbstractAssociation;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Function parent-child associations.
  * 
@@ -50,6 +52,7 @@ public class FunctionAssociation extends AbstractAssociation<Role, Role> {
     /**
      * Associated parent function.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="parentId", nullable=true)
 	public Role getParent() {
@@ -59,6 +62,7 @@ public class FunctionAssociation extends AbstractAssociation<Role, Role> {
     /**
      * Associated child function.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="childId", nullable=true)
 	public Role getChild() {

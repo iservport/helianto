@@ -23,6 +23,8 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.KeyType;
 import org.helianto.core.internal.AbstractKeyStringValue;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 /**
  * The content of a key associated to the partner.
  * 
@@ -68,6 +70,7 @@ public class PartnerKey extends AbstractKeyStringValue {
     /**
      * Partner.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="partnerId", nullable=true)
     public Partner getPartner() {

@@ -21,6 +21,8 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 /**
  * A special inventory movement, where a previous process agreement
@@ -52,6 +54,7 @@ public class Shipment extends Movement implements Comparable<Shipment> {
 	/**
 	 * Process agreement.
 	 */
+	@JsonBackReference 
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="processAgreementId")
 	public ProcessAgreement getProcessAgreement() {

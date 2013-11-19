@@ -36,6 +36,8 @@ import org.helianto.core.def.AssociationState;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.internal.AbstractAssociation;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 /**
  * User group associations.
  * 
@@ -122,6 +124,7 @@ public class UserAssociation
     /**
      * Parent user group.
      */
+    @JsonBackReference 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="parentId", nullable=true)
     public UserGroup getParent() {
@@ -131,6 +134,7 @@ public class UserAssociation
     /**
      * Child user group.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="childId", nullable=true)
     public UserGroup getChild() {

@@ -48,6 +48,9 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.type.FolderEntity;
 import org.helianto.core.utils.StringListUtils;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 /**
  * 			
  * An user account (or group) represents a set of roles within an <code>Entity</code>. 
@@ -147,6 +150,7 @@ public class UserGroup
     /**
      * Entity.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
@@ -419,12 +423,10 @@ public class UserGroup
     	getScriptList().add(scriptContent);
 	}
     
-    
-
-	
 	/**
      * Parent associations.
      */
+    @JsonManagedReference 
     @OneToMany(mappedBy="child")
     public Set<UserAssociation> getParentAssociations() {
         return this.parentAssociations;
@@ -436,6 +438,7 @@ public class UserGroup
     /**
      * Child associations.
      */
+    @JsonManagedReference 
     @OneToMany(mappedBy="parent")
     public Set<UserAssociation> getChildAssociations() {
         return this.childAssociations;
@@ -458,7 +461,7 @@ public class UserGroup
     /**
      * Roles for this group.
      */
-    @OneToMany(mappedBy="userGroup")
+    @JsonManagedReference @OneToMany(mappedBy="userGroup")
     public Set<UserRole> getRoles() {
         return this.roles;
     }

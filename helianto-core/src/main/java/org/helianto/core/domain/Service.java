@@ -28,6 +28,8 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.type.RootEntity;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 /**
  * A service made available in a name space (operator).
  * 
@@ -78,6 +80,7 @@ public class Service implements RootEntity {
     /**
      * Operator.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {

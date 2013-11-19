@@ -32,6 +32,8 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.type.RootEntity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Provinces.
  * 
@@ -121,6 +123,7 @@ public class Province  implements RootEntity, Comparable<Province> {
     /**
      * Namespace operator.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
@@ -133,6 +136,7 @@ public class Province  implements RootEntity, Comparable<Province> {
 	/**
 	 * Parent province.
 	 */
+	@JsonBackReference 
 	@ManyToOne(cascade={CascadeType.ALL})
 	@JoinColumn(name="parentId", nullable=true)
 	public Province getParent() {
@@ -167,6 +171,7 @@ public class Province  implements RootEntity, Comparable<Province> {
     /**
      * Country.
      */
+    @JsonBackReference 
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="countryId")
     public Country getCountry() {

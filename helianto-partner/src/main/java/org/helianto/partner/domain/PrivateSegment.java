@@ -16,6 +16,8 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.type.TrunkEntity;
 import org.helianto.partner.def.SegmentType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Segments to apply to Customers, Suppliers, etc.
  * 
@@ -81,6 +83,7 @@ public class PrivateSegment
     /**
      * Entity
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="entityId")
 	public Entity getEntity() {

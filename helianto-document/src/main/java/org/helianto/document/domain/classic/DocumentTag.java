@@ -31,6 +31,8 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.document.domain.Document;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Tags applicable to documents.
  * 
@@ -74,6 +76,7 @@ public class DocumentTag extends AbstractTag implements Serializable, Comparable
 	/**
      * Document.
      */
+    @JsonBackReference 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="documentId", nullable=true)
     public Document getDocument() {

@@ -33,6 +33,8 @@ import org.helianto.document.domain.ProcessDocument;
 import org.helianto.inventory.CardType;
 import org.helianto.inventory.InvalidCardException;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Represents a range of cards.
  * 
@@ -112,6 +114,7 @@ public class CardSet implements java.io.Serializable, Sequenceable {
      * <<NaturalKey>>Owning entity.
      * @see {@link Entity}
      */
+    @JsonBackReference 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
@@ -160,7 +163,7 @@ public class CardSet implements java.io.Serializable, Sequenceable {
     /**
 	 * Card process.
 	 */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JsonBackReference @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="processId", nullable=true)
 	public ProcessDocument getProcess() {
 		return process;

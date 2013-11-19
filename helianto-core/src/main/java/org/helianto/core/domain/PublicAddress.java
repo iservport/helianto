@@ -8,6 +8,8 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.domain.type.RootEntity;
 import org.helianto.core.internal.AbstractAddress;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Address databases in a common environment searchable by postal code.  
  * 
@@ -57,6 +59,7 @@ public class PublicAddress
 	/**
 	 * Operator that holds the address database.
 	 */
+	@JsonBackReference 
 	@ManyToOne
 	@JoinColumn(name="operatorId")
 	public Operator getOperator() {

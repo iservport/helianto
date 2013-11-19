@@ -17,6 +17,8 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.number.Numerable;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Context event.
  * 
@@ -87,6 +89,7 @@ public class ContextEvent implements Numerable {
     /**
      * Namespace operator.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {

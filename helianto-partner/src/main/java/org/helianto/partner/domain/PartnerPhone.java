@@ -29,6 +29,8 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.def.PhoneType;
 import org.helianto.core.def.PrivacyLevel;
 import org.helianto.core.domain.Phone;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 /**
  * Private entity phones.
  * 
@@ -115,6 +117,7 @@ public class PartnerPhone implements java.io.Serializable {
     /**
      * Private entity.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="partnerRegistryId", nullable=true)
     public PrivateEntity getPrivateEntity() {

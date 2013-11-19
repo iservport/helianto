@@ -33,6 +33,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 /**
  * Represents inventory movement.
@@ -105,6 +107,7 @@ public class InventoryTransaction implements Serializable {
 	/**
 	 * Set of movements.
 	 */
+	@JsonManagedReference 
 	@OneToMany(mappedBy="inventoryTransaction", cascade={CascadeType.ALL})
 	public Set<Movement> getMovements() {
 		return movements;

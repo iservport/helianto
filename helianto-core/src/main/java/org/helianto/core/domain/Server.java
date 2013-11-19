@@ -30,6 +30,8 @@ import org.helianto.core.def.Encription;
 import org.helianto.core.def.ServerType;
 import org.helianto.core.domain.type.RootEntity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * A domain object to represent available servers to an <code>Operator</code>.
  * 
@@ -114,6 +116,7 @@ public class Server  implements RootEntity {
     /**
      * Operator.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
@@ -215,6 +218,7 @@ public class Server  implements RootEntity {
     /**
      * Credential.
      */
+    @JsonBackReference 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="credentialId", nullable=true)
     public Credential getCredential() {

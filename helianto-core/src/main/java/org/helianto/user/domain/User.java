@@ -34,6 +34,9 @@ import org.helianto.core.def.UserType;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 /**
  * <p>
  * The user account.
@@ -129,6 +132,7 @@ public class User extends UserGroup implements PersonalEntity {
     /**
      * Identity.
      */
+    @JsonBackReference 
     @ManyToOne(cascade=CascadeType.REFRESH)
     @JoinColumn(name="identityId", nullable=true)
     public Identity getIdentity() {
@@ -304,6 +308,7 @@ public class User extends UserGroup implements PersonalEntity {
 	/**
 	 * A collection of user logs.
 	 */
+	@JsonManagedReference 
 	@OneToMany(mappedBy="user")
 	public Set<UserLog> getUserLogs() {
 		return userLogs;

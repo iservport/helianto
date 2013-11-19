@@ -23,6 +23,8 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.KeyType;
 import org.helianto.core.internal.AbstractKeyStringValue;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 /**
  * Represents the relationship between the organization and other entities.  
  * 
@@ -81,6 +83,7 @@ public class PrivateEntityKey extends AbstractKeyStringValue {
     /**
      * Partner registry.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="partnerRegistryId", nullable=true)
     public PrivateEntity getPrivateEntity() {

@@ -44,6 +44,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Years;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * A login request.
  * 
@@ -136,6 +138,7 @@ public class UserRequest
         this.id = id;
     }
     
+    @JsonBackReference 
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="userGroupId")
     public UserGroup getUserGroup() {

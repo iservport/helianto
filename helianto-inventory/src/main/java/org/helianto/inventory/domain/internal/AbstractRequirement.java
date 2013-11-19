@@ -37,6 +37,8 @@ import org.helianto.document.domain.ProcessDocument;
 import org.helianto.inventory.RequirementSign;
 import org.helianto.inventory.RequirementState;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 /**
  * Common properties to customer requirements, stock, purchase and production 
@@ -101,6 +103,7 @@ public abstract class AbstractRequirement extends AbstractPrivateControl impleme
      * Usually a part or a process operation.
      * </p>
      */
+    @JsonBackReference 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="documentId", nullable=true)
     public ProcessDocument getProcessDocument() {

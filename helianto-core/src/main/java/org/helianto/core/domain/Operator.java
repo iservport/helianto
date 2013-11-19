@@ -36,6 +36,9 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.def.OperationMode;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * The <code>Operator</code> domain class represents a mandatory
  * parent entity to any Helianto based installation. Every domain
@@ -147,6 +150,7 @@ public class Operator implements java.io.Serializable {
     /**
      * Parent operator, if any.
      */
+    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="parentId", nullable=true)
     public Operator getParent() {
@@ -248,6 +252,7 @@ public class Operator implements java.io.Serializable {
     /**
      * Key type set.
      */
+    @JsonManagedReference 
     @OneToMany(mappedBy="operator", cascade={ CascadeType.ALL },
     		fetch=FetchType.LAZY)
     public Set<KeyType> getKeyTypes() {
@@ -260,6 +265,7 @@ public class Operator implements java.io.Serializable {
     /**
      * Key type map.
      */
+    @JsonManagedReference 
     @OneToMany(mappedBy="operator", cascade={CascadeType.ALL})
     @MapKey(name="keyCode")
 	public Map<String, KeyType> getKeyTypeMap() {
@@ -272,6 +278,7 @@ public class Operator implements java.io.Serializable {
     /**
      * Province set.
      */
+    @JsonManagedReference 
     @OneToMany(mappedBy="operator", fetch=FetchType.LAZY)
     public Set<Province> getProvinces() {
 		return provinces;
@@ -283,6 +290,7 @@ public class Operator implements java.io.Serializable {
 	/**
 	 * Service map, eagerly loaded.
 	 */
+	@JsonManagedReference 
 	@OneToMany(mappedBy="operator", cascade={CascadeType.ALL}, fetch=FetchType.EAGER)
 	@MapKey(name="serviceName")
     public Map<String, Service> getServiceMap() {
