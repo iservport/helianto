@@ -73,7 +73,10 @@ public class AbstractContent
     
     @Transient
     public int getContentSize() {
-    	return this.content.length;
+    	if (getContent()!=null) {
+    		return getContent().length;
+    	}
+    	return 0;
     }
     
     // transient
