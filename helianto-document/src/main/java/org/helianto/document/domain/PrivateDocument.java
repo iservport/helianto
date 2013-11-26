@@ -91,7 +91,10 @@ public class PrivateDocument
     
     @Transient
     public int getContentSize() {
-    	return this.content.length;
+    	if (getContent()!=null) {
+    		return getContent().length;
+    	}
+    	return 0;
     }
     
 	/**
