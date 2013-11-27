@@ -34,7 +34,7 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.Controllable;
 import org.helianto.core.def.Appellation;
 import org.helianto.core.def.Gender;
-import org.helianto.core.def.ResolutionExtended;
+import org.helianto.core.def.Resolution;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.PersonalData;
@@ -56,7 +56,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
     uniqueConstraints = {@UniqueConstraint(columnNames={"userGroupId", "internalNumber"})}
 )
 public class UserRequest 
-
 	implements  
 	  Sequenceable
 	, Controllable 
@@ -67,11 +66,11 @@ public class UserRequest
     private int id;
     private UserGroup userGroup;
     private long internalNumber;
-    private String principal;
-    private String principalConfirmation;
+    private String principal = "";
+    private String principalConfirmation = "";
     private PersonalData personalData;
     private Date issueDate;
-    private char resolution;
+    private char resolution = Resolution.TODO.getValue();
     private int complete;
     private Date nextCheckDate;
     private String tempPassword;
@@ -84,7 +83,6 @@ public class UserRequest
      */
     public UserRequest() {
         setPersonalData(new PersonalData());
-        setResolutionAsEnum(ResolutionExtended.TODO);
         setIssueDate(new Date());
     }
 
@@ -111,12 +109,6 @@ public class UserRequest
     	setPrincipal(principal);
     }
 
-    @Transient
-    public void reset() {
-    	setResolution(' ');
-    	setComplete(-1);
-    }
-    
     @Transient
     public String getInternalNumberKey() {
     	return "LOGINREQ";
@@ -198,11 +190,14 @@ public class UserRequest
      */
     @Transient
     public String getPrincipalName() {
-    	int position = getPrincipal().indexOf("@");
-    	if (position>0) {
-    		return getPrincipal().substring(0, position);
+    	if (getPrincipal()!=null) {
+        	int position = getPrincipal().indexOf("@");
+        	if (position>0) {
+        		return getPrincipal().substring(0, position);
+        	}
+            return getPrincipal();
     	}
-        return getPrincipal();
+    	return "";
     }
     
     /**
@@ -358,7 +353,7 @@ public class UserRequest
     public void setResolution(char resolution) {
 		this.resolution = resolution;
 	}
-    public void setResolutionAsEnum(ResolutionExtended resolution) {
+    public void setResolutionAsEnum(Resolution resolution) {
 		this.resolution = resolution.getValue();
 	}
     

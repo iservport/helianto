@@ -54,7 +54,6 @@ public class UserRequestTests {
 	@Test
 	public void confirmation() {
 		UserRequest userRequest = new UserRequest();
-		assertFalse(userRequest.validatePrincipal());
 		userRequest.setPrincipal("ONE");
 		assertFalse(userRequest.validatePrincipal());
 		userRequest.setPrincipalConfirmation("one");
