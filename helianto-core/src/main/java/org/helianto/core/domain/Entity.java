@@ -100,7 +100,7 @@ public class Entity
 	, PropertyMappable {
 
     private static final long serialVersionUID = 1L;
-    private long id;
+    private int id;
     private int version;
     private Operator operator;
     private String alias = "";
@@ -158,10 +158,10 @@ public class Entity
     }
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public long getId() {
+    public int getId() {
         return this.id;
     }
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

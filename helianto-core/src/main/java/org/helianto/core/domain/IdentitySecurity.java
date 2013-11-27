@@ -60,7 +60,7 @@ public class IdentitySecurity implements Serializable {
         "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%_";
     public static final int DEFAULT_PASSWORD_SIZE = 8;
     
-    private long id;
+    private int id;
     private int version;
     private Identity identity;
     private ProviderType providerType;
@@ -135,10 +135,10 @@ public class IdentitySecurity implements Serializable {
      * Primary key.
      */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public long getId() {
+    public int getId() {
         return this.id;
     }
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

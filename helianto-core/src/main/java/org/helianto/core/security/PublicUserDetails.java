@@ -44,7 +44,7 @@ public interface PublicUserDetails {
     /**
      * Identity security id.
      */
-    long getIdentitySecurityId();
+    int getIdentitySecurityId();
     
     
 }

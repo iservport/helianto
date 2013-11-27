@@ -63,7 +63,7 @@ public class UserDetailsServiceTests {
 		EasyMock.expect(identitySecurityRepository.findByIdentityId(123L)).andReturn(identitySecurityList);
 		EasyMock.replay(identitySecurityRepository);
 		
-		EasyMock.expect(userRepository.findByIdentityIdOrderByLastEventDesc(123L)).andReturn(userList);
+		EasyMock.expect(userRepository.findByIdentityIdOrderByLastEventDesc(123)).andReturn(userList);
 		EasyMock.expect(userRepository.saveAndFlush(user)).andReturn(user);
 		EasyMock.replay(userRepository);
 		
@@ -96,7 +96,7 @@ public class UserDetailsServiceTests {
 		EasyMock.expect(identitySecurityRepository.findByConsumerKey("123")).andReturn(identitySecurityList.get(0));
 		EasyMock.replay(identitySecurityRepository);
 		
-		EasyMock.expect(userRepository.findByIdentityIdOrderByLastEventDesc(123L)).andReturn(userList);
+		EasyMock.expect(userRepository.findByIdentityIdOrderByLastEventDesc(123)).andReturn(userList);
 		EasyMock.expect(userRepository.saveAndFlush(user)).andReturn(user);
 		EasyMock.replay(userRepository);
 		

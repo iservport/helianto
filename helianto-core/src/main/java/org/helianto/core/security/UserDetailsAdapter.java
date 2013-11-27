@@ -110,7 +110,7 @@ public class UserDetailsAdapter
     /**
      * Identity security id.
      */
-    public long getIdentitySecurityId() {
+    public int getIdentitySecurityId() {
     	if (identitySecurity!=null) {
     		return identitySecurity.getId();
     	}

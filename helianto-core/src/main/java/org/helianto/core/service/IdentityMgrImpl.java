@@ -58,7 +58,7 @@ public class IdentityMgrImpl implements IdentityMgr {
     }
     
 	@Transactional(readOnly=true)
-    public Identity loadIdentity(long id) {
+    public Identity loadIdentity(int id) {
     	Identity identity = identityRepository.findOne(id);
     	if (identity!=null && identity.getPhoto()!=null) {
     		logger.debug("Identity {} photo size is {}.", identity, identity.getPhoto().length);
@@ -185,7 +185,7 @@ public class IdentityMgrImpl implements IdentityMgr {
 			logger.debug("Found existing identity for {}.", principal);
 		}
 		PersonalAddress personalAddress = new PersonalAddress(identity, AddressType.PERSONAL);
-		final long identityId = identity.getId();
+		final int identityId = identity.getId();
 		PersonalAddressForm form = new PersonalAddressForm() {
 			
 			public Province getProvince() { return null;}
@@ -193,7 +193,7 @@ public class IdentityMgrImpl implements IdentityMgr {
 			public String getCityName()   { return ""; }
 			public char getAddressType()  { return 0; }
 			
-			public long getIdentityId() {
+			public int getIdentityId() {
 				return identityId;
 			}
 		};

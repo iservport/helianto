@@ -20,7 +20,7 @@ public class PersonalAddressFilterTests {
 
     @Test
     public void empty() {
-    	Mockito.when(form.getIdentityId()).thenReturn(0l);
+    	Mockito.when(form.getIdentityId()).thenReturn(0);
         assertEquals(ORDER, filter.createCriteriaAsString());
     }
     
@@ -37,7 +37,7 @@ public class PersonalAddressFilterTests {
     public void setUp() {
     	form = Mockito.mock(PersonalAddressForm.class);
     	filter = new PersonalAddressFormFilterAdapter(form);
-    	Mockito.when(form.getIdentityId()).thenReturn(1l);
+    	Mockito.when(form.getIdentityId()).thenReturn(1);
     }
     
     @After

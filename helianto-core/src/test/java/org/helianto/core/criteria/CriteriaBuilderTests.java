@@ -273,7 +273,7 @@ public class CriteriaBuilderTests  {
 
         public User getUser() {
             User user = (User) SecurityTestSupport.createUserDetailsAdapter().getUser();
-            user.getEntity().setId(Long.MAX_VALUE);
+            user.getEntity().setId(Integer.MAX_VALUE);
             return user;
         }
         public void setUser(User user) {}

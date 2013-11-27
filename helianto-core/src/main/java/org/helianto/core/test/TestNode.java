@@ -30,7 +30,7 @@ public class TestNode extends AbstractNode<String> {
 
 	private static final long serialVersionUID = 1L;
 
-	public TestNode(long id, String payLoad, int level, int sequence, boolean editable) {
+	public TestNode(int id, String payLoad, int level, int sequence, boolean editable) {
 		super(id, payLoad, level, sequence, editable);
 	}
 

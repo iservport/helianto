@@ -35,7 +35,7 @@ public interface Node extends Comparable<Node>, Serializable {
 	/**
 	 * Id associated to the node.
 	 */
-	public long getId();
+	public int getId();
 	
 	/**
 	 * Text displayed next to the node.

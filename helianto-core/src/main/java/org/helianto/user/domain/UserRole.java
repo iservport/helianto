@@ -47,7 +47,7 @@ public class UserRole
 	implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long id;
+    private int id;
     private UserGroup userGroup;
     private Service service;
     private String serviceExtension;
@@ -80,10 +80,10 @@ public class UserRole
      * Primary key.
      */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public long getId() {
+    public int getId() {
         return this.id;
     }
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

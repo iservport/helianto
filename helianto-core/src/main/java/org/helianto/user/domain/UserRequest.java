@@ -64,7 +64,7 @@ public class UserRequest
 {
 
     private static final long serialVersionUID = 1L;
-    private long id;
+    private int id;
     private UserGroup userGroup;
     private long internalNumber;
     private String principal;
@@ -131,10 +131,10 @@ public class UserRequest
      * Primary key.
      */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public long getId() {
+    public int getId() {
         return this.id;
     }
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
     

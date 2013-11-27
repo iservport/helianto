@@ -55,7 +55,7 @@ public class Credential implements PersonalEntity {
         "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%_";
     public static final int DEFAULT_PASSWORD_SIZE = 8;
     
-    private long id;
+    private int id;
     private Identity identity;
     private int version;
     private String password = "inactive";
@@ -127,10 +127,10 @@ public class Credential implements PersonalEntity {
      * Primary key.
      */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public long getId() {
+    public int getId() {
         return this.id;
     }
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
