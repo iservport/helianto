@@ -24,7 +24,9 @@ import org.helianto.partner.form.PrivateEntityForm;
  * 
  * @author Maurício Fernandes de Castro
  */
-public class PrivateEntityFormFilterAdapter extends AbstractTrunkFilterAdapter<PrivateEntityForm> {
+public class PrivateEntityFormFilterAdapter 
+	extends AbstractTrunkFilterAdapter<PrivateEntityForm> 
+{
 	
 	private static final long serialVersionUID = 1L;
 
