@@ -15,7 +15,7 @@ import org.mockito.Mockito;
 public class PrivateSegmentFilterAdapterTests {
 
 	public static String OB = "order by alias.segmentAlias ";
-    public static String C1 = "alias.entity.id = 0 ";
+    public static String C1 = "alias.entity.id = 1 ";
     public static String C2 = "AND alias.segmentAlias = 'CODE' ";
     public static String C3 = "AND lower(alias.segmentName) like '%name%' ";
     public static String C4 = "AND alias.segmentType = 'X' ";
@@ -50,7 +50,7 @@ public class PrivateSegmentFilterAdapterTests {
     
     @Before
     public void setUp() {
-    	entity = EntityTestSupport.createEntity();
+    	entity = EntityTestSupport.createEntity(1);
     	form = Mockito.mock(PrivateSegmentForm.class);
     	filter = new PrivateSegmentFilterAdapter(form);
     	Mockito.when(form.getEntity()).thenReturn(entity);

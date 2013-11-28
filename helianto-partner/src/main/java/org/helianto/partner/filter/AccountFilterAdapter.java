@@ -39,7 +39,7 @@ public class AccountFilterAdapter
 	}
 	
 	public boolean isSelection() {
-		return getForm().getAccountCode()!=null && getForm().getAccountCode().length()>0;
+		return super.isSelection() && getForm().getAccountCode()!=null && getForm().getAccountCode().length()>0;
 	}
 
 	@Override

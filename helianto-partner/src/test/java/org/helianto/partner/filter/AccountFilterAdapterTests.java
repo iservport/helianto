@@ -16,7 +16,7 @@ import org.mockito.Mockito;
 public class AccountFilterAdapterTests {
 
 	public static String OB = "order by alias.accountCode ";
-    public static String C1 = "alias.entity.id = 0 ";
+    public static String C1 = "alias.entity.id = 1 ";
     public static String C2 = "AND alias.accountCode = 'CODE' ";
     public static String C3 = "AND lower(alias.accountName) like '%name%' ";
     public static String C4 = "AND alias.accountType = 'A' ";
@@ -51,7 +51,7 @@ public class AccountFilterAdapterTests {
     
     @Before
     public void setUp() {
-    	entity = EntityTestSupport.createEntity();
+    	entity = EntityTestSupport.createEntity(1);
     	form = Mockito.mock(AccountForm.class);
     	filter = new AccountFilterAdapter(form);
     	Mockito.when(form.getEntity()).thenReturn(entity);

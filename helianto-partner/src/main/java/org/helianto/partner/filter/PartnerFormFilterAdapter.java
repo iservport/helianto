@@ -51,6 +51,11 @@ public class PartnerFormFilterAdapter extends AbstractTrunkFilterAdapter<Partner
 		appendEqualFilter("privateEntity.id", getForm().getParent().getId(), mainCriteriaBuilder);
 	}
 
+	@Override
+	protected void appendEntityFilter(int entityId, OrmCriteriaBuilder mainCriteriaBuilder) {
+		mainCriteriaBuilder.appendSegment("privateEntity.entity.id", "=").append(entityId);
+	}
+
 	public boolean isSelection() {
 		return hasParentCriterion() && getForm().getPartnerType()>0;
 	}
