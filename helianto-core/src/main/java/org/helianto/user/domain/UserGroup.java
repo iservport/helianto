@@ -26,6 +26,7 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -50,6 +51,7 @@ import org.helianto.core.domain.type.FolderEntity;
 import org.helianto.core.utils.StringListUtils;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 /**
  * 			
@@ -150,8 +152,8 @@ public class UserGroup
     /**
      * Entity.
      */
-    @JsonBackReference 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
         return this.entity;

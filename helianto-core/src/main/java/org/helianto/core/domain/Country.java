@@ -16,6 +16,7 @@
 package org.helianto.core.domain;
 
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,6 +28,7 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.domain.type.RootEntity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Countries.
@@ -90,8 +92,8 @@ public class Country implements RootEntity {
     /**
      * Namespace operator.
      */
-    @JsonBackReference 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
         return this.operator;

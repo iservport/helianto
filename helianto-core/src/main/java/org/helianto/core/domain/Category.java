@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,7 +40,7 @@ import org.helianto.core.internal.AbstractHumanReadable;
 import org.helianto.core.number.Sequencer;
 import org.helianto.core.utils.StringListUtils;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Categories.  
@@ -130,8 +131,8 @@ public class Category
     /**
      * Category entity.
      */
-    @JsonBackReference 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="entityId")
     public Entity getEntity() {
         return this.entity;

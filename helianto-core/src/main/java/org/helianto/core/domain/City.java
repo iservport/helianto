@@ -18,6 +18,7 @@ package org.helianto.core.domain;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +29,7 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -120,8 +122,8 @@ public class City
     /**
      * Context.
      */
-    @JsonBackReference 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="contextId", nullable=true)
     public Operator getContext() {
 		return context;

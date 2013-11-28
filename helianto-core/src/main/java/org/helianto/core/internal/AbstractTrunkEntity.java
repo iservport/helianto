@@ -1,5 +1,6 @@
 package org.helianto.core.internal;
 
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,7 +11,7 @@ import javax.persistence.Version;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.type.TrunkEntity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Base class to persitent domain classes isolated by an {@link Entity}.
@@ -50,10 +51,11 @@ public abstract class AbstractTrunkEntity
     
     /**
      * <<NaturalKey>> Entity owning the control.
+     * 
      * @see {@link Entity}
      */
-    @JsonBackReference 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
         return this.entity;

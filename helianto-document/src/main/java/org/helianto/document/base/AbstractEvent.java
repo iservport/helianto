@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,10 +35,11 @@ import org.helianto.core.def.PrivacyLevel;
 import org.helianto.core.def.ResolutionExtended;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
-import org.helianto.document.Event;
+import org.helianto.core.form.EventForm;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
@@ -52,7 +54,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  */
 
 @javax.persistence.MappedSuperclass
-public abstract class AbstractEvent implements Privacy, Event {
+public abstract class AbstractEvent implements Privacy, EventForm {
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -107,8 +109,8 @@ public abstract class AbstractEvent implements Privacy, Event {
      * <<NaturalKey>> Entity owning the control.
      * @see {@link Entity}
      */
-    @JsonBackReference 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
         return this.entity;
