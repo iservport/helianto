@@ -16,14 +16,16 @@
 package org.helianto.document.filter;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.document.def.InheritanceType;
 import org.helianto.document.domain.ProcessDocument;
+import org.helianto.document.form.ProcessDocumentForm;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * 
@@ -31,17 +33,8 @@ import org.junit.Test;
  */
 public class ProcessDocumentFilterAdapterTests {
 	
-	@Test
-	public void constructor() {
-		Entity entity = new Entity();
-		filter = new ProcessDocumentFilterAdapter(entity, "DOC_CODE");
-		assertSame(filter.getEntity(), entity);
-		assertEquals(filter.getForm().getDocCode(), "DOC_CODE");
-	}
-	
-	
     public static String OB = "order by alias.docCode ";
-    public static String C0 = "alias.entity.id = 0 ";
+    public static String C0 = "alias.entity.id = 1 ";
     public static String C1 = "AND alias.class=Operation ";
     public static String C2 = "AND alias.docCode = 'DOCCODE' ";
     public static String C3 = "AND lower(alias.docName) like '%name%' ";
@@ -51,25 +44,24 @@ public class ProcessDocumentFilterAdapterTests {
 
     @Test
     public void empty() {
-    	target.setDocCode("");
         assertEquals(C0+OB, filter.createCriteriaAsString());
 	}
 
     @Test
     public void select() {
-    	target.setDocCode("DOCCODE");
+		Mockito.when(form.getDocCode()).thenReturn("DOCCODE");
         assertEquals(C0+C2, filter.createCriteriaAsString());
     }
     
     @Test
     public void filterName() {
-    	target.setDocName("NAME");
+		Mockito.when(form.getDocName()).thenReturn("NAME");
         assertEquals(C0+C3+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void filterInheritance() {
-    	target.setInheritanceType(InheritanceType.CONCRETE.getValue());
+		Mockito.when(form.getInheritanceType()).thenReturn(InheritanceType.CONCRETE.getValue());
         assertEquals(C0+C4+OB, filter.createCriteriaAsString());
     }
     
@@ -77,19 +69,25 @@ public class ProcessDocumentFilterAdapterTests {
     public void parent() {
     	ProcessDocument parent = new ProcessDocument();
     	parent.setId(100);
-    	filter.setParent(parent);
+		Mockito.when(form.getParent()).thenReturn(parent);
         assertEquals(S1, filter.createSelectAsString());
         assertEquals(C0+C5+OB, filter.createCriteriaAsString());
     }
     
-    private ProcessDocumentFilterAdapter filter;
-    private ProcessDocument target;
-    
+    private ProcessDocumentForm form;
+    private ProcessDocumentFormFilterAdapter filter;
+     
     @Before
     public void setUp() {
-    	Entity entity = EntityTestSupport.createEntity();
-    	target = new ProcessDocument(entity, "");
-		filter = new ProcessDocumentFilterAdapter(target);
+    	Entity entity = EntityTestSupport.createEntity(1);
+    	form = Mockito.mock(ProcessDocumentForm.class);
+		Mockito.when(form.getEntity()).thenReturn(entity);
+		filter = new ProcessDocumentFormFilterAdapter(form);
     }
+
+	@After
+	public void tearDown() {
+		Mockito.reset(form);
+	}
 
 }

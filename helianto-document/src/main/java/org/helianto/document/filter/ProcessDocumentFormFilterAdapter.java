@@ -15,13 +15,11 @@
 
 package org.helianto.document.filter;
 
-import java.util.Collection;
-
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.criteria.SelectFromBuilder;
-import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 import org.helianto.document.domain.ProcessDocument;
+import org.helianto.document.form.ProcessDocumentForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,46 +27,23 @@ import org.slf4j.LoggerFactory;
  * Filter to <code>User</code>.
  * 
  * @author Mauricio Fernandes de Castro
- * @deprecated
  */
-public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<ProcessDocument> {
+public class ProcessDocumentFormFilterAdapter extends AbstractTrunkFilterAdapter<ProcessDocumentForm> {
 
     private static final long serialVersionUID = 1L;
-	private Class<? extends ProcessDocument> clazz;
-	private ProcessDocument parent;
-    private Collection<? extends ProcessDocument> exclusions;
     
     /**
      * Default constructor.
      * 
-     * @param processDocument
+     * @param processDocumentForm
      */
-    public ProcessDocumentFilterAdapter(ProcessDocument processDocument) {
-    	super(processDocument);
-    	reset();
-    }
-    
-    /**
-     * Key constructor.
-     * 
-     * @param entity
-     * @param docCode
-     */
-    public ProcessDocumentFilterAdapter(Entity entity, String docCode) {
-    	super(new ProcessDocument(entity, docCode));
-    }
-    
-    /**
-     * Force filter to standards.
-     */
-    public void reset() {
-    	getForm().setInheritanceType(' ');
-    	getForm().setPriority(' ');
+    public ProcessDocumentFormFilterAdapter(ProcessDocumentForm processDocumentForm) {
+    	super(processDocumentForm);
     }
     
     @Override
     public String createSelectAsString() {
-    	if (getParent()==null) {
+    	if (getForm().getParent()==null) {
         	return super.createSelectAsString();
     	}
 		SelectFromBuilder builder = new SelectFromBuilder(ProcessDocument.class, getObjectAlias());
@@ -79,14 +54,14 @@ public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<Pro
 	@Override
 	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		boolean connect = super.preProcessFilter(mainCriteriaBuilder);
-		if (getClazz()!=null && !getClazz().equals(ProcessDocument.class)) {
-	        logger.debug("Document class is: '{}'", getClazz());
-			mainCriteriaBuilder.appendAnd().append(getClazz());
+		if (getForm().getClazz()!=null && !getForm().getClazz().equals(ProcessDocument.class)) {
+	        logger.debug("Document class is: '{}'", getForm().getClazz());
+			mainCriteriaBuilder.appendAnd().append(getForm().getClazz());
 			connect = true;
 		}
-		if (getParent()!=null) {
-	        logger.debug("Document parent is: '{}'", getParent());
-			mainCriteriaBuilder.appendAnd().append("parentAssociations.parent.id =").append(getParent().getId());
+		if (getForm().getParent()!=null) {
+	        logger.debug("Document parent is: '{}'", getForm().getParent());
+			mainCriteriaBuilder.appendAnd().append("parentAssociations.parent.id =").append(getForm().getParent().getId());
 			connect = true;
 		}
 		return connect;
@@ -94,7 +69,7 @@ public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<Pro
 	
 	@Override
 	public boolean isSelection() {
-		return getForm().getDocCode().length()>0;
+		return super.isSelection() && getForm().getDocCode()!=null && getForm().getDocCode().length()>0;
 	}
 
 	@Override
@@ -108,53 +83,6 @@ public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<Pro
 		appendEqualFilter("inheritanceType", getForm().getInheritanceType(), mainCriteriaBuilder);
 		appendEqualFilter("priority", getForm().getPriority(), mainCriteriaBuilder);
 		appendOrderBy("docCode", mainCriteriaBuilder);
-	}
-
-	/**
-	 * Subclass
-	 */
-	public Class<? extends ProcessDocument> getClazz() {
-		return clazz;
-	}
-	public void setClazz(Class<? extends ProcessDocument> clazz) {
-		this.clazz = clazz;
-	}
-
-	/**
-	 * Discriminator
-	 */
-	public char getDiscriminator() {
-		return ' ';
-	}
-
-	public void setDiscriminator(char discriminator) {
-	}
-
-	/**
-	 * Parent
-	 */
-	public ProcessDocument getParent() {
-		return parent;
-	}
-	public void setParent(ProcessDocument parent) {
-		this.parent = parent;
-	}
-	
-	public long getParentId() {
-		if (getParent()!=null) {
-			return getParent().getId();
-		}
-		return 0;
-	}
-	
-	/**
-	 * Exclusions.
-	 */
-	public Collection<? extends ProcessDocument> getExclusions() {
-		return exclusions;
-	}
-	public void setExclusions(Collection<? extends ProcessDocument> exclusions) {
-		this.exclusions = exclusions;
 	}
 
 	private static Logger logger = LoggerFactory.getLogger(ProcessDocument.class);
