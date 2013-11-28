@@ -157,7 +157,10 @@ public class PartnerCategory implements Uploadable {
     
     @Transient
     public int getContentSize() {
-    	return this.content.length;
+    	if (getContent()!=null) {
+    		return getContent().length;
+    	}
+    	return 0;
     }
     
 	@Column(length=32)
@@ -204,7 +207,7 @@ public class PartnerCategory implements Uploadable {
      */
     @Transient
     public boolean isText() {
-    	if (getMultipartFileContentType().startsWith("text")) {
+    	if (getContent()!=null && getMultipartFileContentType().startsWith("text")) {
     		return true;
     	}
     	return false;
@@ -215,7 +218,7 @@ public class PartnerCategory implements Uploadable {
      */
     @Transient
     public boolean isHtml() {
-    	if (getMultipartFileContentType().startsWith("text/html")) {
+    	if (getContent()!=null && getMultipartFileContentType().startsWith("text/html")) {
     		return true;
     	}
     	return false;
@@ -226,7 +229,7 @@ public class PartnerCategory implements Uploadable {
      */
     @Transient
     public boolean isImage() {
-    	if (getMultipartFileContentType().startsWith("image")) {
+    	if (getContent()!=null && getMultipartFileContentType().startsWith("image")) {
     		return true;
     	}
     	return false;
