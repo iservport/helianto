@@ -1,16 +1,18 @@
-package org.helianto.core.filter;
+package org.helianto.user.filter;
 
 import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 
-import org.helianto.core.form.CompositeIdentityForm;
-import org.helianto.core.form.internal.AbstractControllable;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.test.EntityTestSupport;
 import org.helianto.core.test.UserGroupTestSupport;
 import org.helianto.user.domain.UserGroup;
 import org.helianto.user.form.UserRequestForm;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * 
@@ -19,7 +21,7 @@ import org.junit.Test;
 public class UserRequestFilterAdapterTests {
 	
 	String OB = "order by alias.internalNumber ";
-	String C0 = "alias.userGroup.entity.id = 0 ";
+	String C0 = "alias.userGroup.entity.id = 1 ";
 	String C1 = "alias.userGroup.id = 1 ";
 	String C2 = "alias.internalNumber = 100 ";
 	String C3 = "lower(alias.principal) like '%test@domain%' ";
@@ -33,26 +35,26 @@ public class UserRequestFilterAdapterTests {
 	
 	@Test
 	public void select() {
-		((CompositeIdentityForm) form).setUserGroup(userGroup);
-		form.setInternalNumber(100);
+		Mockito.when(form.getUserGroup()).thenReturn(userGroup);
+		Mockito.when(form.getInternalNumber()).thenReturn(100L);
 		assertEquals(C0+"AND "+C1+"AND "+C2, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void docName() {
-		((CompositeIdentityForm) form).setPrincipal("TEST@domain");
+		Mockito.when(form.getPrincipal()).thenReturn("TEST@domain");
 		assertEquals(C3+OB, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void nextCheckDate() {
-		((CompositeIdentityForm) form).setNextCheckDate(new Date(1000L));
+		Mockito.when(form.getNextCheckDate()).thenReturn(new Date(1000L));
 		assertEquals(C4+OB, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void tempPassword() {
-		((CompositeIdentityForm) form).setTempPassword("ABCD");
+		Mockito.when(form.getTempPassword()).thenReturn("ABCD");
 		assertEquals(C5+OB, filter.createCriteriaAsString());
 	}
 	
@@ -64,10 +66,17 @@ public class UserRequestFilterAdapterTests {
 	
 	@Before
 	public void setUp() {
-		userGroup = UserGroupTestSupport.createUserGroup(1);
-		form = new CompositeIdentityForm("");
+		Entity entity = EntityTestSupport.createEntity(1);
+		userGroup = UserGroupTestSupport.createUserGroup(entity, 1);
+		form = Mockito.mock(UserRequestForm.class);
 		filter = new UserRequestFormFilterAdapter(form);
-		((AbstractControllable) form).setComplete(-1);
+		Mockito.when(form.getEntity()).thenReturn(entity);
+		Mockito.when(form.getComplete()).thenReturn(-1);
 	}
 
+	@After
+	public void tearDown() {
+		Mockito.reset(form);
+	}
+	
 }

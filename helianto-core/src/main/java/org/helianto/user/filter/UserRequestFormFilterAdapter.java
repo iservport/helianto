@@ -1,7 +1,6 @@
-package org.helianto.core.filter;
+package org.helianto.user.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.base.AbstractControlFilterAdapter;
 import org.helianto.user.form.UserRequestForm;
 
@@ -24,18 +23,18 @@ public class UserRequestFormFilterAdapter extends AbstractControlFilterAdapter<U
 	}
 	
 	/**
-	 * The entity.
+	 * The entity id.
 	 */
-	public Entity getEntity() {
+	public int getEntityId() {
 		if (getForm().getUserGroup()!=null) {
-			return getForm().getUserGroup().getEntity();
+			return getForm().getUserGroup().getEntity().getId();
 		}
-		return super.getEntity();
+		return 0;
 	}
 	
 	@Override
-	protected void appendEntityFilter(Entity entity, OrmCriteriaBuilder mainCriteriaBuilder) {
-		mainCriteriaBuilder.appendSegment("userGroup.entity.id", "=").append(entity.getId());
+	protected void appendEntityFilter(int entityId, OrmCriteriaBuilder mainCriteriaBuilder) {
+		mainCriteriaBuilder.appendSegment("userGroup.entity.id", "=").append(entityId);
 	}
 	
 	@Override
