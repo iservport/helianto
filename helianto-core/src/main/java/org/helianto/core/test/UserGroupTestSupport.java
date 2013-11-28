@@ -27,6 +27,15 @@ public class UserGroupTestSupport {
     /**
      * Test support method to create a <code>UserGroup</code>.
      */
+    public static UserGroup createUserGroup(Entity entity, int id) {
+    	UserGroup userGroup = UserGroupTestSupport.createUserGroup(entity);
+    	userGroup.setId(id);
+    	return userGroup;
+    }
+
+    /**
+     * Test support method to create a <code>UserGroup</code>.
+     */
     public static UserGroup createUserGroup() {
         return UserGroupTestSupport.createUserGroup(EntityTestSupport.createEntity());
     }
