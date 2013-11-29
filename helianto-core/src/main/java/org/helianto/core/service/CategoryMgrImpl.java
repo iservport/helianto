@@ -43,7 +43,8 @@ public class CategoryMgrImpl implements CategoryMgr {
 	public long countCategory(final Entity entity, final char categoryGroup, final String searchString) {
 		@SuppressWarnings("serial")
 		CategoryForm form = new CategoryForm() {
-			public Entity getEntity() { return entity; }
+			public Entity getEntity() { return null; }
+			public int getEntityId() { return entity.getId(); }
 			public char getCategoryGroup() { return categoryGroup; }
 			public String getCategoryCode() { return searchString; }
 			public String getCategoryName() { return "";}
@@ -73,8 +74,7 @@ public class CategoryMgrImpl implements CategoryMgr {
 	}
 
 	public void removeCategory(Category category) {
-		// TODO Auto-generated method stub
-		
+		categoryRepository.delete(category);
 	}
 	
 	@Transactional

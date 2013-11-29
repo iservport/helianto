@@ -7,7 +7,9 @@ import org.helianto.core.domain.type.TrunkEntity;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface CategoryForm extends TrunkEntity {
+public interface CategoryForm 
+	extends TrunkEntity, EntityIdForm
+{
 	
 	/**
 	 * Category code.
