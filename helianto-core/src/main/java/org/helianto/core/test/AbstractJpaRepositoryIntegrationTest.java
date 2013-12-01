@@ -33,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @param <T> target class
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes=HeliantoConfig.class)
+@ContextConfiguration(classes={TestDataSourceConfig.class, HeliantoConfig.class})
 @ActiveProfiles("standalone")
 @Transactional
 public abstract class AbstractJpaRepositoryIntegrationTest<T, R extends FilterRepository<T, Serializable>> {
