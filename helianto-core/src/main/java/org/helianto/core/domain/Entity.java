@@ -97,7 +97,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @DiscriminatorValue("0")
 public class Entity 
 	implements RootEntity 
-	, PropertyMappable {
+	, PropertyMappable 
+{
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -188,6 +189,14 @@ public class Entity
     }
     public void setOperator(Operator operator) {
         this.operator = operator;
+    }
+    
+    @Transient
+    public int getContextId() {
+    	if (getOperator()!=null) {
+    		return getOperator().getId();
+    	}
+    	return 0;
     }
     
     @Transient

@@ -15,7 +15,7 @@ import org.mockito.Mockito;
  */
 public class PublicAddressFilterAdapterTests {
 
-	String ORDER = "order by alias.province.postalCode ASC ";
+	String ORDER = "order by alias.postalCode ASC ";
 	String C1 = "alias.operator.id = 1 ";
 	String C2 = "AND alias.postalCode = 'POSTALCODE' ";
 	String C3 = "AND alias.state.id = 10 ";

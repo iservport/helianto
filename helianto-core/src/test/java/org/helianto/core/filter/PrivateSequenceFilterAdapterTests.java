@@ -2,9 +2,7 @@ package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.domain.Entity;
 import org.helianto.core.form.PrivateSequenceForm;
-import org.helianto.core.test.EntityTestSupport;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,10 +43,9 @@ public class PrivateSequenceFilterAdapterTests {
 	
 	@Before
 	public void setUp() {
-		Entity entity = EntityTestSupport.createEntity(1);
 		form = Mockito.mock(PrivateSequenceForm.class);
 		filter = new PrivateSequenceFilterAdapter(form);
-		Mockito.when(form.getEntity()).thenReturn(entity);
+		Mockito.when(form.getEntityId()).thenReturn(1);
 	}
 	
 	@After

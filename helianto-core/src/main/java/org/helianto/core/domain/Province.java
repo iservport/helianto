@@ -15,6 +15,8 @@
 
 package org.helianto.core.domain;
 
+import javax.persistence.Transient;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -133,6 +135,14 @@ public class Province  implements RootEntity, Comparable<Province> {
     }
     public void setOperator(Operator operator) {
         this.operator = operator;
+    }
+    
+    @Transient
+    public int getContextId() {
+    	if (getOperator()!=null) {
+    		return getOperator().getId();
+    	}
+    	return 0;
     }
     
 	/**

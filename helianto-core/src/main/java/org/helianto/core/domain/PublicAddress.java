@@ -1,5 +1,7 @@
 package org.helianto.core.domain;
 
+import javax.persistence.Transient;
+
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -69,6 +71,14 @@ public class PublicAddress
 		this.operator = operator;
 	}
 	
+    @Transient
+    public int getContextId() {
+    	if (getOperator()!=null) {
+    		return getOperator().getId();
+    	}
+    	return 0;
+    }
+    
     /**
      * toString
      * @return String

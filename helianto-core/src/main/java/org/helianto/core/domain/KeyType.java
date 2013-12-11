@@ -15,6 +15,8 @@
 
 package org.helianto.core.domain;
 
+import javax.persistence.Transient;
+
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -92,6 +94,14 @@ public class KeyType implements RootEntity {
         this.operator = operator;
     }
 
+    @Transient
+    public int getContextId() {
+    	if (getOperator()!=null) {
+    		return getOperator().getId();
+    	}
+    	return 0;
+    }
+    
     /**
      * <<NaturalKey>> Key code.
      */

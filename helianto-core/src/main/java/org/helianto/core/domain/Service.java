@@ -39,7 +39,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name="core_service",
     uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "serviceName"})}
 )
-public class Service implements RootEntity {
+public class Service 
+	implements RootEntity 
+{
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -90,6 +92,14 @@ public class Service implements RootEntity {
         this.operator = operator;
     }
 
+    @Transient
+    public int getContextId() {
+    	if (getOperator()!=null) {
+    		return getOperator().getId();
+    	}
+    	return 0;
+    }
+    
     /**
      * Service name.
      */

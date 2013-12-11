@@ -2,13 +2,12 @@ package org.helianto.core.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
-import org.helianto.core.form.CompositeEntityForm;
 import org.helianto.core.form.PublicEntityForm;
-import org.helianto.core.test.EntityTestSupport;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * @author Mauricio Fernandes de Castro
@@ -25,57 +24,49 @@ public class PublicEntityFormFilterAdapterTests {
 
     @Test
     public void operator() {
-    	operator.setId(1); // just because a zero here will prevent the filter to fire!
+    	Operator operator = new Operator("DEFAULT");
+    	operator.setId(1);
+    	Mockito.when(form.getOperator()).thenReturn(operator);
         assertEquals(C1+OB, filter.createCriteriaAsString());
     }
     
     @Test
-    public void select() {
-    	((CompositeEntityForm) form).setEntity(entity);
-    	((CompositeEntityForm) form).setEntityAlias("ALIAS");
-        assertEquals(C2+"AND "+C3, filter.createCriteriaAsString());
-    }
-    
-    @Test
     public void entity() {
-    	((CompositeEntityForm) form).setOperator(null);
-    	((CompositeEntityForm) form).setEntity(entity);
+    	Mockito.when(form.getEntityId()).thenReturn(2);
         assertEquals(C2+OB, filter.createCriteriaAsString());
     }
     
     @Test
-    public void type() {
-        form.setType('P');
-        assertEquals(C4+OB, filter.createCriteriaAsString());
+    public void alias() {
+    	Mockito.when(form.getEntityAlias()).thenReturn("ALIAS");
+        assertEquals(C3+OB, filter.createCriteriaAsString());
     }
     
     @Test
-    public void typeNonPublic() {
-    	((CompositeEntityForm) form).setEntity(entity);
-        form.setType('R');
-        assertEquals(C5+"AND "+C2+OB, filter.createCriteriaAsString());
-        form.setType('P');
+    public void type() {
+    	Mockito.when(form.getType()).thenReturn('P');
         assertEquals(C4+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void name() {
-    	((CompositeEntityForm) form).setEntityName("NAME");
+    	Mockito.when(form.getEntityName()).thenReturn("NAME");
         assertEquals(C6+OB, filter.createCriteriaAsString());
     }
     
     private PublicEntityFormFilterAdapter filter;
     private PublicEntityForm form;
     
-    private Operator operator;
-    private Entity entity;
-    
  	@Before
     public void setUp() {
-    	entity = EntityTestSupport.createEntity(2); 
-    	operator = entity.getOperator();
-    	form = new CompositeEntityForm(operator);
+    	form = Mockito.mock(PublicEntityForm.class);
     	filter = new PublicEntityFormFilterAdapter(form);
     }
+    
+    @After
+    public void tearDown() {
+    	Mockito.reset(form);
+    }
+
 }
 

@@ -33,6 +33,7 @@ public class PublicAddressFilterAdapter extends AbstractRootFilterAdapter<Public
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("opertor.id", getForm().getContextId(), mainCriteriaBuilder);
 		appendEqualFilter("state.id", getForm().getStateId(), mainCriteriaBuilder);
 		appendEqualFilter("state.stateCode", getForm().getStateCode(), mainCriteriaBuilder);
 		appendEqualFilter("city.cityCode", getForm().getCityCode(), mainCriteriaBuilder);
@@ -53,7 +54,7 @@ public class PublicAddressFilterAdapter extends AbstractRootFilterAdapter<Public
 	
 	@Override
 	public String getOrderByString() {
-		return "province.postalCode ASC";
+		return "postalCode ASC";
 	}
 
 }

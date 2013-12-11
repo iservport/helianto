@@ -23,11 +23,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.type.RootEntity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -39,7 +39,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name="core_country",
     uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "countryCode"})}
 )
-public class Country implements RootEntity {
+public class Country 
+	implements RootEntity 
+{
 
     /**
      * Factory method.
@@ -100,6 +102,14 @@ public class Country implements RootEntity {
     }
     public void setOperator(Operator operator) {
         this.operator = operator;
+    }
+    
+    @Transient
+    public int getContextId() {
+    	if (getOperator()!=null) {
+    		return getOperator().getId();
+    	}
+    	return 0;
     }
     
     /**

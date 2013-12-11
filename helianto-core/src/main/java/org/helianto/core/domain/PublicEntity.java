@@ -34,7 +34,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  */
 @javax.persistence.Entity
 @Table(name = "core_public"
-	, uniqueConstraints = { @UniqueConstraint(columnNames = {"entityId", "entityAlias", "type"}) })
+	, uniqueConstraints = { @UniqueConstraint(columnNames = {"entityId", "type"}) })
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.CHAR)
 @DiscriminatorValue("P")
@@ -42,7 +42,8 @@ public class PublicEntity
 	extends AbstractAddress 
 	implements 
 	  RootEntity
-	, EntityAddress {
+	, EntityAddress 
+{
 	
 	/**
 	 * Exposes the discriminator.
@@ -103,6 +104,14 @@ public class PublicEntity
 		return null;
 	}
 
+    @Transient
+    public int getContextId() {
+    	if (getOperator()!=null) {
+    		return getOperator().getId();
+    	}
+    	return 0;
+    }
+    
 	/**
 	 * Entity.
 	 */
@@ -362,36 +371,34 @@ public class PublicEntity
         return buffer.toString();
     }
 
-	/**
-	 * equals
-	 */
-	public boolean equals(Object other) {
-		if ((this == other))
-			return true;
-		if ((other == null))
-			return false;
-		if (!(other instanceof PublicEntity))
-			return false;
-		PublicEntity castOther = (PublicEntity) other;
-
-		return ((this.getOperator() == castOther.getOperator()) || (this
-				.getOperator() != null
-				&& castOther.getOperator() != null && this.getOperator()
-				.equals(castOther.getOperator())))
-				&& ((this.getEntity() == castOther.getEntity()) || (this
-						.getEntity() != null
-						&& castOther.getEntity() != null && this.getEntity()
-						.equals(castOther.getEntity())));
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((entity == null) ? 0 : entity.hashCode());
+		return result;
 	}
 
-	/**
-	 * hashCode
-	 */
-	public int hashCode() {
-		int result = 17;
-		result = 37 * result + (getOperator() == null ? 0 : this.getOperator().hashCode());
-		result = 37 * result + (getEntity() == null ? 0 : this.getEntity().hashCode());
-		return result;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof PublicEntity)) {
+			return false;
+		}
+		PublicEntity other = (PublicEntity) obj;
+		if (entity == null) {
+			if (other.entity != null) {
+				return false;
+			}
+		} else if (!entity.equals(other.entity)) {
+			return false;
+		}
+		return true;
 	}
 
 }

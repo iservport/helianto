@@ -15,6 +15,7 @@
 
 package org.helianto.core.domain;
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -23,6 +24,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.def.ActivityState;
@@ -48,7 +50,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name="core_serv",
     uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "serverName"})}
 )
-public class Server  implements RootEntity {
+public class Server  
+	implements RootEntity 
+{
 
 	private static final long serialVersionUID = 1L;
 	private int id;
@@ -124,6 +128,14 @@ public class Server  implements RootEntity {
     }
     public void setOperator(Operator operator) {
         this.operator = operator;
+    }
+    
+    @Transient
+    public int getContextId() {
+    	if (getOperator()!=null) {
+    		return getOperator().getId();
+    	}
+    	return 0;
     }
     
     /**

@@ -15,6 +15,8 @@
 
 package org.helianto.core.domain;
 
+import javax.persistence.Transient;
+
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -33,7 +35,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name="core_publicenum",
     uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "typeName"})}
 )
-public class PublicSequence extends AbstractEnumerator implements RootEntity {
+public class PublicSequence 
+	extends AbstractEnumerator 
+	implements RootEntity 
+{
 
     private static final long serialVersionUID = 1L;
     private Operator operator;
@@ -70,6 +75,14 @@ public class PublicSequence extends AbstractEnumerator implements RootEntity {
 		this.operator = operator;
 	}
 
+    @Transient
+    public int getContextId() {
+    	if (getOperator()!=null) {
+    		return getOperator().getId();
+    	}
+    	return 0;
+    }
+    
    /**
     * equals
     */

@@ -1,5 +1,7 @@
 package org.helianto.core.domain;
 
+import javax.persistence.Transient;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -31,7 +33,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.CHAR)
 @DiscriminatorValue("G")
-public class ParameterGroup implements RootEntity {
+public class ParameterGroup 
+	implements RootEntity 
+{
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -93,6 +97,14 @@ public class ParameterGroup implements RootEntity {
         this.operator = operator;
     }
 
+    @Transient
+    public int getContextId() {
+    	if (getOperator()!=null) {
+    		return getOperator().getId();
+    	}
+    	return 0;
+    }
+    
     /**
      * Parameter name.
      */

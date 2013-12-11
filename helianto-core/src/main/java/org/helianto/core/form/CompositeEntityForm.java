@@ -21,6 +21,7 @@ public class CompositeEntityForm
 
 	private static final long serialVersionUID = 1L;
 	private Entity entity;
+	private int entityId;
 	private char type;
 	private String entityName = "";
 	private String entityAlias = "";
@@ -86,6 +87,17 @@ public class CompositeEntityForm
 	}
 	public void setEntity(Entity entity) {
 		this.entity = entity;
+	}
+	
+	@Override
+	public int getEntityId() {
+		if (getEntity()!=null) {
+			return getEntity().getId();
+		}
+		return entityId;
+	}
+	public void setEntityId(int entityId) {
+		this.entityId = entityId;
 	}
 
 	public char getType() {

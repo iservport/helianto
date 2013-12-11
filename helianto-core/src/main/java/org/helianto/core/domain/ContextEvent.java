@@ -99,6 +99,14 @@ public class ContextEvent implements Numerable {
         this.operator = operator;
     }
 
+    @Transient
+    public int getContextId() {
+    	if (getOperator()!=null) {
+    		return getOperator().getId();
+    	}
+    	return 0;
+    }
+    
 	public long getPublicNumber() {
 		return publicNumber;
 	}

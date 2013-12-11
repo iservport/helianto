@@ -1,5 +1,7 @@
 package org.helianto.core.filter.base;
 
+import javax.persistence.Transient;
+
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.type.RootEntity;
 
@@ -9,7 +11,9 @@ import org.helianto.core.domain.type.RootEntity;
  * @author mauriciofernandesdecastro
  */
 @SuppressWarnings("serial")
-public abstract class AbstractRoot implements RootEntity {
+public abstract class AbstractRoot 
+	implements RootEntity 
+{
 	
 	private Operator operator;
 	
@@ -28,5 +32,14 @@ public abstract class AbstractRoot implements RootEntity {
 	public void setOperator(Operator operator) {
 		this.operator = operator;
 	}
+	
+    @Transient
+    public int getContextId() {
+    	if (getOperator()!=null) {
+    		return getOperator().getId();
+    	}
+    	return 0;
+    }
+	
 }
 

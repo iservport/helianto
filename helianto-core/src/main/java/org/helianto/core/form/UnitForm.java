@@ -1,6 +1,5 @@
 package org.helianto.core.form;
 
-import org.helianto.core.domain.type.TrunkEntity;
 
 
 /**
@@ -9,7 +8,7 @@ import org.helianto.core.domain.type.TrunkEntity;
  * @author mauriciofernandesdecastro
  */
 public interface UnitForm 
-	extends TrunkEntity 
+	extends EntityIdForm
 {
 	
 	/**

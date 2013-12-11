@@ -22,6 +22,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.type.RootEntity;
@@ -34,7 +35,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public class AbstractNamespaceData implements RootEntity {
+public class AbstractNamespaceData 
+	implements RootEntity 
+{
 
     /**
      * Factory method.
@@ -54,7 +57,9 @@ public class AbstractNamespaceData implements RootEntity {
     private String dataCode;
     private String dataName;
 
-    /** default constructor */
+    /** 
+     * Default constructor 
+     */
     public AbstractNamespaceData() {
         this("");
     }
@@ -87,6 +92,14 @@ public class AbstractNamespaceData implements RootEntity {
     }
     public void setOperator(Operator operator) {
         this.operator = operator;
+    }
+    
+    @Transient
+    public int getContextId() {
+    	if (getOperator()!=null) {
+    		return getOperator().getId();
+    	}
+    	return 0;
     }
     
     /**
