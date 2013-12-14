@@ -9,8 +9,8 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.def.Uploadable;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
+import org.helianto.core.internal.AbstractEvent;
 import org.helianto.core.number.Sequenceable;
-import org.helianto.document.base.AbstractEvent;
 
 /**
  * Tracks notification events to the recipient (owner).
@@ -22,9 +22,7 @@ import org.helianto.document.base.AbstractEvent;
 	   uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "internalNumber"})}
 )
 public class NotificationEvent 
-
 	extends AbstractEvent 
-	
 	implements Sequenceable, Uploadable 
 
 {

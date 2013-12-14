@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.easymock.EasyMock;
-import org.helianto.core.SequenceMgr;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
 import org.helianto.document.domain.Document;
@@ -42,20 +41,6 @@ import org.junit.Test;
  * @author Mauricio Fernandes de Castro
  */
 public class DocumentMgrImplTests {
-	
-	@Test
-	public void storeDocumentNoBuilder() {
-		Document document= new Document();
-		
-		EasyMock.expect(documentRepository.save(document)).andReturn(document);
-		documentRepository.flush();
-		EasyMock.replay(documentRepository);
-		EasyMock.replay(sequenceMgr);
-		
-		assertSame(document, documentMgr.storeDocument(document));
-		EasyMock.verify(documentRepository);
-		EasyMock.verify(sequenceMgr);
-	}
 	
 	@Test
 	public void storeDocument() {
@@ -127,7 +112,6 @@ public class DocumentMgrImplTests {
 	private DocumentRepository documentRepository;
 	private PrivateDocumentRepository privateDocumentRepository;
 	private DocumentFolderRepository documentFolderRepository;
-	private SequenceMgr sequenceMgr;
 	
 	@Before
 	public void setUp() {
@@ -138,8 +122,6 @@ public class DocumentMgrImplTests {
 		documentMgr.setPrivateDocumentRepository(privateDocumentRepository);
 		documentFolderRepository = EasyMock.createMock(DocumentFolderRepository.class);
 		documentMgr.setDocumentFolderRepository(documentFolderRepository);
-		sequenceMgr = EasyMock.createMock(SequenceMgr.class);
-		documentMgr.setSequenceMgr(sequenceMgr);
 	}
 	
 	@After
@@ -147,7 +129,6 @@ public class DocumentMgrImplTests {
 		EasyMock.reset(documentRepository);
 		EasyMock.reset(privateDocumentRepository);
 		EasyMock.reset(documentFolderRepository);
-		EasyMock.reset(sequenceMgr);
 	}
 
 }

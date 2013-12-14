@@ -20,7 +20,6 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.helianto.core.NonUniqueResultException;
-import org.helianto.core.SequenceMgr;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.Filter;
 import org.helianto.document.DocumentMgr;
@@ -28,8 +27,10 @@ import org.helianto.document.domain.Document;
 import org.helianto.document.domain.DocumentFolder;
 import org.helianto.document.domain.PrivateDocument;
 import org.helianto.document.filter.DocumentFolderFormFilterAdapter;
+import org.helianto.document.filter.DocumentFormFilterAdapter;
 import org.helianto.document.filter.PrivateDocumentFilterAdapter;
 import org.helianto.document.form.DocumentFolderForm;
+import org.helianto.document.form.DocumentForm;
 import org.helianto.document.form.PrivateDocumentForm;
 import org.helianto.document.repository.DocumentFolderRepository;
 import org.helianto.document.repository.DocumentRepository;
@@ -65,6 +66,16 @@ public class DocumentMgrImpl
 		}
 		documentRepository.flush();
 		return document;
+	}
+	
+	@Transactional(readOnly=true)
+	public List<? extends Document> findDocuments(DocumentForm form) {
+		Filter filter = new DocumentFormFilterAdapter(form);
+    	List<? extends Document> documentList = (List<? extends Document>) documentRepository.find(filter);
+    	if (logger.isDebugEnabled() && documentList!=null) {
+    		logger.debug("Found document list of size {}", documentList.size());
+    	}
+    	return documentList;
 	}
 	
 	@Transactional(readOnly=true)
@@ -138,7 +149,6 @@ public class DocumentMgrImpl
 	private DocumentRepository documentRepository;
 	private PrivateDocumentRepository privateDocumentRepository;
 	private DocumentFolderRepository documentFolderRepository;
-	private SequenceMgr sequenceMgr;
 	
 	@Resource
 	public void setDocumentRepository(DocumentRepository documentRepository) {
@@ -153,11 +163,6 @@ public class DocumentMgrImpl
 	@Resource
 	public void setDocumentFolderRepository(DocumentFolderRepository documentFolderRepository) {
 		this.documentFolderRepository = documentFolderRepository;
-	}
-	
-	@Resource
-	public void setSequenceMgr(SequenceMgr sequenceMgr) {
-		this.sequenceMgr = sequenceMgr;
 	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(DocumentMgrImpl.class);

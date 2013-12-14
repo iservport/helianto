@@ -114,7 +114,7 @@ public class Entity
     private String summary = "";
     private Identity manager;
     private String externalLogoUrl = "";
-    private char activityState;
+    private char activityState = 'A';
     private Set<UserGroup> users = new HashSet<UserGroup>(0);
     private Set<PublicEntity> publicEntities = new HashSet<PublicEntity>(0);
     private List<UserGroup> userList;

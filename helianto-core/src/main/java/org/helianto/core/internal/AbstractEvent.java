@@ -25,6 +25,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.helianto.core.def.PrivacyLevel;
+import org.helianto.core.def.Resolution;
 import org.helianto.core.def.ResolutionExtended;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.form.EventForm;
@@ -53,8 +54,8 @@ public abstract class AbstractEvent
     private static final long serialVersionUID = 1L;
     private Identity owner;
     private Date issueDate;
-    private char resolution;
-    private char privacyLevel;
+    private char resolution = Resolution.PRELIMINARY.getValue();
+    private char privacyLevel = PrivacyLevel.PUBLIC.getValue();
     // transient, convenience for filters
     private int interval;
 
@@ -62,7 +63,7 @@ public abstract class AbstractEvent
      * Empty constructor
 	 */
     public AbstractEvent() {
-        setPrivacyLevel(PrivacyLevel.PUBLIC.getValue());
+        super();
         setIssueDate(new Date());
     }
     
