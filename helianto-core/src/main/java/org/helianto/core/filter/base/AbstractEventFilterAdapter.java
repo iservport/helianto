@@ -18,6 +18,7 @@ package org.helianto.core.filter.base;
 import java.util.Date;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.filter.classic.AbstractDateIntervalFilterAdapter;
 import org.helianto.core.form.EventForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

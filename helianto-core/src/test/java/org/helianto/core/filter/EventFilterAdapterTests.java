@@ -23,10 +23,11 @@ import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.base.AbstractEventFilterAdapter;
 import org.helianto.core.form.EventForm;
-import org.helianto.core.internal.AbstractEvent;
 import org.helianto.core.test.EntityTestSupport;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 
 /**
@@ -47,19 +48,19 @@ public class EventFilterAdapterTests {
 	@Test
 	public void entity() {
 		Entity entity = EntityTestSupport.createEntity(1);
-		((AbstractEvent) form).setEntity(entity);
+    	Mockito.when(form.getEntity()).thenReturn(entity);
 		assertEquals(C0, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void toIssueDate() {
-		((AbstractEvent) form).setIssueDate(new Date(1000l));
+    	Mockito.when(form.getIssueDate()).thenReturn(new Date(1000l));
 		assertEquals(C1, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void resolution() {
-		((AbstractEvent) filter.getForm()).setResolution('R');
+    	Mockito.when(form.getResolution()).thenReturn('R');
 		assertEquals(C2, filter.createCriteriaAsString());
 	}
 	
@@ -70,11 +71,15 @@ public class EventFilterAdapterTests {
 	@SuppressWarnings("serial")
 	@Before
 	public void setUp() {
-		form = new AbstractEvent() {};
+    	form = Mockito.mock(EventForm.class);
 		filter = new AbstractEventFilterAdapter<EventForm>(form) {
 			@Override protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) { }
 		};
-		((AbstractEvent) form).setIssueDate(null);
-	}
-	
+    }
+    
+    @After
+    public void tearDown() {
+    	Mockito.reset(form);
+    }
+    
 }

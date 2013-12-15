@@ -1,7 +1,7 @@
 package org.helianto.core.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.filter.base.AbstractEntityIdFilterAdapter;
+import org.helianto.core.filter.internal.AbstractEntityIdFilterAdapter;
 import org.helianto.core.form.PrivateSequenceForm;
 
 /**

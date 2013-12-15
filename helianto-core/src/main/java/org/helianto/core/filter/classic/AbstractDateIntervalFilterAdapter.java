@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.core.filter.base;
+package org.helianto.core.filter.classic;
 
 
 import java.util.Date;
@@ -22,6 +22,8 @@ import org.helianto.core.criteria.DateCriteriaBuilder;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.domain.type.TrunkEntity;
 import org.helianto.core.filter.DateInterval;
+import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
+import org.helianto.core.filter.internal.AbstractDateFilterAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -31,6 +33,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  * Filter base class to be used with date fields.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
+ * @see AbstractDateFilterAdapter
  */
 public abstract class AbstractDateIntervalFilterAdapter<T extends TrunkEntity> 
 	extends AbstractTrunkFilterAdapter<T> 

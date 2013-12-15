@@ -19,6 +19,7 @@ import java.util.Date;
 
 import org.helianto.core.Controllable;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.filter.classic.AbstractInternalFilterAdapterDecorator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

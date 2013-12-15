@@ -70,6 +70,23 @@ public class DateCriteriaBuilder extends OrmCriteriaBuilder {
 	}
 
     /**
+     * Append date range.
+     * 
+     * @param fromDate
+     * @param toDate
+     */
+    public OrmCriteriaBuilder appendDateRange(Date fromDate, Date toDate) {
+        if (fromDate!=null) {
+        	appendSegment(getDateFieldName(), ">=").append(fromDate);
+        }
+    	if (toDate!=null) {
+			appendAnd(fromDate!=null);
+    		appendSegment(getDateFieldName(), "<").append(toDate);
+    	}        	
+        return this;
+    }
+    
+    /**
      * Append from date range.
      * 
      * @param fromDate

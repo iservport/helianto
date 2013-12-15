@@ -6,7 +6,7 @@ import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.filter.base.AbstractSequence;
-import org.helianto.core.filter.base.AbstractSequenceFilterAdapterDecorator;
+import org.helianto.core.filter.classic.AbstractSequenceFilterAdapterDecorator;
 import org.junit.Before;
 import org.junit.Test;
 

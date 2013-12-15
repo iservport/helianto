@@ -1,7 +1,9 @@
-package org.helianto.core.filter.base;
+package org.helianto.core.filter.classic;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.domain.Entity;
+import org.helianto.core.filter.base.AbstractFilter;
+import org.helianto.core.filter.base.AbstractSequence;
 import org.helianto.core.number.Internal;
 
 /**
@@ -9,7 +11,9 @@ import org.helianto.core.number.Internal;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractInternalFilterAdapterDecorator <T extends Internal> extends AbstractDateIntervalFilterAdapter<T> {
+public abstract class AbstractInternalFilterAdapterDecorator <T extends Internal> 
+	extends AbstractDateIntervalFilterAdapter<T> 
+{
 
 	private static final long serialVersionUID = 1L;
 	private AbstractFilter decoratedFilter;
