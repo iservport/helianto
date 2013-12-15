@@ -18,10 +18,11 @@ package org.helianto.document.base;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
-import org.helianto.core.internal.AbstractEvent;
+
 import org.helianto.core.def.ReferenceEnabled;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.form.PriorityForm;
+import org.helianto.core.internal.AbstractEvent;
 import org.helianto.core.utils.StringListUtils;
 import org.helianto.document.Documentable;
 /**

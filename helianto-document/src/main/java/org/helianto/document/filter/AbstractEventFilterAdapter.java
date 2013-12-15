@@ -17,7 +17,7 @@ package org.helianto.document.filter;
 
 import java.util.Date;
 
-import org.helianto.core.filter.base.AbstractDateIntervalFilterAdapter;
+import org.helianto.core.filter.classic.AbstractDateIntervalFilterAdapter;
 import org.helianto.document.Event;
 
 /**

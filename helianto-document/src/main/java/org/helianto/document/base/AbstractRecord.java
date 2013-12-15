@@ -22,6 +22,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.helianto.core.def.ControlState;
+import org.helianto.core.def.Resolution;
 import org.helianto.core.def.ResolutionExtended;
 import org.helianto.core.internal.AbstractEvent;
 import org.helianto.document.Record;
@@ -47,7 +48,7 @@ public abstract class AbstractRecord
      * Default constructor.
      */
     public AbstractRecord() {
-    	this(ResolutionExtended.PRELIMINARY.getValue());
+    	this(Resolution.PRELIMINARY.getValue());
     	setNextCheckDate(new Date());
     }
     

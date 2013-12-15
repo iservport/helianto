@@ -17,7 +17,7 @@ package org.helianto.document.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilter;
-import org.helianto.core.filter.base.AbstractInternalFilterAdapterDecorator;
+import org.helianto.core.filter.classic.AbstractInternalFilterAdapterDecorator;
 import org.helianto.document.Repeatable;
 
 /**

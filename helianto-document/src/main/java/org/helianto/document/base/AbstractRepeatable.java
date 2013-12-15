@@ -29,7 +29,10 @@ import org.helianto.document.RepeatableStateResolver;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.MappedSuperclass
-public abstract class AbstractRepeatable extends AbstractRecord implements Repeatable {
+public abstract class AbstractRepeatable 
+	extends AbstractRecord 
+	implements Repeatable 
+{
 
     private static final long serialVersionUID = 1L;
     private int frequency;
