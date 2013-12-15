@@ -32,7 +32,7 @@ import javax.persistence.Transient;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Unit;
 import org.helianto.core.number.Sequenceable;
-import org.helianto.document.base.AbstractPrivateControl;
+import org.helianto.document.base.AbstractRepeatable;
 import org.helianto.document.domain.ProcessDocument;
 import org.helianto.inventory.RequirementSign;
 import org.helianto.inventory.RequirementState;
@@ -47,28 +47,31 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public abstract class AbstractRequirement extends AbstractPrivateControl implements Sequenceable {
+public abstract class AbstractRequirement 
+	extends AbstractRepeatable 
+	implements Sequenceable 
+{
 
-    /**
-     * Internal factory method.
-     * 
-     * @param clazz
-     * @param part
-     * @param requirementDate
-     */
-    public static <T extends AbstractRequirement> T internalRequirementFactory(Class<T> clazz, Entity entity, Date requirementDate) {
-        T requirement;
-        try {
-            requirement = clazz.newInstance();
-            requirement.setEntity(entity);
-            requirement.setRequirementDate(requirementDate);
-            requirement.setResolution(RequirementState.FORECAST.getValue());
-            return requirement;
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Unable to instantiate "+clazz);
-        }
-    }
-
+//    /**
+//     * Internal factory method.
+//     * 
+//     * @param clazz
+//     * @param part
+//     * @param requirementDate
+//     */
+//    public static <T extends AbstractRequirement> T internalRequirementFactory(Class<T> clazz, Entity entity, Date requirementDate) {
+//        T requirement;
+//        try {
+//            requirement = clazz.newInstance();
+//            requirement.setEntity(entity);
+//            requirement.setRequirementDate(requirementDate);
+//            requirement.setResolution(RequirementState.FORECAST.getValue());
+//            return requirement;
+//        } catch (Exception e) {
+//            throw new IllegalArgumentException("Unable to instantiate "+clazz);
+//        }
+//    }
+//
     private static final long serialVersionUID = 1L;
     protected ProcessDocument document;
     protected Date requirementDate;

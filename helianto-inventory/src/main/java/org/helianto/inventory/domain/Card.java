@@ -42,14 +42,16 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name="inv_card",
     uniqueConstraints = {@UniqueConstraint(columnNames={"cardSetId", "cardLabel"})}
 )
-public class Card implements java.io.Serializable {
+public class Card 
+	implements java.io.Serializable 
+{
 	
     private static final long serialVersionUID = 1L;
     private int id;
     private CardSet cardSet;
     private String cardLabel;
     private int cardNumber;
-	private char cardState;
+	private char cardState = CardState.EMPTY.getValue();
 
     /** 
      * Default constructor.
@@ -68,7 +70,6 @@ public class Card implements java.io.Serializable {
     	super();
     	setCardSet(cardSet);
         setCardLabel(cardLabel);
-        setCardState(CardState.EMPTY);
     }
 
     /** 

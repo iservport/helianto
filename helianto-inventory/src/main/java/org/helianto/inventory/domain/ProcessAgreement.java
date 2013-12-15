@@ -71,10 +71,10 @@ public class ProcessAgreement
 	private static final long serialVersionUID = 1L;
 	private Partner partner;
 	private String agreementDesc;
-	private char agreementLevel;
+	private Character agreementLevel = AgreementState.PENDING.getValue();
 	private BigDecimal agreementPrice = BigDecimal.ZERO;
 	private int minimalOrderDuration;
-	private char procurementOption;
+	private Character procurementOption = ProcurementOption.UNRESOLVED.getValue();
 	private Map<String, Tax> taxes = new HashMap<String, Tax>(); 
 
 	/** 
@@ -82,8 +82,6 @@ public class ProcessAgreement
 	 */
     public ProcessAgreement() {
     	super();
-    	setResolution(AgreementState.PENDING);
-    	setAgreementLevel(AgreementLevel.REQUIRE_CREDIT_ASSESSMENT);
     }
 
 	/** 
@@ -183,10 +181,10 @@ public class ProcessAgreement
     /**
      * Credit level assigned to the partner.
      */
-	public char getAgreementLevel() {
+	public Character getAgreementLevel() {
 		return agreementLevel;
 	}
-	public void setAgreementLevel(char agreementLevel) {
+	public void setAgreementLevel(Character agreementLevel) {
 		this.agreementLevel = agreementLevel;
 	}
 	public void setAgreementLevel(AgreementLevel agreementLevel) {
@@ -217,10 +215,10 @@ public class ProcessAgreement
 	/**
 	 * Procurement option (make, buy local, import)
 	 */
-	public char getProcurementOption() {
+	public Character getProcurementOption() {
 		return procurementOption;
 	}
-	public void setProcurementOption(char procurementOption) {
+	public void setProcurementOption(Character procurementOption) {
 		this.procurementOption = procurementOption;
 	}
 	public void setProcurementOption(ProcurementOption procurementOption) {

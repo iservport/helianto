@@ -52,7 +52,7 @@ public class CardSet implements java.io.Serializable, Sequenceable {
     private long internalNumber;
     private ProcessDocument process;
     private int cardRange;
-    private char cardType;
+    private char cardType = CardType.TEST.getPrefix();
 
     /** 
      * Default constructor.
