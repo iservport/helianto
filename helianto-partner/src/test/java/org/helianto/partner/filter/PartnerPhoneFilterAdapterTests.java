@@ -17,11 +17,10 @@ package org.helianto.partner.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.domain.Entity;
-import org.helianto.core.test.EntityTestSupport;
-import org.helianto.partner.domain.PrivateEntity;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * 
@@ -36,25 +35,28 @@ public class PartnerPhoneFilterAdapterTests {
 
     @Test
     public void empty() {
+    	Mockito.when(form.getSequence()).thenReturn(-1);
         assertEquals(OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void select() {
-    	form.getParent().setId(10);
-        ((CompositeTestPartnerForm) form).setSequence(20);
+    	Mockito.when(form.getPrivateEntityId()).thenReturn(10);
+    	Mockito.when(form.getSequence()).thenReturn(20);
         assertEquals(C1+"AND "+C2, filter.createCriteriaAsString());
     }
     
     @Test
     public void parent() {
-    	form.getParent().setId(10);
+    	Mockito.when(form.getPrivateEntityId()).thenReturn(10);
+    	Mockito.when(form.getSequence()).thenReturn(-1);
         assertEquals(C1+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void phoneType() {
-    	((CompositeTestPartnerForm) form).setPhoneType('M');
+    	Mockito.when(form.getPhoneType()).thenReturn('M');
+    	Mockito.when(form.getSequence()).thenReturn(-1);
         assertEquals(C3+OB, filter.createCriteriaAsString());
     }
     
@@ -63,9 +65,13 @@ public class PartnerPhoneFilterAdapterTests {
     
     @Before
     public void setUp() {
-    	Entity entity = EntityTestSupport.createEntity(1);
-    	PrivateEntity privateEntity = new PrivateEntity(entity, "");
-    	form = new CompositeTestPartnerForm(privateEntity);
+    	form = Mockito.mock(CompositeTestPartnerForm.class);
     	filter = new PartnerPhoneFormFilterAdapter(form);
     }
+    
+    @After
+    public void tearDown() {
+    	Mockito.reset(form);
+    }
+    
 }
