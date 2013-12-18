@@ -1,7 +1,7 @@
 package org.helianto.inventory.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.filter.base.AbstractInternalFilterAdapter;
+import org.helianto.core.filter.internal.AbstractInternalFilterAdapter;
 import org.helianto.inventory.form.CardSetForm;
 
 /**

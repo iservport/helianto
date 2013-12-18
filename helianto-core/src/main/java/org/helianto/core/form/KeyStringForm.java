@@ -7,9 +7,7 @@ package org.helianto.core.form;
  * @author mauriciofernandesdecastro
  */
 public interface KeyStringForm 
-
-	extends KeyForm
-
+	extends KeyTypeIdForm
 {
 
 	/**

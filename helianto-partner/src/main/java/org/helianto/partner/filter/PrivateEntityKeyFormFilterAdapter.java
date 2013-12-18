@@ -38,21 +38,19 @@ public class PrivateEntityKeyFormFilterAdapter extends AbstractFilterAdapter<Pri
 	}
 	
 	public boolean isSelection() {
-		return getForm().getParent()!=null 
-				&& getForm().getParent().getId()>0 
-				&& getForm().getKeyType()!=null
-				&& getForm().getKeyType().getId()>0;
+		return getForm().getPrivateEntityId()>0 
+				&& getForm().getKeyTypeId()>0;
 	}
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("privateEntity.id", getForm().getParent().getId(), mainCriteriaBuilder);
-		appendEqualFilter("keyType.id", getForm().getKeyType().getId(), true, mainCriteriaBuilder);
+		appendEqualFilter("privateEntity.id", getForm().getPrivateEntityId(), mainCriteriaBuilder);
+		appendEqualFilter("keyType.id", getForm().getKeyTypeId(), mainCriteriaBuilder);
 	}
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("privateEntity.id", getForm().getParent().getId(), mainCriteriaBuilder);
+		doSelect(mainCriteriaBuilder);
 		appendEqualFilter("keyValue", getForm().getKeyValue(), mainCriteriaBuilder);
 	}
 	

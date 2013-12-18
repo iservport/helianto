@@ -54,6 +54,9 @@ public class CompositeTestPartnerForm
     private char entityActivityState;
 	private int[] userIdArray;
     private char userOrderBy;
+	private int categoryId;
+	private int privateEntityId;
+	private int keyTypeId;
 	
 	/**
 	 * Entity constructor.
@@ -242,6 +245,39 @@ public class CompositeTestPartnerForm
 		} catch (CloneNotSupportedException e) {
 			throw new IllegalArgumentException("Unable to clone CompositePartnerForm.");
 		}
+	}
+
+	@Override
+	public int getCategoryId() {
+		if (getCategory()!=null) {
+			return getCategory().getId();
+		}
+		return categoryId;
+	}
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	@Override
+	public int getPrivateEntityId() {
+		if (getParent()!=null) {
+			return getParent().getId();
+		}
+		return privateEntityId;
+	}
+	public void setPrivateEntityId(int privateEntityId) {
+		this.privateEntityId = privateEntityId;
+	}
+
+	@Override
+	public int getKeyTypeId() {
+		if (getKeyType()!=null) {
+			return getKeyType().getId();
+		}
+		return keyTypeId;
+	}
+	public void setKeyTypeId(int keyTypeId) {
+		this.keyTypeId = keyTypeId;
 	}
 
 }

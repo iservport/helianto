@@ -12,7 +12,7 @@ public abstract class AbstractSearchForm
 
 	private static final long serialVersionUID = 1L;
 	private String searchString;
-	private char searchMode;
+	private char searchMode = '_';
 	private String searchList;
 	
 	public String getSearchString() {

@@ -40,14 +40,13 @@ public class PartnerCategoryFormFilterAdapter extends AbstractFilterAdapter<Part
 	public boolean isSelection() {
 		return getForm().getPartner()!=null 
 				&& getForm().getPartner().getId()>0 
-				&& getForm().getCategory()!=null
-				&& getForm().getCategory().getId()>0;
+				&& getForm().getCategoryId()>0;
 	}
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("partner.id", getForm().getPartner().getId(), mainCriteriaBuilder);
-		appendEqualFilter("category.id", getForm().getCategory().getId(), mainCriteriaBuilder);
+		appendEqualFilter("category.id", getForm().getCategoryId(), mainCriteriaBuilder);
 	}
 
 	@Override
@@ -55,12 +54,13 @@ public class PartnerCategoryFormFilterAdapter extends AbstractFilterAdapter<Part
 		if (getForm().getParent()!=null) {
 			appendEqualFilter("partner.privateEntity.id", getForm().getParent().getId(), mainCriteriaBuilder);
 		}
+		else if (getForm().getPrivateEntityId()>0) {
+			appendEqualFilter("partner.privateEntity.id", getForm().getPrivateEntityId(), mainCriteriaBuilder);
+		}
 		if (getForm().getPartner()!=null) {
 			appendEqualFilter("partner.id", getForm().getPartner().getId(), mainCriteriaBuilder);
 		}
-		if (getForm().getCategory()!=null) {
-			appendEqualFilter("category.id", getForm().getCategory().getId(), mainCriteriaBuilder);
-		}
+		appendEqualFilter("category.id", getForm().getCategoryId(), mainCriteriaBuilder);
 	}
 	
 	@Override

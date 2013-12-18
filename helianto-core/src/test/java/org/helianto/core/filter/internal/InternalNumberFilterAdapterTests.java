@@ -3,7 +3,6 @@ package org.helianto.core.filter.internal;
 import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.filter.InternalNumberForm;
-import org.helianto.core.filter.base.AbstractInternalFilterAdapter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

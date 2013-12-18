@@ -1,8 +1,7 @@
-package org.helianto.core.filter.base;
+package org.helianto.core.filter.internal;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.InternalNumberForm;
-import org.helianto.core.filter.internal.AbstractDateFilterAdapter;
 
 /**
  * Internal number filter base class.
