@@ -18,8 +18,8 @@ package org.helianto.document.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.domain.Entity;
-import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
 import org.helianto.document.domain.DocumentFolder;
+import org.helianto.document.filter.internal.AbstractFolderFormFilterAdapter;
 import org.helianto.document.form.DocumentFolderForm;
 
 /**
@@ -28,7 +28,7 @@ import org.helianto.document.form.DocumentFolderForm;
  * @author Mauricio Fernandes de Castro
  */
 public class DocumentFolderFormFilterAdapter<T extends DocumentFolderForm> 
-	extends AbstractTrunkFilterAdapter<T> {
+	extends AbstractFolderFormFilterAdapter<T> {
 
 	private static final long serialVersionUID = 1L;
     
@@ -52,18 +52,9 @@ public class DocumentFolderFormFilterAdapter<T extends DocumentFolderForm>
     	super((T) new DocumentFolder(entity, builderCode));
     }
 
-	public boolean isSelection() {
-		return getForm().getFolderCode()!=null && getForm().getFolderCode().length()>0;
-	}
-
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		appendEqualFilter("contentType", getForm().getContentType(), mainCriteriaBuilder);
-	}
-
-	@Override
-	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("folderCode", getForm().getFolderCode(), mainCriteriaBuilder);
 	}
 
 	@Override

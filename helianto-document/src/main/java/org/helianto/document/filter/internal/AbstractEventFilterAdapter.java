@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.document.filter;
+package org.helianto.document.filter.internal;
 
 import java.util.Date;
 

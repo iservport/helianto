@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.test.EntityTestSupport;
+import org.helianto.document.filter.internal.AbstractCustomDocumentFormFilterAdapter;
 import org.helianto.document.form.CustomDocumentForm;
 import org.junit.After;
 import org.junit.Before;

@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.document.filter;
+package org.helianto.document.filter.internal;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.document.form.CustomDocumentForm;

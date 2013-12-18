@@ -21,6 +21,7 @@ import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.document.base.AbstractRepeatable;
+import org.helianto.document.filter.internal.AbstractRepeatFilterAdapter;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,7 +1,7 @@
-package org.helianto.resource.filter;
+package org.helianto.document.filter.internal;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
+import org.helianto.core.filter.internal.AbstractEntityIdFilterAdapter;
 import org.helianto.core.form.FolderForm;
 
 /**
@@ -9,7 +9,9 @@ import org.helianto.core.form.FolderForm;
  * 
  * @author mauriciofernandesdecastro
  */
-public abstract class AbstractFolderFormFilterAdapter<F extends FolderForm> extends AbstractTrunkFilterAdapter<F> {
+public abstract class AbstractFolderFormFilterAdapter<F extends FolderForm> 
+	extends AbstractEntityIdFilterAdapter<F> 
+{
 
 	private static final long serialVersionUID = 1L;
 

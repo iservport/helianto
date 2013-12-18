@@ -1,7 +1,7 @@
 package org.helianto.message.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.document.filter.AbstractEventFilterAdapter;
+import org.helianto.document.filter.internal.AbstractEventFilterAdapter;
 import org.helianto.message.form.NotificationEventForm;
 
 /**

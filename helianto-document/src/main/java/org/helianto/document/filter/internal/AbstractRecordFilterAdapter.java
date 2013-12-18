@@ -13,10 +13,12 @@
  * limitations under the License.
  */
 
-package org.helianto.document.filter;
+package org.helianto.document.filter.internal;
+
+import java.util.Date;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.document.Occurrence;
+import org.helianto.document.Record;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractOccurrenceFilterAdapter <T extends Occurrence> extends AbstractEventFilterAdapter<T> {
+public abstract class AbstractRecordFilterAdapter <T extends Record> extends AbstractOccurrenceFilterAdapter<T> {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -34,31 +36,43 @@ public abstract class AbstractOccurrenceFilterAdapter <T extends Occurrence> ext
 	 * 
 	 * @param form
 	 */
-	public AbstractOccurrenceFilterAdapter(T form) {
+	public AbstractRecordFilterAdapter(T form) {
 		super(form);
+	}
+	
+	@Override
+	public boolean isSelection() {
+		return super.isSelection() && getForm().getInternalNumber()>0;
+	}
+	
+	@Override
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
+		appendEqualFilter("entity", getForm().getEntity().getId(), mainCriteriaBuilder);
+		appendEqualFilter("internalNumber", getForm().getInternalNumber(), mainCriteriaBuilder);		
 	}
 	
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
-		appendResolution(mainCriteriaBuilder);
+		appendEqualFilter("complete", getForm().getComplete(), true, mainCriteriaBuilder);
 	}
 
 	/**
-	 * Resolution appender.
-	 * 
-	 * @param mainCriteriaBuilder
+	 * Field name.
 	 */
-	protected void appendResolution(OrmCriteriaBuilder mainCriteriaBuilder) {
-		if (getForm().getResolution()=='N') {
-			mainCriteriaBuilder.appendAnd().appendSegment("resolution", "IN ").append("('P', 'T')");
-			logger.debug("Resolution constrained to not started.");
-		}
-		else {
-			appendEqualFilter("resolution", getForm().getResolution(), mainCriteriaBuilder);
-		}
+	public String getDateFieldName() {
+		logger.debug("Date field name set to nextCheckDate");
+		return "nextCheckDate";
 	}
-
-	 private static Logger logger = LoggerFactory.getLogger(AbstractOccurrenceFilterAdapter.class);
+	
+	/**
+	 * Next check date.
+	 */
+	@Override
+	public Date getToDate() {
+		return getForm().getNextCheckDate();
+	}
+	
+	 private static Logger logger = LoggerFactory.getLogger(AbstractRecordFilterAdapter.class);
 	
 }
