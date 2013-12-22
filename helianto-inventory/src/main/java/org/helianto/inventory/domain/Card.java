@@ -32,6 +32,7 @@ import org.helianto.inventory.CardState;
 import org.helianto.inventory.InvalidCardException;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Cards are companions to transactions.
@@ -82,7 +83,7 @@ public class Card
     	super();
     	setCardSet(cardSet);
         setCardLabel(cardNumber);
-        setCardState(CardState.EMPTY);
+        setCardStateAsEnum(CardState.EMPTY);
     }
 
     /**
@@ -137,6 +138,7 @@ public class Card
     public void setCardLabel(String cardLabel) {
     	this.cardLabel = cardLabel;
     }
+    @JsonIgnore
     protected void setCardLabel(int cardNumber) {
     	this.cardLabel = formatCardLabel(cardNumber);
     	this.cardNumber = cardNumber;
@@ -217,7 +219,7 @@ public class Card
     public void setCardState(char cardState) {
         this.cardState = cardState;
     }
-    public void setCardState(CardState cardState) {
+    public void setCardStateAsEnum(CardState cardState) {
         this.cardState = cardState.getValue();
     }
 

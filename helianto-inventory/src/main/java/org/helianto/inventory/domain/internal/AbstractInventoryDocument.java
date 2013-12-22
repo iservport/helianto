@@ -58,7 +58,7 @@ public class AbstractInventoryDocument extends AbstractNumberedDocument {
 		if (getInventoryTransaction()==null) {
 			setInventoryTransaction(new InventoryTransaction());
 		}
-		setBlockingState(BlockingState.OPEN);
+		setBlockingStateAsEnum(BlockingState.OPEN);
 	}
     
     /**
@@ -138,7 +138,7 @@ public class AbstractInventoryDocument extends AbstractNumberedDocument {
 	public void setBlockingState(char blockingState) {
 		this.blockingState = blockingState;
 	}
-	public void setBlockingState(BlockingState blockingState) {
+	public void setBlockingStateAsEnum(BlockingState blockingState) {
 		this.blockingState = blockingState.getValue();
 	}
 	

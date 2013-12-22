@@ -210,7 +210,7 @@ public abstract class AbstractRequirement
     public void setRequirementSign(int requirementSign) {
         this.requirementSign = requirementSign;
     }
-    public void setRequirementSign(RequirementSign requirementSign) {
+    public void setRequirementSignAsEnum(RequirementSign requirementSign) {
         this.requirementSign = requirementSign.getValue();
     }
 

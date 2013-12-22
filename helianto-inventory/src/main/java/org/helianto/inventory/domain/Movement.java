@@ -124,7 +124,7 @@ public class Movement implements Serializable {
 	/**
 	 * Inventory transaction.
 	 */
-    @JsonBackReference 
+    @JsonBackReference("inventoryTransaction")
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="inventoryTransactionId")
 	public InventoryTransaction getInventoryTransaction() {
@@ -137,7 +137,7 @@ public class Movement implements Serializable {
 	/**
 	 * Source or destination inventory.
 	 */
-    @JsonBackReference 
+    @JsonBackReference("inventory")
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="inventoryId")
 	public Inventory getInventory() {

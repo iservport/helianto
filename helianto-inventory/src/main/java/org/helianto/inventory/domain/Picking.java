@@ -121,7 +121,6 @@ public class Picking implements Serializable, Sequenceable {
      * <<NaturalKey>> Owning entity.
      * @see {@link Entity}
      */
-    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {

@@ -53,7 +53,7 @@ public class GrossRequirement extends AbstractRequirement {
 	 */
 	public GrossRequirement() {
 		super();
-		setRequirementSign(RequirementSign.INCREMENT);
+		setRequirementSignAsEnum(RequirementSign.INCREMENT);
 	}
 
 	@Transient

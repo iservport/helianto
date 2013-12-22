@@ -107,7 +107,7 @@ public class InventoryTransaction implements Serializable {
 	/**
 	 * Set of movements.
 	 */
-	@JsonManagedReference 
+	@JsonManagedReference("inventoryTransaction")
 	@OneToMany(mappedBy="inventoryTransaction", cascade={CascadeType.ALL})
 	public Set<Movement> getMovements() {
 		return movements;

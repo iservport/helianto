@@ -81,7 +81,7 @@ public class Inventory extends AbstractRequirement {
 	 */
 	public Inventory() {
 		super();
-		setRequirementSign(RequirementSign.INCREMENT);
+		setRequirementSignAsEnum(RequirementSign.INCREMENT);
 		setRequirementDate(new Date());
 		setResolution(RequirementState.FORECAST.getValue());
 	}
@@ -112,7 +112,7 @@ public class Inventory extends AbstractRequirement {
 	/**
 	 * Set of movements.
 	 */
-	@JsonManagedReference 
+	@JsonManagedReference("inventory")
 	@OneToMany(mappedBy="inventory")
 	public Set<Movement> getMovements() {
 		return movements;

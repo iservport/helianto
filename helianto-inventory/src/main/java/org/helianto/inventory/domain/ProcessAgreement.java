@@ -41,7 +41,6 @@ import org.helianto.inventory.ProcurementOption;
 import org.helianto.inventory.domain.internal.AbstractRequirement;
 import org.helianto.partner.domain.Partner;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
@@ -119,7 +118,6 @@ public class ProcessAgreement
     /**
      * Customer or supplier.
      */
-    @JsonBackReference 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="partnerId", nullable=true)
     public Partner getPartner() {
@@ -184,7 +182,7 @@ public class ProcessAgreement
 	public void setAgreementLevel(Character agreementLevel) {
 		this.agreementLevel = agreementLevel;
 	}
-	public void setAgreementLevel(AgreementLevel agreementLevel) {
+	public void setAgreementLevelAsEnum(AgreementLevel agreementLevel) {
 		this.agreementLevel = agreementLevel.getValue();
 	}
 
@@ -218,7 +216,7 @@ public class ProcessAgreement
 	public void setProcurementOption(Character procurementOption) {
 		this.procurementOption = procurementOption;
 	}
-	public void setProcurementOption(ProcurementOption procurementOption) {
+	public void setProcurementOptionAsEnum(ProcurementOption procurementOption) {
 		this.procurementOption = procurementOption.getValue();
 	}
 
