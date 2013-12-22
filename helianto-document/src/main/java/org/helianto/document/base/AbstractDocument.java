@@ -33,14 +33,14 @@ public abstract class AbstractDocument
 {
 
     private static final long serialVersionUID = 1L;
-    private String docCode;
-    private String docName;
-    private String docFile;
-    private String docAbstract;
-    private char priority;
-    private String encoding;
-    private String multipartFileContentType;
-    private String referenceList;
+    private String docCode = "";
+    private String docName = "";
+    private String docFile = "";
+    private String docAbstract = "";
+    private char priority = '0';
+    private String encoding = "ISO8859_1";
+    private String multipartFileContentType = "text/plain";
+    private String referenceList = "";
 
     /** 
      * Default constructor
@@ -67,11 +67,6 @@ public abstract class AbstractDocument
      */
     protected void init(String docCode) {
     	setDocCode(docCode);
-    	setDocName("");
-    	setDocFile("");
-    	setPriority('0');
-    	setEncoding("ISO8859_1");
-    	setMultipartFileContentType("text/plain");
     }
 
     /**

@@ -14,6 +14,8 @@ import org.helianto.document.base.AbstractDocument;
 import org.helianto.user.domain.User;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * A document visible only to the entity.
  * 
@@ -71,6 +73,7 @@ public class PrivateDocument
     public void setContent(byte[] content) {
         this.content = content;
     }
+    @JsonIgnore
     public void setContent(String content) {
     	this.content = content.getBytes();
     }

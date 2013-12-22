@@ -31,7 +31,6 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Unit;
 import org.helianto.document.def.InheritanceType;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
@@ -80,7 +79,6 @@ public class ProcessDocument
      * the Inventory class.
      * </p>
      */
-    @JsonBackReference 
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="unitId")
     public Unit getUnit() {
@@ -115,7 +113,7 @@ public class ProcessDocument
 	public void setInheritanceType(char inheritanceType) {
 		this.inheritanceType = inheritanceType;
 	}
-	public void setInheritanceType(InheritanceType inheritanceType) {
+	public void setInheritanceTypeAsEnum(InheritanceType inheritanceType) {
 		this.inheritanceType = inheritanceType.getValue();
 	}
 

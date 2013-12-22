@@ -32,9 +32,9 @@ public abstract class AbstractFolder
 	implements FolderEntity {
 
 	private static final long serialVersionUID = 1L;
-	private String folderCode;
-	private String folderName;
-	private String folderDecorationUrl;
+	private String folderCode = "";
+	private String folderName = "";
+	private String folderDecorationUrl = "";
     
 	// Transients.
 	private int countItems;
@@ -48,8 +48,6 @@ public abstract class AbstractFolder
      */
     public AbstractFolder() {
     	super();
-    	setFolderName("");
-		setFolderDecorationUrl("");
     }
 
     /** 

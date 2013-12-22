@@ -24,8 +24,6 @@ import javax.persistence.Transient;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.document.domain.DocumentFolder;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 /**
  * Extends <code>AbstractDocument</code> to control how docCode
  * is created.
@@ -34,7 +32,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  * @deprecated see AbstractCustomDocument
  */
 @MappedSuperclass
-public class AbstractNumberedDocument extends AbstractDocument implements Sequenceable {
+public class AbstractNumberedDocument 
+	extends AbstractDocument 
+	implements Sequenceable 
+{
 
 	private static final long serialVersionUID = 1L;
 	private DocumentFolder documentCodeBuilder;
@@ -50,7 +51,6 @@ public class AbstractNumberedDocument extends AbstractDocument implements Sequen
 	/**
 	 * The document code builder.
 	 */
-	@JsonBackReference 
 	@ManyToOne(cascade={CascadeType.ALL})
 	@JoinColumn(name="documentCodeBuilderId")
 	public DocumentFolder getDocumentCodeBuilder() {

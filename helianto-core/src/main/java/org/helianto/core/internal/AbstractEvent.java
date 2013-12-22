@@ -30,7 +30,7 @@ import org.helianto.core.def.ResolutionExtended;
 import org.helianto.core.domain.Identity;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
@@ -77,7 +77,6 @@ public abstract class AbstractEvent
      * Record owner.
      * @see {@link Identity}
      */
-    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="ownerId", nullable=true)
 	public Identity getOwner() {
@@ -130,6 +129,7 @@ public abstract class AbstractEvent
     public void setResolution(char resolution) {
         this.resolution = resolution;
     }
+    @JsonIgnore
     public void setResolution(String resolution) {
         this.resolution = resolution.charAt(0);
     }
@@ -153,7 +153,7 @@ public abstract class AbstractEvent
     public void setPrivacyLevel(char privacyLevel) {
         this.privacyLevel = privacyLevel;
     }
-    public void setPrivacyLevel(PrivacyLevel privacyLevel) {
+    public void setPrivacyLevelAsEnum(PrivacyLevel privacyLevel) {
         this.privacyLevel = privacyLevel.getValue();
     }
     

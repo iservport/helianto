@@ -37,7 +37,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name="doc_assoc",
     uniqueConstraints = {@UniqueConstraint(columnNames={"parentId", "childId"})}
 )
-public class DocumentAssociation extends AbstractAssociation<Document, Document> {
+public class DocumentAssociation 
+	extends AbstractAssociation<Document, Document> 
+{
 
     private static final long serialVersionUID = 1L;
     
@@ -56,7 +58,7 @@ public class DocumentAssociation extends AbstractAssociation<Document, Document>
     /**
      * Associated parent document.
      */
-    @JsonBackReference 
+    @JsonBackReference("parent")
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="parentId", nullable=true)
 	public Document getParent() {
@@ -66,7 +68,7 @@ public class DocumentAssociation extends AbstractAssociation<Document, Document>
     /**
      * Associated child document.
      */
-    @JsonBackReference 
+    @JsonBackReference("child")
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="childId", nullable=true)
 	public Document getChild() {

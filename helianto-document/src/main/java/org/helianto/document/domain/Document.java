@@ -27,7 +27,6 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.Entity;
-import org.helianto.document.Event;
 import org.helianto.document.base.AbstractCustomDocument;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -77,7 +76,7 @@ public class Document
     /**
      * Parent document associations.
      */
-    @JsonManagedReference 
+    @JsonManagedReference("child")
     @OneToMany(mappedBy="child")
     public Set<DocumentAssociation> getParents() {
         return this.parents;
@@ -89,7 +88,7 @@ public class Document
     /**
      * Child document associations.
      */
-    @JsonManagedReference 
+    @JsonManagedReference("parent")
     @OneToMany(mappedBy="parent", cascade={CascadeType.ALL})
     public Set<DocumentAssociation> getChildren() {
         return this.children;
