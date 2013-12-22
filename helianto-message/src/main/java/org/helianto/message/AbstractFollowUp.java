@@ -21,7 +21,7 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import org.helianto.document.base.AbstractRecord;
+import org.helianto.core.internal.AbstractEventControl;
 import org.helianto.message.def.NotificationOption;
 import org.helianto.message.def.ReviewDecision;
 
@@ -31,7 +31,7 @@ import org.helianto.message.def.ReviewDecision;
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public abstract class AbstractFollowUp extends AbstractRecord implements Comparable<AbstractFollowUp> {
+public abstract class AbstractFollowUp extends AbstractEventControl implements Comparable<AbstractFollowUp> {
 
     private static final long serialVersionUID = 1L;
     private String followUpDesc;

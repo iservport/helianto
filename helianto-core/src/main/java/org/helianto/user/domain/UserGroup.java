@@ -114,7 +114,7 @@ public class UserGroup
     	setLastEvent(new Date());
     	setUserStateAsEnum(UserState.ACTIVE);
     	setAccountNonExpired(true);
-    	setCreateIdentity(CreateIdentity.REJECT);
+    	setCreateIdentityAsEnum(CreateIdentity.REJECT);
     }
 
 	/** 
@@ -301,7 +301,7 @@ public class UserGroup
 	public void setCreateIdentity(char createIdentity) {
 		this.createIdentity = createIdentity;
 	}
-	public void setCreateIdentity(CreateIdentity createIdentity) {
+	public void setCreateIdentityAsEnum(CreateIdentity createIdentity) {
 		this.createIdentity = createIdentity.getValue();
 	}
 	
@@ -427,7 +427,7 @@ public class UserGroup
 	/**
      * Parent associations.
      */
-    @JsonManagedReference 
+    @JsonManagedReference("child")
     @OneToMany(mappedBy="child")
     public Set<UserAssociation> getParentAssociations() {
         return this.parentAssociations;
@@ -439,7 +439,7 @@ public class UserGroup
     /**
      * Child associations.
      */
-    @JsonManagedReference 
+    @JsonManagedReference("parent")
     @OneToMany(mappedBy="parent")
     public Set<UserAssociation> getChildAssociations() {
         return this.childAssociations;
@@ -462,7 +462,7 @@ public class UserGroup
     /**
      * Roles for this group.
      */
-    @JsonManagedReference @OneToMany(mappedBy="userGroup")
+    @OneToMany(mappedBy="userGroup")
     public Set<UserRole> getRoles() {
         return this.roles;
     }

@@ -31,8 +31,8 @@ import javax.persistence.Transient;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Unit;
+import org.helianto.core.internal.AbstractEventControl;
 import org.helianto.core.number.Sequenceable;
-import org.helianto.document.base.AbstractRepeatable;
 import org.helianto.document.domain.ProcessDocument;
 import org.helianto.inventory.RequirementSign;
 import org.helianto.inventory.RequirementState;
@@ -48,7 +48,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  */
 @MappedSuperclass
 public abstract class AbstractRequirement 
-	extends AbstractRepeatable 
+	extends AbstractEventControl 
 	implements Sequenceable 
 {
 

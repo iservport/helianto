@@ -13,44 +13,34 @@
  * limitations under the License.
  */
 
-package org.helianto.document.filter.internal;
+package org.helianto.core.filter.internal;
 
-import java.util.Date;
-
-import org.helianto.core.filter.classic.AbstractDateIntervalFilterAdapter;
-import org.helianto.document.Event;
+import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.core.form.EventControlForm;
 
 /**
- * Base class to filters that require an <code>Event</code>.
+ * Base class to filters that require a <code>ControlForm</code>.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractEventFilterAdapter<T extends Event> extends AbstractDateIntervalFilterAdapter<T> {
+public abstract class AbstractEventControlFilterAdapter <T extends EventControlForm> 
+	extends AbstractEventFilterAdapter<T> {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	/**
-	 * Filter constructor.
+	 * Form constructor.
 	 * 
-	 * @param filter
+	 * @param form
 	 */
-	public AbstractEventFilterAdapter(T filter) {
-		super(filter);
+	public AbstractEventControlFilterAdapter(T form) {
+		super(form);
 	}
 	
-	/**
-	 * Filter by issue date.
-	 */
 	@Override
-	public String getDateFieldName() { 
-		return "issueDate"; 
+	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
+		super.doFilter(mainCriteriaBuilder);
+		appendEqualFilter("frequency", getForm().getFrequency(), mainCriteriaBuilder);
 	}
-	
-	/**
-	 * Filter to date.
-	 */
-	public Date getToDate() {
-		return getForm().getIssueDate();
-	}
-	
+
 }

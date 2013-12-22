@@ -2,8 +2,6 @@ package org.helianto.partner.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.domain.Entity;
-import org.helianto.core.test.EntityTestSupport;
 import org.helianto.partner.form.PrivateSegmentForm;
 import org.junit.After;
 import org.junit.Before;
@@ -22,7 +20,7 @@ public class PrivateSegmentFilterAdapterTests {
 
     @Test
     public void empty() {
-    	Mockito.when(form.getEntity()).thenReturn(null);
+    	Mockito.when(form.getEntityId()).thenReturn(0);
         assertEquals(OB, filter.createCriteriaAsString());
     }
     
@@ -46,14 +44,12 @@ public class PrivateSegmentFilterAdapterTests {
     
     private PrivateSegmentForm form;
     private PrivateSegmentFilterAdapter filter;
-    private Entity entity;
     
     @Before
     public void setUp() {
-    	entity = EntityTestSupport.createEntity(1);
     	form = Mockito.mock(PrivateSegmentForm.class);
     	filter = new PrivateSegmentFilterAdapter(form);
-    	Mockito.when(form.getEntity()).thenReturn(entity);
+    	Mockito.when(form.getEntityId()).thenReturn(1);
     }
     
     @After

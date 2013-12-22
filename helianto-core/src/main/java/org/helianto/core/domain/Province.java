@@ -147,7 +147,7 @@ public class Province  implements RootEntity, Comparable<Province> {
 	/**
 	 * Parent province.
 	 */
-	@JsonBackReference 
+	@JsonIgnore
 	@ManyToOne(cascade={CascadeType.ALL})
 	@JoinColumn(name="parentId", nullable=true)
 	public Province getParent() {
@@ -182,7 +182,7 @@ public class Province  implements RootEntity, Comparable<Province> {
     /**
      * Country.
      */
-    @JsonBackReference 
+    @JsonBackReference("country")
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="countryId")
     public Country getCountry() {

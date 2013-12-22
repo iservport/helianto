@@ -2,15 +2,12 @@ package org.helianto.message.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.domain.Entity;
-import org.helianto.core.internal.AbstractEvent;
-import org.helianto.core.test.EntityTestSupport;
-import org.helianto.document.base.AbstractRecord;
 import org.helianto.message.form.NotificationEventForm;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * 
@@ -21,8 +18,7 @@ public class NotificationEventFormFilterAdapterTests {
 	private static final String O0 = "order by alias.issueDate DESC ";
 	private static final String C1 = "alias.entity.id = 1 ";
 	private static final String C2 = "alias.internalNumber = 9 ";
-	private static final String C3 = "(alias.issueDate >= '1969-12-24 23:59:59' " +
-			"AND alias.issueDate < '1969-12-31 21:00:01' ) ";
+	private static final String C3 = "alias.issueDate >= '1969-12-31 21:00:01' ";
 	
 
 	@Test
@@ -32,13 +28,14 @@ public class NotificationEventFormFilterAdapterTests {
 	
 	@Test
 	public void key() {
-		form.setInternalNumber(9);
+		Mockito.when(form.getInternalNumber()).thenReturn(9L);
 		assertEquals(C1+"AND "+C2, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void issueDate() {
-		((AbstractEvent) form).setIssueDate(new DateTime(1000L, DateTimeZone.UTC).toDate());
+		Mockito.when(form.getDateFieldName()).thenReturn("issueDate");
+		Mockito.when(form.getFromDate()).thenReturn(new DateTime(1000L).toDate());
 		assertEquals(C1+"AND "+C3+O0, filter.createCriteriaAsString());
 	}
 	
@@ -49,27 +46,14 @@ public class NotificationEventFormFilterAdapterTests {
 	
 	@Before
 	public void setUp() {
-		Entity entity = EntityTestSupport.createEntity(1);
-		form = new NotificationEventFormStub();
-		((AbstractEvent) form).setEntity(entity);
+		form = Mockito.mock(NotificationEventForm.class);
 		filter = new NotificationEventFormFilterAdapter(form);
+		Mockito.when(form.getEntityId()).thenReturn(1);
 	}
 	
-	/**
-	 * Test stub.
-	 * 
-	 * @author mauriciofernandesdecastro
-	 */
-	private class NotificationEventFormStub extends AbstractRecord implements NotificationEventForm {
-
-		private static final long serialVersionUID = 1L;
-		
-		public NotificationEventFormStub() {
-			super();
-			setIssueDate(null);
-		}
-
-	};
-
-
+	@After
+	public void tearDown() {
+		Mockito.reset(form);
+	}
+	
 }

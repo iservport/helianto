@@ -13,10 +13,14 @@
  * limitations under the License.
  */
 
-package org.helianto.document.filter.internal;
+package org.helianto.core.filter.internal;
 
+import java.util.Date;
+
+import org.helianto.core.Controllable;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.document.Occurrence;
+import org.helianto.core.filter.base.AbstractFilter;
+import org.helianto.core.filter.classic.AbstractInternalFilterAdapterDecorator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +29,9 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractOccurrenceFilterAdapter <T extends Occurrence> extends AbstractEventFilterAdapter<T> {
+public abstract class AbstractControlFilterAdapter <T extends Controllable> 
+	extends AbstractInternalFilterAdapterDecorator<T> 
+{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -34,14 +40,25 @@ public abstract class AbstractOccurrenceFilterAdapter <T extends Occurrence> ext
 	 * 
 	 * @param form
 	 */
-	public AbstractOccurrenceFilterAdapter(T form) {
+	public AbstractControlFilterAdapter(T form) {
 		super(form);
+	}
+	
+	/**
+	 * Decorator constructor.
+	 * 
+	 * @param form
+	 * @param decoratedFilter
+	 */
+	public AbstractControlFilterAdapter(T form, AbstractFilter decoratedFilter) {
+		super(form, decoratedFilter);
 	}
 	
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		appendResolution(mainCriteriaBuilder);
+		appendEqualFilter("complete", getForm().getComplete(), true, mainCriteriaBuilder);
 	}
 
 	/**
@@ -59,6 +76,20 @@ public abstract class AbstractOccurrenceFilterAdapter <T extends Occurrence> ext
 		}
 	}
 
-	 private static Logger logger = LoggerFactory.getLogger(AbstractOccurrenceFilterAdapter.class);
+	/**
+	 * Field name.
+	 */
+	public String getDateFieldName() {
+		return "nextCheckDate";
+	}
+	
+	/**
+	 * Next check date.
+	 */
+	public Date getToDate() {
+		return getForm().getNextCheckDate();
+	}
+	
+	 private static Logger logger = LoggerFactory.getLogger(AbstractControlFilterAdapter.class);
 	
 }

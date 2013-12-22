@@ -13,24 +13,9 @@ public class AbstractCategoryForm
 	extends AbstractTrunkForm implements CategoryForm {
 	
 	private static final long serialVersionUID = 1L;
-	private int entityId;
 	private String categoryCode;
 	private String categoryName;
-	private char categoryGroup;
-	
-	public void reset() {
-		setCategoryGroup(' ');
-	}
-	
-	public int getEntityId() {
-		if (getEntity()!=null) {
-			return getEntity().getId();
-		}
-		return entityId;
-	}
-	public void setEntityId(int entityId) {
-		this.entityId = entityId;
-	}
+	private char categoryGroup = ' ';
 	
 	public String getCategoryCode() {
 		return categoryCode;

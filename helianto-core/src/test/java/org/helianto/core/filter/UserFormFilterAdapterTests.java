@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.helianto.core.def.UserState;
-import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
-import org.helianto.core.test.EntityTestSupport;
 import org.helianto.user.filter.UserFormFilterAdapter;
 import org.helianto.user.form.UserGroupForm;
 import org.junit.After;
@@ -106,7 +104,7 @@ public class UserFormFilterAdapterTests {
 	@Test
 	public void userKey() {
 		Mockito.when(form.getUserKey()).thenReturn("USERKEY");
-		Mockito.when(form.getEntity()).thenReturn(null);
+		Mockito.when(form.getEntityId()).thenReturn(0);
 		filter = new UserFormFilterAdapter(form);
 		assertEquals(C8+O0, filter.createCriteriaAsString());
 	}
@@ -123,14 +121,11 @@ public class UserFormFilterAdapterTests {
 	private UserFormFilterAdapter filter;
 	private UserGroupForm form;
 	
-    private Entity entity;
-
 	@Before
 	public void setUp() {
-		entity = EntityTestSupport.createEntity(10);
 		form = Mockito.mock(UserGroupForm.class);
 		filter = new UserFormFilterAdapter(form);
-		Mockito.when(form.getEntity()).thenReturn(entity);
+		Mockito.when(form.getEntityId()).thenReturn(10);
 	}
 	
 	@After

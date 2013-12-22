@@ -28,8 +28,6 @@ import org.helianto.core.def.PrivacyLevel;
 import org.helianto.core.def.Resolution;
 import org.helianto.core.def.ResolutionExtended;
 import org.helianto.core.domain.Identity;
-import org.helianto.core.form.EventForm;
-import org.helianto.core.form.PrivacyForm;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -49,7 +47,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @javax.persistence.MappedSuperclass
 public abstract class AbstractEvent 
 	extends AbstractTrunkEntity
-	implements PrivacyForm, EventForm {
+{
 
     private static final long serialVersionUID = 1L;
     private Identity owner;

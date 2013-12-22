@@ -85,7 +85,7 @@ public class Category
 	private int countItems;
 	private int countAlerts;
     
-    /** 
+	/** 
      * Default constructor
      */
     public Category() {
@@ -150,6 +150,7 @@ public class Category
 	public void setCategoryGroup(char categoryGroup) {
 		this.categoryGroup = categoryGroup;
 	}
+	@JsonIgnore
 	public void setCategoryGroupAsEnum(CategoryGroup categoryGroup) {
 		this.categoryGroup = categoryGroup.getValue();
 	}
@@ -215,6 +216,7 @@ public class Category
     public String[] getReferencesAsArray() {
     	return StringListUtils.stringToArray(getReferenceList());
     }
+	@JsonIgnore
     public void setReferencesAsArray(String[] referenceListAsArray) {
     	setReferenceList(StringListUtils.arrayToString(referenceListAsArray));
     }
@@ -259,6 +261,7 @@ public class Category
     public String[] getCustomWorkflowRolesAsArray() {
     	return StringListUtils.stringToArray(getCustomWorkflowRoles());
 	}
+    @JsonIgnore
     public void setWorkflowRolesAsArray(String[] workflowRolesArray) {
     	setCustomWorkflowRoles(StringListUtils.arrayToString(workflowRolesArray));
 	}
@@ -270,6 +273,9 @@ public class Category
     public boolean isWorkflowEnabled() {
     	return getCustomWorkflowRolesAsArray().length >0;
 	}
+    @JsonIgnore
+    public void setWorkflowEnabled(boolean workflowEnabled) {
+    }
     
     /**
      * <<Transient>> Last workflow index, i.e., last index from workflow roles array.
@@ -278,6 +284,9 @@ public class Category
     public int getLastWorkflowIndex() {
     	return getCustomWorkflowRolesAsArray().length - 1;
 	}
+    @JsonIgnore
+    public void setLastWorkflowIndex(boolean lastWorkflowIndex) {
+    }
     
     /**
      * <<Transient>> List of work flow roles converted to map.
@@ -297,6 +306,9 @@ public class Category
     	}
     	return workflowRolesMap;
 	}
+    @JsonIgnore
+    public void setCustomWorkflowRolesAsMap(Map<String, String> customWorkflowRolesAsMap) {
+    }
 
 	/**
 	 * Custom properties.
@@ -313,6 +325,9 @@ public class Category
 	public Map<String, Object> getCustomPropertiesAsMap() {
 		return StringListUtils.propertiesToMap(getCustomProperties());
 	}
+    @JsonIgnore
+    public void setCustomPropertiesAsMap(Map<String, Object> customPropertiesAsMap) {
+    }
     
 	/**
 	 * Custom pattern to be applied at code generation.
@@ -372,6 +387,9 @@ public class Category
     public String[] getPartnerFilterPatternAsArray() {
 		return StringListUtils.stringToArray(getPartnerFilterPattern());
 	}
+    @JsonIgnore
+    public void setPartnerFilterPatternAsArray(String[] partnerFilterPatternAsArray) {
+    }
     
     /**
      * Key-value pair list of scripts, separated by comma.
@@ -391,6 +409,7 @@ public class Category
     public String[] getScriptItemsAsArray() {
     	return StringListUtils.stringToArray(getScriptItems());
 	}
+	@JsonIgnore
 	public void setScriptItemsAsArray(String[] scriptItemsArray) {
 		setScriptItems(StringListUtils.arrayToString(scriptItemsArray));
 	}

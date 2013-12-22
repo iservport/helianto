@@ -1,7 +1,7 @@
 package org.helianto.message.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.document.filter.internal.AbstractEventFilterAdapter;
+import org.helianto.core.filter.internal.AbstractEventFilterAdapter;
 import org.helianto.message.form.NotificationEventForm;
 
 /**
@@ -10,9 +10,7 @@ import org.helianto.message.form.NotificationEventForm;
  * @author mauriciofernandesdecastro
  */
 public class NotificationEventFormFilterAdapter 
-
 	extends AbstractEventFilterAdapter<NotificationEventForm> 
-
 {
 
 	private static final long serialVersionUID = 1L;

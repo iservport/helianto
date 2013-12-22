@@ -5,7 +5,6 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.KeyType;
 import org.helianto.core.form.CompositeEntityForm;
 import org.helianto.core.form.KeyTypeForm;
-import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PrivateEntity;
 import org.helianto.partner.form.ContactGroupForm;
 import org.helianto.partner.form.PartnerCategoryForm;
@@ -46,7 +45,7 @@ public class CompositeTestPartnerForm
     private String keyValue;
     private String areaCode;
     private char phoneType;
-    private Partner partner;
+    private int partnerId;
     private Category category;
     private int userGroupParentId;
     private String userKey;
@@ -76,16 +75,6 @@ public class CompositeTestPartnerForm
 	public CompositeTestPartnerForm(PrivateEntity parent) {
 		this(parent.getEntity());
 		setParent(parent);
-	}
-	
-	/**
-	 * Partner constructor.
-	 * 
-	 * @param partner
-	 */
-	public CompositeTestPartnerForm(Partner partner) {
-		this(partner.getEntity());
-		setPartner(partner);
 	}
 	
 	public char getAddressType() {
@@ -176,11 +165,11 @@ public class CompositeTestPartnerForm
 		this.phoneType = phoneType;
 	}
 	
-	public Partner getPartner() {
-		return partner;
+	public int getPartnerId() {
+		return partnerId;
 	}
-	public void setPartner(Partner partner) {
-		this.partner = partner;
+	public void setPartnerId(int partnerId) {
+		this.partnerId = partnerId;
 	}
 	
 	public Category getCategory() {

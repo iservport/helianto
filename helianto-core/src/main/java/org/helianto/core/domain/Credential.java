@@ -98,7 +98,7 @@ public class Credential implements PersonalEntity {
     public Credential(Identity identity, String password) {
     	this(identity);
         setPassword(password);
-        setCredentialState(ActivityState.INITIAL);
+        setCredentialStateAsEnum(ActivityState.INITIAL);
     }
 
     /** 
@@ -200,7 +200,7 @@ public class Credential implements PersonalEntity {
     public void setCredentialState(char credentialState) {
         this.credentialState = credentialState;
     }
-    public void setCredentialState(ActivityState credentialState) {
+    public void setCredentialStateAsEnum(ActivityState credentialState) {
         this.credentialState = credentialState.getValue();
     }
 

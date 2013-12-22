@@ -24,7 +24,9 @@ import org.helianto.partner.form.PartnerCategoryForm;
  * 
  * @author Maurício Fernandes de Castro
  */
-public class PartnerCategoryFormFilterAdapter extends AbstractFilterAdapter<PartnerCategoryForm> {
+public class PartnerCategoryFormFilterAdapter 
+	extends AbstractFilterAdapter<PartnerCategoryForm> 
+{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -38,29 +40,20 @@ public class PartnerCategoryFormFilterAdapter extends AbstractFilterAdapter<Part
 	}
 	
 	public boolean isSelection() {
-		return getForm().getPartner()!=null 
-				&& getForm().getPartner().getId()>0 
+		return getForm().getPartnerId()>0 
 				&& getForm().getCategoryId()>0;
 	}
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("partner.id", getForm().getPartner().getId(), mainCriteriaBuilder);
+		appendEqualFilter("partner.id", getForm().getPartnerId(), mainCriteriaBuilder);
 		appendEqualFilter("category.id", getForm().getCategoryId(), mainCriteriaBuilder);
 	}
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		if (getForm().getParent()!=null) {
-			appendEqualFilter("partner.privateEntity.id", getForm().getParent().getId(), mainCriteriaBuilder);
-		}
-		else if (getForm().getPrivateEntityId()>0) {
-			appendEqualFilter("partner.privateEntity.id", getForm().getPrivateEntityId(), mainCriteriaBuilder);
-		}
-		if (getForm().getPartner()!=null) {
-			appendEqualFilter("partner.id", getForm().getPartner().getId(), mainCriteriaBuilder);
-		}
-		appendEqualFilter("category.id", getForm().getCategoryId(), mainCriteriaBuilder);
+		doSelect(mainCriteriaBuilder);
+		appendEqualFilter("partner.privateEntity.id", getForm().getPrivateEntityId(), mainCriteriaBuilder);
 	}
 	
 	@Override

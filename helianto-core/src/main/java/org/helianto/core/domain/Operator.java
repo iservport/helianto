@@ -37,6 +37,7 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.def.OperationMode;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
@@ -118,7 +119,7 @@ public class Operator implements java.io.Serializable {
      */
     public Operator(String operatorName, Locale locale) {
     	setOperatorName(operatorName);
-    	setOperationMode(OperationMode.LOCAL);
+    	setOperationModeAsEnum(OperationMode.LOCAL);
         setOperatorSourceMailAddress("operator@helianto.org");
         setDefaultEncoding("ISO-8859-1");
         setOperatorHostAddress("http://www.helianto.org");
@@ -179,7 +180,7 @@ public class Operator implements java.io.Serializable {
     public void setOperationMode(char operationMode) {
         this.operationMode = operationMode;
     }
-    public void setOperationMode(OperationMode operationMode) {
+    public void setOperationModeAsEnum(OperationMode operationMode) {
         this.operationMode = operationMode.getValue();
     }
 
@@ -252,7 +253,7 @@ public class Operator implements java.io.Serializable {
     /**
      * Key type set.
      */
-    @JsonManagedReference 
+    @JsonIgnore
     @OneToMany(mappedBy="operator", cascade={ CascadeType.ALL },
     		fetch=FetchType.LAZY)
     public Set<KeyType> getKeyTypes() {
@@ -265,7 +266,7 @@ public class Operator implements java.io.Serializable {
     /**
      * Key type map.
      */
-    @JsonManagedReference 
+    @JsonIgnore
     @OneToMany(mappedBy="operator", cascade={CascadeType.ALL})
     @MapKey(name="keyCode")
 	public Map<String, KeyType> getKeyTypeMap() {
@@ -278,7 +279,7 @@ public class Operator implements java.io.Serializable {
     /**
      * Province set.
      */
-    @JsonManagedReference 
+	@JsonIgnore
     @OneToMany(mappedBy="operator", fetch=FetchType.LAZY)
     public Set<Province> getProvinces() {
 		return provinces;

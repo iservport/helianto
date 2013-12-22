@@ -124,7 +124,7 @@ public class UserAssociation
     /**
      * Parent user group.
      */
-    @JsonBackReference 
+    @JsonBackReference("parent")
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="parentId", nullable=true)
     public UserGroup getParent() {
@@ -134,7 +134,7 @@ public class UserAssociation
     /**
      * Child user group.
      */
-    @JsonBackReference 
+    @JsonBackReference("child")
     @ManyToOne
     @JoinColumn(name="childId", nullable=true)
     public UserGroup getChild() {

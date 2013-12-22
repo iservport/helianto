@@ -174,7 +174,7 @@ public abstract class AbstractAddress
     /**
      * State.
      */
-    @JsonBackReference 
+    @JsonBackReference("state")
     @ManyToOne
     @JoinColumn(name="stateId")
     public State getState() {
@@ -212,7 +212,7 @@ public abstract class AbstractAddress
     /**
      * City.
      */
-    @JsonBackReference 
+    @JsonBackReference("city")
     @ManyToOne
     @JoinColumn(name="cityId")
     public City getCity() {

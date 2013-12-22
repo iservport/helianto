@@ -31,7 +31,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.Controllable;
 import org.helianto.core.def.Appellation;
 import org.helianto.core.def.Gender;
 import org.helianto.core.def.Resolution;
@@ -56,10 +55,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
     uniqueConstraints = {@UniqueConstraint(columnNames={"userGroupId", "internalNumber"})}
 )
 public class UserRequest 
-	implements  
-	  Sequenceable
-	, Controllable 
-
+	implements Sequenceable
 {
 
     private static final long serialVersionUID = 1L;

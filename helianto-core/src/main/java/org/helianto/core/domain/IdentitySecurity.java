@@ -107,7 +107,7 @@ public class IdentitySecurity implements Serializable {
     public IdentitySecurity(Identity identity, String rawPassword) {
     	this(identity, ProviderType.email);
         setRawPassword(rawPassword);
-        setCredentialState(ActivityState.INITIAL);
+        setCredentialStateAsEnum(ActivityState.INITIAL);
     }
 
     /** 
@@ -240,7 +240,7 @@ public class IdentitySecurity implements Serializable {
     public void setCredentialState(char credentialState) {
         this.credentialState = credentialState;
     }
-    public void setCredentialState(ActivityState credentialState) {
+    public void setCredentialStateAsEnum(ActivityState credentialState) {
         this.credentialState = credentialState.getValue();
     }
 

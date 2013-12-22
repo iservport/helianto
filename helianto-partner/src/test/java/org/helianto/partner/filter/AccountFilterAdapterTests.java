@@ -2,8 +2,6 @@ package org.helianto.partner.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.domain.Entity;
-import org.helianto.core.test.EntityTestSupport;
 import org.helianto.partner.AccountType;
 import org.helianto.partner.form.AccountForm;
 import org.junit.After;
@@ -23,7 +21,7 @@ public class AccountFilterAdapterTests {
 
     @Test
     public void empty() {
-    	Mockito.when(form.getEntity()).thenReturn(null);
+    	Mockito.when(form.getEntityId()).thenReturn(0);
         assertEquals(OB, filter.createCriteriaAsString());
     }
     
@@ -47,14 +45,12 @@ public class AccountFilterAdapterTests {
     
     private AccountForm form;
     private AccountFilterAdapter filter;
-    private Entity entity;
     
     @Before
     public void setUp() {
-    	entity = EntityTestSupport.createEntity(1);
     	form = Mockito.mock(AccountForm.class);
     	filter = new AccountFilterAdapter(form);
-    	Mockito.when(form.getEntity()).thenReturn(entity);
+    	Mockito.when(form.getEntityId()).thenReturn(1);
     }
     
     @After

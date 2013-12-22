@@ -2,7 +2,6 @@ package org.helianto.core.form.internal;
 
 import java.util.Date;
 
-import org.helianto.core.domain.Identity;
 import org.helianto.core.form.ControlForm;
 
 /**
@@ -10,14 +9,13 @@ import org.helianto.core.form.ControlForm;
  * 
  * @author mauriciofernandesdecastro
  */
-public abstract class AbstractControllable 
+public abstract class AbstractControlForm 
 	extends AbstractInternalForm implements ControlForm {
 
 	private static final long serialVersionUID = 1L;
-    private Identity owner;
+    private int ownerId;
     private Date issueDate;
-    private int complete;
-    private char resolution;
+    private char resolution = ' ';
     private Date nextCheckDate;
     private int frequency;
     private int frequencyType;
@@ -25,18 +23,15 @@ public abstract class AbstractControllable
     /**
      * Constructor.
      */
-    public AbstractControllable() {
+    public AbstractControlForm() {
     	super();
-        setResolution(' ');
-        setComplete(-1);
-        setNextCheckDate(null);
     }
     
-    public Identity getOwner() {
-		return owner;
+    public int getOwnerId() {
+		return ownerId;
 	}
-    public void setOwner(Identity owner) {
-		this.owner = owner;
+    public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
 	}
     
     public Date getIssueDate() {
@@ -51,13 +46,6 @@ public abstract class AbstractControllable
     }
     public void setResolution(char resolution) {
         this.resolution = resolution;
-    }
-    
-    public int getComplete() {
-    	return complete;
-    }
-    public void setComplete(int complete) {
-        this.complete = complete;
     }
     
     public Date getNextCheckDate() {

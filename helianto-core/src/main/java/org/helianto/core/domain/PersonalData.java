@@ -28,6 +28,8 @@ import org.helianto.core.def.Gender;
 import org.helianto.core.def.PersonalIdentityType;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Personal data, if any.
  * 
@@ -98,6 +100,7 @@ public class PersonalData implements Serializable {
     public void setGender(char gender) {
         this.gender = gender;
     }
+    @JsonIgnore
     public void setGenderAsEnum(Gender gender) {
         this.gender = gender.getValue();
     }
@@ -111,6 +114,7 @@ public class PersonalData implements Serializable {
     public void setAppellation(char appellation) {
         this.appellation = appellation;
     }
+    @JsonIgnore
     public void setAppellationAsEnum(Appellation appellation) {
         this.appellation = appellation.getValue();
     }
@@ -162,6 +166,7 @@ public class PersonalData implements Serializable {
     public void setPersonalIdentityType_1(char personalIdentityType_1) {
 		this.personalIdentityType_1 = personalIdentityType_1;
 	}
+    @JsonIgnore
     public void setPersonalIdentityType_1(PersonalIdentityType personalIdentityType) {
 		this.personalIdentityType_1 = personalIdentityType.getValue();
 	}
@@ -187,6 +192,7 @@ public class PersonalData implements Serializable {
     public void setPersonalIdentityType_2(char personalIdentityType_2) {
 		this.personalIdentityType_2 = personalIdentityType_2;
 	}
+    @JsonIgnore
     public void setPersonalIdentityType_2(PersonalIdentityType personalIdentityType) {
 		this.personalIdentityType_2 = personalIdentityType.getValue();
 	}

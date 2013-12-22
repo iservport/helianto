@@ -1,6 +1,6 @@
 package org.helianto.partner.form;
 
-import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.core.form.PrivateEntityIdForm;
 import org.helianto.user.form.UserForm;
 
 /**
@@ -9,11 +9,6 @@ import org.helianto.user.form.UserForm;
  * @author mauriciofernandesdecastro
  */
 public interface ContactGroupForm 
-	extends UserForm {
+	extends UserForm, PrivateEntityIdForm {
 	
-	/**
-	 * Private entity.
-	 */
-	PrivateEntity getParent();
-
 }

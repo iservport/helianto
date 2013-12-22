@@ -1,7 +1,7 @@
 package org.helianto.user.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.filter.base.AbstractControlFilterAdapter;
+import org.helianto.core.filter.internal.AbstractEventControlFilterAdapter;
 import org.helianto.user.form.UserRequestForm;
 
 /**
@@ -9,7 +9,9 @@ import org.helianto.user.form.UserRequestForm;
  * 
  * @author mauriciofernandesdecastro
  */
-public class UserRequestFormFilterAdapter extends AbstractControlFilterAdapter<UserRequestForm> {
+public class UserRequestFormFilterAdapter 
+	extends AbstractEventControlFilterAdapter<UserRequestForm> 
+{
 
 	private static final long serialVersionUID = 1L;
 	

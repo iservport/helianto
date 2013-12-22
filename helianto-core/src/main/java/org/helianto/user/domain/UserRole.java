@@ -90,7 +90,7 @@ public class UserRole
     /**
      * User group.
      */
-    @JsonBackReference 
+    @JsonBackReference("userGroup")
     @ManyToOne
     @JoinColumn(name="userId", nullable=true)
     public UserGroup getUserGroup() {
@@ -103,7 +103,7 @@ public class UserRole
     /**
      * Service.
      */
-    @JsonBackReference 
+    @JsonBackReference("service")
     @ManyToOne
     @JoinColumn(name="serviceId", nullable=true)
     public Service getService() {

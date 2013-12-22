@@ -25,7 +25,7 @@ public class UserRequestFilterAdapterTests {
 	String C1 = "alias.userGroup.id = 1 ";
 	String C2 = "alias.internalNumber = 100 ";
 	String C3 = "lower(alias.principal) like '%test@domain%' ";
-	String C4 = "(alias.nextCheckDate >= '1969-12-24 23:59:59' AND alias.nextCheckDate < '1969-12-31 21:00:01' ) ";
+	String C4 = "alias.nextCheckDate < '1969-12-31 21:00:01' ";
 	String C5 = "alias.tempPassword = 'ABCD' ";
 	
 	@Test
@@ -48,7 +48,8 @@ public class UserRequestFilterAdapterTests {
 	
 	@Test
 	public void nextCheckDate() {
-		Mockito.when(form.getNextCheckDate()).thenReturn(new Date(1000L));
+    	Mockito.when(form.getDateFieldName()).thenReturn("nextCheckDate");
+		Mockito.when(form.getToDate()).thenReturn(new Date(1000L));
 		assertEquals(C4+OB, filter.createCriteriaAsString());
 	}
 	
@@ -70,8 +71,7 @@ public class UserRequestFilterAdapterTests {
 		userGroup = UserGroupTestSupport.createUserGroup(entity, 1);
 		form = Mockito.mock(UserRequestForm.class);
 		filter = new UserRequestFormFilterAdapter(form);
-		Mockito.when(form.getEntity()).thenReturn(entity);
-		Mockito.when(form.getComplete()).thenReturn(-1);
+		Mockito.when(form.getEntityId()).thenReturn(1);
 	}
 
 	@After

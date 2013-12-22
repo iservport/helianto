@@ -69,7 +69,7 @@ public abstract class AbstractKeyValue implements java.io.Serializable {
     /**
      * Key type.
      */
-    @JsonBackReference 
+    @JsonBackReference("keyType")
     @ManyToOne
     @JoinColumn(name="keyTypeId", nullable=true)
     public KeyType getKeyType() {

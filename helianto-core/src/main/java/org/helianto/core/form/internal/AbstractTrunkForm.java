@@ -13,6 +13,7 @@ public abstract class AbstractTrunkForm
 
 	private static final long serialVersionUID = 1L;
 	private Entity entity;
+	private int entityId;
 	
 	public Entity getEntity() {
 		return entity;
@@ -21,4 +22,14 @@ public abstract class AbstractTrunkForm
 		this.entity = entity;
 	}
 
+	public int getEntityId() {
+		if (getEntity()!=null) {
+			return getEntity().getId();
+		}
+		return entityId;
+	}
+	public void setEntityId(int entityId) {
+		this.entityId = entityId;
+	}
+	
 }

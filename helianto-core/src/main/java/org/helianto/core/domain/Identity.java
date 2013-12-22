@@ -53,6 +53,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Years;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
@@ -76,9 +77,9 @@ public class Identity implements java.io.Serializable {
     private String principal = "";
     private PersonalData personalData;
     private Date created = new Date();
-    private char identityType;
-    private char notification;
-	private byte[] photo;
+    private char identityType = IdentityType.PERSONAL_EMAIL.getValue();
+    private char notification = Notification.AUTOMATIC.getValue();
+	private byte[] photo = new byte[0];
     private String multipartFileContentType;
     private List<Phone> phones = new ArrayList<Phone>();
     private List<ContactInfo> contactInfos = new ArrayList<ContactInfo>();
@@ -121,10 +122,6 @@ public class Identity implements java.io.Serializable {
     	setPrincipal(principal);
     	setDisplayName(displayName);
         setPersonalData(personalData);
-        setCreated(new Date());
-        setIdentityTypeAsEnum(IdentityType.PERSONAL_EMAIL);
-        setNotificationAsEnum(Notification.AUTOMATIC);
-        setPhoto(new byte[0]);
     }
 
     /**
@@ -165,11 +162,17 @@ public class Identity implements java.io.Serializable {
      */
     @Transient
     public String getPrincipalName() {
-    	int position = getPrincipal().indexOf("@");
-    	if (position>0) {
-    		return getPrincipal().substring(0, position);
+    	if (getPrincipal()!=null) {
+        	int position = getPrincipal().indexOf("@");
+        	if (position>0) {
+        		return getPrincipal().substring(0, position);
+        	}
+            return getPrincipal();
     	}
-        return getPrincipal();
+    	return "";
+    }
+    @JsonIgnore
+    public void setPrincipalName(String principalName) {
     }
     
     /**
@@ -178,11 +181,16 @@ public class Identity implements java.io.Serializable {
      */
     @Transient
     public String getPrincipalDomain() {
-    	int position = getPrincipal().indexOf("@");
-    	if (position>0) {
-    		return getPrincipal().substring(position);
+    	if (getPrincipal()!=null) {
+        	int position = getPrincipal().indexOf("@");
+        	if (position>0) {
+        		return getPrincipal().substring(position);
+        	}
     	}
         return "";
+    }
+    @JsonIgnore
+    public void setPrincipalDomain(String principalName) {
     }
     
     /**
@@ -245,6 +253,9 @@ public class Identity implements java.io.Serializable {
     	}
     	return "";
     }
+    @JsonIgnore
+    public void setIdentityFirstName(String identityFirstName) {
+    }
     
     /**
      * <<Transient>> Safe identity last name getter.
@@ -255,6 +266,9 @@ public class Identity implements java.io.Serializable {
     		return getPersonalData().getLastName();
     	}
     	return "";
+    }
+    @JsonIgnore
+    public void setIdentityLastName(String identityLastName) {
     }
     
     /**
@@ -269,6 +283,9 @@ public class Identity implements java.io.Serializable {
     	    .append(" ")
     	    .append(getPersonalData().getLastName()).toString();
     }
+    @JsonIgnore
+    public void setIdentityName(String identityName) {
+    }
     
     /**
      * <<Transient>> Safe gender getter.
@@ -280,6 +297,9 @@ public class Identity implements java.io.Serializable {
     	}
 		return getPersonalData().getGender();
 	}
+    @JsonIgnore
+    public void setGender(String gender) {
+    }
     
     /**
      * <<Transient>> Safe appellation getter.
@@ -291,6 +311,9 @@ public class Identity implements java.io.Serializable {
     	}
 		return getPersonalData().getAppellation();
 	}
+    @JsonIgnore
+    public void setAppellation(String appellation) {
+    }
     
     /**
      * <<Transient>> Safe birth date getter.
@@ -302,6 +325,9 @@ public class Identity implements java.io.Serializable {
     	}
 		return getPersonalData().getBirthDate();
 	}
+    @JsonIgnore
+    public void setBirthDate(Date birthDate) {
+    }
     
     /**
      * <<Transient>> Safe age getter.
@@ -310,6 +336,9 @@ public class Identity implements java.io.Serializable {
     public int getAge() {
 		return getAge(new Date());
 	}
+    @JsonIgnore
+    public void setAge(int age) {
+    }
     
     /**
      * <<Transient>> Safe age getter.
@@ -317,6 +346,7 @@ public class Identity implements java.io.Serializable {
      * @param date
      */
     @Transient
+    @JsonIgnore
     protected int getAge(Date date) {
     	if (getPersonalData()!=null && getPersonalData().getBirthDate()!=null) {
     		DateMidnight birthdate = new DateMidnight(getPersonalData().getBirthDate());
@@ -336,6 +366,9 @@ public class Identity implements java.io.Serializable {
     	}
     	return false;
 	}
+    @JsonIgnore
+    public void setImageAvailable(boolean imageAvailable) {
+    }
     
     /**
      * <<Transient>> Safe image url getter.
@@ -347,6 +380,9 @@ public class Identity implements java.io.Serializable {
     	}
 		return "";
 	}
+    @JsonIgnore
+    public void setImageUrl(String imageUrl) {
+    }
     
     /**
      * <<Transient>> Safe identity alias.
@@ -357,6 +393,9 @@ public class Identity implements java.io.Serializable {
 			return getOptionalAlias();
 		}
 		return getPrincipal();
+    }
+    @JsonIgnore
+    public void setAlias(String alias) {
     }
 
     /**
@@ -379,6 +418,7 @@ public class Identity implements java.io.Serializable {
     public void setIdentityType(char identityType) {
         this.identityType = identityType;
     }
+    @JsonIgnore
     public void setIdentityTypeAsEnum(IdentityType identityType) {
         this.identityType = identityType.getValue();
     }
@@ -390,6 +430,9 @@ public class Identity implements java.io.Serializable {
     public boolean isAddressable() {
 		return IdentityType.isAddressable(getIdentityType());
 	}
+    @JsonIgnore
+    public void setAddressable(boolean addressable) {
+    }
 
     /**
      * Notification getter.
@@ -400,6 +443,7 @@ public class Identity implements java.io.Serializable {
     public void setNotification(char notification) {
         this.notification = notification;
     }
+    @JsonIgnore
     public void setNotificationAsEnum(Notification notification) {
         this.notification = notification.getValue();
     }
@@ -435,6 +479,9 @@ public class Identity implements java.io.Serializable {
     public boolean isPhotoLoaded() {
     	return getMultipartFileContentType()!=null && getMultipartFileContentType().startsWith("image");
     }
+    @JsonIgnore
+    public void setPhotoLoaded(boolean photoLoaded) {
+    }
 
 	@Transient
     private transient MultipartFile file;
@@ -467,6 +514,7 @@ public class Identity implements java.io.Serializable {
     public Set<IdentitySecurity> getConnections() {
 		return connections;
 	}
+    @JsonIgnore
     public void setConnections(Set<IdentitySecurity> connections) {
 		this.connections = connections;
 	}

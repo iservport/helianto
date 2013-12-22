@@ -6,6 +6,8 @@ import javax.persistence.Transient;
 
 import org.helianto.core.def.HumanReadable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Base class to HumanReadable implementations.
  * 
@@ -38,6 +40,7 @@ public class AbstractHumanReadable implements HumanReadable {
     public void setContent(byte[] content) {
 		this.content = content;
 	}
+    @JsonIgnore
     public void setContent(String content) {
     	this.content = content.getBytes();
     }

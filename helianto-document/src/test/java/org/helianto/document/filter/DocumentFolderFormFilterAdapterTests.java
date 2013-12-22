@@ -30,7 +30,7 @@ import org.mockito.Mockito;
  */
 public class DocumentFolderFormFilterAdapterTests {
 	
-	private String OB = "order by alias.priority ,  alias.folderCode ";
+	private String OB = "order by alias.folderCode ASC ";
 	private String C1 = "alias.entity.id = 1 ";
 	private String C2 = "AND alias.folderCode = 'CODE' ";
 	private String C3 = "AND alias.contentType = 'X' ";

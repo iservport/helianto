@@ -18,7 +18,7 @@ package org.helianto.user.filter;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.criteria.SelectFromBuilder;
 import org.helianto.core.domain.Identity;
-import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
+import org.helianto.core.filter.internal.AbstractEntityIdFilterAdapter;
 import org.helianto.user.domain.UserGroup;
 import org.helianto.user.form.UserGroupForm;
 import org.slf4j.Logger;
@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * @author Mauricio Fernandes de Castro
  */
 public class UserFormFilterAdapter 
-	extends AbstractTrunkFilterAdapter<UserGroupForm> {
+	extends AbstractEntityIdFilterAdapter<UserGroupForm> {
 
     private static final long serialVersionUID = 1L;
     

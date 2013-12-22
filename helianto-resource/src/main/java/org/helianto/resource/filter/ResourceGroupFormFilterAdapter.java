@@ -17,7 +17,7 @@
 package org.helianto.resource.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
+import org.helianto.core.filter.internal.AbstractEntityIdFilterAdapter;
 import org.helianto.resource.form.ResourceGroupForm;
 
 /**
@@ -25,7 +25,9 @@ import org.helianto.resource.form.ResourceGroupForm;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ResourceGroupFormFilterAdapter extends AbstractTrunkFilterAdapter<ResourceGroupForm>{
+public class ResourceGroupFormFilterAdapter 
+	extends AbstractEntityIdFilterAdapter<ResourceGroupForm>
+{
 
     private static final long serialVersionUID = 1L;
 	

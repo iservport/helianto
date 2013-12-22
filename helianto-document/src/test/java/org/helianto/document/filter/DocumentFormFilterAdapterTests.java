@@ -2,13 +2,12 @@ package org.helianto.document.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.domain.Entity;
-import org.helianto.core.test.EntityTestSupport;
 import org.helianto.document.filter.internal.AbstractDocumentFormFilterAdapter;
-import org.helianto.document.form.AbstractDocumentForm;
 import org.helianto.document.form.DocumentForm;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * 
@@ -34,47 +33,50 @@ public class DocumentFormFilterAdapterTests {
 	
 	@Test
 	public void search() {
-		form.setSearchString("SEARCH");
+		Mockito.when(form.getSearchString()).thenReturn("SEARCH");
 		assertEquals(C1+C2+OB, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void multiple() {
-		form.setSearchString("WORD1 WORD2");
+		Mockito.when(form.getSearchString()).thenReturn("WORD1 WORD2");
 		assertEquals(C1+C3+OB, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void select() {
-		form.setDocCode("CODE");
+		Mockito.when(form.getDocCode()).thenReturn("CODE");
 		assertEquals(C1+C4, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void docName() {
-		form.setDocName("NAME");
+		Mockito.when(form.getDocName()).thenReturn("NAME");
 		assertEquals(C1+C5+OB, filter.createCriteriaAsString());
 	}
 	
 	@Test
 	public void priority() {
-		form.setPriority('0');
+		Mockito.when(form.getPriority()).thenReturn('0');
 		assertEquals(C1+C6+OB, filter.createCriteriaAsString());
 	}
 	
 	// locals
 	
-	private AbstractDocumentForm form;
+	private DocumentForm form;
 	private AbstractDocumentFormFilterAdapter<DocumentForm> filter;
 	
 	@SuppressWarnings({ "serial", "unchecked", "rawtypes" })
 	@Before
 	public void setUp() {
-		Entity entity = EntityTestSupport.createEntity();
-		entity.setId(1);
-		form = new AbstractDocumentForm() {};
-		form.setEntity(entity);
+		form = Mockito.mock(DocumentForm.class);
 		filter = new AbstractDocumentFormFilterAdapter(form) { };
+		Mockito.when(form.getEntityId()).thenReturn(1);
+	}
+	
+	@After
+	public void tearDown() {
+		Mockito.reset(form);
 	}
 
 }

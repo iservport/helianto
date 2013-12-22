@@ -13,49 +13,36 @@
  * limitations under the License.
  */
 
-package org.helianto.core.filter.base;
+package org.helianto.core.filter.internal;
 
-import java.util.Date;
-
-import org.helianto.core.Controllable;
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.filter.classic.AbstractInternalFilterAdapterDecorator;
+import org.helianto.core.form.EventForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Base class to filters that require a <code>Controllable</code> form.
+ * Base class to filters that require an <code>EventForm</code>.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractControlFilterAdapter <T extends Controllable> extends AbstractInternalFilterAdapterDecorator<T> {
+public abstract class AbstractEventFilterAdapter<T extends EventForm> 
+	extends AbstractDateFilterAdapter<T> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
-	 * Form constructor.
+	 * Filter constructor.
 	 * 
-	 * @param form
+	 * @param filter
 	 */
-	public AbstractControlFilterAdapter(T form) {
-		super(form);
-	}
-	
-	/**
-	 * Decorator constructor.
-	 * 
-	 * @param form
-	 * @param decoratedFilter
-	 */
-	public AbstractControlFilterAdapter(T form, AbstractFilter decoratedFilter) {
-		super(form, decoratedFilter);
+	public AbstractEventFilterAdapter(T filter) {
+		super(filter);
 	}
 	
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
 		appendResolution(mainCriteriaBuilder);
-		appendEqualFilter("complete", getForm().getComplete(), true, mainCriteriaBuilder);
 	}
 
 	/**
@@ -73,21 +60,6 @@ public abstract class AbstractControlFilterAdapter <T extends Controllable> exte
 		}
 	}
 
-	/**
-	 * Field name.
-	 */
-	public String getDateFieldName() {
-		return "nextCheckDate";
-	}
-	
-	/**
-	 * Next check date.
-	 */
-	@Override
-	public Date getToDate() {
-		return getForm().getNextCheckDate();
-	}
-	
-	 private static Logger logger = LoggerFactory.getLogger(AbstractControlFilterAdapter.class);
-	
+	 private static Logger logger = LoggerFactory.getLogger(AbstractEventFilterAdapter.class);
+		
 }

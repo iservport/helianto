@@ -1,9 +1,10 @@
 package org.helianto.core.form;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.helianto.core.domain.Identity;
-import org.helianto.core.form.internal.AbstractControllable;
+import org.helianto.core.form.internal.AbstractControlForm;
 import org.helianto.user.domain.UserGroup;
 import org.helianto.user.form.UserRequestForm;
 
@@ -13,7 +14,7 @@ import org.helianto.user.form.UserRequestForm;
  * @author mauriciofernandesdecastro
  */
 public class CompositeIdentityForm 
-	extends AbstractControllable 
+	extends AbstractControlForm 
 	implements 
 	  IdentityForm
 	, UserRequestForm
@@ -30,6 +31,10 @@ public class CompositeIdentityForm
 	private char identityType;
 	private char notification;
 	private Collection<Identity> exclusions;
+	private int entityId;
+	private Date fromDate;
+	private Date toDate;
+	private String dateFieldName;
 	
 	/**
 	 * Construtor principal.
@@ -101,6 +106,37 @@ public class CompositeIdentityForm
 	}
 	public void setExclusions(Collection<Identity> exclusions) {
 		this.exclusions = exclusions;
+	}
+
+	public int getEntityId() {
+		return entityId;
+	}
+	public void setEntityId(int entityId) {
+		this.entityId = entityId;
+	}
+
+	@Override
+	public Date getFromDate() {
+		return fromDate;
+	}
+	public void setFromDate(Date fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	@Override
+	public Date getToDate() {
+		return toDate;
+	}
+	public void setToDate(Date toDate) {
+		this.toDate = toDate;
+	}
+
+	@Override
+	public String getDateFieldName() {
+		return dateFieldName;
+	}
+	public void setDateFieldName(String dateFieldName) {
+		this.dateFieldName = dateFieldName;
 	}
 
 }

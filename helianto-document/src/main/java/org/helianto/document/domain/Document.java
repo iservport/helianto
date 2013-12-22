@@ -45,8 +45,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Inheritance(strategy=InheritanceType.JOINED)
 public class Document 
 	extends AbstractCustomDocument 
-	implements Event
-	, Comparable<Document> 
+	implements Comparable<Document> 
 
 {
 

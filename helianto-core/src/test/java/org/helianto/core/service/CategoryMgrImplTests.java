@@ -22,12 +22,7 @@ import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.assertSame;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.helianto.core.domain.Category;
-import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.classic.CategoryFilter;
 import org.helianto.core.repository.CategoryRepository;
 import org.junit.After;
 import org.junit.Before;
@@ -40,18 +35,6 @@ import org.junit.Test;
 public class CategoryMgrImplTests {
     
     private CategoryMgrImpl categoryMgr;
-    
-    @Test
-    public void findCategories() {
-    	Filter categoryFilter = new CategoryFilter();
-    	List<Category> categoryList = new ArrayList<Category>();
-    	
-    	expect(categoryRepository.find(categoryFilter)).andReturn(categoryList);
-    	replay(categoryRepository);
-    	
-    	assertSame(categoryList, categoryMgr.findCategories(categoryFilter));
-    	verify(categoryRepository);
-    }
     
     @Test
     public void storeCategory() {

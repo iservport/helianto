@@ -11,7 +11,6 @@ import org.helianto.partner.domain.PrivateEntity;
  * @author mauriciofernandesdecastro
  */
 public interface PartnerForm 
-
 	extends 
 	  PrivateEntityForm
 	, ParentForm<PrivateEntity>

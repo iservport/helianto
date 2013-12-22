@@ -1,6 +1,6 @@
 package org.helianto.user.form;
 
-import org.helianto.core.domain.type.TrunkEntity;
+import org.helianto.core.form.EntityIdForm;
 import org.helianto.core.form.SearchForm;
 
 /**
@@ -9,9 +9,10 @@ import org.helianto.core.form.SearchForm;
  * @author mauriciofernandesdecastro
  */
 public interface UserForm 
-	extends TrunkEntity
+	extends EntityIdForm
 	, UserGroupParentIdForm
-	, SearchForm {
+	, SearchForm 
+{
 
 	/**
 	 * User key.

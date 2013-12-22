@@ -401,7 +401,6 @@ public class Entity
     /**
      * User group set.
      */
-    @JsonManagedReference 
     @OneToMany(mappedBy="entity")
     public Set<UserGroup> getUsers() {
 		return users;

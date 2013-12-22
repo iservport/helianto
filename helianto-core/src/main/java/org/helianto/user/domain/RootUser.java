@@ -13,15 +13,15 @@
  * limitations under the License.
  */
 
-package org.helianto.core.domain;
+package org.helianto.user.domain;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Transient;
 
 import org.helianto.core.def.UserType;
-import org.helianto.user.domain.User;
-import org.helianto.user.domain.UserAssociation;
-import org.helianto.user.domain.UserGroup;
+import org.helianto.core.domain.Credential;
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Identity;
 /**
  * The root user account.
  * 

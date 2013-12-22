@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.helianto.core.domain.Entity;
@@ -62,6 +63,14 @@ public abstract class AbstractTrunkEntity
     }
     public void setEntity(Entity entity) {
         this.entity = entity;
+    }
+    
+    @Transient
+    public int getEntityId() {
+    	if (getEntity()!=null) {
+    		return getEntity().getId();
+    	}
+    	return 0;
     }
     
 }

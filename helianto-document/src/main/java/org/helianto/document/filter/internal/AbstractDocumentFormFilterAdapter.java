@@ -16,7 +16,7 @@
 package org.helianto.document.filter.internal;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.filter.classic.AbstractDateIntervalFilterAdapter;
+import org.helianto.core.filter.internal.AbstractDateFilterAdapter;
 import org.helianto.document.form.DocumentForm;
 
 /**
@@ -25,7 +25,7 @@ import org.helianto.document.form.DocumentForm;
  * @author Mauricio Fernandes de Castro
  */
 public abstract class AbstractDocumentFormFilterAdapter<T extends DocumentForm> 
-	extends AbstractDateIntervalFilterAdapter<T> {
+	extends AbstractDateFilterAdapter<T> {
 
 	private static final long serialVersionUID = 1L;
     

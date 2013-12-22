@@ -57,9 +57,4 @@ public class DocumentFolderFormFilterAdapter<T extends DocumentFolderForm>
 		appendEqualFilter("contentType", getForm().getContentType(), mainCriteriaBuilder);
 	}
 
-	@Override
-	public String getOrderByString() {
-		return "priority,folderCode";
-	}
-	
 }

@@ -19,12 +19,9 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import org.helianto.core.def.ReferenceEnabled;
 import org.helianto.core.domain.Entity;
-import org.helianto.core.form.PriorityForm;
 import org.helianto.core.internal.AbstractEvent;
 import org.helianto.core.utils.StringListUtils;
-import org.helianto.document.Documentable;
 /**
  * Base class to represent a <code>Document</code>.
  * 
@@ -33,11 +30,6 @@ import org.helianto.document.Documentable;
 @MappedSuperclass
 public abstract class AbstractDocument 
 	extends AbstractEvent
-	implements 
-	  Documentable
-	, ReferenceEnabled
-	, PriorityForm 
-
 {
 
     private static final long serialVersionUID = 1L;

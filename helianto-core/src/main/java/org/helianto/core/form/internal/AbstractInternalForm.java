@@ -3,7 +3,7 @@ package org.helianto.core.form.internal;
 import org.helianto.core.number.Internal;
 
 /**
- * Base class to sequenceable forms.
+ * Base class to internally numbered forms.
  * 
  * @author mauriciofernandesdecastro
  */

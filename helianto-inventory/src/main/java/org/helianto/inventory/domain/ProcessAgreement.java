@@ -154,9 +154,6 @@ public class ProcessAgreement
      */
     @Override
     protected final char validateResolution(char agreementState) {
-    	if (getState().isLate()) {
-    		return AgreementState.EXPIRED.getValue();
-    	}
         return agreementState;
     }
 

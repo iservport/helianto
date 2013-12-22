@@ -44,9 +44,40 @@ public abstract class AbstractDateFilterAdapter<T extends DateForm>
     
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		if (getForm().getDateFieldName()!=null && !getForm().getDateFieldName().isEmpty()) {
+		if (isDateFilterEnabled()) {
 			appendDateRange(mainCriteriaBuilder); 
 		}
+	}
+	
+	/**
+	 * True if date filter is enabled.
+	 */
+	protected boolean isDateFilterEnabled() {
+		return !getDateFieldName().isEmpty() && (isDateFilterFrom() | isDateFilterTo());
+	}
+	
+	/**
+	 * True if date filter from date is not empty.
+	 */
+	public boolean isDateFilterFrom() {
+		return getForm().getFromDate()!=null;
+	}
+	
+	/**
+	 * True if date filter to date is not empty.
+	 */
+	public boolean isDateFilterTo() {
+		return getForm().getToDate()!=null;
+	}
+	
+	/**
+	 * Field name.
+	 */
+	protected String getDateFieldName() {
+		if (getForm().getDateFieldName()!=null) {
+			return getForm().getDateFieldName();
+		}
+		return "";
 	}
 	
 	@Override
@@ -63,14 +94,15 @@ public abstract class AbstractDateFilterAdapter<T extends DateForm>
      * @param mainCriteriaBuilder
      */
     public OrmCriteriaBuilder appendDateRange(OrmCriteriaBuilder mainCriteriaBuilder) {
-        if (getForm().getFromDate()!=null) {
-        	mainCriteriaBuilder.appendSegment(getForm().getDateFieldName(), ">=").append(getForm().getFromDate());
-        	logger.debug("Filter {} from date {}.", getForm().getDateFieldName(), getForm().getFromDate());
+		mainCriteriaBuilder.appendAnd();
+        if (isDateFilterFrom()) {
+        	mainCriteriaBuilder.appendSegment(getDateFieldName(), ">=").append(getForm().getFromDate());
+        	logger.debug("Filter {} from date {}.", getDateFieldName(), getForm().getFromDate());
         }
-    	if (getForm().getToDate()!=null) {
-    		mainCriteriaBuilder.appendAnd(getForm().getFromDate()!=null);
-    		mainCriteriaBuilder.appendSegment(getForm().getDateFieldName(), "<").append(getForm().getToDate());
-        	logger.debug("Filter {} to date {}.", getForm().getDateFieldName(), getForm().getToDate());
+    	if (isDateFilterTo()) {
+    		mainCriteriaBuilder.appendAnd(isDateFilterFrom());
+    		mainCriteriaBuilder.appendSegment(getDateFieldName(), "<").append(getForm().getToDate());
+        	logger.debug("Filter {} to date {}.", getDateFieldName(), getForm().getToDate());
     	}        	
         return mainCriteriaBuilder;
     }

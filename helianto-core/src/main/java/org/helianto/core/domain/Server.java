@@ -120,7 +120,7 @@ public class Server
     /**
      * Operator.
      */
-    @JsonBackReference 
+    @JsonBackReference("operator")
     @ManyToOne
     @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
@@ -230,7 +230,7 @@ public class Server
     /**
      * Credential.
      */
-    @JsonBackReference 
+    @JsonBackReference("credential")
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="credentialId", nullable=true)
     public Credential getCredential() {

@@ -90,7 +90,7 @@ public class PublicEntityKey extends AbstractKeyStringValue {
     /**
      * Public entity.
      */
-    @JsonBackReference 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="publicEntityId", nullable=true)
     public PublicEntity getPublicEntity() {
