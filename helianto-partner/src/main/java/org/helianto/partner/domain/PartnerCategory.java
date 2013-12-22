@@ -34,6 +34,7 @@ import org.helianto.core.domain.Category;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  * The category associated to the partner.
  * 
@@ -104,7 +105,7 @@ public class PartnerCategory implements Uploadable {
     /**
      * Partner.
      */
-    @JsonBackReference 
+    @JsonBackReference("partner")
     @ManyToOne
     @JoinColumn(name="partnerId", nullable=true)
     public Partner getPartner() {
@@ -117,7 +118,7 @@ public class PartnerCategory implements Uploadable {
     /**
      * Category.
      */
-    @JsonBackReference 
+    @JsonBackReference("category")
     @ManyToOne
     @JoinColumn(name="categoryId", nullable=true)
     public Category getCategory() {
@@ -137,6 +138,7 @@ public class PartnerCategory implements Uploadable {
     public void setContent(byte[] content) {
         this.content = content;
     }
+    @JsonIgnore
     public void setContent(String content) {
     	this.content = content.getBytes();
     }

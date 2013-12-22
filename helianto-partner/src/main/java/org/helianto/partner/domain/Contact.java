@@ -35,7 +35,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  */
 @javax.persistence.Entity
 @DiscriminatorValue("C")
-public class Contact extends PrivateAddress implements Privacy {
+public class Contact 
+	extends PrivateAddress 
+	implements Privacy 
+{
 
 	private static final long serialVersionUID = 1L;
 	private Identity owner;
@@ -87,7 +90,7 @@ public class Contact extends PrivateAddress implements Privacy {
     /**
      * Owner.
      */
-    @JsonBackReference 
+    @JsonBackReference("identity")
     @ManyToOne
     @JoinColumn(name="identityId", nullable=true)
     public Identity getOwner() {

@@ -92,7 +92,7 @@ public class PrivateAddress extends AbstractAddress implements Comparable<Privat
     /**
      * Private entity.
      */
-    @JsonBackReference 
+    @JsonBackReference("privateEntity")
     @ManyToOne
     @JoinColumn(name="partnerRegistryId", nullable=true)
     public PrivateEntity getPrivateEntity() {

@@ -154,7 +154,7 @@ public class Partner
      * Never null.
      * </p>
      */
-    @JsonBackReference 
+    @JsonBackReference("privateEntity")
     @ManyToOne
     @JoinColumn(name="partnerRegistryId", nullable=true)
     public PrivateEntity getPrivateEntity() {
@@ -413,7 +413,8 @@ public class Partner
     /**
      * Account.
      */
-    @JsonBackReference @ManyToOne
+    @JsonBackReference("account")
+    @ManyToOne
     @JoinColumn(name="accountId", nullable=true)
     public Account getAccount() {
         return this.account;
@@ -470,7 +471,7 @@ public class Partner
     /**
      * Partner categories.
      */
-    @JsonManagedReference 
+    @JsonManagedReference("partner") 
     @OneToMany(mappedBy="partner")
 	public Set<PartnerCategory> getPartnerCategories() {
 		return partnerCategories;

@@ -186,7 +186,7 @@ public class PrivateEntity
     /**
      * Public entity.
      */
-    @JsonBackReference 
+    @JsonBackReference("publicEntity")
     @ManyToOne
     @JoinColumn(name="publicEntityId", nullable=true)
     public PublicEntity getPublicEntity() {
@@ -377,7 +377,7 @@ public class PrivateEntity
     /**
      * Partners.
      */
-    @JsonManagedReference 
+    @JsonManagedReference("privateEntity")
     @OneToMany(mappedBy="privateEntity")
     public Set<Partner> getPartners() {
         return this.partners;
@@ -389,7 +389,7 @@ public class PrivateEntity
     /**
      * Addresses.
      */
-    @JsonManagedReference 
+    @JsonManagedReference("privateEntity")
     @OneToMany(mappedBy="privateEntity")
     public Set<PrivateAddress> getAddresses() {
         return this.addresses;
