@@ -46,14 +46,33 @@ public class City
 	implements Serializable, Comparable<City> {
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @Version
     private int version;
+    
+    @JsonIgnore
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="contextId", nullable=true)
     private Operator context;
+    
+    @Column(length=12)
     private String cityCode = "";
+    
+    @Column(length=64)
     private String cityName = "";
+    
+    @JsonBackReference 
+    @ManyToOne
+    @JoinColumn(name="stateId", nullable=true)
     private State state;
+    
     private boolean capital;
+    
     private char priority;
+    
 
 	/**
 	 * Default constructor.
@@ -100,7 +119,6 @@ public class City
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -111,7 +129,6 @@ public class City
     /**
      * Version.
      */
-    @Version
     public int getVersion() {
 		return version;
 	}
@@ -122,9 +139,6 @@ public class City
     /**
      * Context.
      */
-    @JsonIgnore
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="contextId", nullable=true)
     public Operator getContext() {
 		return context;
 	}
@@ -135,9 +149,6 @@ public class City
     /**
      * State.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="stateId", nullable=true)
     public State getState() {
 		return state;
 	}
@@ -148,7 +159,6 @@ public class City
     /**
      * City code.
      */
-    @Column(length=12)
     public String getCityCode() {
     	return cityCode;
     }
@@ -159,7 +169,6 @@ public class City
     /**
      * City name.
      */
-    @Column(length=64)
     public String getCityName() {
     	return cityName;
     }
