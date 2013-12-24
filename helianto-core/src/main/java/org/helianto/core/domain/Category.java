@@ -62,27 +62,64 @@ public class Category
 {
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @JsonIgnore
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="entityId")
     private Entity entity;
+    
     private char categoryGroup;
+    
+    @Column(length=20)
     private String categoryCode = "";
+    
+    @Column(length=32)
     private String categoryLabel = "";
+    
+    @Column(length=64)
     private String categoryName = "";
+    
     private char priority = '0';
+
+    @Column(length=1024)
     private String referenceList = "";
+
+    @Column(length=255)
     private String customStyle = "";
+
+    @Column(length=255)
     private String customWorkflowRoles = "";
+
+	@Column(length=512)
     private String customProperties = "";
+	
+	@Column(length=12)
     private String customNumberPattern = "";
+	
+	@Column(length=64)
 	private String patternPrefix = "";
+
+	@Column(length=64)
 	private String patternSuffix = "";
+	
 	private int numberOfDigits = 2;
+	
+    @Column(length=20)
     private String partnerFilterPattern = "";
+    
+    @Column(length=255)
     private String scriptItems = "";
 
-	// Transients.
+    @Transient
 	private List<String> scriptList = new ArrayList<String>();
+    
+    @Transient
 	private int countItems;
+
+    @Transient
 	private int countAlerts;
     
 	/** 
@@ -120,7 +157,6 @@ public class Category
     	setCategoryName(categoryName);
     }
 
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -131,9 +167,6 @@ public class Category
     /**
      * Category entity.
      */
-    @JsonIgnore
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="entityId")
     public Entity getEntity() {
         return this.entity;
     }
@@ -150,7 +183,6 @@ public class Category
 	public void setCategoryGroup(char categoryGroup) {
 		this.categoryGroup = categoryGroup;
 	}
-	@JsonIgnore
 	public void setCategoryGroupAsEnum(CategoryGroup categoryGroup) {
 		this.categoryGroup = categoryGroup.getValue();
 	}
@@ -158,7 +190,6 @@ public class Category
     /**
      * Category code.
      */
-    @Column(length=20)
     public String getCategoryCode() {
         return this.categoryCode;
     }
@@ -169,7 +200,6 @@ public class Category
     /**
      * Category label.
      */
-    @Column(length=32)
     public String getCategoryLabel() {
 		return categoryLabel;
 	}
@@ -180,7 +210,6 @@ public class Category
     /**
      * Category name.
      */
-    @Column(length=64)
     public String getCategoryName() {
         return this.categoryName;
     }
@@ -201,7 +230,6 @@ public class Category
     /**
      * Reference list of comma separated values.
      */
-    @Column(length=1024)
     public String getReferenceList() {
 		return referenceList;
 	}
@@ -216,10 +244,6 @@ public class Category
     public String[] getReferencesAsArray() {
     	return StringListUtils.stringToArray(getReferenceList());
     }
-	@JsonIgnore
-    public void setReferencesAsArray(String[] referenceListAsArray) {
-    	setReferenceList(StringListUtils.arrayToString(referenceListAsArray));
-    }
     
     /**
      * Style to be applied.
@@ -230,7 +254,6 @@ public class Category
      * apply style. Limited to 255 characters.
      * </p>
      */
-    @Column(length=255)
 	public String getCustomStyle() {
 		return customStyle;
 	}
@@ -246,7 +269,6 @@ public class Category
      * a workflow. Limited to 255 characters.
      * </p>
      */
-    @Column(length=255)
 	public String getCustomWorkflowRoles() {
 		return customWorkflowRoles;
 	}
@@ -261,10 +283,6 @@ public class Category
     public String[] getCustomWorkflowRolesAsArray() {
     	return StringListUtils.stringToArray(getCustomWorkflowRoles());
 	}
-    @JsonIgnore
-    public void setWorkflowRolesAsArray(String[] workflowRolesArray) {
-    	setCustomWorkflowRoles(StringListUtils.arrayToString(workflowRolesArray));
-	}
     
     /**
      * <<Transient>> True if there is at least one workflow role defined.
@@ -273,9 +291,6 @@ public class Category
     public boolean isWorkflowEnabled() {
     	return getCustomWorkflowRolesAsArray().length >0;
 	}
-    @JsonIgnore
-    public void setWorkflowEnabled(boolean workflowEnabled) {
-    }
     
     /**
      * <<Transient>> Last workflow index, i.e., last index from workflow roles array.
@@ -284,9 +299,6 @@ public class Category
     public int getLastWorkflowIndex() {
     	return getCustomWorkflowRolesAsArray().length - 1;
 	}
-    @JsonIgnore
-    public void setLastWorkflowIndex(boolean lastWorkflowIndex) {
-    }
     
     /**
      * <<Transient>> List of work flow roles converted to map.
@@ -306,14 +318,10 @@ public class Category
     	}
     	return workflowRolesMap;
 	}
-    @JsonIgnore
-    public void setCustomWorkflowRolesAsMap(Map<String, String> customWorkflowRolesAsMap) {
-    }
 
 	/**
 	 * Custom properties.
 	 */
-	@Column(length=512)
 	public String getCustomProperties() {
 		return customProperties;
 	}
@@ -325,14 +333,10 @@ public class Category
 	public Map<String, Object> getCustomPropertiesAsMap() {
 		return StringListUtils.propertiesToMap(getCustomProperties());
 	}
-    @JsonIgnore
-    public void setCustomPropertiesAsMap(Map<String, Object> customPropertiesAsMap) {
-    }
     
 	/**
 	 * Custom pattern to be applied at code generation.
 	 */
-	@Column(length=12)
     public String getCustomNumberPattern() {
 		return customNumberPattern;
 	}
@@ -340,7 +344,6 @@ public class Category
 		this.customNumberPattern = customNumberPattern;
 	}
 	
-    @Override
     public String getPatternPrefix() {
 		return patternPrefix;
 	}
@@ -372,7 +375,6 @@ public class Category
      * of partner discriminators to narrow the choices.
      * </p>
      */
-    @Column(length=20)
     public String getPartnerFilterPattern() {
 		return partnerFilterPattern;
 	}
@@ -387,14 +389,10 @@ public class Category
     public String[] getPartnerFilterPatternAsArray() {
 		return StringListUtils.stringToArray(getPartnerFilterPattern());
 	}
-    @JsonIgnore
-    public void setPartnerFilterPatternAsArray(String[] partnerFilterPatternAsArray) {
-    }
     
     /**
      * Key-value pair list of scripts, separated by comma.
      */
-    @Column(length=255)
     public String getScriptItems() {
 		return scriptItems;
 	}
@@ -417,7 +415,6 @@ public class Category
     /**
      * <<Transient>> Script list, likely to be loaded at runtime.
      */
-    @Transient
     public List<String> getScriptList() {
     	return scriptList;
     }
@@ -426,7 +423,7 @@ public class Category
 	}
     
     /**
-     * Adiciona conteúdo de um script à lista.
+     * <<Transient>> Add  script content to a list.
      * 
      * @param scriptContent
      */
@@ -435,9 +432,8 @@ public class Category
 	}
 
     /**
-     * Count items.
+     * <<Transient>> Count items.
      */
-    @Transient
     public int getCountItems() {
 		return countItems;
 	}
@@ -446,9 +442,8 @@ public class Category
 	}
     
     /**
-     * Count alerts.
+     * <<Transient>> Count alerts.
      */
-    @Transient
     public int getCountAlerts() {
 		return countAlerts;
 	}
