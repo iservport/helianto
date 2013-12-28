@@ -23,7 +23,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.type.RootEntity;
@@ -39,22 +38,34 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name="core_keytype1",
     uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "keyCode"})}
 )
-public class KeyType implements RootEntity {
+public class KeyType 
+	implements RootEntity 
+{
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @JsonIgnore
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="operatorId", nullable=true)
     private Operator operator;
-    private String keyCode;
-    private String keyName;
-    private String purpose;
+    
+    @Column(length=20)
+    private String keyCode = "";
+    
+    @Column(length=48)
+    private String keyName = "";
+    
+    @Column(length=255)
+    private String purpose = "";
 
     /** 
      * Default constructor
      */
     public KeyType() {
-    	setKeyCode("");
-    	setKeyName("");
-    	setPurpose("");
+    	super();
     }
 
     /** 
@@ -72,7 +83,6 @@ public class KeyType implements RootEntity {
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -83,9 +93,6 @@ public class KeyType implements RootEntity {
     /**
      * <<NaturalKey>> Operator.
      */
-    @JsonIgnore
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
         return this.operator;
     }
@@ -93,7 +100,7 @@ public class KeyType implements RootEntity {
         this.operator = operator;
     }
 
-    @Transient
+//    @Transient
     public int getContextId() {
     	if (getOperator()!=null) {
     		return getOperator().getId();
@@ -104,7 +111,6 @@ public class KeyType implements RootEntity {
     /**
      * <<NaturalKey>> Key code.
      */
-    @Column(length=20)
     public String getKeyCode() {
         return this.keyCode;
     }
@@ -116,7 +122,6 @@ public class KeyType implements RootEntity {
     /**
      * Key name.
      */
-    @Column(length=48)
     public String getKeyName() {
         return this.keyName;
     }
@@ -127,7 +132,6 @@ public class KeyType implements RootEntity {
     /**
      * Purpose description.
      */
-    @Column(length=255)
     public String getPurpose() {
         return this.purpose;
     }

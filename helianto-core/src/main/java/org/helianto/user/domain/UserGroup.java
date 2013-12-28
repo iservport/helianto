@@ -80,41 +80,74 @@ public class UserGroup
 	/**
 	 * <<Transient>> Exposes the discriminator.
 	 */
-	@Transient
+//	@Transient
 	public char getDiscriminator() {
 		return 'G';
 	}
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name="userId")
     private int id;
+    
+    @JsonIgnore
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="entityId", nullable=true)
     private Entity entity;
+    
+    @Column(length=40)
     private String userKey = "";
+    
+    @Column(length=64)
     private String userName = "";
+    
     private Locale locale;
-    private Date lastEvent;
-    private char userState;
-    private boolean accountNonExpired;
-    private char createIdentity;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastEvent = new Date();
+    
+    private char userState = UserState.ACTIVE.getValue();
+    
+    private boolean accountNonExpired = true;
+    
+    private char createIdentity = CreateIdentity.REJECT.getValue();
+    
+	@Column(length=512)
     private String userDesc = "";
+    
+    @Column(length=128)
     private String nature = "";
+    
     private int minimalEducationRequirement;
+    
     private int minimalExperienceRequirement;
+    
+    @Column(length=255)
     private String scriptItems = "";
 
+    @JsonManagedReference("child")
+    @OneToMany(mappedBy="child")
     private Set<UserAssociation> parentAssociations = new HashSet<UserAssociation>();
+    
+    @JsonManagedReference("parent")
+    @OneToMany(mappedBy="parent")
     private Set<UserAssociation> childAssociations = new HashSet<UserAssociation>();
+    
+    @Transient
     private List<UserAssociation> childAssociationList = new ArrayList<UserAssociation>();
+    
+    @OneToMany(mappedBy="userGroup")
 	private Set<UserRole> roles = new HashSet<UserRole>();
+	
+    @Transient
     private List<UserRole> roleList = new ArrayList<UserRole>();
     
 	/** 
 	 * Empty constructor.
 	 */
     public UserGroup() {
-    	setLastEvent(new Date());
-    	setUserStateAsEnum(UserState.ACTIVE);
-    	setAccountNonExpired(true);
-    	setCreateIdentityAsEnum(CreateIdentity.REJECT);
+    	super();
     }
 
 	/** 
@@ -138,9 +171,6 @@ public class UserGroup
     	setUserKey(userKey);
     }
 
-    @Id 
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="userId")
     public int getId() {
         return this.id;
     }
@@ -151,9 +181,6 @@ public class UserGroup
     /**
      * Entity.
      */
-    @JsonIgnore
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
         return this.entity;
     }
@@ -164,7 +191,7 @@ public class UserGroup
     /**
      * <<Transient>> Convenience to return Operator.
      */
-    @Transient
+//    @Transient
     public Operator getOperator() {
 		return getEntity().getOperator();
 	}
@@ -172,7 +199,6 @@ public class UserGroup
     /**
      * User key.
      */
-    @Column(length=40)
     public String getUserKey() {
         return getInternalUserKey();
     }
@@ -181,7 +207,7 @@ public class UserGroup
         this.userKey = userKey;
     }
     
-    @Transient
+//    @Transient
     public boolean isUserKeyEmpty() {
     	return getUserKey()==null || (getUserKey()!=null && getUserKey().length()==0);
     }
@@ -189,7 +215,7 @@ public class UserGroup
     /**
      * Satisfies <code>FoderEntity</code> interface to show groups as folders.
      */
-    @Transient
+//    @Transient
     public String getFolderCode() {
     	if (!isUserKeyEmpty()) {
     		return getUserKey();
@@ -200,7 +226,6 @@ public class UserGroup
     /**
      * User name.
      */
-    @Column(length=64)
 	public String getUserName() {
 		return getInternalUserName();
 	}
@@ -211,7 +236,7 @@ public class UserGroup
     /**
      * Satisfies <code>FoderEntity</code> interface to show groups as folders.
      */
-    @Transient
+//    @Transient
     public String getFolderName() {
     	if (getUserName()!=null && getUserName().length()>0) {
     		return getUserName();
@@ -222,7 +247,7 @@ public class UserGroup
     /**
      * Satisfies <code>FoderEntity</code> interface to show groups as folders.
      */
-    @Transient
+//    @Transient
     public String getFolderDecorationUrl() {
     	return "";
     }
@@ -230,7 +255,7 @@ public class UserGroup
 	/**
 	 * Defaults to userName field.
 	 */
-	@Transient
+//	@Transient
 	protected String getInternalUserName() {
 		if (userName!=null && userName.length()>0) {
 			return userName;
@@ -241,7 +266,7 @@ public class UserGroup
     /**
      * <<Transient>> Subclasses may override to customize userKey creation.
      */
-    @Transient
+//    @Transient
     protected String getInternalUserKey() {
     	return this.userKey;
     }
@@ -259,7 +284,6 @@ public class UserGroup
     /**
      * Last event
      */
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getLastEvent() {
 		return lastEvent;
 	}
@@ -294,7 +318,7 @@ public class UserGroup
      * <<Transient>> May be used by the presentation layer to
      * signal automatic identity creation"
      */
-    @Transient
+//    @Transient
     public char getCreateIdentity() {
 		return createIdentity;
 	}
@@ -308,7 +332,6 @@ public class UserGroup
     /**
      * Group nature, as a keyword csv.
      */
-    @Column(length=128)
 	public String getNature() {
 		return nature;
 	}
@@ -319,7 +342,7 @@ public class UserGroup
 	/**
 	 * <<Transient>> Nature as array.
 	 */
-	@Transient
+//	@Transient
 	public String[] getNatureAsArray() {
 		return StringListUtils.stringToArray(getNature());
 	}
@@ -330,7 +353,7 @@ public class UserGroup
 	/**
 	 * <<Transient>> Convenience to read custom colors as array from entity.
 	 */
-	@Transient
+//	@Transient
 	public String[] getCustomColorsAsArray() {
 		return getEntity().getCustomColorsAsArray();
 	}
@@ -338,7 +361,6 @@ public class UserGroup
 	/**
 	 * User or group description.
 	 */
-	@Column(length=512)
 	public String getUserDesc() {
 		return userDesc;
 	}
@@ -377,7 +399,6 @@ public class UserGroup
     /**
      * Key-value pair list of scripts, separated by comma.
      */
-    @Column(length=255)
     public String getScriptItems() {
 		return scriptItems;
 	}
@@ -388,7 +409,7 @@ public class UserGroup
     /**
      * <<Transient>> Key-value pair list of scripts converted to array.
      */
-    @Transient
+//    @Transient
     public String[] getScriptItemsAsArray() {
 		if (getScriptItems()!=null) {
 			return getScriptItems().replace(" ", "").split(",");
@@ -402,12 +423,13 @@ public class UserGroup
 	/*
 	 * Transient field to hold actual script list.
 	 */
+	@Transient
 	private List<String> scriptList = new ArrayList<String>();
     
     /**
      * <<Transient>> Script list, likely to be loaded at runtime.
      */
-    @Transient
+//    @Transient
     public List<String> getScriptList() {
     	return scriptList;
     }
@@ -427,8 +449,6 @@ public class UserGroup
 	/**
      * Parent associations.
      */
-    @JsonManagedReference("child")
-    @OneToMany(mappedBy="child")
     public Set<UserAssociation> getParentAssociations() {
         return this.parentAssociations;
     }
@@ -439,8 +459,6 @@ public class UserGroup
     /**
      * Child associations.
      */
-    @JsonManagedReference("parent")
-    @OneToMany(mappedBy="parent")
     public Set<UserAssociation> getChildAssociations() {
         return this.childAssociations;
     }
@@ -451,7 +469,6 @@ public class UserGroup
     /**
      * <<Transient>> Child association list.
      */
-    @Transient
     public List<UserAssociation> getChildAssociationList() {
 		return childAssociationList;
 	}
@@ -462,7 +479,6 @@ public class UserGroup
     /**
      * Roles for this group.
      */
-    @OneToMany(mappedBy="userGroup")
     public Set<UserRole> getRoles() {
         return this.roles;
     }
@@ -473,7 +489,6 @@ public class UserGroup
     /**
      * <<Transient>> User role list.
      */
-    @Transient
 	public List<UserRole> getRoleList() {
 		return roleList;
 	}

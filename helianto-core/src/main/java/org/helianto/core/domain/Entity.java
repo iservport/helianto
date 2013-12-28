@@ -101,22 +101,58 @@ public class Entity
 {
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @Version
     private int version;
+    
+    @JsonIgnore
+    @JsonBackReference 
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="operatorId", nullable=true)
     private Operator operator;
+    
+    @Column(length=20)
     private String alias = "";
+    
+    @DateTimeFormat(style="S-")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date installDate;
+    
     private char entityType = 'C';
+    
+	@Column(length=128)
     private String nature = "";
+    
+	@Column(length=128)
     private String customColors = "";
+    
+	@Column(length=128)
     private String customStyle = "";
+    
+	@Column(length=128)
     private String customProperties = "";
+    
+	@Column(length=1024)
     private String summary = "";
+    
     private Identity manager;
+    
+	@Column(length=128)
     private String externalLogoUrl = "";
+    
     private char activityState = 'A';
+    
+    @OneToMany(mappedBy="entity")
     private Set<UserGroup> users = new HashSet<UserGroup>(0);
+    
+    @JsonManagedReference 
+    @OneToMany(mappedBy="entity")
     private Set<PublicEntity> publicEntities = new HashSet<PublicEntity>(0);
+    
+    @Transient
     private List<UserGroup> userList;
 
     /** 
@@ -158,7 +194,6 @@ public class Entity
     	setManager(user.getIdentity());
     }
 
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -169,7 +204,6 @@ public class Entity
     /**
      * Version.
      */
-    @Version
     public int getVersion() {
         return this.version;
     }
@@ -180,10 +214,6 @@ public class Entity
     /**
      * Operator, lazy loaded.
      */
-    @JsonIgnore
-    @JsonBackReference 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
         return this.operator;
     }
@@ -191,7 +221,7 @@ public class Entity
         this.operator = operator;
     }
     
-    @Transient
+//    @Transient
     public int getContextId() {
     	if (getOperator()!=null) {
     		return getOperator().getId();
@@ -199,7 +229,7 @@ public class Entity
     	return 0;
     }
     
-    @Transient
+//    @Transient
     public Locale getLocale() {
     	// TODO create locale field.
     	return Locale.getDefault();
@@ -208,7 +238,6 @@ public class Entity
     /**
      * Alias.
      */
-    @Column(length=20)
     public String getAlias() {
         return this.alias;
     }
@@ -219,8 +248,6 @@ public class Entity
     /**
      * Date of installation.
      */
-    @DateTimeFormat(style="S-")
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getInstallDate() {
 		return installDate;
 	}
@@ -231,7 +258,7 @@ public class Entity
 	/**
 	 * <<Transient>> True if install date is not null.
 	 */
-	@Transient
+//	@Transient
 	public boolean isInstalled() {
 		return getInstallDate()!=null;
 	}
@@ -250,7 +277,6 @@ public class Entity
 	 * A list of comma separeted literals matching to public entity discriminators. The service layer
 	 * must control the life cycle of such public entities following the literals on this string.</p>
 	 */
-	@Column(length=128)
 	public String getNature() {
 		return nature;
 	}
@@ -263,7 +289,7 @@ public class Entity
 	 * 
 	 * @param nature
 	 */
-	@Transient
+//	@Transient
 	public void setNatureIfDoesNotExist(char nature) {
 		if (getNature()==null) {
 			setNature(Character.toString(nature));
@@ -281,7 +307,7 @@ public class Entity
 	 * 
 	 * @param nature
 	 */
-	@Transient
+//	@Transient
 	public boolean hasNature(char nature) {
 		return (getNature()!=null && getNature().indexOf(nature)>=0);
 	}
@@ -289,7 +315,7 @@ public class Entity
 	/**
 	 * <<Transient>> Nature as array.
 	 */
-	@Transient
+//	@Transient
 	public String[] getNatureAsArray() {
 		return StringListUtils.stringToArray(getNature());
 	}
@@ -304,7 +330,6 @@ public class Entity
 	 * Up to 6 colors in the hex format #rrggbb,#rrggbb, etc.
 	 * </p>
 	 */
-	@Column(length=128)
 	public String getCustomColors() {
 		return customColors;
 	}
@@ -315,7 +340,7 @@ public class Entity
 	/**
 	 * <<Transient>> Colors as array.
 	 */
-	@Transient
+//	@Transient
 	public String[] getCustomColorsAsArray() {
 		return StringListUtils.stringToArray(getCustomColors());
 	}
@@ -326,7 +351,6 @@ public class Entity
 	/**
 	 * Custom style.
 	 */
-	@Column(length=128)
 	public String getCustomStyle() {
 		return customStyle;
 	}
@@ -334,7 +358,9 @@ public class Entity
 		this.customStyle = customStyle;
 	}
 
-	@Column(length=128)
+	/**
+	 * Custom properties.
+	 */
 	public String getCustomProperties() {
 		return customProperties;
 	}
@@ -342,7 +368,9 @@ public class Entity
 		this.customProperties = customProperties;
 	}
 	
-	@Column(length=1024)
+	/**
+	 * Summary.
+	 */
 	public String getSummary() {
 		return summary;
 	}
@@ -350,7 +378,7 @@ public class Entity
 		this.summary = summary;
 	}
 	
-    @Transient
+//    @Transient
 	public Map<String, Object> getCustomPropertiesAsMap() {
 		return StringListUtils.propertiesToMap(getCustomProperties());
 	}
@@ -366,7 +394,7 @@ public class Entity
 	 * service layer for installation procedures.
 	 * <p>
      */
-    @Transient
+//    @Transient
     public Identity getManager() {
 		return manager;
 	}
@@ -377,7 +405,6 @@ public class Entity
     /**
      * Link to an external logo (like http://mysite/img/log).
      */
-	@Column(length=128)
     public String getExternalLogoUrl() {
 		return externalLogoUrl;
 	}
@@ -401,7 +428,6 @@ public class Entity
     /**
      * User group set.
      */
-    @OneToMany(mappedBy="entity")
     public Set<UserGroup> getUsers() {
 		return users;
 	}
@@ -412,8 +438,6 @@ public class Entity
     /**
      * Public entity set.
      */
-    @JsonManagedReference 
-    @OneToMany(mappedBy="entity")
 	public Set<PublicEntity> getPublicEntities() {
 		return publicEntities;
 	}
@@ -424,7 +448,7 @@ public class Entity
     /**
      * <<Transient>> User list.
      */
-    @Transient
+//    @Transient
     public List<UserGroup> getUserList() {
 		return userList;
 	}

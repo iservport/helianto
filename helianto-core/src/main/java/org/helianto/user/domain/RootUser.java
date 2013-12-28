@@ -30,7 +30,9 @@ import org.helianto.core.domain.Identity;
  */
 @javax.persistence.Entity
 @DiscriminatorValue("R")
-public class RootUser extends User {
+public class RootUser 
+	extends User 
+{
 
 	/**
 	 * <<Transient>> Exposes the discriminator.

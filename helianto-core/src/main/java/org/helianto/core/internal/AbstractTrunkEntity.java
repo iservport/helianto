@@ -6,7 +6,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.helianto.core.domain.Entity;
@@ -24,14 +23,21 @@ public abstract class AbstractTrunkEntity
 	implements TrunkEntity {
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @Version
     private Integer version;
+    
+    @JsonIgnore
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="entityId", nullable=true)
     private Entity entity;
     
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -42,7 +48,6 @@ public abstract class AbstractTrunkEntity
     /**
      * Version.
      */
-    @Version
     public Integer getVersion() {
         return this.version;
     }
@@ -55,9 +60,6 @@ public abstract class AbstractTrunkEntity
      * 
      * @see {@link Entity}
      */
-    @JsonIgnore
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
         return this.entity;
     }
@@ -65,7 +67,7 @@ public abstract class AbstractTrunkEntity
         this.entity = entity;
     }
     
-    @Transient
+//    @Transient
     public int getEntityId() {
     	if (getEntity()!=null) {
     		return getEntity().getId();

@@ -24,7 +24,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.def.ActivityState;
@@ -55,16 +54,37 @@ public class Server
 {
 
 	private static final long serialVersionUID = 1L;
-	private int id;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    private int id;
+    
+    @JsonBackReference("operator")
+    @ManyToOne
+    @JoinColumn(name="operatorId", nullable=true)
     private Operator operator;
+    
+    @Column(length=20)
     private String serverName;
+    
+    @Column(length=64)
     private String serverHostAddress;
+    
     private int serverPort;
+    
+    @Column(length=64)
     private String serverDesc;
+    
     private char serverType;
+    
     private byte priority;
+    
     private char serverState;
+    
     private char requiredEncription;
+    
+    @JsonBackReference("credential")
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name="credentialId", nullable=true)
     private Credential credential;
 
     /**
@@ -109,7 +129,6 @@ public class Server
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -120,9 +139,6 @@ public class Server
     /**
      * Operator.
      */
-    @JsonBackReference("operator")
-    @ManyToOne
-    @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
         return this.operator;
     }
@@ -130,7 +146,7 @@ public class Server
         this.operator = operator;
     }
     
-    @Transient
+//    @Transient
     public int getContextId() {
     	if (getOperator()!=null) {
     		return getOperator().getId();
@@ -141,7 +157,6 @@ public class Server
     /**
      * Server name.
      */
-    @Column(length=20)
     public String getServerName() {
         return this.serverName;
     }
@@ -152,7 +167,6 @@ public class Server
     /**
      * Server host address.
      */
-    @Column(length=64)
     public String getServerHostAddress() {
         return this.serverHostAddress;
     }
@@ -173,7 +187,6 @@ public class Server
     /**
      * Server description.
      */
-    @Column(length=64)
     public String getServerDesc() {
         return this.serverDesc;
     }
@@ -230,9 +243,6 @@ public class Server
     /**
      * Credential.
      */
-    @JsonBackReference("credential")
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name="credentialId", nullable=true)
     public Credential getCredential() {
         return this.credential;
     }

@@ -32,12 +32,22 @@ public abstract class AbstractFolder
 	implements FolderEntity {
 
 	private static final long serialVersionUID = 1L;
+	
+    // TODO rename in table
+    @Column(length=24, name="builderCode")
 	private String folderCode = "";
+	
+    // TODO rename in table
+    @Column(length=128, name="builderName")
 	private String folderName = "";
+	
+    @Column(length=64)
 	private String folderDecorationUrl = "";
     
-	// Transients.
+    @Transient
 	private int countItems;
+	
+    @Transient
 	private int countAlerts;
 	
     /** 
@@ -62,8 +72,6 @@ public abstract class AbstractFolder
     	setFolderCode(folderCode);
     }
 
-    // TODO rename in table
-    @Column(length=24, name="builderCode")
     public String getFolderCode() {
         return getInternalBuilderCode();
     }
@@ -74,13 +82,11 @@ public abstract class AbstractFolder
     /**
      * Sublcasses may change the way a folder code is retrieved.
      */
-    @Transient
+//    @Transient
     protected String getInternalBuilderCode() {
         return this.folderCode;
     }
 
-    // TODO rename in table
-    @Column(length=128, name="builderName")
 	public String getFolderName() {
 		return getInternalBuilderName();
 	}
@@ -91,12 +97,14 @@ public abstract class AbstractFolder
     /**
      * Sublcasses may change the way a folder name is retrieved.
      */
-    @Transient
+//    @Transient
     protected String getInternalBuilderName() {
     	return folderName;
     }
     
-    @Column(length=64)
+    /**
+     * Folder decoration url.
+     */
     public String getFolderDecorationUrl() {
 		return folderDecorationUrl;
 	}
@@ -107,7 +115,7 @@ public abstract class AbstractFolder
     /**
      * True if {@link #getFolderDecorationUrl()} is not empty.
      */
-    @Transient
+//    @Transient
     public boolean isFolderDecorated() {
 		if (getFolderDecorationUrl()!=null && getFolderDecorationUrl().length()>0) {
 			return true;
@@ -118,7 +126,6 @@ public abstract class AbstractFolder
     /**
      * Count items.
      */
-    @Transient
     public int getCountItems() {
 		return countItems;
 	}
@@ -129,7 +136,6 @@ public abstract class AbstractFolder
     /**
      * Count alerts.
      */
-    @Transient
     public int getCountAlerts() {
 		return countAlerts;
 	}

@@ -43,15 +43,25 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class UserLog implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @JsonBackReference 
+    @ManyToOne
+    @JoinColumn(name="userId", nullable=true)
     private User user;
+    
+    @Temporal(TemporalType.TIMESTAMP)
     private Date lastEvent;
+    
     private int eventType;
 
     /** 
      * Default constructor.
      */
     public UserLog() {
+    	super();
     }
 
     /**
@@ -81,7 +91,6 @@ public class UserLog implements java.io.Serializable {
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -92,9 +101,6 @@ public class UserLog implements java.io.Serializable {
     /**
      * User.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="userId", nullable=true)
     public User getUser() {
         return this.user;
     }
@@ -105,7 +111,6 @@ public class UserLog implements java.io.Serializable {
     /**
      * Last event.
      */
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getLastEvent() {
         return this.lastEvent;
     }

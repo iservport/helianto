@@ -79,20 +79,57 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Operator implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @Column(length=20)
     private String operatorName;
+    
+    @JsonBackReference 
+    @ManyToOne
+    @JoinColumn(name="parentId", nullable=true)
     private Operator parent;
+    
     private Locale locale;
-    private char operationMode;
-    private String operatorHostAddress;
-    private String operatorSourceMailAddress;
-    private String defaultEncoding;
+    
+    private char operationMode = OperationMode.LOCAL.getValue();
+    
+    @Column(length=64)
+    private String operatorHostAddress = "http://www.helianto.org";
+    
+    @Column(length=64)
+    private String operatorSourceMailAddress = "operator@helianto.org";
+    
+    @Column(length=20)
+    private String defaultEncoding = "ISO-8859-1";
+    
+    @Column(length=12)
     private String preferredDateFormat;
+    
+    @Column(length=12)
     private String preferredTimeFormat;
+    
+    @Column(length=5)
     private String rfc822TimeZone;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy="operator", cascade={ CascadeType.ALL },
+    		fetch=FetchType.LAZY)
     private Set<KeyType> keyTypes = new HashSet<KeyType>();
+    
+    @JsonIgnore
+    @OneToMany(mappedBy="operator", cascade={CascadeType.ALL})
+    @MapKey(name="keyCode")
     private Map<String, KeyType> keyTypeMap = new HashMap<String, KeyType>();
+    
+	@JsonIgnore
+    @OneToMany(mappedBy="operator", fetch=FetchType.LAZY)
     private Set<Province> provinces = new HashSet<Province>();
+    
+	@JsonManagedReference 
+	@OneToMany(mappedBy="operator", cascade={CascadeType.ALL}, fetch=FetchType.EAGER)
+	@MapKey(name="serviceName")
 	private Map<String, Service> serviceMap = new HashMap<String, Service>();
 
     /** 
@@ -119,17 +156,12 @@ public class Operator implements java.io.Serializable {
      */
     public Operator(String operatorName, Locale locale) {
     	setOperatorName(operatorName);
-    	setOperationModeAsEnum(OperationMode.LOCAL);
-        setOperatorSourceMailAddress("operator@helianto.org");
-        setDefaultEncoding("ISO-8859-1");
-        setOperatorHostAddress("http://www.helianto.org");
         setLocale(locale);
     }
 
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -140,7 +172,6 @@ public class Operator implements java.io.Serializable {
     /**
      * Operator name.
      */
-    @Column(length=20)
     public String getOperatorName() {
         return this.operatorName;
     }
@@ -151,9 +182,6 @@ public class Operator implements java.io.Serializable {
     /**
      * Parent operator, if any.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="parentId", nullable=true)
     public Operator getParent() {
         return this.parent;
     }
@@ -187,7 +215,6 @@ public class Operator implements java.io.Serializable {
     /**
      * Operator host address.
      */
-    @Column(length=64)
     public String getOperatorHostAddress() {
         return this.operatorHostAddress;
     }
@@ -198,7 +225,6 @@ public class Operator implements java.io.Serializable {
     /**
      * Operator source mail address.
      */
-    @Column(length=64)
     public String getOperatorSourceMailAddress() {
         return this.operatorSourceMailAddress;
     }
@@ -209,7 +235,6 @@ public class Operator implements java.io.Serializable {
     /**
      * Default encoding.
      */
-    @Column(length=20)
     public String getDefaultEncoding() {
         return this.defaultEncoding;
     }
@@ -220,7 +245,6 @@ public class Operator implements java.io.Serializable {
     /**
      * Preferred date format.
      */
-    @Column(length=12)
     public String getPreferredDateFormat() {
         return this.preferredDateFormat;
     }
@@ -231,7 +255,6 @@ public class Operator implements java.io.Serializable {
     /**
      * Preferred time format.
      */
-    @Column(length=12)
     public String getPreferredTimeFormat() {
         return this.preferredTimeFormat;
     }
@@ -242,7 +265,6 @@ public class Operator implements java.io.Serializable {
     /**
      * Rfc822 time zone.
      */
-    @Column(length=5)
     public String getRfc822TimeZone() {
         return this.rfc822TimeZone;
     }
@@ -253,9 +275,6 @@ public class Operator implements java.io.Serializable {
     /**
      * Key type set.
      */
-    @JsonIgnore
-    @OneToMany(mappedBy="operator", cascade={ CascadeType.ALL },
-    		fetch=FetchType.LAZY)
     public Set<KeyType> getKeyTypes() {
 		return keyTypes;
 	}
@@ -266,9 +285,6 @@ public class Operator implements java.io.Serializable {
     /**
      * Key type map.
      */
-    @JsonIgnore
-    @OneToMany(mappedBy="operator", cascade={CascadeType.ALL})
-    @MapKey(name="keyCode")
 	public Map<String, KeyType> getKeyTypeMap() {
 		return keyTypeMap;
 	}
@@ -279,8 +295,6 @@ public class Operator implements java.io.Serializable {
     /**
      * Province set.
      */
-	@JsonIgnore
-    @OneToMany(mappedBy="operator", fetch=FetchType.LAZY)
     public Set<Province> getProvinces() {
 		return provinces;
 	}
@@ -291,9 +305,6 @@ public class Operator implements java.io.Serializable {
 	/**
 	 * Service map, eagerly loaded.
 	 */
-	@JsonManagedReference 
-	@OneToMany(mappedBy="operator", cascade={CascadeType.ALL}, fetch=FetchType.EAGER)
-	@MapKey(name="serviceName")
     public Map<String, Service> getServiceMap() {
 		return serviceMap;
 	}

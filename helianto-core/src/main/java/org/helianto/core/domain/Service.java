@@ -24,7 +24,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.type.RootEntity;
@@ -44,10 +43,20 @@ public class Service
 {
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @JsonBackReference 
+    @ManyToOne
+    @JoinColumn(name="operatorId", nullable=true)
     private Operator operator;
-    private String serviceName;
-    private String serviceExtensions;
+    
+    @Column(length=12)
+    private String serviceName = "";
+    
+    @Column(length=72)
+    private String serviceExtensions = "";
 
     /** 
      * Empty constructor.
@@ -71,7 +80,6 @@ public class Service
     /**
      * Primary key
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -82,9 +90,6 @@ public class Service
     /**
      * Operator.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
         return this.operator;
     }
@@ -92,7 +97,7 @@ public class Service
         this.operator = operator;
     }
 
-    @Transient
+//    @Transient
     public int getContextId() {
     	if (getOperator()!=null) {
     		return getOperator().getId();
@@ -103,7 +108,6 @@ public class Service
     /**
      * Service name.
      */
-    @Column(length=12)
     public String getServiceName() {
         return this.serviceName;
     }
@@ -114,7 +118,6 @@ public class Service
     /**
      * Comma separated list of applicable service extension codes.
      */
-    @Column(length=72)
     public String getServiceExtensions() {
 		return serviceExtensions;
 	}
@@ -125,7 +128,7 @@ public class Service
     /**
      * Array of applicable service extension codes.
      */
-	@Transient
+//	@Transient
 	public String[] getServiceExtensionsAsArray() {
 		if (getServiceExtensions()!=null) {
 			return getServiceExtensions().replace(" ", "").split(",");

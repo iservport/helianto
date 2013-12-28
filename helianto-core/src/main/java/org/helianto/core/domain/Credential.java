@@ -51,23 +51,48 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Credential implements PersonalEntity {
 
     private static final long serialVersionUID = 1L;
+    
     public static final String ALLOWED_CHARS_IN_PASSWORD = 
         "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%_";
-    public static final int DEFAULT_PASSWORD_SIZE = 8;
     
+    public static final int DEFAULT_PASSWORD_SIZE = 8;
+       
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @JsonBackReference 
+    @ManyToOne(cascade={CascadeType.ALL})
+    @JoinColumn(name="identityId", nullable=true)
     private Identity identity;
+    
+    @Version
     private int version;
+    
+    @Column(length=20)
     private String password = "inactive";
+    
     private char credentialState = ActivityState.ACTIVE.getValue();
+    
+    @DateTimeFormat(style="SS")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date lastModified;
+    
+    @DateTimeFormat(style="SS")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date expirationDate;
+    
     private char encription = Encription.PLAIN_PASSWORD.getValue();
     
-    //transient fields
+    @Transient
     private String currentPassword = "";
+    
+    @Transient
     private String newPassword = "";
+    
+    @Transient
     private String verifyPassword = "";
+    
+    @Transient
     private boolean passwordDirty = false;
 
 
@@ -126,7 +151,6 @@ public class Credential implements PersonalEntity {
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -137,7 +161,6 @@ public class Credential implements PersonalEntity {
     /**
      * Version.
      */
-    @Version
     public int getVersion() {
         return this.version;
     }
@@ -148,9 +171,6 @@ public class Credential implements PersonalEntity {
     /**
      * <<Cascading>> Identity owning this credential.
      */
-    @JsonBackReference 
-    @ManyToOne(cascade={CascadeType.ALL})
-    @JoinColumn(name="identityId", nullable=true)
     public Identity getIdentity() {
         return this.identity;
     }
@@ -161,7 +181,7 @@ public class Credential implements PersonalEntity {
     /**
      * <<Transient>> Convenience to read identity principal.
      */
-    @Transient
+//    @Transient
     public String getPrincipal() {
 		return getIdentity().getPrincipal();
 	}
@@ -169,7 +189,6 @@ public class Credential implements PersonalEntity {
     /**
      * Plain text password.
      */
-    @Column(length=20)
     public String getPassword() {
         return this.password;
     }
@@ -179,14 +198,14 @@ public class Credential implements PersonalEntity {
     /**
      * Password reset.
      */
-    @Transient
+//    @Transient
     public void resetPassword() {
         this.password = "";
     }
     /**
      * Password generator.
      */
-    @Transient
+//    @Transient
     public void generatePassword() {
         this.password = Credential.passwordFactory();
     }
@@ -207,12 +226,10 @@ public class Credential implements PersonalEntity {
     /**
      * Last modified.
      */
-    @DateTimeFormat(style="SS")
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getLastModified() {
         return this.lastModified;
     }
-    @Transient
+//    @Transient
     public String getLastModifiedDateAsString() {
     	if (getLastModified()==null) {
     		return "";
@@ -220,7 +237,7 @@ public class Credential implements PersonalEntity {
     	DateFormat formatter = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
         return formatter.format(getLastModified());
     }
-    @Transient
+//    @Transient
     public String getLastModifiedTimeAsString() {
     	if (getLastModified()==null) {
     		return "";
@@ -235,12 +252,10 @@ public class Credential implements PersonalEntity {
     /**
      * Expiration date.
      */
-    @DateTimeFormat(style="SS")
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getExpirationDate() {
         return this.expirationDate;
     }
-    @Transient
+//    @Transient
     public boolean isExpired() {
     	if (getExpirationDate()==null) {
     		// null means never expires
@@ -248,7 +263,7 @@ public class Credential implements PersonalEntity {
     	}
     	return getExpirationDate().before(new Date());
     }
-    @Transient
+//    @Transient
     public String getExpirationDateAsString() {
     	if (getExpirationDate()==null) {
     		return "";
@@ -256,7 +271,7 @@ public class Credential implements PersonalEntity {
     	DateFormat formatter = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
         return formatter.format(getExpirationDate());
     }
-    @Transient
+//    @Transient
     public String getExpirationTimeAsString() {
     	if (getExpirationDate()==null) {
     		return "";
@@ -301,7 +316,6 @@ public class Credential implements PersonalEntity {
      * Required before a new password is to be set.
      * </p>
      */
-    @Transient
 	public String getCurrentPassword() {
 		return currentPassword;
 	}
@@ -312,7 +326,6 @@ public class Credential implements PersonalEntity {
     /**
      * <<Transient>> New password.
      */
-    @Transient
 	public String getNewPassword() {
 		return newPassword;
 	}
@@ -323,7 +336,6 @@ public class Credential implements PersonalEntity {
     /**
      * <<Transient>> Verify password.
      */
-    @Transient
     public String getVerifyPassword() {
         return verifyPassword;
     }
@@ -338,7 +350,6 @@ public class Credential implements PersonalEntity {
     /**
      * PasswordDirty getter.
      */
-    @Transient
     public boolean isPasswordDirty() {
         return passwordDirty;
     }
@@ -356,7 +367,6 @@ public class Credential implements PersonalEntity {
      * True if <code>password</code> and <code>verifyPassword</code> transient field match.
      * </p>
      */
-    @Transient
     public boolean isPasswordVerified() {
     	if (getPassword()==null 
     			|| getPassword().length()==0 
@@ -384,7 +394,6 @@ public class Credential implements PersonalEntity {
      * <li><code>newPassword</code> transient field matches <code>verifyPassword</code> transient field.</li>
      * </ol>
      */
-    @Transient
     public boolean isNewPasswordVerified() {
     	if (getCurrentPassword()!=null 
     			&& getCurrentPassword().length()>0 

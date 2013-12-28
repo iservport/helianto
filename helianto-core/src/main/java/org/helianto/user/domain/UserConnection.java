@@ -31,18 +31,38 @@ public class UserConnection
 	implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	
+	@Version
 	private int version;
+	
 	private String userId;
+	
+	@Column(nullable=false)
 	private String providerId;
+	
 	private String providerUserId;
+	
 	private int rank;
+	
+	@Column(length=128)
 	private String displayName;
+	
+	@Column(length=512)
 	private String profileUrl;
+	
+	@Column(length=512)
 	private String imageUrl;
+	
+	@Column(nullable=false)
 	private String accessToken;
+	
 	private String secret;
+	
 	private String refreshToken;
+	
 	private long expireTime;
 	
 	/**
@@ -52,8 +72,6 @@ public class UserConnection
 		super();
 	}
 	
-    @Id 
-    @GeneratedValue(strategy=GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}
@@ -61,7 +79,6 @@ public class UserConnection
 		this.id = id;
 	}
 	
-	@Version
 	public int getVersion() {
 		return version;
 	}
@@ -76,7 +93,6 @@ public class UserConnection
 		this.userId = userId;
 	}
 	
-	@Column(nullable=false)
 	public String getProviderId() {
 		return providerId;
 	}
@@ -105,7 +121,6 @@ public class UserConnection
 		this.displayName = displayName;
 	}
 	
-	@Column(length=512)
 	public String getProfileUrl() {
 		return profileUrl;
 	}
@@ -113,7 +128,6 @@ public class UserConnection
 		this.profileUrl = profileUrl;
 	}
 	
-	@Column(length=512)
 	public String getImageUrl() {
 		return imageUrl;
 	}
@@ -121,7 +135,6 @@ public class UserConnection
 		this.imageUrl = imageUrl;
 	}
 	
-	@Column(nullable=false)
 	public String getAccessToken() {
 		return accessToken;
 	}

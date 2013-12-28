@@ -53,7 +53,6 @@ import org.joda.time.DateTime;
 import org.joda.time.Years;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
@@ -71,20 +70,54 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Identity implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @Column(length=64)
 	private String displayName = "";
+	
+    @Column(length=20)
 	private String optionalSourceAlias = "";
+	
+    @Column(length=40)
     private String principal = "";
+    
+    @Embedded
     private PersonalData personalData;
+    
+    @Temporal(TemporalType.TIMESTAMP)
     private Date created = new Date();
+    
     private char identityType = IdentityType.PERSONAL_EMAIL.getValue();
+    
     private char notification = Notification.AUTOMATIC.getValue();
+    
+    @Basic(fetch=FetchType.LAZY)
+    @Lob
+    @Column(table="core_identitydata")
 	private byte[] photo = new byte[0];
+	
+	@Column(length=32)
     private String multipartFileContentType;
+    
+    @ElementCollection
+    @CollectionTable(name = "core_identityPhone", joinColumns = @JoinColumn(name = "identityId"))
+    @OrderColumn(name="sequence")
     private List<Phone> phones = new ArrayList<Phone>();
+    
+    @ElementCollection
+    @CollectionTable(name = "core_identityContact", joinColumns = @JoinColumn(name = "identityId"))
+    @OrderColumn(name="sequence")
     private List<ContactInfo> contactInfos = new ArrayList<ContactInfo>();
+    
+    @JsonManagedReference 
+    @OneToMany(mappedBy="identity")
     private Set<IdentitySecurity> connections = new HashSet<IdentitySecurity>();
 
+	@Transient
+    private transient MultipartFile file;
+	
     /** 
      * Default constructor.
      */
@@ -127,7 +160,6 @@ public class Identity implements java.io.Serializable {
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -138,7 +170,6 @@ public class Identity implements java.io.Serializable {
     /**
      * Principal getter.
      */
-    @Column(length=40)
     public String getPrincipal() {
         return this.principal;
     }
@@ -160,7 +191,7 @@ public class Identity implements java.io.Serializable {
      * <<Transient>> Principal name, i.e., substring of principal before '@', if any,
      * or the principal itself.
      */
-    @Transient
+//    @Transient
     public String getPrincipalName() {
     	if (getPrincipal()!=null) {
         	int position = getPrincipal().indexOf("@");
@@ -171,15 +202,12 @@ public class Identity implements java.io.Serializable {
     	}
     	return "";
     }
-    @JsonIgnore
-    public void setPrincipalName(String principalName) {
-    }
     
     /**
      * <<Transient>> User principal domain, i.e., substring of principal after '@', if any,
      * or empty string.
      */
-    @Transient
+//    @Transient
     public String getPrincipalDomain() {
     	if (getPrincipal()!=null) {
         	int position = getPrincipal().indexOf("@");
@@ -189,9 +217,6 @@ public class Identity implements java.io.Serializable {
     	}
         return "";
     }
-    @JsonIgnore
-    public void setPrincipalDomain(String principalName) {
-    }
     
     /**
      * Optional source alias.
@@ -200,7 +225,6 @@ public class Identity implements java.io.Serializable {
      * May be used to create an user in the future.
      * </p>
      */
-    @Column(length=20)
     public String getOptionalSourceAlias() {
 		return optionalSourceAlias;
 	}
@@ -213,7 +237,7 @@ public class Identity implements java.io.Serializable {
      * @deprecated
      * @see #getDisplayName()
      */
-    @Transient
+//    @Transient
     public String getOptionalAlias() {
         return getDisplayName();
     }
@@ -224,7 +248,6 @@ public class Identity implements java.io.Serializable {
     /**
      * Display name.
      */
-    @Column(length=64)
     public String getDisplayName() {
 		return displayName;
 	}
@@ -235,7 +258,6 @@ public class Identity implements java.io.Serializable {
     /**
      * PersonalData getter.
      */
-    @Embedded
     public PersonalData getPersonalData() {
         return this.personalData;
     }
@@ -246,35 +268,29 @@ public class Identity implements java.io.Serializable {
     /**
      * <<Transient>> Safe identity first name getter.
      */
-    @Transient
+//    @Transient
     public String getIdentityFirstName() {
     	if (getPersonalData()!=null) {
     		return getPersonalData().getFirstName();
     	}
     	return "";
     }
-    @JsonIgnore
-    public void setIdentityFirstName(String identityFirstName) {
-    }
     
     /**
      * <<Transient>> Safe identity last name getter.
      */
-    @Transient
+//    @Transient
     public String getIdentityLastName() {
     	if (getPersonalData()!=null) {
     		return getPersonalData().getLastName();
     	}
     	return "";
     }
-    @JsonIgnore
-    public void setIdentityLastName(String identityLastName) {
-    }
     
     /**
      * <<Transient>> Safe identity name getter.
      */
-    @Transient
+//    @Transient
     public String getIdentityName() {
     	if (getPersonalData()==null) {
     		return getAlias();
@@ -283,70 +299,53 @@ public class Identity implements java.io.Serializable {
     	    .append(" ")
     	    .append(getPersonalData().getLastName()).toString();
     }
-    @JsonIgnore
-    public void setIdentityName(String identityName) {
-    }
     
     /**
      * <<Transient>> Safe gender getter.
      */
-    @Transient
+//    @Transient
     public char getGender() {
     	if (getPersonalData()==null) {
     		return Gender.NOT_SUPPLIED.getValue();
     	}
 		return getPersonalData().getGender();
 	}
-    @JsonIgnore
-    public void setGender(String gender) {
-    }
     
     /**
      * <<Transient>> Safe appellation getter.
      */
-    @Transient
+//    @Transient
     public char getAppellation() {
     	if (getPersonalData()==null) {
     		return Appellation.NOT_SUPPLIED.getValue();
     	}
 		return getPersonalData().getAppellation();
 	}
-    @JsonIgnore
-    public void setAppellation(String appellation) {
-    }
     
     /**
      * <<Transient>> Safe birth date getter.
      */
-    @Transient
+//    @Transient
     public Date getBirthDate() {
     	if (getPersonalData()==null) {
     		return new Date(1000l);
     	}
 		return getPersonalData().getBirthDate();
 	}
-    @JsonIgnore
-    public void setBirthDate(Date birthDate) {
-    }
     
     /**
      * <<Transient>> Safe age getter.
      */
-    @Transient
+//    @Transient
     public int getAge() {
 		return getAge(new Date());
 	}
-    @JsonIgnore
-    public void setAge(int age) {
-    }
     
     /**
      * <<Transient>> Safe age getter.
      * 
      * @param date
      */
-    @Transient
-    @JsonIgnore
     protected int getAge(Date date) {
     	if (getPersonalData()!=null && getPersonalData().getBirthDate()!=null) {
     		DateMidnight birthdate = new DateMidnight(getPersonalData().getBirthDate());
@@ -358,7 +357,7 @@ public class Identity implements java.io.Serializable {
     /**
      * <<Transient>> True if image url is available.
      */
-    @Transient
+//    @Transient
     public boolean isImageAvailable() {
     	if (getPersonalData()!=null && getPersonalData().getImageUrl()!=null 
     			&& getPersonalData().getImageUrl().length()>0) {
@@ -366,42 +365,32 @@ public class Identity implements java.io.Serializable {
     	}
     	return false;
 	}
-    @JsonIgnore
-    public void setImageAvailable(boolean imageAvailable) {
-    }
     
     /**
      * <<Transient>> Safe image url getter.
      */
-    @Transient
+//    @Transient
     public String getImageUrl() {
     	if (isImageAvailable()) {
     		return getPersonalData().getImageUrl();
     	}
 		return "";
 	}
-    @JsonIgnore
-    public void setImageUrl(String imageUrl) {
-    }
     
     /**
      * <<Transient>> Safe identity alias.
      */
-    @Transient
+//    @Transient
     public String getAlias() {
-		if (getOptionalAlias()!=null && getOptionalAlias().length()>0) {
-			return getOptionalAlias();
+		if (getDisplayName()!=null && getDisplayName().length()>0) {
+			return getDisplayName();
 		}
 		return getPrincipal();
-    }
-    @JsonIgnore
-    public void setAlias(String alias) {
     }
 
     /**
      * Date created.
      */
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getCreated() {
         return this.created;
     }
@@ -418,7 +407,6 @@ public class Identity implements java.io.Serializable {
     public void setIdentityType(char identityType) {
         this.identityType = identityType;
     }
-    @JsonIgnore
     public void setIdentityTypeAsEnum(IdentityType identityType) {
         this.identityType = identityType.getValue();
     }
@@ -426,13 +414,10 @@ public class Identity implements java.io.Serializable {
     /**
      * True if can receive email.
      */
-    @Transient
+//    @Transient
     public boolean isAddressable() {
 		return IdentityType.isAddressable(getIdentityType());
 	}
-    @JsonIgnore
-    public void setAddressable(boolean addressable) {
-    }
 
     /**
      * Notification getter.
@@ -443,7 +428,6 @@ public class Identity implements java.io.Serializable {
     public void setNotification(char notification) {
         this.notification = notification;
     }
-    @JsonIgnore
     public void setNotificationAsEnum(Notification notification) {
         this.notification = notification.getValue();
     }
@@ -451,9 +435,6 @@ public class Identity implements java.io.Serializable {
     /**
      * Identity photo.
      */
-    @Basic(fetch=FetchType.LAZY)
-    @Lob
-    @Column(table="core_identitydata")
     public byte[] getPhoto() {
 		return photo;
 	}
@@ -464,7 +445,6 @@ public class Identity implements java.io.Serializable {
     /**
      * Tipo de conteúdo, tal como img/jpg, etc.
      */
-	@Column(length=32)
     public String getMultipartFileContentType() {
 		return multipartFileContentType;
 	}
@@ -475,21 +455,15 @@ public class Identity implements java.io.Serializable {
     /**
      * Ture if the phot has the image type.
      */
-    @Transient
+//    @Transient
     public boolean isPhotoLoaded() {
     	return getMultipartFileContentType()!=null && getMultipartFileContentType().startsWith("image");
     }
-    @JsonIgnore
-    public void setPhotoLoaded(boolean photoLoaded) {
-    }
 
-	@Transient
-    private transient MultipartFile file;
-	
 	/**
 	 * <<Transient>> Required to allow for file upload.
 	 */
-	@Transient
+//	@Transient
 	public MultipartFile getFile() {
 		return file;
 	}
@@ -500,7 +474,7 @@ public class Identity implements java.io.Serializable {
 	/**
 	 * <<Transient>> Convenience method to read uploaded data.
 	 */
-	@Transient
+//	@Transient
 	public void processFile() throws IOException {
 		setPhoto(getFile().getBytes());
 		setMultipartFileContentType(file.getContentType());
@@ -509,12 +483,9 @@ public class Identity implements java.io.Serializable {
     /**
      * A set of connection data.
      */
-    @JsonManagedReference 
-    @OneToMany(mappedBy="identity")
     public Set<IdentitySecurity> getConnections() {
 		return connections;
 	}
-    @JsonIgnore
     public void setConnections(Set<IdentitySecurity> connections) {
 		this.connections = connections;
 	}
@@ -522,9 +493,6 @@ public class Identity implements java.io.Serializable {
     /**
      * List of phones.
      */
-    @ElementCollection
-    @CollectionTable(name = "core_identityPhone", joinColumns = @JoinColumn(name = "identityId"))
-    @OrderColumn(name="sequence")
     public List<Phone> getPhones() {
 		return phones;
 	}
@@ -535,9 +503,6 @@ public class Identity implements java.io.Serializable {
     /**
      * List of contact infos.
      */
-    @ElementCollection
-    @CollectionTable(name = "core_identityContact", joinColumns = @JoinColumn(name = "identityId"))
-    @OrderColumn(name="sequence")
     public List<ContactInfo> getContactInfos() {
 		return contactInfos;
 	}

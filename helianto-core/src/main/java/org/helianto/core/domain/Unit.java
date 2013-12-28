@@ -44,13 +44,30 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Unit implements TrunkEntity {
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @Version
     private int version;
+    
+    @JsonBackReference 
+    @ManyToOne
+    @JoinColumn(name="entityId", nullable=true)
     private Entity entity;
+    
+    @Column(length=20)
     private String unitCode = "";
+    
+    @Column(length=20)
     private String unitSymbol = "";
+    
+    @Column(length=64)
     private String unitName = "";
+    
+    @Column(length=32)
     private String nature = "";
+    
     private char priority = '1';
 
     /** 
@@ -61,14 +78,23 @@ public class Unit implements TrunkEntity {
     }
 
     /**
+     * Entity constructor.
+     * 
+     * @param entity
+     */
+    public Unit(Entity entity) {
+    	this();
+        setEntity(entity);
+    }
+
+    /**
      * Key constructor.
      * 
      * @param entity
      * @param unitCode
      */
     public Unit(Entity entity, String unitCode) {
-    	this();
-        setEntity(entity);
+    	this(entity);
         setUnitCode(unitCode);
     }
 
@@ -89,7 +115,6 @@ public class Unit implements TrunkEntity {
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -100,7 +125,6 @@ public class Unit implements TrunkEntity {
     /**
      * Optimistic lock version.
      */
-    @Version
     public int getVersion() {
 		return version;
 	}
@@ -111,9 +135,6 @@ public class Unit implements TrunkEntity {
     /**
      * Entity getter.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
         return this.entity;
     }
@@ -124,7 +145,6 @@ public class Unit implements TrunkEntity {
     /**
      * Unique unit code.
      */
-    @Column(length=20)
     public String getUnitCode() {
         return this.unitCode;
     }
@@ -135,7 +155,6 @@ public class Unit implements TrunkEntity {
     /**
      * Symbol (mm, m, Ton, etc.).
      */
-    @Column(length=20)
     public String getUnitSymbol() {
 		return unitSymbol;
 	}
@@ -146,7 +165,6 @@ public class Unit implements TrunkEntity {
     /**
      * Unit name.
      */
-    @Column(length=64)
     public String getUnitName() {
         return this.unitName;
     }
@@ -157,7 +175,6 @@ public class Unit implements TrunkEntity {
 	/**
 	 * Unit nature.
 	 */
-	@Column(length=32)
 	public String getNature() {
 		return nature;
 	}

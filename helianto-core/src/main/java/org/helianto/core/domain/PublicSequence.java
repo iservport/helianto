@@ -18,7 +18,6 @@ package org.helianto.core.domain;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.type.RootEntity;
@@ -40,6 +39,10 @@ public class PublicSequence
 {
 
     private static final long serialVersionUID = 1L;
+    
+    @JsonBackReference 
+    @ManyToOne
+    @JoinColumn(name="operatorId", nullable=true)
     private Operator operator;
 
     /**
@@ -64,9 +67,6 @@ public class PublicSequence
     /**
      * Entity.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
 		return operator;
 	}
@@ -74,7 +74,7 @@ public class PublicSequence
 		this.operator = operator;
 	}
 
-    @Transient
+//    @Transient
     public int getContextId() {
     	if (getOperator()!=null) {
     		return getOperator().getId();

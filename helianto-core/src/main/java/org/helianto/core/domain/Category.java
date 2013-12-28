@@ -240,7 +240,7 @@ public class Category
     /**
      * References as array.
      */
-    @Transient
+//    @Transient
     public String[] getReferencesAsArray() {
     	return StringListUtils.stringToArray(getReferenceList());
     }
@@ -279,7 +279,7 @@ public class Category
     /**
      * <<Transient>> List of workflow roles converted to array.
      */
-    @Transient
+//    @Transient
     public String[] getCustomWorkflowRolesAsArray() {
     	return StringListUtils.stringToArray(getCustomWorkflowRoles());
 	}
@@ -287,7 +287,7 @@ public class Category
     /**
      * <<Transient>> True if there is at least one workflow role defined.
      */
-    @Transient
+//    @Transient
     public boolean isWorkflowEnabled() {
     	return getCustomWorkflowRolesAsArray().length >0;
 	}
@@ -295,7 +295,7 @@ public class Category
     /**
      * <<Transient>> Last workflow index, i.e., last index from workflow roles array.
      */
-    @Transient
+//    @Transient
     public int getLastWorkflowIndex() {
     	return getCustomWorkflowRolesAsArray().length - 1;
 	}
@@ -308,7 +308,7 @@ public class Category
      * to be prepended.
      * </p>
      */
-    @Transient
+//    @Transient
     public Map<String, String> getCustomWorkflowRolesAsMap() {
 		Map<String, String> workflowRolesMap = new HashMap<String, String>();
     	if (isWorkflowEnabled()) {
@@ -329,7 +329,7 @@ public class Category
 		this.customProperties = customProperties;
 	}
 	
-    @Transient
+//    @Transient
 	public Map<String, Object> getCustomPropertiesAsMap() {
 		return StringListUtils.propertiesToMap(getCustomProperties());
 	}
@@ -385,7 +385,7 @@ public class Category
     /**
      * <<Transient>> Partner (if any) filter pattern converted to array.
      */
-    @Transient
+//    @Transient
     public String[] getPartnerFilterPatternAsArray() {
 		return StringListUtils.stringToArray(getPartnerFilterPattern());
 	}
@@ -403,7 +403,7 @@ public class Category
     /**
      * <<Transient>> Key-value pair list of scripts converted to array.
      */
-    @Transient
+//    @Transient
     public String[] getScriptItemsAsArray() {
     	return StringListUtils.stringToArray(getScriptItems());
 	}

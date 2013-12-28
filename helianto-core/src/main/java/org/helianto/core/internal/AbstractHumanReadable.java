@@ -1,8 +1,8 @@
 package org.helianto.core.internal;
 
 import javax.persistence.Column;
+import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
 
 import org.helianto.core.def.HumanReadable;
 
@@ -17,8 +17,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class AbstractHumanReadable implements HumanReadable {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Lob
 	private byte[] content;
+	
+	@Column(length=32)
     private String encoding;
+    
+	@Column(length=32)
     private String multipartFileContentType;
     
     /**
@@ -48,7 +54,7 @@ public class AbstractHumanReadable implements HumanReadable {
     /**
      * Helper method to get text content as String.
      */
-    @Transient
+//    @Transient
     public String getContentAsString() {
     	if (getContent()!=null && isText()) {
     		return new String(getContent());
@@ -59,7 +65,6 @@ public class AbstractHumanReadable implements HumanReadable {
 		setContent(contentAsString);
 	}
     
-	@Column(length=32)
     public String getEncoding() {
 		return encoding;
 	}
@@ -67,7 +72,6 @@ public class AbstractHumanReadable implements HumanReadable {
     	this.encoding = encoding;
     }
     
-	@Column(length=32)
 	public String getMultipartFileContentType() {
 		return multipartFileContentType;
 	}
@@ -75,7 +79,7 @@ public class AbstractHumanReadable implements HumanReadable {
 		this.multipartFileContentType = multipartFileContentType;
 	}
 	
-    @Transient
+//    @Transient
     public boolean isText() {
     	if (getMultipartFileContentType()!=null && getMultipartFileContentType().startsWith("text")) {
     		return true;
@@ -83,7 +87,7 @@ public class AbstractHumanReadable implements HumanReadable {
     	return false;
     }
 
-    @Transient
+//    @Transient
     public boolean isHtml() {
     	if (getMultipartFileContentType()!=null && getMultipartFileContentType().startsWith("text/html")) {
     		return true;

@@ -23,7 +23,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.type.RootEntity;
@@ -43,22 +42,20 @@ public class Country
 	implements RootEntity 
 {
 
-    /**
-     * Factory method.
-     * 
-     * @param requiredOperator
-     */
-    public static Country countryFactory(Operator requiredOperator) {
-    	Country country = new Country();
-        country.setOperator(requiredOperator);
-        return country;
-    }
-
-
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @JsonIgnore
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="operatorId", nullable=true)
     private Operator operator;
+    
+    @Column(length=7)
     private String countryCode = "";
+    
+    @Column(length=32)
     private String countryName = "";
 
     /** 
@@ -83,7 +80,6 @@ public class Country
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -94,9 +90,6 @@ public class Country
     /**
      * Namespace operator.
      */
-    @JsonIgnore
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
         return this.operator;
     }
@@ -104,7 +97,7 @@ public class Country
         this.operator = operator;
     }
     
-    @Transient
+//    @Transient
     public int getContextId() {
     	if (getOperator()!=null) {
     		return getOperator().getId();
@@ -115,7 +108,6 @@ public class Country
     /**
      * Country code.
      */
-    @Column(length=7)
     public String getCountryCode() {
         return this.countryCode;
     }
@@ -126,7 +118,6 @@ public class Country
     /**
      * Country name.
      */
-    @Column(length=32)
     public String getCountryName() {
         return this.countryName;
     }

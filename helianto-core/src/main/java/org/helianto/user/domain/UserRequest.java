@@ -59,19 +59,48 @@ public class UserRequest
 {
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @JsonBackReference 
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="userGroupId")
     private UserGroup userGroup;
+    
     private long internalNumber;
+    
+    @Column(length=40)
     private String principal = "";
+    
+    @Transient
     private String principalConfirmation = "";
+    
+    @Embedded
     private PersonalData personalData;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(style="S-")
     private Date issueDate;
+    
     private char resolution = Resolution.TODO.getValue();
+    
     private int complete;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(style="S-")
     private Date nextCheckDate;
+    
+    @Column(length=48)
     private String tempPassword;
+    
+    @Column(length=10)
     private String postalCode;
+    
+    @Column(length=10)
     private String promotionCode;
+    
+    @Column(length=12)
     private String localeString;
 
     /** 
@@ -105,12 +134,12 @@ public class UserRequest
     	setPrincipal(principal);
     }
 
-    @Transient
+//    @Transient
     public String getInternalNumberKey() {
     	return "LOGINREQ";
     }
     
-    @Transient
+//    @Transient
     public int getStartNumber() {
     	return 1;
     }
@@ -118,7 +147,6 @@ public class UserRequest
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -126,9 +154,6 @@ public class UserRequest
         this.id = id;
     }
     
-    @JsonBackReference 
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="userGroupId")
     public UserGroup getUserGroup() {
 		return userGroup;
 	}
@@ -139,12 +164,12 @@ public class UserRequest
     /**
      * True if the property {@link #getUserGroup()} has the User instead of UserGroup.
      */
-    @Transient
+//    @Transient
     public boolean isConfirmed() {
 		return (getUserGroup() instanceof User);
 	}
     
-    @Transient
+//    @Transient
     public Entity getEntity() {
     	if (getUserGroup()!=null) {
     		return getUserGroup().getEntity();
@@ -162,7 +187,6 @@ public class UserRequest
     /**
      * Principal getter.
      */
-    @Column(length=40)
     public String getPrincipal() {
         return this.principal;
     }
@@ -184,7 +208,7 @@ public class UserRequest
      * <<Transient>> Principal name, i.e., substring of principal before '@', if any,
      * or the principal itself.
      */
-    @Transient
+//    @Transient
     public String getPrincipalName() {
     	if (getPrincipal()!=null) {
         	int position = getPrincipal().indexOf("@");
@@ -200,7 +224,7 @@ public class UserRequest
      * <<Transient>> User principal domain, i.e., substring of principal after '@', if any,
      * or empty string.
      */
-    @Transient
+//    @Transient
     public String getPrincipalDomain() {
     	int position = getPrincipal().indexOf("@");
     	if (position>0) {
@@ -212,7 +236,6 @@ public class UserRequest
     /**
      * Principal confirmation.
      */
-    @Transient
     public String getPrincipalConfirmation() {
 		return principalConfirmation;
 	}
@@ -223,7 +246,7 @@ public class UserRequest
     /**
      * True if principal and principal confirmation are equal.
      */
-    @Transient
+//    @Transient
     public boolean validatePrincipal() {
     	return validatePrincipal(getPrincipalConfirmation());
     }
@@ -233,7 +256,7 @@ public class UserRequest
      * 
      * @param principalConfirmation
      */
-    @Transient
+//    @Transient
     public boolean validatePrincipal(String principalConfirmation) {
     	if (getPrincipal()!=null && principalConfirmation!=null) {
     		return getPrincipal().equals(principalConfirmation);
@@ -244,7 +267,6 @@ public class UserRequest
     /**
      * PersonalData getter.
      */
-    @Embedded
     public PersonalData getPersonalData() {
         return this.personalData;
     }
@@ -255,7 +277,7 @@ public class UserRequest
     /**
      * <<Transient>> Safe identity name getter.
      */
-    @Transient
+//    @Transient
     public String getIdentityName() {
     	if (getPersonalData()!=null) {
         	return new StringBuilder(getPersonalData().getFirstName())
@@ -268,7 +290,7 @@ public class UserRequest
     /**
      * <<Transient>> Safe gender getter.
      */
-    @Transient
+//    @Transient
     public char getGender() {
     	if (getPersonalData()!=null) {
     		return getPersonalData().getGender();
@@ -279,7 +301,7 @@ public class UserRequest
     /**
      * <<Transient>> Safe appellation getter.
      */
-    @Transient
+//    @Transient
     public char getAppellation() {
     	if (getPersonalData()!=null) {
     		return getPersonalData().getAppellation();
@@ -290,7 +312,7 @@ public class UserRequest
     /**
      * <<Transient>> Safe birth date getter.
      */
-    @Transient
+//    @Transient
     public Date getBirthDate() {
     	if (getPersonalData()!=null) {
     		return getPersonalData().getBirthDate();
@@ -301,7 +323,7 @@ public class UserRequest
     /**
      * <<Transient>> Safe age getter.
      */
-    @Transient
+//    @Transient
     public int getAge() {
 		return getAge(new Date());
 	}
@@ -311,7 +333,7 @@ public class UserRequest
      * 
      * @param date
      */
-    @Transient
+//    @Transient
     protected int getAge(Date date) {
     	if (getPersonalData()!=null && getPersonalData().getBirthDate()!=null) {
     		DateMidnight birthdate = new DateMidnight(getPersonalData().getBirthDate());
@@ -323,7 +345,7 @@ public class UserRequest
     /**
      * <<Transient>> Call back to create an <code>Identity</code> from user request daa.
      */
-    @Transient
+//    @Transient
     public Identity createIdentity() {
     	return new Identity(getPrincipal(), "", getPersonalData());
     }
@@ -331,8 +353,6 @@ public class UserRequest
     /**
      * Issue date.
      */
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style="S-")
     public Date getIssueDate() {
 		return issueDate;
 	}
@@ -366,8 +386,6 @@ public class UserRequest
     /**
      * Next check date.
      */
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style="S-")
     public Date getNextCheckDate() {
 		return nextCheckDate;
 	}
@@ -378,7 +396,6 @@ public class UserRequest
     /**
      * Temporary password.
      */
-    @Column(length=48)
     public String getTempPassword() {
 		return tempPassword;
 	}
@@ -389,7 +406,6 @@ public class UserRequest
     /**
      * Postal code.
      */
-    @Column(length=10)
     public String getPostalCode() {
         return this.postalCode;
     }
@@ -400,7 +416,6 @@ public class UserRequest
     /**
      * Promotion code.
      */
-    @Column(length=10)
     public String getPromotionCode() {
 		return promotionCode;
 	}
@@ -411,7 +426,6 @@ public class UserRequest
     /**
      * Locale string (ex. en, pt, pt_BR).
      */
-    @Column(length=12)
     public String getLocaleString() {
 		return localeString;
 	}

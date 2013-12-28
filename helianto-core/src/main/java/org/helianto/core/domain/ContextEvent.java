@@ -11,7 +11,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.number.Numerable;
@@ -31,15 +30,31 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class ContextEvent implements Numerable {
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @JsonBackReference 
+    @ManyToOne
+    @JoinColumn(name="operatorId", nullable=true)
     private Operator operator;
+    
     private long publicNumber;
+    
+	@Column(length=4096)
     private String contentAsString;
+    
+	@DateTimeFormat(style="SS")
+	@Temporal(TemporalType.TIMESTAMP)
     private Date issueDate;
+    
+	@DateTimeFormat(style="SS")
+	@Temporal(TemporalType.TIMESTAMP)
     private Date nextCheckDate;
+    
     private char resolution;
 
-    @Transient
+//    @Transient
 	public String getPublicNumberKey() {
 		return "CTXEVT";
 	}
@@ -78,7 +93,6 @@ public class ContextEvent implements Numerable {
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -89,9 +103,6 @@ public class ContextEvent implements Numerable {
     /**
      * Namespace operator.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
         return this.operator;
     }
@@ -99,7 +110,7 @@ public class ContextEvent implements Numerable {
         this.operator = operator;
     }
 
-    @Transient
+//    @Transient
     public int getContextId() {
     	if (getOperator()!=null) {
     		return getOperator().getId();
@@ -117,7 +128,6 @@ public class ContextEvent implements Numerable {
 	/**
 	 * Event description content.
 	 */
-	@Column(length=4096)
 	public String getContentAsString() {
 		return contentAsString;
 	}
@@ -128,8 +138,6 @@ public class ContextEvent implements Numerable {
 	/**
 	 * Issue date.
 	 */
-	@DateTimeFormat(style="SS")
-	@Temporal(TemporalType.TIMESTAMP)
 	public Date getIssueDate() {
 		return issueDate;
 	}
@@ -140,8 +148,6 @@ public class ContextEvent implements Numerable {
 	/**
 	 * Next check date.
 	 */
-	@DateTimeFormat(style="SS")
-	@Temporal(TemporalType.TIMESTAMP)
 	public Date getNextCheckDate() {
 		return nextCheckDate;
 	}

@@ -30,10 +30,18 @@ import javax.persistence.Version;
 public abstract class AbstractEnumerator implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @Version
     private int version;
+    
+    @Column(length=24)
     private String typeName;
+    
     private long lastNumber;
+    
     private int startNumber;
 
     /**
@@ -47,7 +55,6 @@ public abstract class AbstractEnumerator implements java.io.Serializable {
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -58,7 +65,6 @@ public abstract class AbstractEnumerator implements java.io.Serializable {
     /**
      * Version.
      */
-    @Version
     public int getVersion() {
         return this.version;
     }
@@ -69,7 +75,6 @@ public abstract class AbstractEnumerator implements java.io.Serializable {
     /**
      * Type name.
      */
-    @Column(length=24)
     public String getTypeName() {
         return this.typeName;
     }

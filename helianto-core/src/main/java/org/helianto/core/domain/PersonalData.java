@@ -28,7 +28,6 @@ import org.helianto.core.def.Gender;
 import org.helianto.core.def.PersonalIdentityType;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Personal data, if any.
@@ -39,16 +38,37 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class PersonalData implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    @Column(length=32)
     private String firstName = "";
+    
+    @Column(length=32)
     private String lastName = "";
+    
     private char gender = Gender.NOT_SUPPLIED.getValue();
+    
     private char appellation = Appellation.NOT_SUPPLIED.getValue();
+    
+    @DateTimeFormat(style="SS")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date birthDate = new Date(0l);
+    
+    @Column(length=128)
 	private String profileUrl = "";
+	
+    @Column(length=128)
 	private String imageUrl = "";
+	
+    @Column(length=20, name="PIN_1") 
     private String personalIdentityNumber_1 = "";
+    
+    @Column(name="PIT_1") 
     private char personalIdentityType_1 = PersonalIdentityType.NOT_REQUIRED.getValue();
+    
+    @Column(length=20, name="PIN_2") 
     private String personalIdentityNumber_2 = "";
+    
+    @Column(name="PIT_2") 
     private char personalIdentityType_2 = PersonalIdentityType.NOT_REQUIRED.getValue();
 
     /** 
@@ -72,7 +92,6 @@ public class PersonalData implements Serializable {
     /**
      * First name.
      */
-    @Column(length=32)
     public String getFirstName() {
         return this.firstName;
     }
@@ -83,7 +102,6 @@ public class PersonalData implements Serializable {
     /**
      * Last name.
      */
-    @Column(length=32)
     public String getLastName() {
         return this.lastName;
     }
@@ -100,7 +118,6 @@ public class PersonalData implements Serializable {
     public void setGender(char gender) {
         this.gender = gender;
     }
-    @JsonIgnore
     public void setGenderAsEnum(Gender gender) {
         this.gender = gender.getValue();
     }
@@ -114,7 +131,6 @@ public class PersonalData implements Serializable {
     public void setAppellation(char appellation) {
         this.appellation = appellation;
     }
-    @JsonIgnore
     public void setAppellationAsEnum(Appellation appellation) {
         this.appellation = appellation.getValue();
     }
@@ -122,8 +138,6 @@ public class PersonalData implements Serializable {
     /**
      * Birth date.
      */
-    @DateTimeFormat(style="SS")
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getBirthDate() {
 		return birthDate;
 	}
@@ -148,7 +162,6 @@ public class PersonalData implements Serializable {
     /**
      * First personal identity number.
      */
-    @Column(length=20, name="PIN_1") 
     public String getPersonalIdentityNumber_1() {
 		return personalIdentityNumber_1;
 	}
@@ -159,22 +172,19 @@ public class PersonalData implements Serializable {
     /**
      * First personal identity type.
      */
-    @Column(name="PIT_1") 
     public char getPersonalIdentityType_1() {
 		return personalIdentityType_1;
 	}
     public void setPersonalIdentityType_1(char personalIdentityType_1) {
 		this.personalIdentityType_1 = personalIdentityType_1;
 	}
-    @JsonIgnore
-    public void setPersonalIdentityType_1(PersonalIdentityType personalIdentityType) {
+    public void setPersonalIdentityType_1AsEnum(PersonalIdentityType personalIdentityType) {
 		this.personalIdentityType_1 = personalIdentityType.getValue();
 	}
 
     /**
      * Second personal identity number.
      */
-    @Column(length=20, name="PIN_2") 
     public String getPersonalIdentityNumber_2() {
 		return personalIdentityNumber_2;
 	}
@@ -185,15 +195,13 @@ public class PersonalData implements Serializable {
     /**
      * Personal document type.
      */
-    @Column(name="PIT_2") 
     public char getPersonalIdentityType_2() {
 		return personalIdentityType_2;
 	}
     public void setPersonalIdentityType_2(char personalIdentityType_2) {
 		this.personalIdentityType_2 = personalIdentityType_2;
 	}
-    @JsonIgnore
-    public void setPersonalIdentityType_2(PersonalIdentityType personalIdentityType) {
+    public void setPersonalIdentityType_2AsEnum(PersonalIdentityType personalIdentityType) {
 		this.personalIdentityType_2 = personalIdentityType.getValue();
 	}
 

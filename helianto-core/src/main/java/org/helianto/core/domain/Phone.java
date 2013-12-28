@@ -28,16 +28,23 @@ import org.helianto.core.def.PhoneType;
 public class Phone implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
-    private String phoneNumber;
-    private String areaCode;
-    private String branch;
-    private char phoneType;
+    
+    @Column(length=20)
+    private String phoneNumber = "";
+    
+    @Column(length=2)
+    private String areaCode = "";
+    
+    @Column(length=10)
+    private String branch = "";
+    
+    private char phoneType = PhoneType.MAIN.getValue();
 
     /** 
      * Default constructor
      */
     public Phone() {
-    	this("", "");
+    	super();
     }
 
     /** 
@@ -58,6 +65,7 @@ public class Phone implements java.io.Serializable {
      * @param phoneType
      */
     public Phone(String areaCode, String phoneNumber, PhoneType phoneType) {
+    	super();
     	setPhoneNumber(phoneNumber);
     	setAreaCode(areaCode);
     	setPhoneTypeAsEnum(phoneType);
@@ -66,7 +74,6 @@ public class Phone implements java.io.Serializable {
     /**
      * Phone number.
      */
-    @Column(length=20)
     public String getPhoneNumber() {
         return this.phoneNumber;
     }
@@ -77,7 +84,6 @@ public class Phone implements java.io.Serializable {
     /**
      * Area code.
      */
-    @Column(length=2)
     public String getAreaCode() {
         return this.areaCode;
     }
@@ -88,7 +94,6 @@ public class Phone implements java.io.Serializable {
     /**
      * Branch.
      */
-    @Column(length=10)
     public String getBranch() {
 		return branch;
 	}

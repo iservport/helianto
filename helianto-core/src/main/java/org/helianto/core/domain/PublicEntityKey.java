@@ -18,7 +18,6 @@ package org.helianto.core.domain;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.internal.AbstractKeyStringValue;
@@ -38,13 +37,17 @@ public class PublicEntityKey extends AbstractKeyStringValue {
 	/**
 	 * <<Transient>> Delegate to the actual key owner.
 	 */
-	@Transient
+//	@Transient
 	@Override
 	protected Object getKeyOwner() {
 		return getPublicEntity();
 	}   
 
     private static final long serialVersionUID = 1L;
+    
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name="publicEntityId", nullable=true)
     private PublicEntity publicEntity;
 
     /** 
@@ -90,9 +93,6 @@ public class PublicEntityKey extends AbstractKeyStringValue {
     /**
      * Public entity.
      */
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name="publicEntityId", nullable=true)
     public PublicEntity getPublicEntity() {
 		return publicEntity;
 	}

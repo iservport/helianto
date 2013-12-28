@@ -26,20 +26,20 @@ import javax.persistence.MappedSuperclass;
 public abstract class AbstractKeyStringValue extends AbstractKeyValue {
 
     private static final long serialVersionUID = 1L;
-    private String keyValue;
+    
+    @Column(length=20)
+    private String keyValue = "";
 
     /** 
      * Default constructor
      */
     public AbstractKeyStringValue() {
     	super();
-    	setKeyValue("");
     }
 
     /**
      * Key value.
      */
-    @Column(length=20)
     public String getKeyValue() {
         return this.keyValue;
     }

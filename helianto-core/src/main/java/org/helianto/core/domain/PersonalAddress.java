@@ -26,15 +26,22 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class PersonalAddress extends AbstractAddress implements PersonalForm {
 
 	private static final long serialVersionUID = 1L;
-	private int version;
+	
+    @Version
+    private int version;
+    
+	@JsonBackReference 
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "identityId")
 	private Identity identity;
-	private char addressType;
+	
+	private char addressType = AddressType.PERSONAL.getValue();
 	
 	/**
 	 * Empty constructor.
 	 */
 	public PersonalAddress() {
-		this(AddressType.PERSONAL);
+		super();
 	}
 	
 	/**
@@ -43,6 +50,7 @@ public class PersonalAddress extends AbstractAddress implements PersonalForm {
 	 * @param addressType
 	 */
 	private PersonalAddress(AddressType addressType) {
+		super();
 		setAddressTypeAsEnum(addressType);
 	}
 	
@@ -60,7 +68,6 @@ public class PersonalAddress extends AbstractAddress implements PersonalForm {
 	/**
 	 * Optimistic locking control.
 	 */
-	@Version
 	public int getVersion() {
 		return version;
 	}
@@ -69,18 +76,8 @@ public class PersonalAddress extends AbstractAddress implements PersonalForm {
 	}
 	
 	/**
-	 * Reset.
-	 */
-	public void reset() {
-		setAddressType(' ');
-	}
-	
-	/**
 	 * Identity.
 	 */
-	@JsonBackReference 
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name = "identityId")
 	public Identity getIdentity() {
 		return identity;
 	}

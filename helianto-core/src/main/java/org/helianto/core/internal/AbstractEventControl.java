@@ -20,9 +20,9 @@ import java.util.Date;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import org.helianto.core.def.ControlState;
+import org.helianto.core.def.Resolution;
 import org.helianto.core.def.ResolutionExtended;
 import org.helianto.core.form.ControlForm;
 import org.helianto.core.form.ProgressForm;
@@ -43,17 +43,24 @@ public abstract class AbstractEventControl
 {
 
     private static final long serialVersionUID = 1L;
+    
     private long internalNumber;
+    
+    @DateTimeFormat(style="SS")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date nextCheckDate;
+    
     private int frequency;
+    
     private int frequencyType;
+    
     private int complete;
 
     /** 
      * Default constructor.
      */
     public AbstractEventControl() {
-    	this(ResolutionExtended.PRELIMINARY.getValue());
+    	this(Resolution.PRELIMINARY.getValue());
     	setNextCheckDate(new Date());
     }
     
@@ -80,8 +87,6 @@ public abstract class AbstractEventControl
     /**
      * Date to be controlled.
      */
-    @DateTimeFormat(style="SS")
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getNextCheckDate() {
         return validateNextCheckDate(this.nextCheckDate);
     }
@@ -99,7 +104,7 @@ public abstract class AbstractEventControl
     /**
      * Evaluate the control state.
      */
-    @Transient
+//    @Transient
     public char getControlState() {
     	Date now = new Date();
     	if (getResolution()==ResolutionExtended.DONE.getValue()) {
@@ -122,7 +127,7 @@ public abstract class AbstractEventControl
     public int getFrequency() {
     	return getInternalFrequency();
     }
-    @Transient
+//    @Transient
     protected int getInternalFrequency() {
     	return this.frequency;
     }

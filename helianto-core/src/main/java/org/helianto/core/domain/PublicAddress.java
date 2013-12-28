@@ -3,7 +3,6 @@ package org.helianto.core.domain;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.type.RootEntity;
@@ -25,6 +24,10 @@ public class PublicAddress
 	implements RootEntity {
 
 	private static final long serialVersionUID = 1L;
+	
+	@JsonBackReference 
+	@ManyToOne
+	@JoinColumn(name="operatorId")
 	private Operator operator;
 	
 	/**
@@ -60,9 +63,6 @@ public class PublicAddress
 	/**
 	 * Operator that holds the address database.
 	 */
-	@JsonBackReference 
-	@ManyToOne
-	@JoinColumn(name="operatorId")
 	public Operator getOperator() {
 		return operator;
 	}
@@ -70,7 +70,7 @@ public class PublicAddress
 		this.operator = operator;
 	}
 	
-    @Transient
+//    @Transient
     public int getContextId() {
     	if (getOperator()!=null) {
     		return getOperator().getId();

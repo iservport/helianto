@@ -50,11 +50,20 @@ public abstract class AbstractEvent
 {
 
     private static final long serialVersionUID = 1L;
+    
+    @ManyToOne
+    @JoinColumn(name="ownerId", nullable=true)
     private Identity owner;
+    
+    @DateTimeFormat(style="SS")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date issueDate;
+    
     private char resolution = Resolution.PRELIMINARY.getValue();
+    
     private char privacyLevel = PrivacyLevel.PUBLIC.getValue();
-    // transient, convenience for filters
+    
+    @Transient
     private int interval;
 
     /** 
@@ -68,7 +77,7 @@ public abstract class AbstractEvent
     /**
      * Locale.
      */
-    @Transient
+//    @Transient
     public Locale getLocale() {
     	return Locale.getDefault();
     }
@@ -77,8 +86,6 @@ public abstract class AbstractEvent
      * Record owner.
      * @see {@link Identity}
      */
-    @ManyToOne
-    @JoinColumn(name="ownerId", nullable=true)
 	public Identity getOwner() {
 		return owner;
 	}
@@ -87,7 +94,7 @@ public abstract class AbstractEvent
      * Safe presentation record owner alias.
      * @deprecated
      */
-    @Transient
+//    @Transient
 	public String getOwnerOptionalAlias() {
         return getOwner()==null ? "" : owner.getDisplayName();
 	}
@@ -103,7 +110,7 @@ public abstract class AbstractEvent
     /**
      * Safe presentation record owner name.
      */
-    @Transient
+//    @Transient
 	public String getOwnerName() {
         return getOwner()==null ? "" : owner.getIdentityName();
 	}
@@ -114,8 +121,6 @@ public abstract class AbstractEvent
     /**
      * Issue date.
      */
-    @DateTimeFormat(style="SS")
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getIssueDate() {
         return this.issueDate;
     }
@@ -160,7 +165,6 @@ public abstract class AbstractEvent
     /**
      * <<Transient>> Convenience to pass date intervals when used as a filter.
      */
-    @Transient
     public int getInterval() {
 		return interval;
 	}

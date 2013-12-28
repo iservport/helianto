@@ -43,11 +43,26 @@ public class State
 	implements Serializable, Comparable<State> {
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @JsonIgnore
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="contextId", nullable=true)
     private Operator context;
+    
+    @Column(length=12)
     private String stateCode = "";
+    
+    @Column(length=64)
     private String stateName = "";
+    
+    @JsonBackReference 
+    @ManyToOne
+    @JoinColumn(name="countryId")
     private Country country;
+    
     private char priority;
 
 	/**
@@ -84,7 +99,6 @@ public class State
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -95,9 +109,6 @@ public class State
     /**
      * Context.
      */
-    @JsonIgnore
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="contextId", nullable=true)
     public Operator getContext() {
 		return context;
 	}
@@ -108,7 +119,6 @@ public class State
     /**
      * State code.
      */
-    @Column(length=12)
     public String getStateCode() {
 		return stateCode;
 	}
@@ -119,7 +129,6 @@ public class State
     /**
      * State name.
      */
-    @Column(length=64)
     public String getStateName() {
 		return stateName;
 	}
@@ -130,9 +139,6 @@ public class State
     /**
      * Country.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="countryId")
     public Country getCountry() {
 		return country;
 	}
