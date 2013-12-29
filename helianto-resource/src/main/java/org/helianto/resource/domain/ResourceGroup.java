@@ -15,18 +15,12 @@
 
 package org.helianto.resource.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -35,10 +29,8 @@ import org.helianto.core.Controllable;
 import org.helianto.core.Navigable;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.type.FolderEntity;
-import org.helianto.core.domain.type.TrunkEntity;
+import org.helianto.core.internal.AbstractTrunkEntity;
 import org.helianto.resource.def.ResourceType;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * <p>
@@ -57,23 +49,32 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 )
 @DiscriminatorValue("G")
 public class ResourceGroup 
-
-	implements TrunkEntity
-	, FolderEntity
+	extends AbstractTrunkEntity
+	implements FolderEntity
 	, Navigable
 	, Comparable<ResourceGroup> 
 
 {
 
 	private static final long serialVersionUID = 1L;
-	private int id;
-    private Entity entity;
+	
+    @Column(length=20)
     private String resourceCode = "";
+    
+    @Column(length=128)
     private String resourceName = "";
+    
+    @Column(length=128)
 	private String folderDecorationUrl = "";
+	
+    @Column(length=64)
     private String parentPath = "";
+    
     private char resourceType = ResourceType.EQUIPMENT.getValue();
 
+    @Transient
+    private Controllable controlReference;
+    
     /** 
      * Default constructor.
      */
@@ -93,31 +94,9 @@ public class ResourceGroup
     	setResourceCode(resourceCode);
     }
 
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
-        return this.id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    
-    /**
-     * Entity getter.
-     */
-    @JsonBackReference 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="entityId", nullable=true)
-    public Entity getEntity() {
-        return this.entity;
-    }
-    public void setEntity(Entity entity) {
-        this.entity = entity;
-    }
-    
     /**
      * Resource code.
      */
-    @Column(length=20)
     public String getResourceCode() {
         return this.resourceCode;
     }
@@ -133,7 +112,7 @@ public class ResourceGroup
     /**
      * <<Transient>> Make discriminator value available.
      */
-    @Transient
+//    @Transient
     public char getDiscriminatorValue() {
     	return 'G';
     }
@@ -141,7 +120,6 @@ public class ResourceGroup
     /**
      * Resource name.
      */
-    @Column(length=128)
     public String getResourceName() {
         return this.resourceName;
     }
@@ -149,7 +127,7 @@ public class ResourceGroup
         this.resourceName = resourceName;
     }
     
-	@Transient
+//	@Transient
 	public String getFolderName() {
 		return getResourceName();
 	}
@@ -157,7 +135,6 @@ public class ResourceGroup
     /**
      * Folder decoration url.
      */
-    @Column(length=128)
 	public String getFolderDecorationUrl() {
 		return folderDecorationUrl;
 	}
@@ -165,7 +142,6 @@ public class ResourceGroup
 		this.folderDecorationUrl = folderDecorationUrl;
 	}
 	
-    @Column(length=64)
     public String getParentPath() {
 		return getInternalParentPath(parentPath);
 	}
@@ -178,12 +154,12 @@ public class ResourceGroup
      * 
      * @param parentPath
      */
-    @Transient
+//    @Transient
     protected String getInternalParentPath(String parentPath) {
     	return "/";
     }
     
-    @Transient
+//    @Transient
     public String getCurrentPath() {
     	if (getParentPath()!=null) {
     		return new StringBuilder(getParentPath()).append(getResourceCode()).append("/").toString();
@@ -204,13 +180,9 @@ public class ResourceGroup
         this.resourceType = resourceType.getValue();
     }
     
-    //transient
-    private Controllable controlReference;
-    
     /**
      * <<Transient>> Control reference.
      */
-    @Transient
     public Controllable getControlReference() {
 		return controlReference;
 	}
