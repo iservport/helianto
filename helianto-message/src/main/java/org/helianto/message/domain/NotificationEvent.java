@@ -3,7 +3,6 @@ package org.helianto.message.domain;
 import javax.persistence.Column;
 import javax.persistence.Lob;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.def.Uploadable;
@@ -11,6 +10,8 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.internal.AbstractEvent;
 import org.helianto.core.number.Sequenceable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Tracks notification events to the recipient (owner).
@@ -28,20 +29,26 @@ public class NotificationEvent
 {
 
 	private static final long serialVersionUID = 1L;
+	
 	private long internalNumber;
-	private byte[] content;
-    private String encoding;
-    private String multipartFileContentType;
-	private String textContent;
+	
+    @Lob
+	private byte[] content = new byte[0];
+	
+	@Column(length=32)
+    private String encoding = "iso_88591";
+    
+	@Column(length=32)
+    private String multipartFileContentType = "text/html";
+    
+    @Lob
+	private String textContent = "";
 
     /**
      * Default constructor.
      */
     public NotificationEvent() {
     	super();
-		setContent("");
-		setEncoding("iso_88591");
-    	setMultipartFileContentType("text/html");
 	}
     
     /**
@@ -67,12 +74,12 @@ public class NotificationEvent
 		setOwner(owner);
 	}
     
-    @Transient
+//    @Transient
     public String getInternalNumberKey() {
     	return "NOTIF";
     }
     
-    @Transient
+//    @Transient
     public int getStartNumber() {
     	return 1;
     }
@@ -84,13 +91,13 @@ public class NotificationEvent
 		this.internalNumber = internalNumber;
 	}
     
-    @Lob
     public byte[] getContent() {
         return this.content;
     }
     public void setContent(byte[] content) {
         this.content = content;
     }
+    @JsonIgnore
     public void setContent(String content) {
     	this.content = content.getBytes();
     }
@@ -98,7 +105,7 @@ public class NotificationEvent
     /**
      * Helper method to get text content as String.
      */
-    @Transient
+//    @Transient
     public String getContentAsString() {
     	if (getContent()!=null && isText()) {
     		return new String(getContent());
@@ -109,12 +116,11 @@ public class NotificationEvent
 		setContent(contentAsString);
 	}
     
-    @Transient
+//    @Transient
     public int getContentSize() {
     	return this.content.length;
     }
     
-	@Column(length=32)
 	public String getEncoding() {
 		return this.encoding;
 	}
@@ -122,7 +128,6 @@ public class NotificationEvent
 		this.encoding = encoding;
 	}
 
-	@Column(length=32)
 	public String getMultipartFileContentType() {
 		return multipartFileContentType;
 	}
@@ -133,7 +138,7 @@ public class NotificationEvent
     /**
      * True if {@link #afterInternalNumberSet(long)} starts with "text".
      */
-    @Transient
+//    @Transient
     public boolean isText() {
     	if (getMultipartFileContentType().startsWith("text")) {
     		return true;
@@ -144,7 +149,7 @@ public class NotificationEvent
     /**
      * True if {@link #afterInternalNumberSet(long)} starts with "text/html".
      */
-    @Transient
+//    @Transient
     public boolean isHtml() {
     	if (getMultipartFileContentType().startsWith("text/html")) {
     		return true;
@@ -155,7 +160,7 @@ public class NotificationEvent
     /**
      * True if {@link #afterInternalNumberSet(long)} starts with "image".
      */
-    @Transient
+//    @Transient
     public boolean isImage() {
     	if (getMultipartFileContentType().startsWith("image")) {
     		return true;
@@ -166,7 +171,6 @@ public class NotificationEvent
     /**
      * Text content.
      */
-    @Lob
     public String getTextContent() {
 		return textContent;
 	}
