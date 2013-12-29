@@ -16,7 +16,6 @@
 package org.helianto.partner.domain.nature;
 
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.Transient;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.partner.domain.Partner;
@@ -30,15 +29,18 @@ import org.helianto.partner.domain.PrivateEntity;
  */
 @javax.persistence.Entity
 @DiscriminatorValue("E")
-public class EducationPartner extends Partner {
+public class EducationPartner 
+	extends Partner 
+{
 
     private static final long serialVersionUID = 1L;
+    
     private float agentComission;
 
     /**
      * <<Transient>> Discriminator.
      */
-    @Transient
+//    @Transient
     public char getDiscriminator() {
     	return 'E';
     }

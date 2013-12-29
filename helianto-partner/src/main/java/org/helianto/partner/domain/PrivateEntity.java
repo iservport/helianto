@@ -25,11 +25,9 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 import org.helianto.core.EntityAddress;
 import org.helianto.core.domain.Entity;
-import org.helianto.core.domain.Phone;
 import org.helianto.core.domain.PublicEntity;
 import org.helianto.core.number.Sequenceable;
 
@@ -49,25 +47,49 @@ public class PrivateEntity
 	extends PublicEntity
 	implements 
 	  Sequenceable
-	, EntityAddress {
+	, EntityAddress 
+{
 
 	/**
 	 * Exposes the discriminator.
 	 */
-	@Transient
+//	@Transient
 	public char getDiscriminator() {
 		return 'R';
 	}
 
     private static final long serialVersionUID = 1L;
+    
+    @JsonBackReference("publicEntity")
+    @ManyToOne
+    @JoinColumn(name="publicEntityId", nullable=true)
     private PublicEntity publicEntity;
+    
     private boolean autoNumber = false;
+    
     private long internalNumber;
+    
+    @Column(length=512)
     private String parsedContent;
-    private Set<Partner> partners = new HashSet<Partner>(0);
+    
+//    @JsonManagedReference("privateEntity")
+//    @OneToMany(mappedBy="privateEntity")
+//    private Set<Partner> partners = new HashSet<Partner>(0);
+    
+    @JsonManagedReference("privateEntity")
+    @OneToMany(mappedBy="privateEntity")
     private Set<PrivateAddress> addresses = new HashSet<PrivateAddress>(0);
+    
+    @JsonManagedReference 
+    @OneToMany(mappedBy="privateEntity", cascade=CascadeType.ALL)
     private Set<PrivateEntityKey> partnerRegistryKeys = new HashSet<PrivateEntityKey>(0);
+    
+    @JsonManagedReference 
+    @OneToMany(mappedBy="privateEntity")
     private Set<PartnerPhone> phones = new HashSet<PartnerPhone>(0);
+    
+    @JsonManagedReference 
+    @OneToMany(mappedBy="privateEntity")
     private Set<ContactGroup> contactGroups = new HashSet<ContactGroup>(0);
 
     /** 
@@ -75,11 +97,6 @@ public class PrivateEntity
      */
     public PrivateEntity() {
     	super();
-    	setEntityAlias("");
-    	setEntityName("");
-		setMainPhone(new Phone());
-		setMainEmail("");
-//		setInternalNumber(-1);
     }
 
     /** 
@@ -103,57 +120,16 @@ public class PrivateEntity
     	setEntityAlias(partnerAlias);
     }
 
-//    /**
-//     * Entity.
-//     */
-//    @JsonBackReference 
-//    @ManyToOne
-//    @JoinColumn(name="entityId", nullable=true)
-//    public Entity getEntity() {
-//        return this.entity;
-//    }
-//    public void setEntity(Entity entity) {
-//        this.entity = entity;
-//    }
-//
-    @Transient
+//    @Transient
     public String getInternalNumberKey() {
     	return "PRVTENT";
     }
     
-    @Transient
+//    @Transient
     public int getStartNumber() {
     	return 1;
     }
 
-//    /**
-//     * PartnerAlias.
-//     * @deprecated use entityAlias instead.
-//     */
-//    @Transient
-//    public String getPartnerAlias() {
-//        return getEntityAlias();
-//    }
-//    public void setPartnerAlias(String partnerAlias) {
-//        setEntityAlias(partnerAlias);
-//    }
-//
-//    /** 
-//     * Entity alias, copied from public entity if not null.
-//     * 
-//     * @see #getInternalEntityAlias()
-//     */
-//    @Column(length=20, name="partnerAlias")
-//    public String getEntityAlias() {
-//    	if (getPublicEntity()!=null) {
-//    		return getPublicEntity().getEntityAlias();
-//    	}
-//        return getInternalEntityAlias();
-//    }
-//    public void setEntityAlias(String partnerAlias) {
-//        this.partnerAlias = partnerAlias;
-//    }
-//    
     /**
      * Subclasses may override this to customize automatic generation for the
      * entityAlias property (default behavior expects the user to provide a code).
@@ -165,7 +141,7 @@ public class PrivateEntity
      * supplied as entityAlias.
      * </p>
      */
-    @Transient
+//    @Transient
     protected String getInternalEntityAlias() {
     	if (isAutoNumber()) {
     		return new DecimalFormat("0").format(getInternalNumber());
@@ -186,9 +162,6 @@ public class PrivateEntity
     /**
      * Public entity.
      */
-    @JsonBackReference("publicEntity")
-    @ManyToOne
-    @JoinColumn(name="publicEntityId", nullable=true)
     public PublicEntity getPublicEntity() {
         return this.publicEntity;
     }
@@ -196,43 +169,6 @@ public class PrivateEntity
         this.publicEntity = publicEntity;
     }
     
-//    /**
-//     * PartnerName.
-//     * @deprecated use entityName instead.
-//     */
-//    @Transient
-//    public String getPartnerName() {
-//        return getEntityName();
-//    }
-//    public void setPartnerName(String partnerName) {
-//        setEntityName(partnerName);
-//    }
-//
-//    /**
-//     * Entity name.
-//     */
-//    @Column(length=128, name="partnerName")
-//    public String getEntityName() {
-//    	if (getPublicEntity()!=null) {
-//    		return getPublicEntity().getEntityName();
-//    	}
-//        return this.partnerName;
-//    }
-//    public void setEntityName(String partnerName) {
-//        this.partnerName = partnerName;
-//    }
-//
-//    /**
-//     * PartnerName (short).
-//     */
-//    @Transient
-//    public String getPartnerShortName() {
-//    	if (getEntityName().length() > 20) {
-//            return getEntityName().substring(0, 20)+"...";
-//    	}
-//        return getEntityName();
-//    }
-//    
     public long getInternalNumber() {
     	return internalNumber;
     }
@@ -240,133 +176,9 @@ public class PrivateEntity
     	this.internalNumber = internalNumber;
     }
     
-//    /**
-//     * Main phone.
-//     */
-//    @Embedded
-//    public Phone getMainPhone() {
-//    	if (getPublicEntity()!=null) {
-//    		return getPublicEntity().getMainPhone();
-//    	}
-//		return mainPhone;
-//	}
-//    public void setMainPhone(Phone mainPhone) {
-//		this.mainPhone = mainPhone;
-//	}
-//    
-//    // delegate phone
-//    
-//    /**
-//     * Phone number.
-//     */
-//    @Transient
-//    public String getPhoneNumber() {
-//    	if (getMainPhone()!=null) {
-//    		return getMainPhone().getPhoneNumber();
-//    	}
-//        return "";
-//    }
-//    public void setPhoneNumber(String phoneNumber) {
-//    	if (getPublicEntity()==null && getMainPhone()!=null) {
-//    		getMainPhone().setPhoneNumber(phoneNumber);
-//    	}
-//    }
-//
-//    /**
-//     * Area code.
-//     */
-//    @Transient
-//    public String getAreaCode() {
-//    	if (getMainPhone()!=null) {
-//    		return getMainPhone().getAreaCode();
-//    	}
-//        return "";
-//    }
-//    public void setAreaCode(String areaCode) {
-//    	if (getPublicEntity()==null && getMainPhone()!=null) {
-//    		getMainPhone().setAreaCode(areaCode);
-//    	}
-//    }
-//    
-//    /**
-//     * Branch.
-//     */
-//    @Transient
-//    public String getBranch() {
-//    	if (getMainPhone()!=null) {
-//    		return getMainPhone().getBranch();
-//    	}
-//        return "";
-//	}
-//    public void setBranch(String branch) {
-//    	if (getPublicEntity()==null && getMainPhone()!=null) {
-//    		getMainPhone().setBranch(branch);
-//    	}
-//	}
-//
-//    /**
-//     * Phone type.
-//     */
-//    @Transient
-//    public char getPhoneType() {
-//    	if (getMainPhone()!=null) {
-//    		return getMainPhone().getPhoneType();
-//    	}
-//        return PhoneType.MAIN.getValue();
-//    }
-//    public void setPhoneType(char phoneType) {
-//    	if (getPublicEntity()==null && getMainPhone()!=null) {
-//    		getMainPhone().setPhoneType(phoneType);
-//    	}
-//    }
-//    public void setPhoneTypeAsEnum(PhoneType phoneType) {
-//    	if (getPublicEntity()==null && getMainPhone()!=null) {
-//    		getMainPhone().setPhoneTypeAsEnum(phoneType);
-//    	}
-//    }
-
-
-    
-//    /**
-//     * Main e-mail.
-//     */
-//    @Column(length=40)
-//    public String getMainEmail() {
-//    	if (getPublicEntity()!=null) {
-//    		return getPublicEntity().getMainEmail();
-//    	}
-//		return mainEmail;
-//	}
-//    public void setMainEmail(String mainEmail) {
-//		this.mainEmail = mainEmail;
-//	}
-//    
-//    /**
-//     * Private entity nature determining Partners to be maintained as aggregates, as a keyword csv.
-//     */
-//    @Column(length=128)
-//	public String getNature() {
-//		return nature;
-//	}
-//	public void setNature(String nature) {
-//		this.nature = nature;
-//	}
-//	
-//	@Transient
-//	public String[] getNatureAsArray() {
-//		if (getNature()!=null && getNature().length()>0) {
-//			return getNature().replace(" ", "").split(",");
-//		}
-//		return new String[] {};
-//	}
-//	public void setNatureAsArray(String[] natureArray) {
-//		setNature(Arrays.deepToString(natureArray).replace("[", "").replace("]", "").replace(" ", ""));
-//	}
-    
     /**
      * Text content to be parsed on binding to a custom form.
      */
-    @Column(length=512)
     public String getParsedContent() {
 		return parsedContent;
 	}
@@ -374,23 +186,19 @@ public class PrivateEntity
 		this.parsedContent = parsedContent;
 	}
 
-    /**
-     * Partners.
-     */
-    @JsonManagedReference("privateEntity")
-    @OneToMany(mappedBy="privateEntity")
-    public Set<Partner> getPartners() {
-        return this.partners;
-    }
-    public void setPartners(Set<Partner> partners) {
-        this.partners = partners;
-    }
+//    /**
+//     * Partners.
+//     */
+//    public Set<Partner> getPartners() {
+//        return this.partners;
+//    }
+//    public void setPartners(Set<Partner> partners) {
+//        this.partners = partners;
+//    }
 
     /**
      * Addresses.
      */
-    @JsonManagedReference("privateEntity")
-    @OneToMany(mappedBy="privateEntity")
     public Set<PrivateAddress> getAddresses() {
         return this.addresses;
     }
@@ -403,7 +211,7 @@ public class PrivateEntity
      * 
      * @param address
      */
-	@Transient
+//	@Transient
     public boolean addAddress(PrivateAddress address) {
     	return getAddresses().add(address);
     }
@@ -411,8 +219,6 @@ public class PrivateEntity
     /**
      * Partner registry keys.
      */
-    @JsonManagedReference 
-    @OneToMany(mappedBy="privateEntity", cascade=CascadeType.ALL)
     public Set<PrivateEntityKey> getPartnerRegistryKeys() {
 		return partnerRegistryKeys;
 	}
@@ -423,8 +229,6 @@ public class PrivateEntity
     /**
      * Phones.
      */
-    @JsonManagedReference 
-    @OneToMany(mappedBy="privateEntity")
     public Set<PartnerPhone> getPhones() {
         return this.phones;
     }
@@ -435,7 +239,6 @@ public class PrivateEntity
     /**
      * Contact groups.
      */
-    @JsonManagedReference @OneToMany(mappedBy="privateEntity")
     public Set<ContactGroup> getContactGroups() {
 		return contactGroups;
 	}
@@ -443,20 +246,6 @@ public class PrivateEntity
 		this.contactGroups = contactGroups;
 	}
 
-//	/**
-//	 * Convenience to add a key type-value pair to the registry.
-//	 * 
-//	 * @param keyType
-//	 * @param keyValue
-//	 * @return true if added
-//	 */
-//	@Transient
-//	public boolean addKeyValuePair(KeyType keyType, String keyValue) {
-//		PrivateEntityKey partnerRegistryKey = new PrivateEntityKey(this, keyType, keyValue);
-//		return getPartnerRegistryKeys().add(partnerRegistryKey);
-//	}
-//
-	
     /**
      * toString
      * @return String

@@ -16,7 +16,6 @@
 package org.helianto.partner.domain.nature;
 
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.Transient;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.partner.domain.Partner;
@@ -30,14 +29,16 @@ import org.helianto.partner.domain.PrivateEntity;
  */
 @javax.persistence.Entity
 @DiscriminatorValue("T")
-public class TransportPartner extends Supplier {
+public class TransportPartner 
+	extends Supplier 
+{
 
     private static final long serialVersionUID = 1L;
 
     /**
      * <<Transient>> Discriminator.
      */
-    @Transient
+//    @Transient
     public char getDiscriminator() {
     	return 'T';
     }

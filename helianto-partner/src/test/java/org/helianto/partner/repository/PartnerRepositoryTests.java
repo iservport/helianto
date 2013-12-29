@@ -39,7 +39,7 @@ public class PartnerRepositoryTests
 
 	@Override
 	protected Partner findByKey() {
-		return getRepository().findByPrivateEntity(privateEntity);
+		return getRepository().findByPrivateEntityAndType(privateEntity, 'P');
 	}
 	
 	@Override

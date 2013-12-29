@@ -33,7 +33,7 @@ import org.helianto.core.internal.AbstractAddress;
 import org.helianto.core.repository.CityRepository;
 import org.helianto.core.utils.AddressUtils;
 import org.helianto.partner.PartnerMgr;
-import org.helianto.partner.PartnerState;
+import org.helianto.partner.def.PartnerState;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PartnerCategory;
 import org.helianto.partner.domain.PartnerKey;
@@ -104,7 +104,8 @@ public class PartnerMgrImpl implements PartnerMgr {
 	public PrivateEntity storePrivateEntity(PrivateEntity privateEntity) {
 		privateEntity = privateEntityRepository.save(privateEntity);
 		sequenceMgr.validateInternalNumber(privateEntity);
-		Set<Partner> partners = privateEntity.getPartners();
+		List<Partner> partners = partnerRepository.findByPrivateEntity(privateEntity);
+//		Set<Partner> partners = privateEntity.getPartners();
 		
 		// create partner, if does not exist, or activate it
 		Partner partner = null;
@@ -160,7 +161,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 	 * @param partners
 	 * @param clazz
 	 */
-	protected boolean reviewPartner(Set<Partner> partners, Class<? extends Partner> clazz) {
+	protected boolean reviewPartner(List<Partner> partners, Class<? extends Partner> clazz) {
 		boolean create = true;
 		for (Partner partner: partners) {
 			if (partner.getClass().isAssignableFrom(clazz)) {

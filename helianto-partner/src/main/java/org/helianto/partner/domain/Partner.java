@@ -40,7 +40,7 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Phone;
 import org.helianto.core.domain.type.TrunkEntity;
-import org.helianto.partner.PartnerState;
+import org.helianto.partner.def.PartnerState;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -73,33 +73,51 @@ public class Partner
 	  TrunkEntity
 	, EntityAddress {
 
-    private static final long serialVersionUID = 1L;
-    private int id;
-    private PrivateEntity privateEntity;
-    private String newEntityAlias;
-    private Account account;
-    private char priority;
-    private char partnerState;
-    private char taxClass;
-    private Set<PartnerKey> partnerKeys = new HashSet<PartnerKey>(0);
-    private Set<PartnerCategory> partnerCategories = new HashSet<PartnerCategory>(0);
-    
     /**
      * <<Transient>> Discriminator.
      */
-    @Transient
+//    @Transient
     public char getDiscriminator() {
     	return 'P';
     }
 
+    private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    private int id;
+    
+//    @JsonBackReference("privateEntity")
+    @ManyToOne
+    @JoinColumn(name="partnerRegistryId", nullable=true)
+    private PrivateEntity privateEntity;
+    
+    @Transient
+    private String newEntityAlias = "";
+    
+    @JsonBackReference("account")
+    @ManyToOne
+    @JoinColumn(name="accountId", nullable=true)
+    private Account account;
+    
+    private char priority = '0';
+    
+    private char partnerState = PartnerState.ACTIVE.getValue();
+    
+    private char taxClass = '3';
+    
+    @JsonManagedReference 
+    @OneToMany(mappedBy="partner")
+    private Set<PartnerKey> partnerKeys = new HashSet<PartnerKey>(0);
+    
+    @JsonManagedReference("partner") 
+    @OneToMany(mappedBy="partner")
+    private Set<PartnerCategory> partnerCategories = new HashSet<PartnerCategory>(0);
+    
 	/**
 	 *  Empty constructor
 	 */
     public Partner() {
-    	setNewEntityAlias("");
-        setPartnerState(PartnerState.ACTIVE.getValue());
-        setPriority('0');
-        setTaxClass('3');
+    	super();
     }
 
 	/**
@@ -139,7 +157,6 @@ public class Partner
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -154,9 +171,6 @@ public class Partner
      * Never null.
      * </p>
      */
-    @JsonBackReference("privateEntity")
-    @ManyToOne
-    @JoinColumn(name="partnerRegistryId", nullable=true)
     public PrivateEntity getPrivateEntity() {
     	if (this.privateEntity==null) {
     		this.privateEntity = new PrivateEntity();
@@ -170,7 +184,6 @@ public class Partner
 	/**
 	 * <<Transient>> Should be used only to install a new PrivateEntity.
 	 */
-	@Transient
 	public String getNewEntityAlias() {
 		return this.newEntityAlias;
 	}
@@ -182,7 +195,7 @@ public class Partner
      * <<Transient>> Convenience to retrieve <code>Entity</code> from parent
      * <code>PrivateEntity</code>.
      */
-    @Transient
+//    @Transient
     public Entity getEntity() {
     	return getPrivateEntity().getEntity();
     }
@@ -190,7 +203,7 @@ public class Partner
 	/**
 	 * <<Transient>> True if the owning <code>PrivateEntity</code> has alias.
 	 */
-	@Transient
+//	@Transient
 	public boolean isPrivateEntityValid() {
 		return getEntityAlias().length()>0;
 	}
@@ -198,7 +211,7 @@ public class Partner
 	/**
 	 * <<Transient>> Should be used only to create a new <code>PrivateEntity</code>.
 	 */
-	@Transient
+//	@Transient
 	public boolean isNewPrivateEntityRequested(Entity entity) {
 		if (!isPrivateEntityValid() && getNewEntityAlias().length()>0) {
 			getPrivateEntity().setEntity(entity);
@@ -212,77 +225,77 @@ public class Partner
     // Implementation of the BusinessUnit interface
     // future implementations may choose from addresses on the owning public entity.
 
-    @Transient
+//    @Transient
     public String getEntityAlias() {
     	return getPrivateEntity().getEntityAlias();
     }
     
-    @Transient
+//    @Transient
     public String getEntityName() {
     	return getPrivateEntity().getEntityName();
     }
 
-    @Transient
+//    @Transient
     public String getAddress1() {
         return this.getPrivateEntity().getAddress1();
     }
     
-    @Transient
+//    @Transient
     public String getAddressClassifier() {
         return this.getPrivateEntity().getAddressClassifier();
     }
     
-    @Transient
+//    @Transient
     public String getAddressNumber() {
     	return this.getPrivateEntity().getAddressNumber();
     }
     
-    @Transient
+//    @Transient
     public String getAddressDetail() {
     	return this.getPrivateEntity().getAddressDetail();
     }
 
-    @Transient
+//    @Transient
     public String getAddress2() {
         return this.getPrivateEntity().getAddress2();
     }
 
-    @Transient
+//    @Transient
     public String getAddress3() {
         return this.getPrivateEntity().getAddress3();
     }
     
-    @Transient
+//    @Transient
     public String getPostOfficeBox() {
     	return this.getPrivateEntity().getPostOfficeBox();
     }
 
-    @Transient
+//    @Transient
     public String getPostalCode() {
         return this.getPrivateEntity().getPostalCode();
     }
 
-    @Transient
+//    @Transient
     public City getCity() {
         return this.getPrivateEntity().getCity();
     }
     
-    @Transient
+//    @Transient
     public String getCityName() {
     	return this.getPrivateEntity().getCityName();
     }
     
-    @Transient
+//    @Transient
     public String getShortAddress() {
     	return this.getPrivateEntity().getShortAddress();
     }
     
-    @Transient
+//    @Transient
     public Phone getMainPhone() {
     	return this.getPrivateEntity().getMainPhone();
     }
 
-    @Transient
+//    @Transient
     public String getMainEmail() {
     	return this.getPrivateEntity().getMainEmail();
     }
@@ -297,7 +310,7 @@ public class Partner
      * partner registry.
      * </p>
      */
-    @Transient
+//    @Transient
     protected Address getAddresse() {
     	return getAddressee(-1);
     }
@@ -312,7 +325,7 @@ public class Partner
      * 
      * @param index
      */
-    @Transient
+//    @Transient
     protected Address getAddressee(int index) {
     	return getPrivateEntity();
     }
@@ -405,7 +418,7 @@ public class Partner
      * 
      * @param address
      */
-	@Transient
+//	@Transient
     public boolean addAddress(PrivateAddress address) {
     	return getPrivateEntity().getAddresses().add(address);
     }
@@ -413,9 +426,6 @@ public class Partner
     /**
      * Account.
      */
-    @JsonBackReference("account")
-    @ManyToOne
-    @JoinColumn(name="accountId", nullable=true)
     public Account getAccount() {
         return this.account;
     }
@@ -459,8 +469,6 @@ public class Partner
     /**
      * Partner keys.
      */
-    @JsonManagedReference 
-    @OneToMany(mappedBy="partner")
     public Set<PartnerKey> getPartnerKeys() {
 		return partnerKeys;
 	}
@@ -471,8 +479,6 @@ public class Partner
     /**
      * Partner categories.
      */
-    @JsonManagedReference("partner") 
-    @OneToMany(mappedBy="partner")
 	public Set<PartnerCategory> getPartnerCategories() {
 		return partnerCategories;
 	}
@@ -487,7 +493,7 @@ public class Partner
 	 * @param keyValue
 	 * @return true if added
 	 */
-	@Transient
+//	@Transient
 	public boolean addKeyValuePair(KeyType keyType, String keyValue) {
 		PartnerKey partnerKey = new PartnerKey(this, keyType);
 		partnerKey.setKeyValue(keyValue);

@@ -1,16 +1,9 @@
 package org.helianto.partner.base;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Version;
 
-import org.helianto.core.domain.Entity;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.helianto.core.def.PrivacyLevel;
+import org.helianto.core.internal.AbstractTrunkEntity;
 
 /**
  * Base class to instances having a contact address.
@@ -19,54 +12,21 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  */
 @SuppressWarnings("serial")
 @javax.persistence.MappedSuperclass
-public abstract class AbstractContactAddress implements java.io.Serializable {
+public abstract class AbstractContactAddress
+	extends AbstractTrunkEntity
+{
 
-    private int id;
-    private int version;
-    private Entity entity;
-    private String uniqueString;
-    private String comment;
-    private char privacyLevel;
+	@Column(length=40)
+    private String uniqueString = "";
     
-    /**
-     * Primary key.
-     */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-    /**
-     * Optimistic lock version control.
-     */
-    @Version
-	public int getVersion() {
-		return version;
-	}
-	public void setVersion(int version) {
-		this.version = version;
-	}
-	
-	/**
-	 * Entity.
-	 */
-	@JsonBackReference 
-	@ManyToOne
-	@JoinColumn(name = "entityId")
-	public Entity getEntity() {
-		return entity;
-	}
-	public void setEntity(Entity entity) {
-		this.entity = entity;
-	}
-	
+	@Column(length=128)
+    private String comment = "";
+    
+    private char privacyLevel = PrivacyLevel.PUBLIC.getValue();
+    
 	/**
 	 * Normalized string having complete phone numbers, e-mail addresses, etc..
 	 */
-	@Column(length=40)
 	public String getUniqueString() {
 		return uniqueString;
 	}
@@ -77,7 +37,6 @@ public abstract class AbstractContactAddress implements java.io.Serializable {
 	/**
 	 * Comment.
 	 */
-	@Column(length=128)
 	public String getComment() {
 		return comment;
 	}

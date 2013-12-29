@@ -2,7 +2,6 @@ package org.helianto.partner.domain.nature;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.Transient;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.partner.domain.Partner;
@@ -17,19 +16,24 @@ import org.helianto.partner.domain.PrivateEntity;
 @DiscriminatorValue("V")
 public class Developer 
 	extends Partner 
-	implements java.io.Serializable 
 {
 
     private static final long serialVersionUID = 1L;
+    
+	@Column(length=60)
     private String clientSecret = "";
+    
+	@Column(length=256)
     private String redirectUri = "";
+    
 	private Integer accessTokenValiditySeconds;
+	
 	private Integer refreshTokenValiditySeconds;
 
     /**
      * <<Transient>> Discriminator.
      */
-    @Transient
+//    @Transient
     public char getDiscriminator() {
     	return 'V';
     }
@@ -81,7 +85,6 @@ public class Developer
     /**
      * Protected client secret.
      */
-	@Column(length=60)
     public String getClientSecret() {
 		return clientSecret;
 	}
@@ -92,7 +95,6 @@ public class Developer
     /**
      * Link to OAuth redirection endpoint URI (like http://mysite/callback).
      */
-	@Column(length=256)
     public String getRedirectUri() {
 		return redirectUri;
 	}

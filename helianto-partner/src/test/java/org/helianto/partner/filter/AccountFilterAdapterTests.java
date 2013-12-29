@@ -2,7 +2,7 @@ package org.helianto.partner.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.partner.AccountType;
+import org.helianto.partner.def.AccountType;
 import org.helianto.partner.form.AccountForm;
 import org.junit.After;
 import org.junit.Before;

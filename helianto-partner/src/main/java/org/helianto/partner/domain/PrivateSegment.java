@@ -1,22 +1,13 @@
 package org.helianto.partner.domain;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
-import javax.persistence.Version;
 
 import org.helianto.core.domain.Entity;
-import org.helianto.core.domain.type.TrunkEntity;
+import org.helianto.core.internal.AbstractTrunkEntity;
 import org.helianto.partner.def.SegmentType;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * Segments to apply to Customers, Suppliers, etc.
@@ -28,15 +19,20 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "segmentAlias"})}
 )
 public class PrivateSegment 
-	implements TrunkEntity {
+	extends AbstractTrunkEntity 
+{
 	
 	private static final long serialVersionUID = 1L;
-	private int id;
-	private int version;
-	private Entity entity;
+	
+	@Column(length=20)
 	private String segmentAlias = "";
+	
+	@Column(length=128)
 	private String segmentName = "";
+	
+	@Lob
 	private byte[] content = "".getBytes();
+	
 	private char segmentType = SegmentType.Z.getValue();
 	
 	/**
@@ -58,45 +54,9 @@ public class PrivateSegment
 		setSegmentAlias(segmentAlias);
 	}
 	
-    /**
-     * Primary key.
-     */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	/**
-	 * Optimistic lock version.
-	 */
-	@Version
-	public int getVersion() {
-		return version;
-	}
-	public void setVersion(int version) {
-		this.version = version;
-	}
-	
-    /**
-     * Entity
-     */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="entityId")
-	public Entity getEntity() {
-		return entity;
-	}
-	public void setEntity(Entity entity) {
-		this.entity = entity;
-	}
-	
 	/**
 	 * Segment alias.
 	 */
-	@Column(length=20)
 	public String getSegmentAlias() {
 		return segmentAlias;
 	}
@@ -107,7 +67,6 @@ public class PrivateSegment
 	/**
 	 * Segment name.
 	 */
-	@Column(length=128)
 	public String getSegmentName() {
 		return segmentName;
 	}
@@ -118,7 +77,6 @@ public class PrivateSegment
 	/**
 	 * Content.
 	 */
-	@Lob
 	public byte[] getContent() {
 		return content;
 	}
@@ -129,7 +87,7 @@ public class PrivateSegment
 	/**
 	 * Content as string.
 	 */
-	@Transient
+//	@Transient
 	public String getContentAsString() {
 		if (getContent()!=null) {
 			return new String(getContent());
@@ -154,7 +112,7 @@ public class PrivateSegment
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((entity == null) ? 0 : entity.hashCode());
+		result = prime * result + ((getEntity() == null) ? 0 : getEntity().hashCode());
 		result = prime * result
 				+ ((segmentAlias == null) ? 0 : segmentAlias.hashCode());
 		return result;
@@ -172,11 +130,11 @@ public class PrivateSegment
 			return false;
 		}
 		PrivateSegment other = (PrivateSegment) obj;
-		if (entity == null) {
-			if (other.entity != null) {
+		if (getEntity() == null) {
+			if (other.getEntity() != null) {
 				return false;
 			}
-		} else if (!entity.equals(other.entity)) {
+		} else if (!getEntity().equals(other.getEntity())) {
 			return false;
 		}
 		if (segmentAlias == null) {

@@ -15,21 +15,13 @@
 
 package org.helianto.partner.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.Entity;
-import org.helianto.core.domain.type.TrunkEntity;
-import org.helianto.partner.AccountType;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.helianto.core.internal.AbstractTrunkEntity;
+import org.helianto.partner.def.AccountType;
 /**
  * Represents accounts.  
  * 
@@ -39,13 +31,18 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name="prtnr_account",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "accountCode"})}
 )
-public class Account implements TrunkEntity {
+public class Account 
+	extends AbstractTrunkEntity 
+{
 
     private static final long serialVersionUID = 1L;
-    private int id;
-    private Entity entity;
+    
+    @Column(length=20)
     private String accountCode;
+    
+    @Column(length=32)
     private String accountName;
+    
     private char accountType;
 
     /** 
@@ -68,36 +65,8 @@ public class Account implements TrunkEntity {
     }
 
     /**
-     * Primary key.
-     */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
-        return this.id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * Entity getter.
-     */
-    @JsonBackReference 
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name="entityId", nullable=true)
-    public Entity getEntity() {
-        return this.entity;
-    }
-    /**
-     * Entity.
-     */
-    public void setEntity(Entity entity) {
-        this.entity = entity;
-    }
-
-    /**
      * Account code.
      */
-    @Column(length=20)
     public String getAccountCode() {
         return this.accountCode;
     }
@@ -108,7 +77,6 @@ public class Account implements TrunkEntity {
     /**
      * Account name.
      */
-    @Column(length=32)
     public String getAccountName() {
         return this.accountName;
     }

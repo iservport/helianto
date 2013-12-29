@@ -1,6 +1,7 @@
 package org.helianto.partner.repository;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.helianto.core.data.FilterRepository;
 import org.helianto.partner.domain.Partner;
@@ -18,16 +19,16 @@ public interface PartnerRepository extends FilterRepository<Partner, Serializabl
 	 * Find by natural key.
 	 * 
 	 * @param privateEntity
-	 */
-	Partner findByPrivateEntity(PrivateEntity privateEntity);
-	
-	/**
-	 * Find by natural key and type.
-	 * 
-	 * @param privateEntity
 	 * @param type
 	 */
 	@Query("select partner from Partner partner where privateEntity = ?1 and type = ?2")
 	Partner findByPrivateEntityAndType(PrivateEntity privateEntity, char type);
+	
+	/**
+	 * Find by private entity.
+	 * 
+	 * @param privateEntity
+	 */
+	List<Partner> findByPrivateEntity(PrivateEntity privateEntity);
 	
 }

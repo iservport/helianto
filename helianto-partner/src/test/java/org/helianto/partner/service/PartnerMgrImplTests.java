@@ -64,9 +64,12 @@ public class PartnerMgrImplTests {
     	PrivateEntity privateEntity = new PrivateEntity();
     	Partner partner = new Partner(privateEntity);
     	
+    	List<Partner> partners = new ArrayList<Partner>();
+    	
 		EasyMock.expect(privateEntityRepository.save(EasyMock.isA(PrivateEntity.class))).andReturn(privateEntity);
     	replay(privateEntityRepository);
 
+		EasyMock.expect(partnerRepository.findByPrivateEntity(privateEntity)).andReturn(partners);
 		EasyMock.expect(partnerRepository.save(EasyMock.isA(Partner.class))).andReturn(partner);
     	replay(partnerRepository);
 

@@ -17,7 +17,7 @@ package org.helianto.partner.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.partner.PartnerState;
+import org.helianto.partner.def.PartnerState;
 import org.helianto.partner.form.PartnerForm;
 import org.junit.After;
 import org.junit.Before;

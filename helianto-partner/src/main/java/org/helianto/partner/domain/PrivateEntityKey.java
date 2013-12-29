@@ -18,7 +18,6 @@ package org.helianto.partner.domain;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.KeyType;
@@ -35,16 +34,22 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name="prtnr_partnerRegistryKey",
     uniqueConstraints = {@UniqueConstraint(columnNames={"partnerRegistryId", "keyTypeId"})}
 )
-public class PrivateEntityKey extends AbstractKeyStringValue {
+public class PrivateEntityKey 
+	extends AbstractKeyStringValue 
+{
 
     private static final long serialVersionUID = 1L;
+    
+    @JsonBackReference 
+    @ManyToOne
+    @JoinColumn(name="partnerRegistryId", nullable=true)
     private PrivateEntity privateEntity;
 
     /** 
      * Default constructor.
      */
     public PrivateEntityKey() {
-    	setKeyValue("");
+    	super();
     }
 
     /** 
@@ -83,9 +88,6 @@ public class PrivateEntityKey extends AbstractKeyStringValue {
     /**
      * Partner registry.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="partnerRegistryId", nullable=true)
     public PrivateEntity getPrivateEntity() {
         return this.privateEntity;
     }
@@ -93,7 +95,7 @@ public class PrivateEntityKey extends AbstractKeyStringValue {
         this.privateEntity = privateEntity;
     }
     
-    @Transient
+//    @Transient
     @Override
     protected Object getKeyOwner() {
     	return getPrivateEntity();

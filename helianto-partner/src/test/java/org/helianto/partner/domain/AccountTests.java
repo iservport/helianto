@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.test.DomainTestSupport;
-import org.helianto.partner.AccountType;
+import org.helianto.partner.def.AccountType;
 import org.junit.Test;
 
 /**
