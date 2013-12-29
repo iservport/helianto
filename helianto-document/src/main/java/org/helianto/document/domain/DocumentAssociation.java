@@ -15,17 +15,10 @@
 
 package org.helianto.document.domain;
 
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.internal.AbstractAssociation;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 /**
@@ -56,29 +49,9 @@ public class DocumentAssociation
 	}
     
     /**
-     * Associated parent document.
-     */
-    @JsonBackReference("parent")
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="parentId", nullable=true)
-	public Document getParent() {
-		return parent;
-	}
-    
-    /**
-     * Associated child document.
-     */
-    @JsonBackReference("child")
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name="childId", nullable=true)
-	public Document getChild() {
-		return child;
-	}
-
-    /**
      * Natural key info.
      */
-    @Transient
+//    @Transient
     public boolean isKeyEmpty() {
     	if (this.getChild()!=null) {
     		return this.getChild().isKeyEmpty();

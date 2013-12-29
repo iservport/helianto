@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.document.base;
+package org.helianto.document.internal;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -34,8 +34,13 @@ public abstract class AbstractSerializer<D>
 	extends AbstractFolder {
 
 	private static final long serialVersionUID = 1L;
-	private String numberPattern;
-    private char contentType;
+	
+    @Column(length=20)
+	private String numberPattern = "0000";
+	
+    private char contentType = ' ';
+    
+	@OneToMany(mappedBy="series")
     private Set<D> documents = new HashSet<D>();
     
     /** 
@@ -46,8 +51,6 @@ public abstract class AbstractSerializer<D>
      */
     public AbstractSerializer(Entity entity, String folderCode) {
     	super(entity, folderCode);
-    	setNumberPattern("0000");
-    	setContentType(' ');
     }
 
     /**
@@ -59,7 +62,6 @@ public abstract class AbstractSerializer<D>
      * 0001/09, 0002/09, etc.
      * </p>
      */
-    @Column(length=20)
 	public String getNumberPattern() {
 		return numberPattern;
 	}
@@ -80,7 +82,6 @@ public abstract class AbstractSerializer<D>
 	/**
 	 * Document set.
 	 */
-	@OneToMany(mappedBy="series")
 	public Set<D> getDocuments() {
 		return documents;
 	}

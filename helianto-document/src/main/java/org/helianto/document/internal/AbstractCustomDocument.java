@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.document.base;
+package org.helianto.document.internal;
 
 import java.text.DecimalFormat;
 
@@ -22,7 +22,6 @@ import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
 
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
@@ -41,9 +40,18 @@ public abstract class AbstractCustomDocument
 	implements Sequenceable {
 
 	private static final long serialVersionUID = 1L;
+	
+	@ManyToOne(cascade={CascadeType.ALL})
+	@JoinColumn(name="serializerId")
 	private DocumentFolder series;
+	
 	private long internalNumber;
+	
+	@Column(length=48)
 	private String internalNumberKey;
+	
+    @ManyToOne
+    @JoinColumn(name="categoryId", nullable=true)
     private Category category;
 	
 	/**
@@ -66,8 +74,6 @@ public abstract class AbstractCustomDocument
 	/**
 	 * The document series.
 	 */
-	@ManyToOne(cascade={CascadeType.ALL})
-	@JoinColumn(name="serializerId")
 	public DocumentFolder getSeries() {
 		return series;
 	}
@@ -86,7 +92,7 @@ public abstract class AbstractCustomDocument
     /**
      * <<Transient>> Convenience to rename field series to folder.
      */
-    @Transient
+//    @Transient
     public DocumentFolder getFolder() {
 		return getSeries();
 	}
@@ -97,7 +103,7 @@ public abstract class AbstractCustomDocument
 	/**
 	 * Subclasses may override this method to change how the prefix is created.
 	 */
-	@Transient
+//	@Transient
 	public StringBuilder getPrefix() {
 		if (getSeries()!=null) {
 			return new StringBuilder(getSeries().getFolderCode());
@@ -108,7 +114,6 @@ public abstract class AbstractCustomDocument
 	/**
 	 * Required by {@link Sequenceable}.
 	 */
-	@Column(length=48)
 	public String getInternalNumberKey() {
 		return validateInternalNumberKey(internalNumberKey);
 	}
@@ -125,7 +130,7 @@ public abstract class AbstractCustomDocument
 	 * 
 	 * @param internalNumberKey
 	 */
-    @Transient
+//    @Transient
 	protected String validateInternalNumberKey(String internalNumberKey) {
     	if (getPrefix()!=null) {
     		return getPrefix().toString();
@@ -133,7 +138,7 @@ public abstract class AbstractCustomDocument
     	return internalNumberKey;
 	}
 	
-    @Transient
+//    @Transient
     public int getStartNumber() {
     	return 1;
     }
@@ -152,7 +157,7 @@ public abstract class AbstractCustomDocument
 	/**
 	 * The number pattern, if available, or null.
 	 */
-	@Transient
+//	@Transient
 	protected String getNumberPattern() {
 		if (getFolder()!=null) {
 			return getFolder().getNumberPattern();
@@ -167,7 +172,7 @@ public abstract class AbstractCustomDocument
 	 * greater or equal than {@link #getStartNumber()} and {@link #isKeyEmpty()} is true .
 	 * </p>
 	 */
-	@Transient
+//	@Transient
 	protected boolean isNewNumberRequired() {
 		return isKeyEmpty() && getInternalNumber() >= getStartNumber();
 	}
@@ -175,7 +180,7 @@ public abstract class AbstractCustomDocument
 	/**
 	 * Reset docCode and internalNumber to allow the number pattern to be re-applied.
 	 */
-	@Transient
+//	@Transient
 	public void resetDocCode() {
 		setDocCode("");
 		setInternalNumber(getStartNumber());
@@ -189,7 +194,7 @@ public abstract class AbstractCustomDocument
 	 * and {@link #getNumberPattern()} is not null.
 	 * </p>
 	 */
-	@Transient
+//	@Transient
 	protected boolean isPatternRequired() {
 		return isNewNumberRequired() && getNumberPattern()!=null;
 	}
@@ -199,7 +204,7 @@ public abstract class AbstractCustomDocument
      * 
      * @see #afterInternalNumberSet(long)
      */
-	@Transient
+//	@Transient
 	protected String applyNumberPattern(long internalNumber) {
 		return new DecimalFormat(getNumberPattern()).format(internalNumber);
 	}
@@ -209,7 +214,7 @@ public abstract class AbstractCustomDocument
 	 * 
 	 * @param internalNumber
 	 */
-	@Transient
+//	@Transient
 	protected void afterInternalNumberSet(long internalNumber) {
 		if (isPatternRequired()) {
 			setDocCode(applyNumberPattern(internalNumber));
@@ -220,8 +225,6 @@ public abstract class AbstractCustomDocument
      * Category.
      * @see {@link Category}
      */
-    @ManyToOne
-    @JoinColumn(name="categoryId", nullable=true)
     public Category getCategory() {
 		return getInternalCategory(category);
 	}
@@ -236,7 +239,7 @@ public abstract class AbstractCustomDocument
 	 * Default implementation does not replace the private field.
 	 * </p>
 	 */
-	@Transient
+//	@Transient
 	protected Category getInternalCategory(Category category) {
 		return category;
 	}

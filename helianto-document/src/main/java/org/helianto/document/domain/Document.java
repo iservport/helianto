@@ -15,21 +15,14 @@
 
 package org.helianto.document.domain;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.Entity;
-import org.helianto.document.base.AbstractCustomDocument;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.helianto.document.internal.AbstractCustomDocument;
 
 
 /**
@@ -49,11 +42,11 @@ public class Document
 {
 
     private static final long serialVersionUID = 1L;
-    private Set<DocumentAssociation> parents = new HashSet<DocumentAssociation>(0);
-    private Set<DocumentAssociation> children = new HashSet<DocumentAssociation>(0);
     
-    // optional non-persistent fields to display at the human interface.
+    @Transient
     private boolean visited;
+    
+    @Transient
     private long views;
     
 	/** 
@@ -73,30 +66,6 @@ public class Document
     	super(entity, docCode);
     }
 
-    /**
-     * Parent document associations.
-     */
-    @JsonManagedReference("child")
-    @OneToMany(mappedBy="child")
-    public Set<DocumentAssociation> getParents() {
-        return this.parents;
-    }
-    public void setParents(Set<DocumentAssociation> parents) {
-        this.parents = parents;
-    }
-    
-    /**
-     * Child document associations.
-     */
-    @JsonManagedReference("parent")
-    @OneToMany(mappedBy="parent", cascade={CascadeType.ALL})
-    public Set<DocumentAssociation> getChildren() {
-        return this.children;
-    }
-    public void setChildren(Set<DocumentAssociation> children) {
-        this.children = children;
-    }
-    
 	/**
 	 * Sort by docCode.
 	 */
@@ -113,7 +82,6 @@ public class Document
     /**
      * Optional non-persistent flag to be true when user has visited.
      */
-    @Transient
     public boolean isVisited() {
 		return visited;
 	}
@@ -124,7 +92,6 @@ public class Document
     /**
      * Optional non-persistent counter to views.
      */
-    @Transient
     public long getViews() {
 		return views;
 	}

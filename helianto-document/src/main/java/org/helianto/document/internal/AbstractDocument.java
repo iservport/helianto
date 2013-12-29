@@ -13,11 +13,10 @@
  * limitations under the License.
  */
 
-package org.helianto.document.base;
+package org.helianto.document.internal;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.internal.AbstractEvent;
@@ -33,13 +32,28 @@ public abstract class AbstractDocument
 {
 
     private static final long serialVersionUID = 1L;
+    
+    @Column(length=24)
     private String docCode = "";
+    
+    @Column(length=128)
     private String docName = "";
+    
+    @Column(length=128)
     private String docFile = "";
+    
+    @Column(length=2048)
     private String docAbstract = "";
+    
     private char priority = '0';
+    
+	@Column(length=32)
     private String encoding = "ISO8859_1";
+    
+	@Column(length=32)
     private String multipartFileContentType = "text/plain";
+    
+    @Column(length=1024)
     private String referenceList = "";
 
     /** 
@@ -72,7 +86,6 @@ public abstract class AbstractDocument
     /**
      * Document code.
      */
-    @Column(length=24)
     public String getDocCode() {
         return this.docCode;
     }
@@ -83,7 +96,6 @@ public abstract class AbstractDocument
     /**
      * Document name.
      */
-    @Column(length=128)
     public String getDocName() {
         return this.docName;
     }
@@ -94,7 +106,6 @@ public abstract class AbstractDocument
     /**
      * Document file.
      */
-    @Column(length=128)
     public String getDocFile() {
         return this.docFile;
     }
@@ -105,7 +116,6 @@ public abstract class AbstractDocument
     /**
      * Document abstract.
      */
-    @Column(length=2048)
     public String getDocAbstract() {
 		return docAbstract;
 	}
@@ -123,7 +133,6 @@ public abstract class AbstractDocument
         this.priority = priority;
     }
     
-	@Column(length=32)
 	public String getEncoding() {
 		return this.encoding;
 	}
@@ -131,7 +140,6 @@ public abstract class AbstractDocument
 		this.encoding = encoding;
 	}
 
-	@Column(length=32)
 	public String getMultipartFileContentType() {
 		return internalMultipartFileContentType(multipartFileContentType);
 	}
@@ -142,7 +150,7 @@ public abstract class AbstractDocument
     /**
      * Allow subclasses to override how multipartFileContentType is determined.
      */
-    @Transient
+//    @Transient
     protected String internalMultipartFileContentType(String multipartFileContentType) {
     	return multipartFileContentType;
     }
@@ -150,7 +158,7 @@ public abstract class AbstractDocument
     /**
      * True if {@link #afterInternalNumberSet(long)} starts with "text".
      */
-    @Transient
+//    @Transient
     public boolean isText() {
     	if (getMultipartFileContentType().startsWith("text")) {
     		return true;
@@ -161,7 +169,7 @@ public abstract class AbstractDocument
     /**
      * True if {@link #afterInternalNumberSet(long)} starts with "text/html".
      */
-    @Transient
+//    @Transient
     public boolean isHtml() {
     	if (getMultipartFileContentType().startsWith("text/html")) {
     		return true;
@@ -172,7 +180,7 @@ public abstract class AbstractDocument
     /**
      * True if {@link #afterInternalNumberSet(long)} starts with "image".
      */
-    @Transient
+//    @Transient
     public boolean isImage() {
     	if (getMultipartFileContentType().startsWith("image")) {
     		return true;
@@ -183,7 +191,7 @@ public abstract class AbstractDocument
     /**
      * By default, a document can be changed.
      */
-    @Transient
+//    @Transient
     public boolean isLocked() {
     	return false;
     }
@@ -191,7 +199,7 @@ public abstract class AbstractDocument
     /**
      * True if docCode is empty.
      */
-    @Transient
+//    @Transient
     public boolean isKeyEmpty() {
     	if (this.getDocCode()!=null) {
     		return getDocCode().length()==0;
@@ -202,7 +210,6 @@ public abstract class AbstractDocument
     /**
      * Reference list of comma separated values.
      */
-    @Column(length=1024)
     public String getReferenceList() {
 		return referenceList;
 	}
@@ -213,7 +220,7 @@ public abstract class AbstractDocument
     /**
      * References as array.
      */
-    @Transient
+//    @Transient
     public String[] getReferencesAsArray() {
     	return StringListUtils.stringToArray(getReferenceList());
     }

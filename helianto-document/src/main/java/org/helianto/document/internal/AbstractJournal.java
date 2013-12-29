@@ -13,13 +13,12 @@
  * limitations under the License.
  */
 
-package org.helianto.document.base;
+package org.helianto.document.internal;
 
 import java.util.Date;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import org.helianto.core.form.PriorityForm;
 import org.helianto.core.internal.AbstractEventControl;
@@ -38,8 +37,15 @@ public abstract class AbstractJournal
 	implements Journal, PriorityForm {
 
     private static final long serialVersionUID = 1L;
+    
+    @DateTimeFormat(style="SS")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date actualStartDate;
+    
+    @DateTimeFormat(style="SS")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date actualEndDate;
+    
     private char priority;
 
     /** 
@@ -53,14 +59,12 @@ public abstract class AbstractJournal
     /**
      * Summary.
      */
-    @Transient
+//    @Transient
     public abstract String getSummary();
     
     /**
      * Actual start date.
      */
-    @DateTimeFormat(style="SS")
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getActualStartDate() {
         return internalActualStartDate();
     }
@@ -72,7 +76,7 @@ public abstract class AbstractJournal
      * Convenience to allow subclasses to change how actual start 
      * date is handled.
      */
-    @Transient
+//    @Transient
     protected Date internalActualStartDate() {
     	return this.actualStartDate;
     }
@@ -80,8 +84,6 @@ public abstract class AbstractJournal
     /**
      * Actual end date.
      */
-    @DateTimeFormat(style="SS")
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getActualEndDate() {
         return internalActualEndDate();
     }
@@ -93,7 +95,7 @@ public abstract class AbstractJournal
      * Convenience to allow subclasses to change how actual end 
      * date is handled.
      */
-    @Transient
+//    @Transient
     protected Date internalActualEndDate() {
     	return this.actualEndDate;
     }
@@ -101,7 +103,7 @@ public abstract class AbstractJournal
     /**
      * <<Transient>> Actual duration in milliseconds.
      */
-    @Transient
+//    @Transient
     public long getActualDuration() {
     	if (getActualStartDate()!=null && getActualEndDate()!=null) {
     		return getActualEndDate().getTime() - getActualStartDate().getTime();

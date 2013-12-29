@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.document.base;
+package org.helianto.document.internal;
 
 import java.util.Date;
 
@@ -30,11 +30,21 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.MappedSuperclass
-public abstract class AbstractPlan extends AbstractJournal implements Plan {
+public abstract class AbstractPlan 
+	extends AbstractJournal 
+	implements Plan 
+{
 
     private static final long serialVersionUID = 1L;
+    
+    @DateTimeFormat(style="SS")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date scheduledStartDate;
+    
+    @DateTimeFormat(style="SS")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date scheduledEndDate;
+    
     private long scheduledDuration;
 
 
@@ -46,8 +56,6 @@ public abstract class AbstractPlan extends AbstractJournal implements Plan {
     	setScheduledStartDate(getIssueDate());
     }
     
-    @DateTimeFormat(style="SS")
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getScheduledStartDate() {
         return this.scheduledStartDate;
     }
@@ -55,8 +63,6 @@ public abstract class AbstractPlan extends AbstractJournal implements Plan {
         this.scheduledStartDate = scheduledStartDate;
     }
     
-    @DateTimeFormat(style="SS")
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getScheduledEndDate() {
         return this.scheduledEndDate;
     }
@@ -73,6 +79,7 @@ public abstract class AbstractPlan extends AbstractJournal implements Plan {
     public void setScheduledDuration(long scheduledDuration) {
         this.scheduledDuration = scheduledDuration;
     }
+    
 }
 
 

@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.document.base;
+package org.helianto.document.internal;
 
 import java.io.IOException;
 
@@ -23,6 +23,8 @@ import javax.persistence.Transient;
 import org.helianto.core.def.Uploadable;
 import org.helianto.document.domain.Document;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Implements <code>Uploadable</code> interface.
@@ -36,7 +38,12 @@ public class AbstractContent
 	, Uploadable {
 
     private static final long serialVersionUID = 1L;
+    
+    @Lob
     private byte[] content;
+    
+	@Transient
+    private transient MultipartFile file;
     
 	/** 
 	 * Default constructor.
@@ -46,13 +53,13 @@ public class AbstractContent
     	setMultipartFileContentType("text/html");
     }
 
-    @Lob
     public byte[] getContent() {
         return this.content;
     }
     public void setContent(byte[] content) {
         this.content = content;
     }
+    @JsonIgnore
     public void setContent(String content) {
     	this.content = content.getBytes();
     }
@@ -60,7 +67,7 @@ public class AbstractContent
     /**
      * Helper method to get text content as String.
      */
-    @Transient
+//    @Transient
     public String getContentAsString() {
     	if (getContent()!=null) {
     		return new String(getContent());
@@ -71,7 +78,7 @@ public class AbstractContent
 		setContent(contentAsString);
 	}
     
-    @Transient
+//    @Transient
     public int getContentSize() {
     	if (getContent()!=null) {
     		return getContent().length;
@@ -79,13 +86,9 @@ public class AbstractContent
     	return 0;
     }
     
-    // transient
-    private transient MultipartFile file;
-
 	/**
 	 * <<Transient>> Convenience property to hold uploaded data.
 	 */
-	@Transient
 	public MultipartFile getFile() {
 		return file;
 	}
@@ -96,7 +99,7 @@ public class AbstractContent
 	/**
 	 * <<Transient>> Convenience method to read uploaded data.
 	 */
-	@Transient
+//	@Transient
 	public void processFile() throws IOException {
 		setContent(file.getBytes());
 		setMultipartFileContentType(file.getContentType());
