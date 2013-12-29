@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.inventory.domain.internal;
+package org.helianto.inventory.internal;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -26,9 +26,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
-import org.helianto.document.base.AbstractNumberedDocument;
+import org.helianto.document.internal.AbstractCustomDocument;
 import org.helianto.inventory.BlockingState;
 import org.helianto.inventory.domain.Inventory;
 import org.helianto.inventory.domain.InventoryTransaction;
@@ -43,11 +42,20 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public class AbstractInventoryDocument extends AbstractNumberedDocument {
+public class AbstractInventoryDocument 
+	extends AbstractCustomDocument 
+{
 
     private static final long serialVersionUID = 1L;
+    
+    @JsonBackReference 
+    @ManyToOne(cascade={CascadeType.ALL})
+    @JoinColumn(name="inventoryTransactionId")
     private InventoryTransaction inventoryTransaction;
+    
+	@Temporal(TemporalType.DATE)
  	private Date shipmentDate;
+ 	
 	private char blockingState;
 	
 	/**
@@ -64,9 +72,6 @@ public class AbstractInventoryDocument extends AbstractNumberedDocument {
     /**
 	 * The wrapped inventory transaction
 	 */
-    @JsonBackReference 
-    @ManyToOne(cascade={CascadeType.ALL})
-    @JoinColumn(name="inventoryTransactionId")
 	public InventoryTransaction getInventoryTransaction() {
 		return inventoryTransaction;
 	}
@@ -78,7 +83,7 @@ public class AbstractInventoryDocument extends AbstractNumberedDocument {
 	/**
 	 * List associated movements.
 	 */
-	@Transient
+//	@Transient
 	public List<Movement> getMovementList() {
 		List<Movement> movementList = new ArrayList<Movement>(getInventoryTransaction().getMovements());
 		return movementList;
@@ -87,7 +92,7 @@ public class AbstractInventoryDocument extends AbstractNumberedDocument {
 	/**
 	 * Add movement.
 	 */
-	@Transient
+//	@Transient
 	public boolean addMovement(Movement movement) {
 		movement.setInventoryTransaction(getInventoryTransaction());
 		calculate();
@@ -97,7 +102,7 @@ public class AbstractInventoryDocument extends AbstractNumberedDocument {
 	/**
 	 * Create and add movement.
 	 */
-	@Transient
+//	@Transient
 	protected <T extends Movement> T addMovement(Class<T> clazz, Inventory inventory, BigDecimal qty) {
 		try {
 			T movement = clazz.newInstance();
@@ -116,7 +121,6 @@ public class AbstractInventoryDocument extends AbstractNumberedDocument {
 	/**
 	 * Shipment date.
 	 */
-	@Temporal(TemporalType.DATE)
 	public Date getShipmentDate() {
 		return shipmentDate;
 	}

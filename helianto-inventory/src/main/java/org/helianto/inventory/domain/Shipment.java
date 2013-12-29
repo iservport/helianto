@@ -40,9 +40,17 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Shipment extends Movement implements Comparable<Shipment> {
 
 	private static final long serialVersionUID = 1L;
+	
+	@JsonBackReference 
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="processAgreementId")
 	private ProcessAgreement processAgreement;
+	
+	@Column(precision=4)
 	private int sequence;
-	private String info;
+	
+	@Column(length=512)
+	private String info = "";
 	
 	/**
 	 * Default constructor.
@@ -54,9 +62,6 @@ public class Shipment extends Movement implements Comparable<Shipment> {
 	/**
 	 * Process agreement.
 	 */
-	@JsonBackReference 
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="processAgreementId")
 	public ProcessAgreement getProcessAgreement() {
 		return processAgreement;
 	}
@@ -67,7 +72,6 @@ public class Shipment extends Movement implements Comparable<Shipment> {
 	/**
 	 * Process agreement.
 	 */
-	@Column(precision=4)
 	public int getSequence() {
 		return sequence;
 	}
@@ -78,7 +82,6 @@ public class Shipment extends Movement implements Comparable<Shipment> {
 	/**
 	 * Additional information concerning the shipment.
 	 */
-	@Column(length=512)
 	public String getInfo() {
 		return info;
 	}

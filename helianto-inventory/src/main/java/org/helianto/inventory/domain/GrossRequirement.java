@@ -21,11 +21,10 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.inventory.RequirementSign;
-import org.helianto.inventory.domain.internal.AbstractRequirement;
+import org.helianto.inventory.internal.AbstractRequirement;
 
 
 /**
@@ -56,12 +55,12 @@ public class GrossRequirement extends AbstractRequirement {
 		setRequirementSignAsEnum(RequirementSign.INCREMENT);
 	}
 
-	@Transient
+//	@Transient
 	public String getInternalNumberKey() {
 		return "GROSSREQ";
 	}
 
-    @Transient
+//    @Transient
     public int getStartNumber() {
     	return 1;
     }

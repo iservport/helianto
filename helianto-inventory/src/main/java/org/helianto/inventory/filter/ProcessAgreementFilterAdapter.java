@@ -24,7 +24,9 @@ import org.helianto.inventory.form.ProcessAgreementForm;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ProcessAgreementFilterAdapter extends AbstractInternalFilterAdapter<ProcessAgreementForm> {
+public class ProcessAgreementFilterAdapter 
+	extends AbstractInternalFilterAdapter<ProcessAgreementForm> 
+{
 
 	private static final long serialVersionUID = 1L;
 

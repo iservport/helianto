@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.inventory.domain.internal;
+package org.helianto.inventory.internal;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -27,7 +27,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Unit;
@@ -52,38 +51,27 @@ public abstract class AbstractRequirement
 	implements Sequenceable 
 {
 
-//    /**
-//     * Internal factory method.
-//     * 
-//     * @param clazz
-//     * @param part
-//     * @param requirementDate
-//     */
-//    public static <T extends AbstractRequirement> T internalRequirementFactory(Class<T> clazz, Entity entity, Date requirementDate) {
-//        T requirement;
-//        try {
-//            requirement = clazz.newInstance();
-//            requirement.setEntity(entity);
-//            requirement.setRequirementDate(requirementDate);
-//            requirement.setResolution(RequirementState.FORECAST.getValue());
-//            return requirement;
-//        } catch (Exception e) {
-//            throw new IllegalArgumentException("Unable to instantiate "+clazz);
-//        }
-//    }
-//
     private static final long serialVersionUID = 1L;
+    
+    @JsonBackReference 
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name="documentId", nullable=true)
     protected ProcessDocument document;
-    protected Date requirementDate;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date requirementDate = new Date();
+    
+    @Column(precision=10, scale=4)
     protected BigDecimal requirementAmount = BigDecimal.ZERO;
-    protected int requirementSign;
+    
+    @Column(precision=1, scale=0)
+    protected int requirementSign = RequirementSign.INCREMENT.getValue();
 
     /** 
      * Constructor 
 	 */
     public AbstractRequirement() {
     	super();
-    	setRequirementDate(new Date());
     	setResolution(RequirementState.FORECAST.getValue());
     }
 
@@ -106,9 +94,6 @@ public abstract class AbstractRequirement
      * Usually a part or a process operation.
      * </p>
      */
-    @JsonBackReference 
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name="documentId", nullable=true)
     public ProcessDocument getProcessDocument() {
     	ProcessDocument externalProcessDocument = resolveExternalProcessDocument();
     	if (externalProcessDocument!=null) {
@@ -116,25 +101,25 @@ public abstract class AbstractRequirement
     	}
         return this.document;
     }
-    @Transient
+//    @Transient
     protected ProcessDocument resolveExternalProcessDocument() {
     	return null;
     }
-    @Transient
+//    @Transient
     public String getDocCode() {
     	if (getProcessDocument()!=null) {
     		return getProcessDocument().getDocCode();
     	}
         return "";
     }
-    @Transient
+//    @Transient
     public String getDocName() {
     	if (getProcessDocument()!=null) {
     		return getProcessDocument().getDocName();
     	}
         return "";
     }
-    @Transient
+//    @Transient
     public String[] getColorChain() {
     	if (getProcessDocument()!=null && getProcessDocument() instanceof ProcessDocument) {
     		return ((ProcessDocument) getProcessDocument()).getProcessColorChain();
@@ -148,19 +133,18 @@ public abstract class AbstractRequirement
     /**
      * Requirement date.
      */
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getRequirementDate() {
         return this.requirementDate;
     }
-    @Transient
+//    @Transient
     public String getRequirementDateTimeAsString() {
     	return SimpleDateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, getLocale()).format(getRequirementDate());
     }
-    @Transient
+//    @Transient
     public String getRequirementDateAsString() {
     	return SimpleDateFormat.getDateInstance(DateFormat.SHORT, getLocale()).format(getRequirementDate());
     }
-    @Transient
+//    @Transient
     public String getRequirementTimeAsString() {
     	return SimpleDateFormat.getTimeInstance(DateFormat.SHORT, getLocale()).format(getRequirementDate());
     }
@@ -171,7 +155,6 @@ public abstract class AbstractRequirement
     /**
      * Requirement amount.
      */
-    @Column(precision=10, scale=4)
     public BigDecimal getRequirementAmount() {
         return this.requirementAmount;
     }
@@ -182,7 +165,7 @@ public abstract class AbstractRequirement
     /**
      * <<Transient>> Unit.
      */
-    @Transient
+//    @Transient
     public Unit getUnit() {
 		return getProcessDocument().getUnit();
 	}
@@ -203,7 +186,6 @@ public abstract class AbstractRequirement
     /**
      * Signal input or output.
      */
-    @Column(precision=1, scale=0)
     public int getRequirementSign() {
         return this.requirementSign;
     }

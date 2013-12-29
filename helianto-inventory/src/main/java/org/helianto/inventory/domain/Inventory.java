@@ -15,7 +15,6 @@
 
 package org.helianto.inventory.domain;
 
-import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.DiscriminatorColumn;
@@ -25,14 +24,12 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.document.domain.ProcessDocument;
-import org.helianto.inventory.RequirementSign;
 import org.helianto.inventory.RequirementState;
-import org.helianto.inventory.domain.internal.AbstractRequirement;
+import org.helianto.inventory.internal.AbstractRequirement;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -64,14 +61,17 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Inventory extends AbstractRequirement {
 	
 	private static final long serialVersionUID = 1L;
+	
+	@JsonManagedReference("inventory")
+	@OneToMany(mappedBy="inventory")
 	private Set<Movement> movements;
 	
-	@Transient
+//	@Transient
 	public String getInternalNumberKey() {
 		return "INVENT";
 	}
 
-    @Transient
+//    @Transient
     public int getStartNumber() {
     	return 1;
     }
@@ -81,8 +81,6 @@ public class Inventory extends AbstractRequirement {
 	 */
 	public Inventory() {
 		super();
-		setRequirementSignAsEnum(RequirementSign.INCREMENT);
-		setRequirementDate(new Date());
 		setResolution(RequirementState.FORECAST.getValue());
 	}
 
@@ -112,8 +110,6 @@ public class Inventory extends AbstractRequirement {
 	/**
 	 * Set of movements.
 	 */
-	@JsonManagedReference("inventory")
-	@OneToMany(mappedBy="inventory")
 	public Set<Movement> getMovements() {
 		return movements;
 	}

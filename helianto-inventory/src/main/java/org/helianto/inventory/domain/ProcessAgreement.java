@@ -31,14 +31,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.inventory.AgreementLevel;
 import org.helianto.inventory.AgreementState;
 import org.helianto.inventory.ProcurementOption;
-import org.helianto.inventory.domain.internal.AbstractRequirement;
+import org.helianto.inventory.internal.AbstractRequirement;
 import org.helianto.partner.domain.Partner;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -68,12 +67,26 @@ public class ProcessAgreement
 	extends AbstractRequirement {
 
 	private static final long serialVersionUID = 1L;
+	
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="partnerId", nullable=true)
 	private Partner partner;
-	private String agreementDesc;
+	
+    @Column(length=512)
+	private String agreementDesc = "";
+	
 	private Character agreementLevel = AgreementState.PENDING.getValue();
+	
+	@Column(precision=10, scale=3)
 	private BigDecimal agreementPrice = BigDecimal.ZERO;
+	
 	private int minimalOrderDuration;
+	
 	private Character procurementOption = ProcurementOption.UNRESOLVED.getValue();
+	
+	@JsonManagedReference 
+	@OneToMany(mappedBy="processAgreement", cascade=CascadeType.ALL)
+	@MapKey(name="taxCode")
 	private Map<String, Tax> taxes = new HashMap<String, Tax>(); 
 
 	/** 
@@ -105,12 +118,12 @@ public class ProcessAgreement
     	setPartner(partner);
     }
 
-    @Transient
+//    @Transient
 	public String getInternalNumberKey() {
 		return "AGREEM";
 	}
 
-    @Transient
+//    @Transient
     public int getStartNumber() {
     	return 1;
     }
@@ -118,8 +131,6 @@ public class ProcessAgreement
     /**
      * Customer or supplier.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="partnerId", nullable=true)
     public Partner getPartner() {
         return this.partner;
     }
@@ -130,7 +141,7 @@ public class ProcessAgreement
     /**
      * <<Transient>> Customer or supplier alias.
      */
-    @Transient
+//    @Transient
     public String getPartnerAlias() {
     	if (partner==null) return "";
         return this.partner.getEntityAlias();
@@ -139,7 +150,6 @@ public class ProcessAgreement
     /**
      * Description.
      */
-    @Column(length=512)
     public String getAgreementDesc() {
 		return agreementDesc;
 	}
@@ -165,7 +175,7 @@ public class ProcessAgreement
     /**
      * True if approved.
      */
-    @Transient
+//    @Transient
     public boolean isApproved() {
     	if (getResolution()==AgreementState.APPROVED.getValue()) {
     		return true;
@@ -189,7 +199,6 @@ public class ProcessAgreement
 	/**
 	 * Agreement price.
 	 */
-	@Column(precision=10, scale=3)
 	public BigDecimal getAgreementPrice() {
 		return agreementPrice;
 	}
@@ -223,9 +232,6 @@ public class ProcessAgreement
 	/**
 	 * A map of taxes.
 	 */
-	@JsonManagedReference 
-	@OneToMany(mappedBy="processAgreement", cascade=CascadeType.ALL)
-	@MapKey(name="taxCode")
 	public Map<String, Tax> getTaxes() {
 		return taxes;
 	}

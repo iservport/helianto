@@ -25,7 +25,6 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.KeyType;
@@ -53,39 +52,33 @@ public class Tax
 	/**
 	 * <<Transient>> Delegate to the actual key owner.
 	 */
-	@Transient
+//	@Transient
 	@Override
 	protected Object getKeyOwner() {
 		return getProcessAgreement();
 	}   
 
-    /**
-     * Factory method.
-     * 
-     * @param processAgreement
-     * @param keyType
-     */
-    public static Tax taxFactory(ProcessAgreement processAgreement, KeyType keyType) {
-    	Tax tax = new Tax();
-        tax.setProcessAgreement(processAgreement);
-        tax.setKeyType(keyType);
-        return tax;
-    }
-
     private static final long serialVersionUID = 1L;
+    
+    @JsonBackReference 
+    @ManyToOne(cascade={CascadeType.ALL})
+    @JoinColumn(name="processAgreementId")
     private ProcessAgreement processAgreement;
-    private BigDecimal taxBaseValue;
-    private BigDecimal taxRate;
-    private BigDecimal taxValue;
+    
+    @Column(length=20)
+    private String taxCode = "";
+    
+    private BigDecimal taxBaseValue = BigDecimal.ZERO;
+    
+    private BigDecimal taxRate = BigDecimal.ZERO;
+    
+    private BigDecimal taxValue = BigDecimal.ZERO;
 
 	/** 
      * Default constructor.
      */
     public Tax() {
     	super();
-    	taxBaseValue = BigDecimal.ZERO;
-    	taxRate = BigDecimal.ZERO;
-    	taxValue = BigDecimal.ZERO;
     }
     
     /**
@@ -110,23 +103,19 @@ public class Tax
 	 * class (unlike Hibernate).
 	 * </p>
 	 */
-    @Column(length=20)
 	public String getTaxCode() {
     	if (getKeyType()!=null) {
     		return getKeyType().getKeyCode();
     	}
-		return "";
+		return taxCode;
 	}
 	public void setTaxCode(String taxCode) {
-		// this field is immutable
+		this.taxCode = taxCode;
 	}
 
     /**
      * Process agreement.
      */
-    @JsonBackReference 
-    @ManyToOne(cascade={CascadeType.ALL})
-    @JoinColumn(name="processAgreementId")
     public ProcessAgreement getProcessAgreement() {
 		return processAgreement;
 	}
@@ -159,7 +148,7 @@ public class Tax
     /**
      * <<Transient>> Actual tax calculation.
      */
-	@Transient
+//	@Transient
 	public Tax calculate() {
 		return setTaxValue(getTaxBaseValue().multiply(getTaxRate()).divide(new BigDecimal(100)));
 	}

@@ -28,7 +28,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
@@ -54,16 +53,30 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Movement implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	
+    @Version
 	private int version;
+	
+    @JsonBackReference("inventoryTransaction")
+    @ManyToOne(cascade={CascadeType.ALL})
+    @JoinColumn(name="inventoryTransactionId")
 	private InventoryTransaction inventoryTransaction;
+	
+    @JsonBackReference("inventory")
+    @ManyToOne(cascade={CascadeType.ALL})
+    @JoinColumn(name="inventoryId")
 	private Inventory inventory;
+	
 	private BigDecimal quantity = BigDecimal.ZERO;
 
 	/**
 	 * Default constructor.
 	 */
 	public Movement() {
+		super();
 	}
 
 	/**
@@ -102,7 +115,6 @@ public class Movement implements Serializable {
 	/**
 	 * Auto generated primary key.
 	 */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}
@@ -113,7 +125,6 @@ public class Movement implements Serializable {
     /**
      * Version.
      */
-    @Version
     public int getVersion() {
         return this.version;
     }
@@ -124,9 +135,6 @@ public class Movement implements Serializable {
 	/**
 	 * Inventory transaction.
 	 */
-    @JsonBackReference("inventoryTransaction")
-    @ManyToOne(cascade={CascadeType.ALL})
-    @JoinColumn(name="inventoryTransactionId")
 	public InventoryTransaction getInventoryTransaction() {
 		return inventoryTransaction;
 	}
@@ -137,9 +145,6 @@ public class Movement implements Serializable {
 	/**
 	 * Source or destination inventory.
 	 */
-    @JsonBackReference("inventory")
-    @ManyToOne(cascade={CascadeType.ALL})
-    @JoinColumn(name="inventoryId")
 	public Inventory getInventory() {
 		return inventory;
 	}
@@ -161,7 +166,7 @@ public class Movement implements Serializable {
 	/**
 	 * Movement direction.
 	 */
-	@Transient
+//	@Transient
 	public MovementDirection getDirection() {
 		return MovementDirection.fromValue(getQuantity());
 	}

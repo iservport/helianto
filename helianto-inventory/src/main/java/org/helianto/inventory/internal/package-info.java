@@ -4,4 +4,4 @@
  * @author mauriciofernandesdecastro
  *
  */
-package org.helianto.inventory.domain.internal;
+package org.helianto.inventory.internal;

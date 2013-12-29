@@ -23,7 +23,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.Entity;
@@ -48,10 +47,21 @@ public class Card
 {
 	
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @JsonBackReference 
+    @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="cardSetId", nullable=true)
     private CardSet cardSet;
+    
+    @Column(length=15)
     private String cardLabel;
+    
+    @Column(precision=4, scale=0)
     private int cardNumber;
+    
 	private char cardState = CardState.EMPTY.getValue();
 
     /** 
@@ -83,7 +93,6 @@ public class Card
     	super();
     	setCardSet(cardSet);
         setCardLabel(cardNumber);
-        setCardStateAsEnum(CardState.EMPTY);
     }
 
     /**
@@ -107,7 +116,6 @@ public class Card
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -118,9 +126,6 @@ public class Card
 	/**
 	 * <<NaturalKey>>Card set.
 	 */
-    @JsonBackReference 
-    @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="cardSetId", nullable=true)
 	public CardSet getCardSet() {
 		return cardSet;
 	}
@@ -131,7 +136,6 @@ public class Card
     /**
      * Card label.
      */
-    @Column(length=15)
     public String getCardLabel() {
     	return this.cardLabel;
     }
@@ -158,7 +162,7 @@ public class Card
     /**
      * Owning entity.
      */
-    @Transient
+//    @Transient
     public Entity getEntity() {
     	if (this.cardSet!=null) {
     		return this.cardSet.getEntity();
@@ -168,7 +172,7 @@ public class Card
 	/**
 	 * Card process inherited from a card set.
 	 */
-    @Transient
+//    @Transient
 	public ProcessDocument getProcess() {
     	if (this.cardSet!=null) {
     		return this.cardSet.getProcess();
@@ -179,7 +183,7 @@ public class Card
     /**
 	 * Card type inherited from a card set.
 	 */
-    @Transient
+//    @Transient
 	public char getCardType() {
     	if (this.cardSet!=null) {
     		return this.cardSet.getCardType();
@@ -189,7 +193,6 @@ public class Card
     /**
      * Card number.
      */
-    @Column(precision=4, scale=0)
     public int getCardNumber() {
         return this.cardNumber;
     }
@@ -200,7 +203,7 @@ public class Card
      * Convert the human readable representation of the card to 
      * an integer unique to the card range.
      */
-    @Transient
+//    @Transient
 	public static int getInternalNumber(String cardLabel) {
 		try {
 			return Integer.parseInt(cardLabel.substring(5));

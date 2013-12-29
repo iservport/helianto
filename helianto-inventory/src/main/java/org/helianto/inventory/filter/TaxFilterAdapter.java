@@ -2,74 +2,46 @@ package org.helianto.inventory.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilterAdapter;
-import org.helianto.inventory.domain.Tax;
+import org.helianto.inventory.form.TaxForm;
 
 /**
  * Tax filter adapter.
  * 
  * @author mauriciofernandesdecastro
  */
-public class TaxFilterAdapter extends AbstractFilterAdapter<Tax> {
+public class TaxFilterAdapter extends AbstractFilterAdapter<TaxForm> {
 
 	private static final long serialVersionUID = 1L;
-	private String keyCode;
 
 	/**
 	 * Default constructor.
 	 * 
-	 * @param filter
+	 * @param form
 	 */
-	public TaxFilterAdapter(Tax filter) {
-		super(filter);
-		setKeyCode("");
-	}
-	
-	/**
-	 * Key code constructor.
-	 * 
-	 * @param keyCode
-	 * @param filter
-	 */
-	public TaxFilterAdapter(String keyCode, Tax filter) {
-		super(filter);
-		setKeyCode(keyCode);
+	public TaxFilterAdapter(TaxForm form) {
+		super(form);
 	}
 	
 	@Override
 	public boolean isSelection() {
-		return getForm().getKeyType()!=null;
-	}
-
-	public void reset() { }
-	
-	@Override
-	public boolean preProcessFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		boolean connect = super.preProcessFilter(mainCriteriaBuilder);
-		if (getForm().getProcessAgreement()!=null) {
-			appendEqualFilter("processAgreement.id", getForm().getProcessAgreement().getId(), mainCriteriaBuilder);
-			connect = true;
-		}
-		return connect;
+		return getForm().getProcessAgreementId()>0 && getForm().getKeyTypeId()>0;
 	}
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("keyType.id", getForm().getKeyType().getId(), mainCriteriaBuilder);
+		appendEqualFilter("processAgreement.id", getForm().getProcessAgreementId(), mainCriteriaBuilder);
+		appendEqualFilter("keyType.id", getForm().getKeyTypeId(), mainCriteriaBuilder);
 	}
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("keyType.keyCode", getKeyCode(), mainCriteriaBuilder);
+		doSelect(mainCriteriaBuilder);
+		appendEqualFilter("keyType.keyCode", getForm().getKeyCode(), mainCriteriaBuilder);
 	}
 	
-	/**
-	 * Key code filter.
-	 */
-	public String getKeyCode() {
-		return keyCode;
+	@Override
+	public String getOrderByString() {
+		return "keyCode";
 	}
-	public void setKeyCode(String keyCode) {
-		this.keyCode = keyCode;
-	}
-
+	
 }

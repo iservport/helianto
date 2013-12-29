@@ -101,7 +101,7 @@ public class CardMgrImpl
 	 * @param cardLabel
 	 */
 	protected Card doCreateCard(CardSet cardSet, String cardLabel) throws InvalidCardException {
-		return cardSet.cardFactory(cardLabel);
+		return new Card(cardSet, cardLabel);
 	}
 	
 	@Transactional

@@ -21,11 +21,10 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.Entity;
-import org.helianto.inventory.domain.internal.AbstractRequirement;
+import org.helianto.inventory.internal.AbstractRequirement;
 
 
 /**
@@ -48,12 +47,12 @@ public class ProcessRequirement
 
 	private static final long serialVersionUID = 1L;
 
-	@Transient
+//	@Transient
 	public String getInternalNumberKey() {
 		return "PROCREQ";
 	}
 	
-    @Transient
+//    @Transient
     public int getStartNumber() {
     	return 1;
     }
