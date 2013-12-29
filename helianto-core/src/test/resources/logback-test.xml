@@ -24,6 +24,7 @@
   <logger name="org.hibernate.jdbc" level="OFF"/>
   <logger name="org.hibernate.jdbc.AbstractBatcher" level="OFF"/>
   <logger name="org.hibernate.impl" level="OFF"/>
+  <logger name="org.hibernate.cfg.annotations.CollectionBinder" level="DEBUG"/>
   <logger name="org.aopalliance" level="OFF"/>
 
   <root level="INFO">          
