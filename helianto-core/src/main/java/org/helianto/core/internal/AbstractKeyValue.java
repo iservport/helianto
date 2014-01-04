@@ -32,7 +32,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public abstract class AbstractKeyValue implements java.io.Serializable {
+public abstract class AbstractKeyValue 
+	implements java.io.Serializable 
+{
 
     private static final long serialVersionUID = 1L;
     

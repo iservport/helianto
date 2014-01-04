@@ -11,12 +11,7 @@ import org.helianto.core.form.PrivateEntityIdForm;
 public interface PartnerCategoryForm 
 	extends CategoryIdForm
 	, PrivateEntityIdForm
-	
+	, PartnerIdForm
 {
 	
-	/**
-	 * Partner.
-	 */
-	int getPartnerId();
-
 }

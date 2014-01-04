@@ -38,18 +38,18 @@ public class Account
     private static final long serialVersionUID = 1L;
     
     @Column(length=20)
-    private String accountCode;
+    private String accountCode = "";
     
-    @Column(length=32)
-    private String accountName;
+    @Column(length=64)
+    private String accountName = "";
     
-    private char accountType;
+    private char accountType = AccountType.ASSET.getValue();
 
     /** 
      * Default constructor.
      */
     public Account() {
-        setAccountTypeAsEnum(AccountType.ASSET);
+        super();
     }
 
     /** 

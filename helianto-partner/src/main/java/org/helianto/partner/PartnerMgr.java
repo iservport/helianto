@@ -34,6 +34,7 @@ import org.helianto.partner.domain.nature.Division;
 import org.helianto.partner.form.ContactGroupForm;
 import org.helianto.partner.form.PartnerCategoryForm;
 import org.helianto.partner.form.PartnerForm;
+import org.helianto.partner.form.PartnerKeyForm;
 import org.helianto.partner.form.PartnerPhoneForm;
 import org.helianto.partner.form.PrivateAddressForm;
 import org.helianto.partner.form.PrivateEntityForm;
@@ -145,6 +146,13 @@ public interface PartnerMgr {
      * @param partner
      */
 	Map<String, PartnerKey> loadPartnerKeyMap(Partner partner);
+	
+    /**
+     * Find <code>PartnerKey</code>.
+     * 
+     * @param form
+     */
+	List<PartnerKey> findPartnerKeys(PartnerKeyForm form);
 	
     /**
      * Write <code>PartnerKey</code> to the datastore.

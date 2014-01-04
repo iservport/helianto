@@ -23,7 +23,9 @@ import javax.persistence.MappedSuperclass;
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public abstract class AbstractKeyStringValue extends AbstractKeyValue {
+public abstract class AbstractKeyStringValue 
+	extends AbstractKeyValue 
+{
 
     private static final long serialVersionUID = 1L;
     

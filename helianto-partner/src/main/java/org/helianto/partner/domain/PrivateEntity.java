@@ -31,7 +31,6 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.PublicEntity;
 import org.helianto.core.number.Sequenceable;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
@@ -60,7 +59,6 @@ public class PrivateEntity
 
     private static final long serialVersionUID = 1L;
     
-    @JsonBackReference("publicEntity")
     @ManyToOne
     @JoinColumn(name="publicEntityId", nullable=true)
     private PublicEntity publicEntity;

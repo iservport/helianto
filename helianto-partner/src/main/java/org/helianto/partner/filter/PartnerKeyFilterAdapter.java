@@ -17,14 +17,16 @@ package org.helianto.partner.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.base.AbstractFilterAdapter;
-import org.helianto.partner.form.PrivateEntityKeyForm;
+import org.helianto.partner.form.PartnerKeyForm;
 
 /**
- * Private entity key filter adapter.
+ * Partner key filter adapter.
  * 
  * @author mauriciofernandesdecastro
  */
-public class PrivateEntityKeyFormFilterAdapter extends AbstractFilterAdapter<PrivateEntityKeyForm> {
+public class PartnerKeyFilterAdapter 
+	extends AbstractFilterAdapter<PartnerKeyForm> 
+{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -33,24 +35,25 @@ public class PrivateEntityKeyFormFilterAdapter extends AbstractFilterAdapter<Pri
 	 * 
 	 * @param form
 	 */
-	public PrivateEntityKeyFormFilterAdapter(PrivateEntityKeyForm form) {
+	public PartnerKeyFilterAdapter(PartnerKeyForm form) {
 		super(form);
 	}
 	
 	public boolean isSelection() {
-		return getForm().getPrivateEntityId()>0 
+		return getForm().getPartnerId()>0 
 				&& getForm().getKeyTypeId()>0;
 	}
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("privateEntity.id", getForm().getPrivateEntityId(), mainCriteriaBuilder);
+		appendEqualFilter("partner.id", getForm().getPartnerId(), mainCriteriaBuilder);
 		appendEqualFilter("keyType.id", getForm().getKeyTypeId(), mainCriteriaBuilder);
 	}
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		doSelect(mainCriteriaBuilder);
+		appendEqualFilter("keyType.keyCode", getForm().getKeyCode(), mainCriteriaBuilder);
 		appendEqualFilter("keyValue", getForm().getKeyValue(), mainCriteriaBuilder);
 	}
 	

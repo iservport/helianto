@@ -11,12 +11,10 @@ import org.helianto.partner.domain.PrivateEntity;
  * @author mauriciofernandesdecastro
  */
 public interface PrivateEntityKeyForm 
-
 	extends 
 	  ParentForm<PrivateEntity>
 	, PrivateEntityIdForm
 	, KeyStringForm
-	
 {
 
 }

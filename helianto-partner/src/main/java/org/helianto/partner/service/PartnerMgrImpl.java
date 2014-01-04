@@ -53,6 +53,7 @@ import org.helianto.partner.domain.nature.TransportPartner;
 import org.helianto.partner.filter.ContactGroupFormFilterAdapter;
 import org.helianto.partner.filter.PartnerCategoryFormFilterAdapter;
 import org.helianto.partner.filter.PartnerFormFilterAdapter;
+import org.helianto.partner.filter.PartnerKeyFilterAdapter;
 import org.helianto.partner.filter.PartnerPhoneFormFilterAdapter;
 import org.helianto.partner.filter.PrivateAddressFormFilterAdapter;
 import org.helianto.partner.filter.PrivateEntityFormFilterAdapter;
@@ -61,6 +62,7 @@ import org.helianto.partner.filter.PrivateSegmentFilterAdapter;
 import org.helianto.partner.form.ContactGroupForm;
 import org.helianto.partner.form.PartnerCategoryForm;
 import org.helianto.partner.form.PartnerForm;
+import org.helianto.partner.form.PartnerKeyForm;
 import org.helianto.partner.form.PartnerPhoneForm;
 import org.helianto.partner.form.PrivateAddressForm;
 import org.helianto.partner.form.PrivateEntityForm;
@@ -239,6 +241,16 @@ public class PartnerMgrImpl implements PartnerMgr {
 			partnerKeyMap.put(partnerKey.getKeyType().getKeyCode(), partnerKey);
 		}
 		return partnerKeyMap;
+	}
+
+	@Transactional(readOnly=true)
+	public List<PartnerKey> findPartnerKeys(PartnerKeyForm form) {
+		PartnerKeyFilterAdapter filter = new PartnerKeyFilterAdapter(form);
+		List<PartnerKey> partnerKeyList = (List<PartnerKey>) partnerKeyRepository.find(filter);
+    	if (logger.isDebugEnabled() && partnerKeyList!=null) {
+    		logger.debug("Found partner key list of size {}", partnerKeyList.size());
+    	}
+		return partnerKeyList;
 	}
 
 	@Transactional

@@ -39,7 +39,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name="prtnr_phone2",
     uniqueConstraints = {@UniqueConstraint(columnNames={"partnerRegistryId", "sequence"})}
 )
-public class PartnerPhone implements java.io.Serializable {
+public class PartnerPhone 
+	implements java.io.Serializable 
+{
 
     private static final long serialVersionUID = 1L;
     

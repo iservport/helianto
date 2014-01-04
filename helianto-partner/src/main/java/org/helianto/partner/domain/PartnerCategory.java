@@ -61,7 +61,6 @@ public class PartnerCategory
     @JoinColumn(name="partnerId", nullable=true)
     private Partner partner;
     
-    @JsonBackReference("category")
     @ManyToOne
     @JoinColumn(name="categoryId", nullable=true)
     private Category category;

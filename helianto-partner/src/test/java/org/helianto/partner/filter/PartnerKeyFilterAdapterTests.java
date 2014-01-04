@@ -17,6 +17,7 @@ package org.helianto.partner.filter;
 
 import static org.junit.Assert.assertEquals;
 
+import org.helianto.partner.form.PartnerKeyForm;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,12 +27,13 @@ import org.mockito.Mockito;
  * 
  * @author mauriciofernandesdecastro
  */
-public class PrivateEntityKeyFilterAdapterTests {
+public class PartnerKeyFilterAdapterTests {
 	
     public static String OB = "order by alias.keyType.keyCode ";
-    public static String C1 = "alias.privateEntity.id = 10 ";
+    public static String C1 = "alias.partner.id = 10 ";
     public static String C2 = "alias.keyType.id = 30 ";
-    public static String C3 = "alias.keyValue = 'VALUE' ";
+    public static String C3 = "alias.keyType.keyCode = 'CODE' ";
+    public static String C4 = "alias.keyValue = 'VALUE' ";
 
     @Test
     public void empty() {
@@ -40,30 +42,36 @@ public class PrivateEntityKeyFilterAdapterTests {
     
     @Test
     public void select() {
-    	Mockito.when(form.getPrivateEntityId()).thenReturn(10);
+    	Mockito.when(form.getPartnerId()).thenReturn(10);
     	Mockito.when(form.getKeyTypeId()).thenReturn(30);
         assertEquals(C1+"AND "+C2, filter.createCriteriaAsString());
     }
     
     @Test
     public void parent() {
-    	Mockito.when(form.getPrivateEntityId()).thenReturn(10);
+    	Mockito.when(form.getPartnerId()).thenReturn(10);
         assertEquals(C1+OB, filter.createCriteriaAsString());
+    }
+    
+    @Test
+    public void keyCode() {
+    	Mockito.when(form.getKeyCode()).thenReturn("CODE");
+        assertEquals(C3+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void keyValue() {
     	Mockito.when(form.getKeyValue()).thenReturn("VALUE");
-        assertEquals(C3+OB, filter.createCriteriaAsString());
+        assertEquals(C4+OB, filter.createCriteriaAsString());
     }
     
-    private PrivateEntityKeyFormFilterAdapter filter;
-    private CompositeTestPartnerForm form;
+    private PartnerKeyFilterAdapter filter;
+    private PartnerKeyForm form;
     
     @Before
     public void setUp() {
-    	form = Mockito.mock(CompositeTestPartnerForm.class);
-    	filter = new PrivateEntityKeyFormFilterAdapter(form);
+    	form = Mockito.mock(PartnerKeyForm.class);
+    	filter = new PartnerKeyFilterAdapter(form);
     }
     
     @After

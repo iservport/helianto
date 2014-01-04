@@ -33,7 +33,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name="prtnr_partnerKey",
     uniqueConstraints = {@UniqueConstraint(columnNames={"partnerId", "keyTypeId"})}
 )
-public class PartnerKey extends AbstractKeyStringValue {
+public class PartnerKey 
+	extends AbstractKeyStringValue 
+{
 
 	/**
 	 * <<Transient>> Delegate to the actual key owner.
