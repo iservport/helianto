@@ -191,12 +191,14 @@ public class PublicEntity
     /**
      * Short name.
      */
-//    @Transient
     public String getShortName() {
-    	if (getEntityName().length() > 20) {
-            return getEntityName().substring(0, 20)+"...";
+    	if (getEntityName()!=null) {
+        	if (getEntityName().length() > 20) {
+                return getEntityName().substring(0, 20)+"...";
+        	}
+            return getEntityName();
     	}
-        return getEntityName();
+    	return "";
     }
     
     /**
