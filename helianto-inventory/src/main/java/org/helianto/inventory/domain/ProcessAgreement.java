@@ -19,7 +19,6 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -68,7 +67,7 @@ public class ProcessAgreement
 
 	private static final long serialVersionUID = 1L;
 	
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="partnerId", nullable=true)
 	private Partner partner;
 	
@@ -85,7 +84,7 @@ public class ProcessAgreement
 	private Character procurementOption = ProcurementOption.UNRESOLVED.getValue();
 	
 	@JsonManagedReference 
-	@OneToMany(mappedBy="processAgreement", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="processAgreement")
 	@MapKey(name="taxCode")
 	private Map<String, Tax> taxes = new HashMap<String, Tax>(); 
 

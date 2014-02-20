@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.core.security;
+package org.helianto.user;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;

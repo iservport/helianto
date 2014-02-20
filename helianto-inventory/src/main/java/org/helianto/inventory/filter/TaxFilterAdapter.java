@@ -41,7 +41,7 @@ public class TaxFilterAdapter extends AbstractFilterAdapter<TaxForm> {
 	
 	@Override
 	public String getOrderByString() {
-		return "keyCode";
+		return "keyType.keyCode";
 	}
 	
 }

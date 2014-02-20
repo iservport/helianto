@@ -38,7 +38,6 @@ import org.helianto.document.internal.AbstractCustomDocument;
 public class Document 
 	extends AbstractCustomDocument 
 	implements Comparable<Document> 
-
 {
 
     private static final long serialVersionUID = 1L;

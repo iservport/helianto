@@ -110,7 +110,7 @@ public class Entity
     
     @JsonIgnore
     @JsonBackReference 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="operatorId", nullable=true)
     private Operator operator;
     
@@ -138,7 +138,8 @@ public class Entity
 	@Column(length=1024)
     private String summary = "";
     
-    private Identity manager;
+	@Transient
+	private Identity manager;
     
 	@Column(length=128)
     private String externalLogoUrl = "";
@@ -221,7 +222,6 @@ public class Entity
         this.operator = operator;
     }
     
-//    @Transient
     public int getContextId() {
     	if (getOperator()!=null) {
     		return getOperator().getId();
@@ -229,7 +229,6 @@ public class Entity
     	return 0;
     }
     
-//    @Transient
     public Locale getLocale() {
     	// TODO create locale field.
     	return Locale.getDefault();
@@ -289,7 +288,6 @@ public class Entity
 	 * 
 	 * @param nature
 	 */
-//	@Transient
 	public void setNatureIfDoesNotExist(char nature) {
 		if (getNature()==null) {
 			setNature(Character.toString(nature));
@@ -307,7 +305,6 @@ public class Entity
 	 * 
 	 * @param nature
 	 */
-//	@Transient
 	public boolean hasNature(char nature) {
 		return (getNature()!=null && getNature().indexOf(nature)>=0);
 	}
@@ -315,7 +312,6 @@ public class Entity
 	/**
 	 * <<Transient>> Nature as array.
 	 */
-//	@Transient
 	public String[] getNatureAsArray() {
 		return StringListUtils.stringToArray(getNature());
 	}
@@ -340,7 +336,6 @@ public class Entity
 	/**
 	 * <<Transient>> Colors as array.
 	 */
-//	@Transient
 	public String[] getCustomColorsAsArray() {
 		return StringListUtils.stringToArray(getCustomColors());
 	}
@@ -378,7 +373,6 @@ public class Entity
 		this.summary = summary;
 	}
 	
-//    @Transient
 	public Map<String, Object> getCustomPropertiesAsMap() {
 		return StringListUtils.propertiesToMap(getCustomProperties());
 	}
@@ -394,7 +388,6 @@ public class Entity
 	 * service layer for installation procedures.
 	 * <p>
      */
-//    @Transient
     public Identity getManager() {
 		return manager;
 	}
@@ -448,7 +441,6 @@ public class Entity
     /**
      * <<Transient>> User list.
      */
-//    @Transient
     public List<UserGroup> getUserList() {
 		return userList;
 	}

@@ -17,7 +17,6 @@ package org.helianto.document.internal;
 
 import java.text.DecimalFormat;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -41,7 +40,7 @@ public abstract class AbstractCustomDocument
 
 	private static final long serialVersionUID = 1L;
 	
-	@ManyToOne(cascade={CascadeType.ALL})
+	@ManyToOne
 	@JoinColumn(name="serializerId")
 	private DocumentFolder series;
 	
@@ -92,7 +91,6 @@ public abstract class AbstractCustomDocument
     /**
      * <<Transient>> Convenience to rename field series to folder.
      */
-//    @Transient
     public DocumentFolder getFolder() {
 		return getSeries();
 	}
@@ -130,7 +128,6 @@ public abstract class AbstractCustomDocument
 	 * 
 	 * @param internalNumberKey
 	 */
-//    @Transient
 	protected String validateInternalNumberKey(String internalNumberKey) {
     	if (getPrefix()!=null) {
     		return getPrefix().toString();
@@ -138,7 +135,6 @@ public abstract class AbstractCustomDocument
     	return internalNumberKey;
 	}
 	
-//    @Transient
     public int getStartNumber() {
     	return 1;
     }

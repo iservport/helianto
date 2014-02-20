@@ -1,6 +1,5 @@
 package org.helianto.core.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -31,7 +30,7 @@ public class PersonalAddress extends AbstractAddress implements PersonalForm {
     private int version;
     
 	@JsonBackReference 
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "identityId")
 	private Identity identity;
 	

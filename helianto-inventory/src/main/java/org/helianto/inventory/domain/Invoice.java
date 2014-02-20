@@ -18,7 +18,6 @@ package org.helianto.inventory.domain;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
@@ -60,12 +59,12 @@ public class Invoice
     
     private char invoiceType = InvoiceType.OUTPUT.getValue();
     
-    @ManyToOne(cascade={CascadeType.ALL})
+    @ManyToOne
     @JoinColumn(name="partnerId")
     private Partner partner;
     
     @JsonManagedReference 
-    @OneToMany(mappedBy="invoice", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="invoice")
     private Set<Picking> pickingSet = new HashSet<Picking>();
     
 	/**

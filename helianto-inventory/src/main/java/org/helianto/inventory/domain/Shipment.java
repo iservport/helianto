@@ -15,7 +15,6 @@
 
 package org.helianto.inventory.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.JoinColumn;
@@ -42,7 +41,7 @@ public class Shipment extends Movement implements Comparable<Shipment> {
 	private static final long serialVersionUID = 1L;
 	
 	@JsonBackReference 
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="processAgreementId")
 	private ProcessAgreement processAgreement;
 	

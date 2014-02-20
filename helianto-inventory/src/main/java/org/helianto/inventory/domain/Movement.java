@@ -18,7 +18,6 @@ package org.helianto.inventory.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
@@ -61,12 +60,12 @@ public class Movement implements Serializable {
 	private int version;
 	
     @JsonBackReference("inventoryTransaction")
-    @ManyToOne(cascade={CascadeType.ALL})
+    @ManyToOne
     @JoinColumn(name="inventoryTransactionId")
 	private InventoryTransaction inventoryTransaction;
 	
     @JsonBackReference("inventory")
-    @ManyToOne(cascade={CascadeType.ALL})
+    @ManyToOne
     @JoinColumn(name="inventoryId")
 	private Inventory inventory;
 	

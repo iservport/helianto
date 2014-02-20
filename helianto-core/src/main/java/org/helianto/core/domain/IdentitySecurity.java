@@ -20,7 +20,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -68,7 +67,7 @@ public class IdentitySecurity implements Serializable {
     private int version;
     
     @JsonBackReference 
-    @ManyToOne(cascade={CascadeType.ALL})
+    @ManyToOne
     @JoinColumn(name="identityId", nullable=true)
     private Identity identity;
     
@@ -192,7 +191,6 @@ public class IdentitySecurity implements Serializable {
     /**
      * <<Transient>> Convenience to read identity principal.
      */
-//    @Transient
     public String getPrincipal() {
 		return getIdentity().getPrincipal();
 	}
@@ -244,7 +242,6 @@ public class IdentitySecurity implements Serializable {
 //    /**
 //     * Password generator.
 //     */
-//    @Transient
 //    public void generatePassword() {
 //        this.password = IdentitySecurity.passwordFactory();
 //    }
@@ -268,7 +265,6 @@ public class IdentitySecurity implements Serializable {
     public Date getLastModified() {
         return this.lastModified;
     }
-//    @Transient
     public String getLastModifiedDateAsString() {
     	if (getLastModified()==null) {
     		return "";
@@ -276,7 +272,6 @@ public class IdentitySecurity implements Serializable {
     	DateFormat formatter = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
         return formatter.format(getLastModified());
     }
-//    @Transient
     public String getLastModifiedTimeAsString() {
     	if (getLastModified()==null) {
     		return "";
@@ -294,7 +289,6 @@ public class IdentitySecurity implements Serializable {
     public Date getExpirationDate() {
         return this.expirationDate;
     }
-//    @Transient
     public boolean isExpired() {
     	if (getExpirationDate()==null) {
     		// null means never expires
@@ -302,7 +296,6 @@ public class IdentitySecurity implements Serializable {
     	}
     	return getExpirationDate().before(new Date());
     }
-//    @Transient
     public String getExpirationDateAsString() {
     	if (getExpirationDate()==null) {
     		return "";
@@ -310,7 +303,6 @@ public class IdentitySecurity implements Serializable {
     	DateFormat formatter = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
         return formatter.format(getExpirationDate());
     }
-//    @Transient
     public String getExpirationTimeAsString() {
     	if (getExpirationDate()==null) {
     		return "";

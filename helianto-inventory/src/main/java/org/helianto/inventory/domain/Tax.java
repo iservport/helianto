@@ -17,7 +17,6 @@ package org.helianto.inventory.domain;
 
 import java.math.BigDecimal;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -61,7 +60,7 @@ public class Tax
     private static final long serialVersionUID = 1L;
     
     @JsonBackReference 
-    @ManyToOne(cascade={CascadeType.ALL})
+    @ManyToOne
     @JoinColumn(name="processAgreementId")
     private ProcessAgreement processAgreement;
     

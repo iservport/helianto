@@ -19,7 +19,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -61,7 +60,7 @@ public class Credential implements PersonalEntity {
     private int id;
     
     @JsonBackReference 
-    @ManyToOne(cascade={CascadeType.ALL})
+    @ManyToOne
     @JoinColumn(name="identityId", nullable=true)
     private Identity identity;
     
@@ -181,7 +180,6 @@ public class Credential implements PersonalEntity {
     /**
      * <<Transient>> Convenience to read identity principal.
      */
-//    @Transient
     public String getPrincipal() {
 		return getIdentity().getPrincipal();
 	}
@@ -198,14 +196,12 @@ public class Credential implements PersonalEntity {
     /**
      * Password reset.
      */
-//    @Transient
     public void resetPassword() {
         this.password = "";
     }
     /**
      * Password generator.
      */
-//    @Transient
     public void generatePassword() {
         this.password = Credential.passwordFactory();
     }
@@ -229,7 +225,6 @@ public class Credential implements PersonalEntity {
     public Date getLastModified() {
         return this.lastModified;
     }
-//    @Transient
     public String getLastModifiedDateAsString() {
     	if (getLastModified()==null) {
     		return "";
@@ -237,7 +232,6 @@ public class Credential implements PersonalEntity {
     	DateFormat formatter = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
         return formatter.format(getLastModified());
     }
-//    @Transient
     public String getLastModifiedTimeAsString() {
     	if (getLastModified()==null) {
     		return "";
@@ -255,7 +249,6 @@ public class Credential implements PersonalEntity {
     public Date getExpirationDate() {
         return this.expirationDate;
     }
-//    @Transient
     public boolean isExpired() {
     	if (getExpirationDate()==null) {
     		// null means never expires
@@ -263,7 +256,6 @@ public class Credential implements PersonalEntity {
     	}
     	return getExpirationDate().before(new Date());
     }
-//    @Transient
     public String getExpirationDateAsString() {
     	if (getExpirationDate()==null) {
     		return "";
@@ -271,7 +263,6 @@ public class Credential implements PersonalEntity {
     	DateFormat formatter = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
         return formatter.format(getExpirationDate());
     }
-//    @Transient
     public String getExpirationTimeAsString() {
     	if (getExpirationDate()==null) {
     		return "";

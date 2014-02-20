@@ -55,7 +55,6 @@ public class UserRole
     @JoinColumn(name="userId", nullable=true)
     private UserGroup userGroup;
     
-    @JsonBackReference("service")
     @ManyToOne
     @JoinColumn(name="serviceId", nullable=true)
     private Service service;

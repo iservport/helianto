@@ -80,7 +80,7 @@ public class UserGroup
 	/**
 	 * <<Transient>> Exposes the discriminator.
 	 */
-//	@Transient
+
 	public char getDiscriminator() {
 		return 'G';
 	}
@@ -111,6 +111,7 @@ public class UserGroup
     
     private boolean accountNonExpired = true;
     
+    @Transient
     private char createIdentity = CreateIdentity.REJECT.getValue();
     
 	@Column(length=512)
@@ -191,7 +192,7 @@ public class UserGroup
     /**
      * <<Transient>> Convenience to return Operator.
      */
-//    @Transient
+    @JsonIgnore
     public Operator getOperator() {
 		return getEntity().getOperator();
 	}
@@ -207,7 +208,7 @@ public class UserGroup
         this.userKey = userKey;
     }
     
-//    @Transient
+
     public boolean isUserKeyEmpty() {
     	return getUserKey()==null || (getUserKey()!=null && getUserKey().length()==0);
     }
@@ -215,7 +216,7 @@ public class UserGroup
     /**
      * Satisfies <code>FoderEntity</code> interface to show groups as folders.
      */
-//    @Transient
+
     public String getFolderCode() {
     	if (!isUserKeyEmpty()) {
     		return getUserKey();
@@ -236,7 +237,7 @@ public class UserGroup
     /**
      * Satisfies <code>FoderEntity</code> interface to show groups as folders.
      */
-//    @Transient
+
     public String getFolderName() {
     	if (getUserName()!=null && getUserName().length()>0) {
     		return getUserName();
@@ -247,7 +248,7 @@ public class UserGroup
     /**
      * Satisfies <code>FoderEntity</code> interface to show groups as folders.
      */
-//    @Transient
+
     public String getFolderDecorationUrl() {
     	return "";
     }
@@ -255,7 +256,7 @@ public class UserGroup
 	/**
 	 * Defaults to userName field.
 	 */
-//	@Transient
+
 	protected String getInternalUserName() {
 		if (userName!=null && userName.length()>0) {
 			return userName;
@@ -266,7 +267,7 @@ public class UserGroup
     /**
      * <<Transient>> Subclasses may override to customize userKey creation.
      */
-//    @Transient
+
     protected String getInternalUserKey() {
     	return this.userKey;
     }
@@ -318,7 +319,7 @@ public class UserGroup
      * <<Transient>> May be used by the presentation layer to
      * signal automatic identity creation"
      */
-//    @Transient
+
     public char getCreateIdentity() {
 		return createIdentity;
 	}
@@ -342,7 +343,7 @@ public class UserGroup
 	/**
 	 * <<Transient>> Nature as array.
 	 */
-//	@Transient
+
 	public String[] getNatureAsArray() {
 		return StringListUtils.stringToArray(getNature());
 	}
@@ -353,7 +354,7 @@ public class UserGroup
 	/**
 	 * <<Transient>> Convenience to read custom colors as array from entity.
 	 */
-//	@Transient
+	@JsonIgnore
 	public String[] getCustomColorsAsArray() {
 		return getEntity().getCustomColorsAsArray();
 	}
@@ -409,7 +410,7 @@ public class UserGroup
     /**
      * <<Transient>> Key-value pair list of scripts converted to array.
      */
-//    @Transient
+
     public String[] getScriptItemsAsArray() {
 		if (getScriptItems()!=null) {
 			return getScriptItems().replace(" ", "").split(",");
@@ -429,7 +430,7 @@ public class UserGroup
     /**
      * <<Transient>> Script list, likely to be loaded at runtime.
      */
-//    @Transient
+
     public List<String> getScriptList() {
     	return scriptList;
     }
@@ -438,7 +439,7 @@ public class UserGroup
 	}
     
     /**
-     * Adiciona conteúdo de um script à lista.
+     * Add the content of a script to the list.
      * 
      * @param scriptContent
      */
@@ -522,17 +523,6 @@ public class UserGroup
         }
     }
     
-    /**
-     * Natural key info.
-     */
-    @Transient
-    public boolean isKeyEmpty() {
-    	if (this.getUserKey()!=null) {
-    		return getUserKey().length()==0;
-    	}
-    	throw new IllegalArgumentException("Natural key must not be null");
-    }
-
     /**
      * toString
      * @return String

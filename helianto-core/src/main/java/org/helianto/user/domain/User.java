@@ -19,7 +19,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.JoinColumn;
@@ -66,7 +65,7 @@ public class User extends UserGroup implements PersonalEntity {
     private static final long serialVersionUID = 1L;
     
     @JsonBackReference 
-    @ManyToOne(cascade=CascadeType.REFRESH)
+    @ManyToOne
     @JoinColumn(name="identityId", nullable=true)
     private Identity identity;
     

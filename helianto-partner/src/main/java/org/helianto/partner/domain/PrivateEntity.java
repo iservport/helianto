@@ -19,7 +19,6 @@ import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.JoinColumn;
@@ -79,7 +78,7 @@ public class PrivateEntity
     private Set<PrivateAddress> addresses = new HashSet<PrivateAddress>(0);
     
     @JsonManagedReference 
-    @OneToMany(mappedBy="privateEntity", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="privateEntity")
     private Set<PrivateEntityKey> partnerRegistryKeys = new HashSet<PrivateEntityKey>(0);
     
     @JsonManagedReference 

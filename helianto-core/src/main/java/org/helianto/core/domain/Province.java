@@ -15,7 +15,6 @@
 
 package org.helianto.core.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -70,7 +69,7 @@ public class Province  implements RootEntity, Comparable<Province> {
     private Operator operator;
     
 	@JsonIgnore
-	@ManyToOne(cascade={CascadeType.ALL})
+	@ManyToOne
 	@JoinColumn(name="parentId", nullable=true)
     private Province parent;
     
@@ -81,7 +80,7 @@ public class Province  implements RootEntity, Comparable<Province> {
     private String provinceName = "";
     
     @JsonBackReference("country")
-    @ManyToOne(cascade={CascadeType.ALL})
+    @ManyToOne
     @JoinColumn(name="countryId")
     private Country country;
     

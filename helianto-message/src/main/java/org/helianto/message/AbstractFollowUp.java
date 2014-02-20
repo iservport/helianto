@@ -19,7 +19,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
 
 import org.helianto.core.internal.AbstractEventControl;
 import org.helianto.message.def.NotificationOption;
@@ -31,11 +30,18 @@ import org.helianto.message.def.ReviewDecision;
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public abstract class AbstractFollowUp extends AbstractEventControl implements Comparable<AbstractFollowUp> {
+public abstract class AbstractFollowUp 
+	extends AbstractEventControl 
+	implements Comparable<AbstractFollowUp> 
+{
 
     private static final long serialVersionUID = 1L;
+    
+    @Column(length=512)
     private String followUpDesc;
+    
     private char decision;
+    
     private char notificationOption;
 
     /** 
@@ -49,7 +55,6 @@ public abstract class AbstractFollowUp extends AbstractEventControl implements C
     /**
      * Description.
      */
-    @Column(length=512)
     public String getFollowUpDesc() {
         return this.followUpDesc;
     }
@@ -83,7 +88,7 @@ public abstract class AbstractFollowUp extends AbstractEventControl implements C
     /**
      * Decision as enum.
      */
-    @Transient
+//    @Transient
     public ReviewDecision getDecisionAsEnum() {
     	for (ReviewDecision d: ReviewDecision.values()) {
     		if (d.getValue()==getDecision()) {
@@ -99,16 +104,16 @@ public abstract class AbstractFollowUp extends AbstractEventControl implements C
     /**
      * The control target.
      */
-    @Transient
+//    @Transient
     public abstract ControlSource getSubject(); 
     
-    @Transient
+//    @Transient
     public void update() {
     	setResolutionAsEnum(getDecisionAsEnum().getNextResolution());
     	getSubject().setResolution(getResolution());
     }
     
-    @Transient
+//    @Transient
     public void update(Date nextCheckDate) {
     	getSubject().setComplete(getComplete());
     	getSubject().setNextCheckDate(nextCheckDate);

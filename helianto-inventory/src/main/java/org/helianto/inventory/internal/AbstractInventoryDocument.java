@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
@@ -49,7 +48,7 @@ public class AbstractInventoryDocument
     private static final long serialVersionUID = 1L;
     
     @JsonBackReference 
-    @ManyToOne(cascade={CascadeType.ALL})
+    @ManyToOne
     @JoinColumn(name="inventoryTransactionId")
     private InventoryTransaction inventoryTransaction;
     
@@ -83,7 +82,6 @@ public class AbstractInventoryDocument
 	/**
 	 * List associated movements.
 	 */
-//	@Transient
 	public List<Movement> getMovementList() {
 		List<Movement> movementList = new ArrayList<Movement>(getInventoryTransaction().getMovements());
 		return movementList;
@@ -92,7 +90,6 @@ public class AbstractInventoryDocument
 	/**
 	 * Add movement.
 	 */
-//	@Transient
 	public boolean addMovement(Movement movement) {
 		movement.setInventoryTransaction(getInventoryTransaction());
 		calculate();
@@ -102,7 +99,6 @@ public class AbstractInventoryDocument
 	/**
 	 * Create and add movement.
 	 */
-//	@Transient
 	protected <T extends Movement> T addMovement(Class<T> clazz, Inventory inventory, BigDecimal qty) {
 		try {
 			T movement = clazz.newInstance();

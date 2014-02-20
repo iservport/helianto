@@ -35,6 +35,7 @@ import org.helianto.core.number.Sequenceable;
 import org.helianto.document.domain.ProcessDocument;
 import org.helianto.inventory.RequirementSign;
 import org.helianto.inventory.RequirementState;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -58,6 +59,7 @@ public abstract class AbstractRequirement
     @JoinColumn(name="documentId", nullable=true)
     protected ProcessDocument document;
     
+    @DateTimeFormat(style="SS")
     @Temporal(TemporalType.TIMESTAMP)
     protected Date requirementDate = new Date();
     

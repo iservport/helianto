@@ -10,8 +10,6 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
-
 /**
  * ORM implementation for Spring Social User Connection.
  * 

@@ -18,7 +18,6 @@ package org.helianto.inventory.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -61,7 +60,7 @@ public class Picking
     private long internalNumber;
 
 	@JsonBackReference 
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="invoiceId")
 	private Invoice invoice;
 	

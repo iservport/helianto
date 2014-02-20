@@ -15,7 +15,6 @@
 
 package org.helianto.inventory.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -52,7 +51,7 @@ public class Card
     private int id;
     
     @JsonBackReference 
-    @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="cardSetId", nullable=true)
     private CardSet cardSet;
     
@@ -162,7 +161,6 @@ public class Card
     /**
      * Owning entity.
      */
-//    @Transient
     public Entity getEntity() {
     	if (this.cardSet!=null) {
     		return this.cardSet.getEntity();
@@ -172,7 +170,6 @@ public class Card
 	/**
 	 * Card process inherited from a card set.
 	 */
-//    @Transient
 	public ProcessDocument getProcess() {
     	if (this.cardSet!=null) {
     		return this.cardSet.getProcess();
@@ -183,7 +180,6 @@ public class Card
     /**
 	 * Card type inherited from a card set.
 	 */
-//    @Transient
 	public char getCardType() {
     	if (this.cardSet!=null) {
     		return this.cardSet.getCardType();
@@ -203,7 +199,6 @@ public class Card
      * Convert the human readable representation of the card to 
      * an integer unique to the card range.
      */
-//    @Transient
 	public static int getInternalNumber(String cardLabel) {
 		try {
 			return Integer.parseInt(cardLabel.substring(5));

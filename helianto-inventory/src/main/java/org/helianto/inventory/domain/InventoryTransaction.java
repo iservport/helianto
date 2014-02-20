@@ -20,7 +20,6 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
@@ -67,7 +66,7 @@ public class InventoryTransaction implements Serializable {
     private Integer version;
     
 	@JsonManagedReference("inventoryTransaction")
-	@OneToMany(mappedBy="inventoryTransaction", cascade={CascadeType.ALL})
+	@OneToMany(mappedBy="inventoryTransaction")
 	private Set<Movement> movements = new HashSet<Movement>();
 	
 	/**

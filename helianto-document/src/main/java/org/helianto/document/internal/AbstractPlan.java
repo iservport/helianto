@@ -71,7 +71,7 @@ public abstract class AbstractPlan
     }
 
     /**
-     * Duração programada em mili-segundos.
+     * Scheduled duration in milliseconds.
      */
     public long getScheduledDuration() {
         return this.scheduledDuration;

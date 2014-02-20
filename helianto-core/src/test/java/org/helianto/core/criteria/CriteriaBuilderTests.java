@@ -22,7 +22,6 @@ import java.text.DateFormat;
 import java.util.Date;
 
 import org.helianto.core.filter.classic.AbstractDateRangeFilter;
-import org.helianto.core.test.SecurityTestSupport;
 import org.helianto.user.domain.User;
 import org.junit.Before;
 import org.junit.Test;
@@ -265,34 +264,34 @@ public class CriteriaBuilderTests  {
     
     //- user backed filter stub
     
-    @SuppressWarnings("serial")
-	public class UserBackedFilterStub extends AbstractDateRangeFilter {
-
-        private Date fromDate;
-        private Date toDate;
-
-        public User getUser() {
-            User user = (User) SecurityTestSupport.createUserDetailsAdapter().getUser();
-            user.getEntity().setId(Integer.MAX_VALUE);
-            return user;
-        }
-        public void setUser(User user) {}
-        public void reset() {}
-		public Date getFromDate() { return this.fromDate; }
-		public Date getToDate() { return this.toDate; }
-		public void setFromDate(Date fromDate) { this.fromDate = fromDate; }
-		public void setToDate(Date toDate) { this.toDate = toDate; }
-//		public boolean isSelection() { return false; }
-//		public String createCriteriaAsString(boolean requireEntity) { return null; }
-//		public Entity getEntity() { return null; }
-//		public String createCriteriaAsString() { return null; }
-//		public String getObjectAlias() { return null; }
-//		public List<?> getList() { return null; }
-//		public void setList(List<?> itemList) { }
-		@Override
-		public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { }
-		@Override protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) { }
-		public String getObjectAlias() { return "ALIAS"; }
-    }
-
+//    @SuppressWarnings("serial")
+//	public class UserBackedxFilterStub extends AbstractDateRangeFilter {
+//
+//        private Date fromDate;
+//        private Date toDate;
+//
+//        public User getUser() {
+//            User user = (User) SecurityTestSupport.createUserDetailsAdapter().getUser();
+//            user.getEntity().setId(Integer.MAX_VALUE);
+//            return user;
+//        }
+//        public void setUser(User user) {}
+//        public void reset() {}
+//		public Date getFromDate() { return this.fromDate; }
+//		public Date getToDate() { return this.toDate; }
+//		public void setFromDate(Date fromDate) { this.fromDate = fromDate; }
+//		public void setToDate(Date toDate) { this.toDate = toDate; }
+////		public boolean isSelection() { return false; }
+////		public String createCriteriaAsString(boolean requireEntity) { return null; }
+////		public Entity getEntity() { return null; }
+////		public String createCriteriaAsString() { return null; }
+////		public String getObjectAlias() { return null; }
+////		public List<?> getList() { return null; }
+////		public void setList(List<?> itemList) { }
+//		@Override
+//		public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) { }
+//		@Override protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) { }
+//		public String getObjectAlias() { return "ALIAS"; }
+//    }
+//
 }

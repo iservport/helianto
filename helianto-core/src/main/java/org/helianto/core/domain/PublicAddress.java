@@ -61,6 +61,17 @@ public class PublicAddress
 	}
 	
 	/**
+	 * City constructor.
+	 * 
+	 * @param city
+	 * @param postalCode
+	 */
+	public PublicAddress(City city, String postalCode) {
+		this(city.getState(), postalCode);
+		setCity(city);
+	}
+	
+	/**
 	 * Operator that holds the address database.
 	 */
 	public Operator getOperator() {

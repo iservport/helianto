@@ -12,7 +12,7 @@ import org.mockito.Mockito;
  */
 public class TaxFilterAdapterTests {
 
-    public static String OB = "order by alias.keyCode ";
+    public static String OB = "order by alias.keyType.keyCode ";
     public static String C0 = "alias.processAgreement.id = 1 ";
     public static String C1 = "alias.keyType.id = 2 ";
     public static String C2 = "alias.keyType.keyCode = 'CODE' ";

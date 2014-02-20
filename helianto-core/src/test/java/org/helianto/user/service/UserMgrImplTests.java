@@ -68,22 +68,6 @@ public class UserMgrImplTests {
     	verify(userGroupRepository);
     }
     
-	@Test(expected=IllegalArgumentException.class)
-    public void storeUserGroupNullKey() {
-		UserGroup userGroup = new UserGroup();
-		userGroup.setUserKey(null);
-		
-		userMgr.storeUserGroup(userGroup);
-    }
-    
-	@Test(expected=IllegalArgumentException.class)
-    public void storeUserGroupEmptyKey() {
-		UserGroup userGroup = new UserGroup();
-		userGroup.setUserKey("");
-		
-		userMgr.storeUserGroup(userGroup);
-    }
-    
 	@Test
     public void storeUserGroup() {
     	UserGroup userGroup = UserGroupTestSupport.createUserGroup();

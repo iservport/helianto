@@ -63,7 +63,7 @@ public class State
     @JoinColumn(name="countryId")
     private Country country;
     
-    private char priority;
+    private char priority = 0;
 
 	/**
 	 * Empty constructor.
@@ -82,6 +82,17 @@ public class State
         this();
         setContext(context);
         setStateCode(stateCode);
+    }
+
+    /**
+     * Country constructor.
+     * 
+     * @param country
+     * @param stateCode
+     */
+    public State(Country country, String stateCode) {
+        this(country.getOperator(), stateCode);
+        setCountry(country);
     }
 
     /**

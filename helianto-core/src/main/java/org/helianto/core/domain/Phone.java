@@ -32,7 +32,7 @@ public class Phone implements java.io.Serializable {
     @Column(length=20)
     private String phoneNumber = "";
     
-    @Column(length=2)
+    @Column(length=3)
     private String areaCode = "";
     
     @Column(length=10)

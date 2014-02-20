@@ -121,17 +121,6 @@ public class UserAssociation
     }
        
     /**
-     * Natural key info.
-     */
-//    @Transient
-    public boolean isKeyEmpty() {
-    	if (this.getChild()!=null) {
-    		return this.getChild().isKeyEmpty();
-    	}
-    	throw new IllegalArgumentException("Natural key must not be null");
-    }
-    
-    /**
      * Association resolution.
      */
     public char getResolution() {
@@ -164,7 +153,6 @@ public class UserAssociation
 		this.parsedContent = parsedContent;
 	}
     
-//	@Transient
 	public String[] getParsedContentAsArray() {
 		if (getParsedContent()!=null) {
 			return getParsedContent().split(",");

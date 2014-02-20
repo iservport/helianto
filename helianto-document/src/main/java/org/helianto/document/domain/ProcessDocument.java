@@ -19,7 +19,6 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -45,12 +44,12 @@ public class ProcessDocument
 
     private static final long serialVersionUID = 1L;
     
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="unitId")
     private Unit unit;
     
     @JsonManagedReference 
-    @OneToMany(mappedBy="processDocument", cascade={CascadeType.ALL})
+    @OneToMany(mappedBy="processDocument")
     private Set<ProcessDocumentKey> processDocumentKeys = new HashSet<ProcessDocumentKey>(0);
     
     private char inheritanceType = InheritanceType.FINAL.getValue();

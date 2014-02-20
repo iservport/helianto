@@ -94,9 +94,6 @@ public class UserMgrImpl
 	 */
 	@Transactional
 	public UserGroup storeUserGroup(UserGroup userGroup) {
-    	if (userGroup.isKeyEmpty()) {
-    		throw new IllegalArgumentException("Unable to create user, null or invalid identity");
-    	}
     	userGroupRepository.saveAndFlush(userGroup);
     	publicEntityMgr.installPublicEntity(userGroup.getEntity());
         return userGroup;

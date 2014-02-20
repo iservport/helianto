@@ -17,7 +17,6 @@ package org.helianto.user.domain;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.GeneratedValue;
@@ -64,7 +63,7 @@ public class UserRequest
     private int id;
     
     @JsonBackReference 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="userGroupId")
     private UserGroup userGroup;
     
@@ -80,7 +79,7 @@ public class UserRequest
     private PersonalData personalData;
     
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style="S-")
+    @DateTimeFormat(style="SS")
     private Date issueDate;
     
     private char resolution = Resolution.TODO.getValue();
@@ -88,7 +87,7 @@ public class UserRequest
     private int complete;
     
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style="S-")
+    @DateTimeFormat(style="SS")
     private Date nextCheckDate;
     
     @Column(length=48)

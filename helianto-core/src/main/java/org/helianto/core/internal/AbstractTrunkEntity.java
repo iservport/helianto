@@ -30,8 +30,7 @@ public abstract class AbstractTrunkEntity
     @Version
     private Integer version;
     
-    @JsonIgnore
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="entityId", nullable=true)
     private Entity entity;
     

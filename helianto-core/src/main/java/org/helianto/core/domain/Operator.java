@@ -21,7 +21,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -114,12 +113,12 @@ public class Operator implements java.io.Serializable {
     private String rfc822TimeZone;
     
     @JsonIgnore
-    @OneToMany(mappedBy="operator", cascade={ CascadeType.ALL },
+    @OneToMany(mappedBy="operator",
     		fetch=FetchType.LAZY)
     private Set<KeyType> keyTypes = new HashSet<KeyType>();
     
     @JsonIgnore
-    @OneToMany(mappedBy="operator", cascade={CascadeType.ALL})
+    @OneToMany(mappedBy="operator")
     @MapKey(name="keyCode")
     private Map<String, KeyType> keyTypeMap = new HashMap<String, KeyType>();
     
@@ -128,7 +127,7 @@ public class Operator implements java.io.Serializable {
     private Set<Province> provinces = new HashSet<Province>();
     
 	@JsonManagedReference 
-	@OneToMany(mappedBy="operator", cascade={CascadeType.ALL}, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="operator", fetch=FetchType.EAGER)
 	@MapKey(name="serviceName")
 	private Map<String, Service> serviceMap = new HashMap<String, Service>();
 

@@ -191,7 +191,6 @@ public class Identity implements java.io.Serializable {
      * <<Transient>> Principal name, i.e., substring of principal before '@', if any,
      * or the principal itself.
      */
-//    @Transient
     public String getPrincipalName() {
     	if (getPrincipal()!=null) {
         	int position = getPrincipal().indexOf("@");
@@ -207,7 +206,6 @@ public class Identity implements java.io.Serializable {
      * <<Transient>> User principal domain, i.e., substring of principal after '@', if any,
      * or empty string.
      */
-//    @Transient
     public String getPrincipalDomain() {
     	if (getPrincipal()!=null) {
         	int position = getPrincipal().indexOf("@");
@@ -237,7 +235,6 @@ public class Identity implements java.io.Serializable {
      * @deprecated
      * @see #getDisplayName()
      */
-//    @Transient
     public String getOptionalAlias() {
         return getDisplayName();
     }
@@ -268,7 +265,6 @@ public class Identity implements java.io.Serializable {
     /**
      * <<Transient>> Safe identity first name getter.
      */
-//    @Transient
     public String getIdentityFirstName() {
     	if (getPersonalData()!=null) {
     		return getPersonalData().getFirstName();
@@ -279,7 +275,6 @@ public class Identity implements java.io.Serializable {
     /**
      * <<Transient>> Safe identity last name getter.
      */
-//    @Transient
     public String getIdentityLastName() {
     	if (getPersonalData()!=null) {
     		return getPersonalData().getLastName();
@@ -290,7 +285,6 @@ public class Identity implements java.io.Serializable {
     /**
      * <<Transient>> Safe identity name getter.
      */
-//    @Transient
     public String getIdentityName() {
     	if (getPersonalData()==null) {
     		return getAlias();
@@ -303,7 +297,6 @@ public class Identity implements java.io.Serializable {
     /**
      * <<Transient>> Safe gender getter.
      */
-//    @Transient
     public char getGender() {
     	if (getPersonalData()==null) {
     		return Gender.NOT_SUPPLIED.getValue();
@@ -314,7 +307,6 @@ public class Identity implements java.io.Serializable {
     /**
      * <<Transient>> Safe appellation getter.
      */
-//    @Transient
     public char getAppellation() {
     	if (getPersonalData()==null) {
     		return Appellation.NOT_SUPPLIED.getValue();
@@ -325,7 +317,6 @@ public class Identity implements java.io.Serializable {
     /**
      * <<Transient>> Safe birth date getter.
      */
-//    @Transient
     public Date getBirthDate() {
     	if (getPersonalData()==null) {
     		return new Date(1000l);
@@ -336,7 +327,6 @@ public class Identity implements java.io.Serializable {
     /**
      * <<Transient>> Safe age getter.
      */
-//    @Transient
     public int getAge() {
 		return getAge(new Date());
 	}
@@ -357,7 +347,6 @@ public class Identity implements java.io.Serializable {
     /**
      * <<Transient>> True if image url is available.
      */
-//    @Transient
     public boolean isImageAvailable() {
     	if (getPersonalData()!=null && getPersonalData().getImageUrl()!=null 
     			&& getPersonalData().getImageUrl().length()>0) {
@@ -369,7 +358,6 @@ public class Identity implements java.io.Serializable {
     /**
      * <<Transient>> Safe image url getter.
      */
-//    @Transient
     public String getImageUrl() {
     	if (isImageAvailable()) {
     		return getPersonalData().getImageUrl();
@@ -380,7 +368,6 @@ public class Identity implements java.io.Serializable {
     /**
      * <<Transient>> Safe identity alias.
      */
-//    @Transient
     public String getAlias() {
 		if (getDisplayName()!=null && getDisplayName().length()>0) {
 			return getDisplayName();
@@ -414,7 +401,6 @@ public class Identity implements java.io.Serializable {
     /**
      * True if can receive email.
      */
-//    @Transient
     public boolean isAddressable() {
 		return IdentityType.isAddressable(getIdentityType());
 	}
@@ -443,7 +429,7 @@ public class Identity implements java.io.Serializable {
 	}
     
     /**
-     * Tipo de conteúdo, tal como img/jpg, etc.
+     * Content type, like img/jpg, etc.
      */
     public String getMultipartFileContentType() {
 		return multipartFileContentType;
@@ -455,7 +441,6 @@ public class Identity implements java.io.Serializable {
     /**
      * Ture if the phot has the image type.
      */
-//    @Transient
     public boolean isPhotoLoaded() {
     	return getMultipartFileContentType()!=null && getMultipartFileContentType().startsWith("image");
     }
@@ -463,7 +448,6 @@ public class Identity implements java.io.Serializable {
 	/**
 	 * <<Transient>> Required to allow for file upload.
 	 */
-//	@Transient
 	public MultipartFile getFile() {
 		return file;
 	}
@@ -474,7 +458,6 @@ public class Identity implements java.io.Serializable {
 	/**
 	 * <<Transient>> Convenience method to read uploaded data.
 	 */
-//	@Transient
 	public void processFile() throws IOException {
 		setPhoto(getFile().getBytes());
 		setMultipartFileContentType(file.getContentType());
