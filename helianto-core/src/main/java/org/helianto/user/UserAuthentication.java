@@ -24,7 +24,7 @@ import org.helianto.user.domain.User;
  * 
  * @author Mauricio Fernandes de Castro
  */
-public interface PublicUserDetails {
+public interface UserAuthentication {
     
     /**
      * Return the <code>User</code>.
