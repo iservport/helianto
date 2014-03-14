@@ -66,6 +66,7 @@ public class Category
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     
+    @JsonIgnore
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="entityId")
     private Entity entity;
