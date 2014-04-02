@@ -14,11 +14,17 @@ import org.springframework.data.repository.core.support.RepositoryFactorySupport
 /**
  * Filter repository factory bean.
  * 
+ * <p>
+ * Will be replaced by QueryRepositoryFactoryBean in project helianto-query.
+ * </p>
+ * 
  * @author mauriciofernandesdecastro
  *
  * @param <R>
  * @param <T>
  * @param <I>
+ * 
+ * @deprecated
  */
 public class FilterRepositoryFactoryBean<R extends JpaRepository<T, I>, T, I extends Serializable>
 		extends JpaRepositoryFactoryBean<R, T, I> {
