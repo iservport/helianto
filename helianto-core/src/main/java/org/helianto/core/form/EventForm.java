@@ -6,6 +6,7 @@ import org.helianto.core.filter.DateForm;
  * Event interface.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public interface EventForm 
 	extends EntityIdForm

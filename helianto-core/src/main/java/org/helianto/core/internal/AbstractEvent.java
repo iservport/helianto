@@ -28,6 +28,7 @@ import org.helianto.core.def.PrivacyLevel;
 import org.helianto.core.def.Resolution;
 import org.helianto.core.def.ResolutionExtended;
 import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.type.ResolvableEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -43,10 +44,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * 
  * @author Mauricio Fernandes de Castro
  */
-
 @javax.persistence.MappedSuperclass
 public abstract class AbstractEvent 
 	extends AbstractTrunkEntity
+	implements ResolvableEntity
 {
 
     private static final long serialVersionUID = 1L;
@@ -90,6 +91,14 @@ public abstract class AbstractEvent
 		return owner;
 	}
     
+	@Transient
+	public int getOwnerId() {
+		if (getOwner()!=null) {
+			return getOwner().getId();
+		}
+		return 0;
+	}
+
     /**
      * Safe presentation record owner alias.
      * @deprecated
