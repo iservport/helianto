@@ -17,16 +17,19 @@ package org.helianto.core.test;
 
 import java.util.Date;
 
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.test.AbstractTransactionalSpringContextTests;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * A base class for service layer integration tests.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
-public abstract class AbstractIntegrationTest extends AbstractTransactionalSpringContextTests {
+@RunWith(SpringJUnit4ClassRunner.class)
+public abstract class AbstractIntegrationTest {
 
     /**
      * Generate a not repeatable key.
