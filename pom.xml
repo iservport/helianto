@@ -56,7 +56,7 @@
 	<properties>
 		<maven.test.failure.ignore>false</maven.test.failure.ignore>
 		<helianto-query.version>0.0.1-SNAPSHOT</helianto-query.version>
-		<spring.framework.version>3.2.6.RELEASE</spring.framework.version>
+		<spring.framework.version>4.0.4.RELEASE</spring.framework.version>
 		<org.aspectj.version>1.6.11</org.aspectj.version>
 		<spring.data.version>1.4.3.RELEASE</spring.data.version>
 		<spring-social.version>1.0.3.RELEASE</spring-social.version>
