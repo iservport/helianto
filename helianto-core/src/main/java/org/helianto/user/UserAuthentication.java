@@ -32,9 +32,19 @@ public interface UserAuthentication {
     User getUser();
     
     /**
+     * Return the <code>User</code> id.
+     */
+    int getUserId();
+    
+    /**
      * Convenience to retrieve the entity from the user.
      */
     Entity getEntity();
+    
+    /**
+     * Convenience to retrieve the entity id from the user.
+     */
+    int getEntityId();
     
     /**
      * Convenience to retrieve the operator from the user.
