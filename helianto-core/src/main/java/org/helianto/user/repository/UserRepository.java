@@ -6,6 +6,7 @@ import java.util.List;
 import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.Entity;
 import org.helianto.user.domain.User;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 
@@ -23,6 +24,14 @@ public interface UserRepository extends FilterRepository<User, Serializable> {
 	 * @param userKey
 	 */
 	User findByEntityAndUserKey(Entity entity, String userKey);
+	
+	/**
+	 * Find by natural key.
+	 * 
+	 * @param entityId
+	 * @param identityId
+	 */
+	User findByEntity_IdAndIdentity_Id(int entityId, int identityId);
 	
 	/**
 	 * Find by user key.
@@ -96,5 +105,20 @@ public interface UserRepository extends FilterRepository<User, Serializable> {
     			"and lower(child.identity.principal) like lower(?2) " +
     			"and parents.parent.entity.entityType = ?3 ")
 	List<User> findByParentAndPrincipalAndEntityType(String parentKey, String principal, char entityType, Sort sort);
+	
+	/**
+	 * Find ordered user entities by identity id and entity type.
+	 * 
+	 * @param identityId
+	 * @param entityType
+	 * @param pageable
+	 */
+	@Query(value="select distinct child.entity from User child " +
+		   		"join child.parentAssociations parents " +
+    			"where lower(parents.parent.userKey) = 'user' " +
+    			"and child.identity.id = ?1 " +
+    			"and parents.parent.entity.entityType = ?2 " +
+    			"order by child.lastEvent DESC ")
+	List<Entity> findByIdentityIdAndEntityTypeOrderByLastEventDesc(int identityId, char entityType, Pageable pageable);
 	
 }
