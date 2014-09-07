@@ -50,6 +50,12 @@ public abstract class AbstractFolder
     @Transient
 	private int countAlerts;
 	
+    @Transient
+	private int countWarnings;
+	
+    @Transient
+	private int countOthers;
+	
     /** 
      * Empty constructor.
      * 
@@ -141,6 +147,26 @@ public abstract class AbstractFolder
 	}
     public void setCountAlerts(int countAlerts) {
 		this.countAlerts = countAlerts;
+	}
+    
+    /**
+     * Count warnings.
+     */
+    public int getCountWarnings() {
+		return countWarnings;
+	}
+    public void setCountWarnings(int countWarnings) {
+		this.countWarnings = countWarnings;
+	}
+    
+    /**
+     * Count others.
+     */
+    public int getCountOthers() {
+		return countOthers;
+	}
+    public void setCountOthers(int countOthers) {
+		this.countOthers = countOthers;
 	}
     
     /**
