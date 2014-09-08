@@ -29,7 +29,7 @@ import org.helianto.core.Controllable;
 import org.helianto.core.Navigable;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.type.FolderEntity;
-import org.helianto.core.internal.AbstractTrunkEntity;
+import org.helianto.core.internal.AbstractCounter;
 import org.helianto.resource.def.ResourceType;
 
 /**
@@ -49,7 +49,7 @@ import org.helianto.resource.def.ResourceType;
 )
 @DiscriminatorValue("G")
 public class ResourceGroup 
-	extends AbstractTrunkEntity
+	extends AbstractCounter
 	implements FolderEntity
 	, Navigable
 	, Comparable<ResourceGroup> 

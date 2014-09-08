@@ -26,14 +26,8 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -42,12 +36,12 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Programmable;
-import org.helianto.core.def.ActivityState;
 import org.helianto.core.def.CreateIdentity;
 import org.helianto.core.def.UserState;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.type.FolderEntity;
+import org.helianto.core.internal.AbstractCounter;
 import org.helianto.core.utils.StringListUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -70,6 +64,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @DiscriminatorValue("G")
 
 public class UserGroup 
+	extends AbstractCounter
 	implements 
 	  FolderEntity
 	, Comparable<UserGroup>
@@ -86,15 +81,6 @@ public class UserGroup
 	}
 
     private static final long serialVersionUID = 1L;
-    
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="userId")
-    private int id;
-    
-    @JsonIgnore
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="entityId", nullable=true)
-    private Entity entity;
     
     @Column(length=40)
     private String userKey = "";
@@ -172,23 +158,6 @@ public class UserGroup
     	setUserKey(userKey);
     }
 
-    public int getId() {
-        return this.id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * Entity.
-     */
-    public Entity getEntity() {
-        return this.entity;
-    }
-    public void setEntity(Entity entity) {
-        this.entity = entity;
-    }
-    
     /**
      * <<Transient>> Convenience to return Operator.
      */
@@ -504,25 +473,6 @@ public class UserGroup
 		return 1;
 	}   
 
-    /**
-     * Internal <code>UserGroup</code> factory.
-     * 
-     * @param clazz
-     * @param entity
-     * @param userKey
-     */
-    protected static <T extends UserGroup> T internalUserGroupFactory(Class<T> clazz, Entity entity, String userKey) {
-        try {
-            T userGroup = clazz.newInstance();
-            userGroup.setEntity(entity);
-            userGroup.setUserKey(userKey);
-            userGroup.setUserState(ActivityState.ACTIVE.getValue());
-            return userGroup;
-        } catch (Exception e) {
-            throw new IllegalStateException("Unable to create class "+clazz, e);
-        }
-    }
-    
     /**
      * toString
      * @return String
