@@ -16,7 +16,6 @@
 package org.helianto.core.internal;
 
 import javax.persistence.Column;
-import javax.persistence.Transient;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.type.FolderEntity;
@@ -28,7 +27,7 @@ import org.helianto.core.domain.type.FolderEntity;
  */
 @javax.persistence.MappedSuperclass
 public abstract class AbstractFolder
-	extends AbstractTrunkEntity
+	extends AbstractCounter
 	implements FolderEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -44,18 +43,6 @@ public abstract class AbstractFolder
     @Column(length=64)
 	private String folderDecorationUrl = "";
     
-    @Transient
-	private int countItems;
-	
-    @Transient
-	private int countAlerts;
-	
-    @Transient
-	private int countWarnings;
-	
-    @Transient
-	private int countOthers;
-	
     /** 
      * Empty constructor.
      * 
@@ -88,7 +75,6 @@ public abstract class AbstractFolder
     /**
      * Sublcasses may change the way a folder code is retrieved.
      */
-//    @Transient
     protected String getInternalBuilderCode() {
         return this.folderCode;
     }
@@ -103,7 +89,6 @@ public abstract class AbstractFolder
     /**
      * Sublcasses may change the way a folder name is retrieved.
      */
-//    @Transient
     protected String getInternalBuilderName() {
     	return folderName;
     }
@@ -121,7 +106,6 @@ public abstract class AbstractFolder
     /**
      * True if {@link #getFolderDecorationUrl()} is not empty.
      */
-//    @Transient
     public boolean isFolderDecorated() {
 		if (getFolderDecorationUrl()!=null && getFolderDecorationUrl().length()>0) {
 			return true;
@@ -129,46 +113,6 @@ public abstract class AbstractFolder
 		return false;
 	}
 
-    /**
-     * Count items.
-     */
-    public int getCountItems() {
-		return countItems;
-	}
-    public void setCountItems(int countItems) {
-		this.countItems = countItems;
-	}
-    
-    /**
-     * Count alerts.
-     */
-    public int getCountAlerts() {
-		return countAlerts;
-	}
-    public void setCountAlerts(int countAlerts) {
-		this.countAlerts = countAlerts;
-	}
-    
-    /**
-     * Count warnings.
-     */
-    public int getCountWarnings() {
-		return countWarnings;
-	}
-    public void setCountWarnings(int countWarnings) {
-		this.countWarnings = countWarnings;
-	}
-    
-    /**
-     * Count others.
-     */
-    public int getCountOthers() {
-		return countOthers;
-	}
-    public void setCountOthers(int countOthers) {
-		this.countOthers = countOthers;
-	}
-    
     /**
      * toString
      * @return String
