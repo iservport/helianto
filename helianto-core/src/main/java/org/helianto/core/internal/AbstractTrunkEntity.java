@@ -11,7 +11,7 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.type.TrunkEntity;
 
 /**
- * Base class to persitent domain classes isolated by an {@link Entity}.
+ * Base class to persistent domain classes isolated by an {@link Entity}.
  * 
  * @author mauriciofernandesdecastro
  */
