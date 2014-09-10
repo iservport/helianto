@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -62,7 +64,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("G")
-
+@AttributeOverrides({
+    @AttributeOverride(name="id", column=@Column(name="userId"))
+})
 public class UserGroup 
 	extends AbstractCounter
 	implements 
@@ -72,6 +76,11 @@ public class UserGroup
 
 {
 	
+//	-    @JsonIgnore
+//	-    @ManyToOne(fetch=FetchType.LAZY)
+//	-    @JoinColumn(name="entityId", nullable=true)
+//	-    private Entity entity;
+
 	/**
 	 * <<Transient>> Exposes the discriminator.
 	 */
@@ -94,6 +103,8 @@ public class UserGroup
     private Date lastEvent = new Date();
     
     private char userState = UserState.ACTIVE.getValue();
+    
+    private Character userType = ' ';
     
     private boolean accountNonExpired = true;
     
@@ -262,7 +273,7 @@ public class UserGroup
 	}
 
     /**
-     * UserState getter.
+     * Users or groups may be deactivated using this field.
      */
     public char getUserState() {
         return this.userState;
@@ -273,6 +284,16 @@ public class UserGroup
     public void setUserStateAsEnum(UserState userState) {
         this.userState = userState.getValue();
     }
+    
+    /**
+     * Primary user and group distinction.
+     */
+     public Character getUserType() {
+		return userType;
+	}
+    public void setUserType(Character userType) {
+		this.userType = userType;
+	}
 
     /**
      * AccountNonExpired getter.

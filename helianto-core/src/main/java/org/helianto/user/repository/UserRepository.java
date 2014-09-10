@@ -79,6 +79,30 @@ public interface UserRepository extends FilterRepository<User, Serializable> {
 	List<User> findByParent(String parentKey, Sort sort);
 	
 	/**
+	 * Find by parent id, pageable.
+	 * 
+	 * @param parentGroupId
+	 * @param page
+	 */
+	@Query(value="select distinct child from User child " +
+    		   	"join child.parentAssociations parents " +
+    			"where parents.parent.id = ?1 ")
+	List<User> findByParent(int parentGroupId, Pageable page);
+	
+	/**
+	 * Find by parent id and state, pageable.
+	 * 
+	 * @param parentGroupId
+	 * @param userState
+	 * @param page
+	 */
+	@Query(value="select distinct child from User child " +
+    		   	"join child.parentAssociations parents " +
+    			"where parents.parent.id = ?1 " +
+    			"and child.userState = ?2 ")
+	List<User> findByParent(int parentGroupId, char userState, Pageable page);
+	
+	/**
 	 * Find by parent key and principal.
 	 * 
 	 * @param parentKey
@@ -120,5 +144,39 @@ public interface UserRepository extends FilterRepository<User, Serializable> {
     			"and parents.parent.entity.entityType = ?2 " +
     			"order by child.lastEvent DESC ")
 	List<Entity> findByIdentityIdAndEntityTypeOrderByLastEventDesc(int identityId, char entityType, Pageable pageable);
+	
+	/**
+	 * Find users by entity id and search string like key or name.
+	 * 
+	 * @param entityId
+	 * @param searchString
+	 * @param pageable
+	 */
+	@Query(value="select user from User user where user.id in (" +
+			"select u.id from User u " +
+    			"where u.entity.id = ?1 " +
+    			"and (" +
+    				"lower(u.userKey) like ?2 " +
+    				"or lower(u.userName) like ?2 " +
+    			") )")
+	List<User> findByEntity_IdAndSearchString(int entityId, String searchString, Pageable pageable);
+	
+	/**
+	 * Find users by entity id and search string like key or name and state.
+	 * 
+	 * @param entityId
+	 * @param searchString
+	 * @param userState
+	 * @param pageable
+	 */
+	@Query(value="select user from User user where user.id in (" +
+			"select u.id from User u " +
+    			"where u.entity.id = ?1 " +
+    			"and ( " +
+    				"lower(u.userKey) like ?2 " +
+    				"or lower(u.userName) like ?2 " +
+    			") " +
+    			"and u.userState = ?3 ) ")
+	List<User> findByEntity_IdAndSearchStringAndUserState(int entityId, String searchString, char userState, Pageable pageable);
 	
 }

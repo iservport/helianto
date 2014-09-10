@@ -6,6 +6,7 @@ import java.util.List;
 import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.Entity;
 import org.helianto.user.domain.UserGroup;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
 /**
@@ -58,5 +59,22 @@ public interface UserGroupRepository extends FilterRepository<UserGroup, Seriali
 	@Query(value="select association.parent from UserAssociation association " +
     		   	"where association.child = ?1 ")
 	List<UserGroup> findParentsByChild(UserGroup child);
+	
+	/**
+	 * Find by entity userType.
+	 * 
+	 * @param entityId
+	 * @param userType
+	 * @param page
+	 */
+	List<UserGroup> findByEntity_IdAndUserType(int entityId, Character userType, Pageable page);
+
+	/**
+	 * Find by entity and nature (containing).
+	 * 
+	 * @param entityId
+	 * @param userNature
+	 */
+	List<UserGroup> findByEntity_IdAndNatureContainingOrderByUserKeyAsc(int entityId, String userNature);
 
 }

@@ -24,7 +24,6 @@ public class UserTests {
 		assertTrue(user instanceof UserGroup);
 		assertEquals('U', user.getDiscriminator());
     	assertFalse(user.isAccountNonExpired());
-    	assertEquals(UserType.INTERNAL.getValue(), user.getUserType());
     	assertEquals('0', user.getPrivacyLevel());
 	}
     

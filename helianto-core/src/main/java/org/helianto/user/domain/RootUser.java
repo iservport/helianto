@@ -49,7 +49,7 @@ public class RootUser
 	 */
     public RootUser() {
     	super();
-    	setUserTypeAsEnum(UserType.ADMINISTRATOR);
+    	setUserType(UserType.ADMINISTRATOR.getValue());
     }
 
 	/** 

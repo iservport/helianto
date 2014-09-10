@@ -29,7 +29,6 @@ import org.helianto.core.PersonalEntity;
 import org.helianto.core.def.Appellation;
 import org.helianto.core.def.Gender;
 import org.helianto.core.def.PrivacyLevel;
-import org.helianto.core.def.UserType;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
@@ -71,8 +70,6 @@ public class User extends UserGroup implements PersonalEntity {
     
     @Column(length=4)
     private String initials;
-    
-    private char userType = UserType.INTERNAL.getValue();
     
     private char privacyLevel = PrivacyLevel.PUBLIC.getValue();
     
@@ -285,19 +282,6 @@ public class User extends UserGroup implements PersonalEntity {
     public void setInitials(String initials) {
 		this.initials = initials;
 	}
-
-    /**
-     * UserType getter.
-     */
-    public char getUserType() {
-        return this.userType;
-    }
-    public void setUserType(char userType) {
-        this.userType = userType;
-    }
-    public void setUserTypeAsEnum(UserType userType) {
-        this.userType = userType.getValue();
-    }
 
     /**
      * Privacy level
