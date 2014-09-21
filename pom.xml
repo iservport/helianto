@@ -9,7 +9,7 @@
 	<artifactId>helianto</artifactId>
 	<packaging>pom</packaging>
 	<name>The Helianto Project ${project.version}</name>
-	<version>0.4.1-SNAPSHOT</version>
+	<version>0.4.2-SNAPSHOT</version>
 	<description>
 		Helianto project creates infrastructure, repository, domain and
 		service objects to promote a basic level of standardization 
@@ -55,10 +55,9 @@
 
 	<properties>
 		<maven.test.failure.ignore>false</maven.test.failure.ignore>
-		<helianto-query.version>0.0.1-SNAPSHOT</helianto-query.version>
+		<helianto-query.version>0.0.2-SNAPSHOT</helianto-query.version>
 		<spring.framework.version>4.0.4.RELEASE</spring.framework.version>
 		<org.aspectj.version>1.6.11</org.aspectj.version>
-		<spring.data.version>1.4.3.RELEASE</spring.data.version>
 		<spring-social.version>1.0.3.RELEASE</spring-social.version>
 		<org.slf4j.version>1.7.5</org.slf4j.version>
 	</properties>

@@ -15,6 +15,7 @@
 
 package org.helianto.core.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +38,7 @@ import org.helianto.core.def.CategoryGroup;
 import org.helianto.core.def.ReferenceEnabled;
 import org.helianto.core.domain.type.TrunkEntity;
 import org.helianto.core.internal.AbstractHumanReadable;
+import org.helianto.core.internal.KeyNameAdapter;
 import org.helianto.core.number.Sequencer;
 import org.helianto.core.utils.StringListUtils;
 
@@ -59,6 +61,7 @@ public class Category
 	, ReferenceEnabled
 	, PropertyMappable
 	, Programmable
+	, KeyNameAdapter
 {
 
     private static final long serialVersionUID = 1L;
@@ -163,6 +166,11 @@ public class Category
     public void setId(int id) {
         this.id = id;
     }
+    
+    @Transient
+    public Serializable getKey() {
+    	return id;
+    }
 
     /**
      * Category entity.
@@ -215,6 +223,14 @@ public class Category
     }
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+    
+    @Transient
+    public String getName() {
+    	if (getCategoryName()!=null) {
+    		return getCategoryName();
+    	}
+    	return "";
     }
 
     /**
