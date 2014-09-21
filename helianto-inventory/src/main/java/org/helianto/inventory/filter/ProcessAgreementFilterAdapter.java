@@ -16,35 +16,33 @@
 package org.helianto.inventory.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.filter.base.AbstractSequenceFilterAdapterDecorator;
-import org.helianto.inventory.domain.ProcessAgreement;
+import org.helianto.core.filter.internal.AbstractInternalFilterAdapter;
+import org.helianto.inventory.form.ProcessAgreementForm;
 
 /**
  * Process agreement filter adapter.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public class ProcessAgreementFilterAdapter extends AbstractSequenceFilterAdapterDecorator<ProcessAgreement> {
+public class ProcessAgreementFilterAdapter 
+	extends AbstractInternalFilterAdapter<ProcessAgreementForm> 
+{
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Default constructor.
 	 * 
-	 * @param filter
+	 * @param form
 	 */
-	public ProcessAgreementFilterAdapter(ProcessAgreement filter) {
-		super(filter);
+	public ProcessAgreementFilterAdapter(ProcessAgreementForm form) {
+		super(form);
 	}
-
-	public void reset() { }
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
 		super.doFilter(mainCriteriaBuilder);
-		if (getForm().getPartner()!=null) {
-			appendEqualFilter("partner.id", getForm().getPartner().getId(), mainCriteriaBuilder);
-		}
+		appendEqualFilter("partner.id", getForm().getPartnerId(), mainCriteriaBuilder);
 	}
 
 }

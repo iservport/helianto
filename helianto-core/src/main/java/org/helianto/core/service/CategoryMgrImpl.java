@@ -24,7 +24,6 @@ import org.helianto.core.def.CategoryGroup;
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.CategoryFormFilterAdapter;
-import org.helianto.core.filter.Filter;
 import org.helianto.core.form.CategoryForm;
 import org.helianto.core.repository.CategoryRepository;
 import org.slf4j.Logger;
@@ -43,7 +42,7 @@ public class CategoryMgrImpl implements CategoryMgr {
 	public long countCategory(final Entity entity, final char categoryGroup, final String searchString) {
 		@SuppressWarnings("serial")
 		CategoryForm form = new CategoryForm() {
-			public Entity getEntity() { return entity; }
+			public int getEntityId() { return entity.getId(); }
 			public char getCategoryGroup() { return categoryGroup; }
 			public String getCategoryCode() { return searchString; }
 			public String getCategoryName() { return "";}
@@ -59,22 +58,13 @@ public class CategoryMgrImpl implements CategoryMgr {
     	return categoryList;
 	}
 
-	@Transactional(readOnly=true)
-	public List<Category> findCategories(Filter categoryFilter) {
-    	List<Category> categoryList = (List<Category>) categoryRepository.find(categoryFilter);
-    	logger.debug("Found category list of size {}", categoryList.size());
-    	return categoryList;
-	}
-
 	@Transactional
 	public Category storeCategory(Category category) {
-		categoryRepository.saveAndFlush(category);
-    	return category;
+    	return categoryRepository.saveAndFlush(category);
 	}
 
 	public void removeCategory(Category category) {
-		// TODO Auto-generated method stub
-		
+		categoryRepository.delete(category);
 	}
 	
 	@Transactional

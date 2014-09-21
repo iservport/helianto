@@ -15,23 +15,19 @@
 
 package org.helianto.core.number;
 
-import org.helianto.core.domain.type.TrunkEntity;
+import org.helianto.core.form.EntityIdForm;
+
 
 /**
  * Common Interface to entities having internalNumber.
  *  
  * @author Mauricio Fernandes de Castro
  */
-public interface Internal extends TrunkEntity {
+public interface Internal extends EntityIdForm {
 	
 	/**
 	 * InternalNumber getter.
 	 */
 	public long getInternalNumber();
-
-	/**
-	 * InternalNumber setter.
-	 */
-	public void setInternalNumber(long internalNumber);
 
 }

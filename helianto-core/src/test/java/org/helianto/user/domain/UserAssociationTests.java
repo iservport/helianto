@@ -40,13 +40,6 @@ public class UserAssociationTests {
         assertFalse(userAssociation.getAssociationDate().after(endDate));
     }
 	
-	@Test
-	public void reset() {
-		UserAssociation userAssociation = new UserAssociation();
-		userAssociation.reset();
-		assertEquals(' ', userAssociation.getResolution());
-		assertNull(userAssociation.getAssociationDate());
-	}
     
     /**
      * Test <code>UserAssociation</code> equals() method.

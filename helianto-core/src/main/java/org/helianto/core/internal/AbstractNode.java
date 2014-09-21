@@ -26,7 +26,7 @@ import org.helianto.core.Node;
 public abstract class AbstractNode<T> implements Node {
 
 	private static final long serialVersionUID = 1L;
-	private long id;
+	private int id;
 	private T content;
 	private int level = 0;
 	private int sequence = 0;
@@ -37,7 +37,7 @@ public abstract class AbstractNode<T> implements Node {
 	/**
 	 * Constructor.
 	 */
-	public AbstractNode(long id, T content,  int level, int sequence, boolean editable) {
+	public AbstractNode(int id, T content,  int level, int sequence, boolean editable) {
 		this.id = id;
 		this.content = content;
 		this.level = level;
@@ -48,14 +48,14 @@ public abstract class AbstractNode<T> implements Node {
 	/**
 	 * Constructor.
 	 */
-	public AbstractNode(long id, T payLoad,  int level, int sequence) {
+	public AbstractNode(int id, T payLoad,  int level, int sequence) {
 		this(id, payLoad,  level, sequence, true);
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

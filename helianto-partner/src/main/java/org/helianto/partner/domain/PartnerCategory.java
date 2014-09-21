@@ -34,6 +34,7 @@ import org.helianto.core.domain.Category;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  * The category associated to the partner.
  * 
@@ -43,17 +44,39 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name="prtnr_category",
     uniqueConstraints = {@UniqueConstraint(columnNames={"partnerId", "categoryId"})}
 )
-public class PartnerCategory implements Uploadable {
+public class PartnerCategory 
+	implements Uploadable 
+{
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @Version
     private int version;
+    
+    @JsonBackReference("partner")
+    @ManyToOne
+    @JoinColumn(name="partnerId", nullable=true)
     private Partner partner;
+    
+    @ManyToOne
+    @JoinColumn(name="categoryId", nullable=true)
     private Category category;
+    
+    @Lob
     private byte[] content;
-    private String encoding;
+    
+	@Column(length=32)
+    private String encoding = "";
+    
+	@Column(length=32)
     private String multipartFileContentType;
 
+    @Transient
+    private transient MultipartFile file;
+    
     /** 
      * Default constructor.
      */
@@ -85,7 +108,6 @@ public class PartnerCategory implements Uploadable {
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -93,7 +115,6 @@ public class PartnerCategory implements Uploadable {
         this.id = id;
     }
     
-    @Version
     public int getVersion() {
 		return version;
 	}
@@ -104,9 +125,6 @@ public class PartnerCategory implements Uploadable {
     /**
      * Partner.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="partnerId", nullable=true)
     public Partner getPartner() {
         return this.partner;
     }
@@ -117,9 +135,6 @@ public class PartnerCategory implements Uploadable {
     /**
      * Category.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="categoryId", nullable=true)
     public Category getCategory() {
 		return category;
 	}
@@ -130,13 +145,13 @@ public class PartnerCategory implements Uploadable {
     /**
      * Partner category content.
      */
-    @Lob
     public byte[] getContent() {
         return this.content;
     }
     public void setContent(byte[] content) {
         this.content = content;
     }
+    @JsonIgnore
     public void setContent(String content) {
     	this.content = content.getBytes();
     }
@@ -144,7 +159,7 @@ public class PartnerCategory implements Uploadable {
     /**
      * Helper method to get text content as String.
      */
-    @Transient
+//    @Transient
     public String getContentAsString() {
     	if (getContent()!=null && isText()) {
     		return new String(getContent());
@@ -155,12 +170,14 @@ public class PartnerCategory implements Uploadable {
 		setContent(contentAsString);
 	}
     
-    @Transient
+//    @Transient
     public int getContentSize() {
-    	return this.content.length;
+    	if (getContent()!=null) {
+    		return getContent().length;
+    	}
+    	return 0;
     }
     
-	@Column(length=32)
 	public String getEncoding() {
 		return this.encoding;
 	}
@@ -168,7 +185,6 @@ public class PartnerCategory implements Uploadable {
 		this.encoding = encoding;
 	}
 
-	@Column(length=32)
 	public String getMultipartFileContentType() {
 		return multipartFileContentType;
 	}
@@ -176,13 +192,9 @@ public class PartnerCategory implements Uploadable {
 		this.multipartFileContentType = multipartFileContentType;
 	}
 	
-    // transient
-    private transient MultipartFile file;
-    
 	/**
 	 * <<Transient>> Convenience property to hold uploaded data.
 	 */
-	@Transient
 	public MultipartFile getFile() {
 		return file;
 	}
@@ -193,7 +205,6 @@ public class PartnerCategory implements Uploadable {
 	/**
 	 * <<Transient>> Convenience method to read uploaded data.
 	 */
-	@Transient
 	public void processFile() throws IOException {
 		setContent(file.getBytes());
 		setMultipartFileContentType(file.getContentType());
@@ -202,9 +213,9 @@ public class PartnerCategory implements Uploadable {
     /**
      * True if {@link #afterInternalNumberSet(long)} starts with "text".
      */
-    @Transient
+//    @Transient
     public boolean isText() {
-    	if (getMultipartFileContentType().startsWith("text")) {
+    	if (getContent()!=null && getMultipartFileContentType().startsWith("text")) {
     		return true;
     	}
     	return false;
@@ -213,9 +224,9 @@ public class PartnerCategory implements Uploadable {
     /**
      * True if {@link #afterInternalNumberSet(long)} starts with "text/html".
      */
-    @Transient
+//    @Transient
     public boolean isHtml() {
-    	if (getMultipartFileContentType().startsWith("text/html")) {
+    	if (getContent()!=null && getMultipartFileContentType().startsWith("text/html")) {
     		return true;
     	}
     	return false;
@@ -224,9 +235,9 @@ public class PartnerCategory implements Uploadable {
     /**
      * True if {@link #afterInternalNumberSet(long)} starts with "image".
      */
-    @Transient
+//    @Transient
     public boolean isImage() {
-    	if (getMultipartFileContentType().startsWith("image")) {
+    	if (getContent()!=null && getMultipartFileContentType().startsWith("image")) {
     		return true;
     	}
     	return false;

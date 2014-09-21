@@ -23,14 +23,11 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
-import org.helianto.document.base.AbstractSerializer;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.helianto.document.internal.AbstractSerializer;
 
 /**
  * Wraps a number pattern to be used to generate a sequence of documents.
@@ -51,6 +48,9 @@ public class DocumentFolder
 	extends AbstractSerializer<Document> {
 
 	private static final long serialVersionUID = 1L;
+	
+    @ManyToOne
+    @JoinColumn(name="categoryId", nullable=true)
     private Category category;
 
     /** 
@@ -68,18 +68,12 @@ public class DocumentFolder
      */
     public DocumentFolder(Entity entity, String folderCode) {
     	super(entity, folderCode);
-    	setNumberPattern("0000");
-    	setFolderName("");
-    	setContentType(' ');
     }
 
     /**
      * Category.
      * @see {@link Category}
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="categoryId", nullable=true)
     public Category getCategory() {
 		return getInternalCategory(category);
 	}
@@ -94,7 +88,7 @@ public class DocumentFolder
 	 * Default implementation does not replace the private field.
 	 * </p>
 	 */
-	@Transient
+//	@Transient
 	protected Category getInternalCategory(Category category) {
 		return category;
 	}
@@ -102,7 +96,7 @@ public class DocumentFolder
 	/**
 	 * <<Transient>> True if category is not null.
 	 */
-	@Transient
+//	@Transient
 	public boolean isCategoryEnabled() {
 		return getCategory()!=null;
 	}

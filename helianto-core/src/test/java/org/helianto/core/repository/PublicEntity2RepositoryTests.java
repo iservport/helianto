@@ -1,9 +1,12 @@
 package org.helianto.core.repository;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.Serializable;
 
 import org.helianto.core.domain.PublicEntity;
 import org.helianto.core.test.AbstractJpaRepositoryIntegrationTest;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -18,10 +21,12 @@ public class PublicEntity2RepositoryTests extends AbstractJpaRepositoryIntegrati
 	protected PublicEntityRepository getRepository() {
 		return repository;
 	}
-	
+
 	protected PublicEntity getNewTarget() {
 		entity.setAlias("ALIAS");
-		return new PublicEntity(entity);
+		PublicEntity publicEntity = new PublicEntity(entity);
+		assertEquals("ALIAS", publicEntity.getEntityAlias());
+		return publicEntity;
 	}
 	
 	protected Serializable getTargetId(PublicEntity target) {
@@ -29,7 +34,7 @@ public class PublicEntity2RepositoryTests extends AbstractJpaRepositoryIntegrati
 	}
 	
 	protected PublicEntity findByKey() {
-		return getRepository().findByEntityAndEntityAlias(entity, "ALIAS");
+		return getRepository().findByEntity(entity);
 	}
 	
 }

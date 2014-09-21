@@ -23,7 +23,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.def.PhoneType;
@@ -40,14 +39,28 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name="prtnr_phone2",
     uniqueConstraints = {@UniqueConstraint(columnNames={"partnerRegistryId", "sequence"})}
 )
-public class PartnerPhone implements java.io.Serializable {
+public class PartnerPhone 
+	implements java.io.Serializable 
+{
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
-    private PrivateEntity partnerRegistry;
+    
+    @JsonBackReference 
+    @ManyToOne
+    @JoinColumn(name="partnerRegistryId", nullable=true)
+    private PrivateEntity privateEntity;
+    
     private int sequence;
+    
+    @Embedded
     private Phone phone;
+    
+    @Column(length=20)
     private String comment;
+    
     private char privacyLevel;
 
     /** 
@@ -106,7 +119,6 @@ public class PartnerPhone implements java.io.Serializable {
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -117,26 +129,23 @@ public class PartnerPhone implements java.io.Serializable {
     /**
      * Private entity.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="partnerRegistryId", nullable=true)
     public PrivateEntity getPrivateEntity() {
-		return partnerRegistry;
+		return privateEntity;
 	}
-    public void setPrivateEntity(PrivateEntity partnerRegistry) {
-		this.partnerRegistry = partnerRegistry;
+    public void setPrivateEntity(PrivateEntity privateEntity) {
+		this.privateEntity = privateEntity;
 	}
 
     /**
      * Old name to private entity, kept for legacy.
      * @deprecated
      */
-    @Transient
+//    @Transient
     public PrivateEntity getPartnerRegistry() {
-		return partnerRegistry;
+		return privateEntity;
 	}
     public void setPartnerRegistry(PrivateEntity partnerRegistry) {
-		this.partnerRegistry = partnerRegistry;
+		this.privateEntity = partnerRegistry;
 	}
 
     /**
@@ -152,7 +161,6 @@ public class PartnerPhone implements java.io.Serializable {
     /**
      * Phone.
      */
-    @Embedded
     public Phone getPhone() {
 		return phone;
 	}
@@ -163,7 +171,7 @@ public class PartnerPhone implements java.io.Serializable {
     /**
      * Phone number.
      */
-    @Transient
+//    @Transient
     public String getPhoneNumber() {
         return getPhone().getPhoneNumber();
     }
@@ -174,7 +182,7 @@ public class PartnerPhone implements java.io.Serializable {
     /**
      * Area code.
      */
-    @Transient
+//    @Transient
     public String getAreaCode() {
         return getPhone().getAreaCode();
     }
@@ -185,7 +193,7 @@ public class PartnerPhone implements java.io.Serializable {
     /**
      * Phone type.
      */
-    @Transient
+//    @Transient
     public char getPhoneType() {
         return getPhone().getPhoneType();
     }
@@ -199,7 +207,7 @@ public class PartnerPhone implements java.io.Serializable {
     /**
      * Branch.
      */
-    @Transient
+//    @Transient
     public String getBranch() {
         return getPhone().getBranch();
     }
@@ -210,7 +218,6 @@ public class PartnerPhone implements java.io.Serializable {
     /**
      * Comment.
      */
-    @Column(length=20)
     public String getComment() {
         return this.comment;
     }

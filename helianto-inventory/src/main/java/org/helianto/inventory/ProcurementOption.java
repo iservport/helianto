@@ -22,6 +22,7 @@ package org.helianto.inventory;
  */
 public enum ProcurementOption {
 
+	UNRESOLVED('9'),
 	MAKE('0'),
 	BUY('1'),
 	IMPORT('2');

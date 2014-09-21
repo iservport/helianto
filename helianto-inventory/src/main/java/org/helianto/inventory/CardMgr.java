@@ -19,9 +19,10 @@ package org.helianto.inventory;
 import java.util.List;
 
 import org.helianto.core.domain.Entity;
-import org.helianto.core.filter.Filter;
 import org.helianto.inventory.domain.Card;
 import org.helianto.inventory.domain.CardSet;
+import org.helianto.inventory.form.CardForm;
+import org.helianto.inventory.form.CardSetForm;
 
 
 /**
@@ -33,8 +34,10 @@ public interface CardMgr {
 
 	/**
 	 * Find card set list.
+	 * 
+	 * @param form
 	 */
-	List<CardSet> findCardSets(Filter cardSetFilter);
+	List<CardSet> findCardSets(CardSetForm form);
 
 	/**
 	 * Store card set.
@@ -42,6 +45,13 @@ public interface CardMgr {
 	 * @param cardSet
 	 */
 	CardSet storeCardSet(CardSet cardSet);
+	
+	/**
+	 * Find cards.
+	 * 
+	 * @param form
+	 */
+	List<Card> findCards(CardForm form);
 
 	/**
 	 * Find or create an unique card.

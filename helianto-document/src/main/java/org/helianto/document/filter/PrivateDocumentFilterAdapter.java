@@ -1,6 +1,7 @@
 package org.helianto.document.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
+import org.helianto.document.filter.internal.AbstractDocumentFormFilterAdapter;
 import org.helianto.document.form.PrivateDocumentForm;
 
 /**

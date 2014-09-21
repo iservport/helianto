@@ -2,8 +2,7 @@ package org.helianto.document.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.domain.Entity;
-import org.helianto.core.test.EntityTestSupport;
+import org.helianto.document.filter.internal.AbstractCustomDocumentFormFilterAdapter;
 import org.helianto.document.form.CustomDocumentForm;
 import org.junit.After;
 import org.junit.Before;
@@ -60,9 +59,8 @@ public class CustomDocumentFormFilterAdapterTests {
 	@SuppressWarnings({ "serial", "unchecked", "rawtypes" })
 	@Before
 	public void setUp() {
-		Entity entity = EntityTestSupport.createEntity(1);
 		form = Mockito.mock(CustomDocumentForm.class);
-		Mockito.when(form.getEntity()).thenReturn(entity);
+		Mockito.when(form.getEntityId()).thenReturn(1);
 		filter = new AbstractCustomDocumentFormFilterAdapter(form) { };
 	}
 	

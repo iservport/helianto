@@ -65,6 +65,9 @@ public class ServiceFormFilterAdapterTests {
 			public Operator getOperator() { return operator; }
 			public String getServiceName() { return serviceName; }
 			public String getServiceNameLike() { return serviceNameLike; }
+		    public int getContextId() { return 0; }
+		    
+
     	};
     	filter = new ServiceFormFilterAdapter(form);
     }

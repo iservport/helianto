@@ -38,20 +38,19 @@ public class PartnerPhoneFormFilterAdapter extends AbstractFilterAdapter<Partner
 	}
 	
 	public boolean isSelection() {
-		return getForm().getParent()!=null 
-				&& getForm().getParent().getId()>0 
+		return getForm().getPrivateEntityId()>0 
 				&& getForm().getSequence()>0;
 	}
 
 	@Override
 	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("privateEntity.id", getForm().getParent().getId(), mainCriteriaBuilder);
+		appendEqualFilter("privateEntity.id", getForm().getPrivateEntityId(), mainCriteriaBuilder);
 		appendEqualFilter("sequence", getForm().getSequence(), true, mainCriteriaBuilder);
 	}
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("privateEntity.id", getForm().getParent().getId(), mainCriteriaBuilder);
+		doSelect(mainCriteriaBuilder);
 		appendEqualFilter("phoneType", getForm().getPhoneType(), mainCriteriaBuilder);
 	}
 	

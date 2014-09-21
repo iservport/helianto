@@ -15,7 +15,6 @@
 
 package org.helianto.inventory.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,7 +22,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.Entity;
@@ -32,6 +30,7 @@ import org.helianto.inventory.CardState;
 import org.helianto.inventory.InvalidCardException;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Cards are companions to transactions.
@@ -42,14 +41,27 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name="inv_card",
     uniqueConstraints = {@UniqueConstraint(columnNames={"cardSetId", "cardLabel"})}
 )
-public class Card implements java.io.Serializable {
+public class Card 
+	implements java.io.Serializable 
+{
 	
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @JsonBackReference 
+    @ManyToOne
+    @JoinColumn(name="cardSetId", nullable=true)
     private CardSet cardSet;
+    
+    @Column(length=15)
     private String cardLabel;
+    
+    @Column(precision=4, scale=0)
     private int cardNumber;
-	private char cardState;
+    
+	private char cardState = CardState.EMPTY.getValue();
 
     /** 
      * Default constructor.
@@ -68,7 +80,6 @@ public class Card implements java.io.Serializable {
     	super();
     	setCardSet(cardSet);
         setCardLabel(cardLabel);
-        setCardState(CardState.EMPTY);
     }
 
     /** 
@@ -81,7 +92,6 @@ public class Card implements java.io.Serializable {
     	super();
     	setCardSet(cardSet);
         setCardLabel(cardNumber);
-        setCardState(CardState.EMPTY);
     }
 
     /**
@@ -105,7 +115,6 @@ public class Card implements java.io.Serializable {
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -116,9 +125,6 @@ public class Card implements java.io.Serializable {
 	/**
 	 * <<NaturalKey>>Card set.
 	 */
-    @JsonBackReference 
-    @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="cardSetId", nullable=true)
 	public CardSet getCardSet() {
 		return cardSet;
 	}
@@ -129,13 +135,13 @@ public class Card implements java.io.Serializable {
     /**
      * Card label.
      */
-    @Column(length=15)
     public String getCardLabel() {
     	return this.cardLabel;
     }
     public void setCardLabel(String cardLabel) {
     	this.cardLabel = cardLabel;
     }
+    @JsonIgnore
     protected void setCardLabel(int cardNumber) {
     	this.cardLabel = formatCardLabel(cardNumber);
     	this.cardNumber = cardNumber;
@@ -155,7 +161,6 @@ public class Card implements java.io.Serializable {
     /**
      * Owning entity.
      */
-    @Transient
     public Entity getEntity() {
     	if (this.cardSet!=null) {
     		return this.cardSet.getEntity();
@@ -165,7 +170,6 @@ public class Card implements java.io.Serializable {
 	/**
 	 * Card process inherited from a card set.
 	 */
-    @Transient
 	public ProcessDocument getProcess() {
     	if (this.cardSet!=null) {
     		return this.cardSet.getProcess();
@@ -176,7 +180,6 @@ public class Card implements java.io.Serializable {
     /**
 	 * Card type inherited from a card set.
 	 */
-    @Transient
 	public char getCardType() {
     	if (this.cardSet!=null) {
     		return this.cardSet.getCardType();
@@ -186,7 +189,6 @@ public class Card implements java.io.Serializable {
     /**
      * Card number.
      */
-    @Column(precision=4, scale=0)
     public int getCardNumber() {
         return this.cardNumber;
     }
@@ -197,7 +199,6 @@ public class Card implements java.io.Serializable {
      * Convert the human readable representation of the card to 
      * an integer unique to the card range.
      */
-    @Transient
 	public static int getInternalNumber(String cardLabel) {
 		try {
 			return Integer.parseInt(cardLabel.substring(5));
@@ -216,7 +217,7 @@ public class Card implements java.io.Serializable {
     public void setCardState(char cardState) {
         this.cardState = cardState;
     }
-    public void setCardState(CardState cardState) {
+    public void setCardStateAsEnum(CardState cardState) {
         this.cardState = cardState.getValue();
     }
 

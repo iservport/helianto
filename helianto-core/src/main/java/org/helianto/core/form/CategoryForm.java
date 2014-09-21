@@ -1,13 +1,14 @@
 package org.helianto.core.form;
 
-import org.helianto.core.domain.type.TrunkEntity;
 
 /**
  * Category form.
  * 
  * @author mauriciofernandesdecastro
  */
-public interface CategoryForm extends TrunkEntity {
+public interface CategoryForm 
+	extends EntityIdForm
+{
 	
 	/**
 	 * Category code.

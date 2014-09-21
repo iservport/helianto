@@ -15,14 +15,35 @@
 
 package org.helianto.core.number;
 
+import java.io.Serializable;
+
+import org.helianto.core.domain.Entity;
+
 
 /**
  * Common Interface to entities having internalNumber.
  *  
  * @author Mauricio Fernandes de Castro
  */
-public interface Sequenceable extends Internal {
+public interface Sequenceable 
+	extends Serializable
+{
 	
+	/**
+	 * The owning entity.
+	 */
+	Entity getEntity();
+	
+	/**
+	 * InternalNumber getter.
+	 */
+	long getInternalNumber();
+
+	/**
+	 * InternalNumber setter.
+	 */
+	void setInternalNumber(long internalNumber);
+
 	/**
 	 * InternalNumber key.
 	 */

@@ -16,7 +16,7 @@
 package org.helianto.partner.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
+import org.helianto.core.filter.internal.AbstractEntityIdFilterAdapter;
 import org.helianto.partner.form.AccountForm;
 
 /**
@@ -25,7 +25,7 @@ import org.helianto.partner.form.AccountForm;
  * @author Maurício Fernandes de Castro
  */
 public class AccountFilterAdapter 
-	extends AbstractTrunkFilterAdapter<AccountForm> {
+	extends AbstractEntityIdFilterAdapter<AccountForm> {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -39,7 +39,7 @@ public class AccountFilterAdapter
 	}
 	
 	public boolean isSelection() {
-		return getForm().getAccountCode()!=null && getForm().getAccountCode().length()>0;
+		return super.isSelection() && getForm().getAccountCode()!=null && getForm().getAccountCode().length()>0;
 	}
 
 	@Override

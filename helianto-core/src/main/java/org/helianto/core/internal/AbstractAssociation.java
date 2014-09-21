@@ -18,13 +18,18 @@ package org.helianto.core.internal;
 
 import java.io.Serializable;
 
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 import org.helianto.core.Association;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * Base class to generic associations.
@@ -36,10 +41,23 @@ public abstract class AbstractAssociation<P, C>
 	implements Association<P, C>, Serializable, Comparable<AbstractAssociation<P,C>> {
 	
 	private static final long serialVersionUID = 1L;
+	
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	
+    @Version
 	private int version;
+	
 	private int sequence;
+	
+    @JsonBackReference("parent")
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="parentId", nullable=true)
 	protected P parent;
+	
+    @JsonBackReference("child")
+    @ManyToOne
+    @JoinColumn(name="childId", nullable=true)
 	protected C child;
 	
 	/**
@@ -50,7 +68,6 @@ public abstract class AbstractAssociation<P, C>
 	/**
 	 * Auto generated primary key.
 	 */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}
@@ -61,7 +78,6 @@ public abstract class AbstractAssociation<P, C>
     /**
      * Version.
      */
-    @Version
     public int getVersion() {
         return this.version;
     }
@@ -79,10 +95,22 @@ public abstract class AbstractAssociation<P, C>
 		this.sequence = sequence;
 	}
 
+	/**
+	 * Parent.
+	 */
+	public P getParent() {
+		return parent;
+	}
 	public void setParent(P parent) {
 		this.parent = parent;
 	}
 
+	/**
+	 * Child.
+	 */
+	public C getChild() {
+		return child;
+	}
 	public void setChild(C child) {
 		this.child = child;
 	}

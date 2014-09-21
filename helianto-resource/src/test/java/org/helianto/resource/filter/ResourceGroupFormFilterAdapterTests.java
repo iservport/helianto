@@ -2,8 +2,6 @@ package org.helianto.resource.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.domain.Entity;
-import org.helianto.core.test.EntityTestSupport;
 import org.helianto.resource.def.ResourceType;
 import org.helianto.resource.form.ResourceGroupForm;
 import org.junit.After;
@@ -80,9 +78,8 @@ public class ResourceGroupFormFilterAdapterTests {
     
     @Before
     public void setUp() {
-    	Entity entity = EntityTestSupport.createEntity(1);
     	form = Mockito.mock(ResourceGroupForm.class);
-    	Mockito.when(form.getEntity()).thenReturn(entity);
+    	Mockito.when(form.getEntityId()).thenReturn(1);
     	filter = new ResourceGroupFormFilterAdapter(form);
     }
     

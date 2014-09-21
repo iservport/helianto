@@ -1,11 +1,16 @@
 package org.helianto.core.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
+import org.helianto.core.filter.internal.AbstractEntityIdFilterAdapter;
 import org.helianto.core.form.PrivateSequenceForm;
 
+/**
+ * Private sequence filter.
+ * 
+ * @author mauriciofernandesdecastro
+ */
 public class PrivateSequenceFilterAdapter 
-	extends AbstractTrunkFilterAdapter<PrivateSequenceForm> {
+	extends AbstractEntityIdFilterAdapter<PrivateSequenceForm> {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -31,7 +36,7 @@ public class PrivateSequenceFilterAdapter
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		// nop
+		doSelect(mainCriteriaBuilder);
 	}
 	
 	@Override

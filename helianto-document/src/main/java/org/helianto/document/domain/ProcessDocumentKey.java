@@ -19,7 +19,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.KeyType;
@@ -41,13 +40,17 @@ public class ProcessDocumentKey
 	/**
 	 * <<Transient>> Delegate to the actual key owner.
 	 */
-	@Transient
+//	@Transient
 	@Override
 	protected Object getKeyOwner() {
 		return getProcessDocument();
 	}   
 
     private static final long serialVersionUID = 1L;
+    
+    @JsonBackReference 
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="processDocumentId", nullable=true)
     private ProcessDocument processDocument;
 
     /** 
@@ -82,9 +85,6 @@ public class ProcessDocumentKey
     /**
      * Process document.
      */
-    @JsonBackReference 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="processDocumentId", nullable=true)
     public ProcessDocument getProcessDocument() {
         return this.processDocument;
     }

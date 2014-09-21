@@ -17,14 +17,11 @@ package org.helianto.partner.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.def.CategoryGroup;
-import org.helianto.core.domain.Category;
-import org.helianto.core.domain.Entity;
-import org.helianto.core.test.EntityTestSupport;
-import org.helianto.partner.domain.PrivateEntity;
-import org.helianto.partner.domain.nature.Customer;
+import org.helianto.partner.form.PartnerCategoryForm;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * 
@@ -44,42 +41,41 @@ public class PartnerCategoryFilterAdapterTests {
     
     @Test
     public void select() {
-    	form.getPartner().setId(10);
-    	form.getCategory().setId(20);
+    	Mockito.when(form.getPartnerId()).thenReturn(10);
+    	Mockito.when(form.getCategoryId()).thenReturn(20);
         assertEquals(C1+"AND "+C2, filter.createCriteriaAsString());
     }
     
     @Test
     public void partner() {
-    	form.getPartner().setId(10);
+    	Mockito.when(form.getPartnerId()).thenReturn(10);
         assertEquals(C1+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void category() {
-    	form.getCategory().setId(20);
+    	Mockito.when(form.getCategoryId()).thenReturn(20);
         assertEquals(C2+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void parent() {
-    	parent.setId(100);
-    	form.setParent(parent);
+    	Mockito.when(form.getPrivateEntityId()).thenReturn(100);
         assertEquals(C3+OB, filter.createCriteriaAsString());
     }
     
     private PartnerCategoryFormFilterAdapter filter;
-    private CompositeTestPartnerForm form;
-    private PrivateEntity parent;
+    private PartnerCategoryForm form;
     
     @Before
     public void setUp() {
-    	Entity entity = EntityTestSupport.createEntity(1);
-    	parent = new PrivateEntity(entity, "PRIVATE_ENTITY");
-    	Customer customer = new Customer(parent);
-    	Category category = new Category(entity, CategoryGroup.NOT_DEFINED, "CATEGORY");
-    	form = new CompositeTestPartnerForm(customer);
-    	form.setCategory(category);
+    	form = Mockito.mock(PartnerCategoryForm.class);
     	filter = new PartnerCategoryFormFilterAdapter(form);
     }
+    
+    @After
+    public void tearDown() {
+    	Mockito.reset(form);
+    }
+    
 }

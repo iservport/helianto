@@ -24,6 +24,10 @@ public class PublicAddress
 	implements RootEntity {
 
 	private static final long serialVersionUID = 1L;
+	
+	@JsonBackReference 
+	@ManyToOne
+	@JoinColumn(name="operatorId")
 	private Operator operator;
 	
 	/**
@@ -57,11 +61,19 @@ public class PublicAddress
 	}
 	
 	/**
+	 * City constructor.
+	 * 
+	 * @param city
+	 * @param postalCode
+	 */
+	public PublicAddress(City city, String postalCode) {
+		this(city.getState(), postalCode);
+		setCity(city);
+	}
+	
+	/**
 	 * Operator that holds the address database.
 	 */
-	@JsonBackReference 
-	@ManyToOne
-	@JoinColumn(name="operatorId")
 	public Operator getOperator() {
 		return operator;
 	}
@@ -69,6 +81,14 @@ public class PublicAddress
 		this.operator = operator;
 	}
 	
+//    @Transient
+    public int getContextId() {
+    	if (getOperator()!=null) {
+    		return getOperator().getId();
+    	}
+    	return 0;
+    }
+    
     /**
      * toString
      * @return String

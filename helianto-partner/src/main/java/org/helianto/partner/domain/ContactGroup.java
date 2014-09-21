@@ -18,7 +18,6 @@ package org.helianto.partner.domain;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.user.domain.UserGroup;
@@ -32,17 +31,23 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  */
 @javax.persistence.Entity
 @DiscriminatorValue("C")
-public class ContactGroup extends UserGroup {
+public class ContactGroup 
+	extends UserGroup 
+{
 
 	/**
 	 * <<Transient>> Exposes the discriminator.
 	 */
-	@Transient
+//	@Transient
 	public char getDiscriminator() {
 		return 'C';
 	}
 
     private static final long serialVersionUID = 1L;
+    
+    @JsonBackReference 
+    @ManyToOne
+    @JoinColumn(name="partnerRegistryId", nullable=true)
     private PrivateEntity privateEntity;
 
 	/** 
@@ -86,9 +91,6 @@ public class ContactGroup extends UserGroup {
     /**
      * Private entity.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="partnerRegistryId", nullable=true)
     public PrivateEntity getPrivateEntity() {
         return this.privateEntity;
     }
@@ -96,13 +98,13 @@ public class ContactGroup extends UserGroup {
         this.privateEntity = privateEntity;
     }
 
-    @Transient
+//    @Transient
     public String getEntityAlias() {
     	if (getPrivateEntity()==null) return "";
     	return getPrivateEntity().getEntityAlias();
     }
     
-    @Transient
+//    @Transient
     public String getEntityName() {
     	if (getPrivateEntity()==null) return "";
     	return getPrivateEntity().getEntityName();

@@ -22,7 +22,7 @@ public class EntityTestSupport {
      * 
      * @param id
      */
-    public static Entity createEntity(long id) {
+    public static Entity createEntity(int id) {
         Entity entity = EntityTestSupport.createEntity();
         entity.setId(id);
         return entity;

@@ -15,12 +15,14 @@
 
 package org.helianto.core.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,10 +38,11 @@ import org.helianto.core.def.CategoryGroup;
 import org.helianto.core.def.ReferenceEnabled;
 import org.helianto.core.domain.type.TrunkEntity;
 import org.helianto.core.internal.AbstractHumanReadable;
+import org.helianto.core.internal.KeyNameAdapter;
 import org.helianto.core.number.Sequencer;
 import org.helianto.core.utils.StringListUtils;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Categories.  
@@ -58,33 +61,71 @@ public class Category
 	, ReferenceEnabled
 	, PropertyMappable
 	, Programmable
+	, KeyNameAdapter
 {
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @JsonIgnore
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="entityId")
     private Entity entity;
+    
     private char categoryGroup;
+    
+    @Column(length=20)
     private String categoryCode = "";
+    
+    @Column(length=32)
     private String categoryLabel = "";
+    
+    @Column(length=64)
     private String categoryName = "";
+    
     private char priority = '0';
+
+    @Column(length=1024)
     private String referenceList = "";
+
+    @Column(length=255)
     private String customStyle = "";
+
+    @Column(length=255)
     private String customWorkflowRoles = "";
+
+	@Column(length=512)
     private String customProperties = "";
+	
+	@Column(length=12)
     private String customNumberPattern = "";
+	
+	@Column(length=64)
 	private String patternPrefix = "";
+
+	@Column(length=64)
 	private String patternSuffix = "";
+	
 	private int numberOfDigits = 2;
+	
+    @Column(length=20)
     private String partnerFilterPattern = "";
+    
+    @Column(length=255)
     private String scriptItems = "";
 
-	// Transients.
+    @Transient
 	private List<String> scriptList = new ArrayList<String>();
+    
+    @Transient
 	private int countItems;
+
+    @Transient
 	private int countAlerts;
     
-    /** 
+	/** 
      * Default constructor
      */
     public Category() {
@@ -119,20 +160,21 @@ public class Category
     	setCategoryName(categoryName);
     }
 
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
     public void setId(int id) {
         this.id = id;
     }
+    
+    @Transient
+    public Serializable getKey() {
+    	return id;
+    }
 
     /**
      * Category entity.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="entityId")
     public Entity getEntity() {
         return this.entity;
     }
@@ -156,7 +198,6 @@ public class Category
     /**
      * Category code.
      */
-    @Column(length=20)
     public String getCategoryCode() {
         return this.categoryCode;
     }
@@ -167,7 +208,6 @@ public class Category
     /**
      * Category label.
      */
-    @Column(length=32)
     public String getCategoryLabel() {
 		return categoryLabel;
 	}
@@ -178,12 +218,19 @@ public class Category
     /**
      * Category name.
      */
-    @Column(length=64)
     public String getCategoryName() {
         return this.categoryName;
     }
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+    
+    @Transient
+    public String getName() {
+    	if (getCategoryName()!=null) {
+    		return getCategoryName();
+    	}
+    	return "";
     }
 
     /**
@@ -199,7 +246,6 @@ public class Category
     /**
      * Reference list of comma separated values.
      */
-    @Column(length=1024)
     public String getReferenceList() {
 		return referenceList;
 	}
@@ -210,12 +256,9 @@ public class Category
     /**
      * References as array.
      */
-    @Transient
+//    @Transient
     public String[] getReferencesAsArray() {
     	return StringListUtils.stringToArray(getReferenceList());
-    }
-    public void setReferencesAsArray(String[] referenceListAsArray) {
-    	setReferenceList(StringListUtils.arrayToString(referenceListAsArray));
     }
     
     /**
@@ -227,7 +270,6 @@ public class Category
      * apply style. Limited to 255 characters.
      * </p>
      */
-    @Column(length=255)
 	public String getCustomStyle() {
 		return customStyle;
 	}
@@ -243,7 +285,6 @@ public class Category
      * a workflow. Limited to 255 characters.
      * </p>
      */
-    @Column(length=255)
 	public String getCustomWorkflowRoles() {
 		return customWorkflowRoles;
 	}
@@ -254,18 +295,15 @@ public class Category
     /**
      * <<Transient>> List of workflow roles converted to array.
      */
-    @Transient
+//    @Transient
     public String[] getCustomWorkflowRolesAsArray() {
     	return StringListUtils.stringToArray(getCustomWorkflowRoles());
-	}
-    public void setWorkflowRolesAsArray(String[] workflowRolesArray) {
-    	setCustomWorkflowRoles(StringListUtils.arrayToString(workflowRolesArray));
 	}
     
     /**
      * <<Transient>> True if there is at least one workflow role defined.
      */
-    @Transient
+//    @Transient
     public boolean isWorkflowEnabled() {
     	return getCustomWorkflowRolesAsArray().length >0;
 	}
@@ -273,7 +311,7 @@ public class Category
     /**
      * <<Transient>> Last workflow index, i.e., last index from workflow roles array.
      */
-    @Transient
+//    @Transient
     public int getLastWorkflowIndex() {
     	return getCustomWorkflowRolesAsArray().length - 1;
 	}
@@ -286,7 +324,7 @@ public class Category
      * to be prepended.
      * </p>
      */
-    @Transient
+//    @Transient
     public Map<String, String> getCustomWorkflowRolesAsMap() {
 		Map<String, String> workflowRolesMap = new HashMap<String, String>();
     	if (isWorkflowEnabled()) {
@@ -300,7 +338,6 @@ public class Category
 	/**
 	 * Custom properties.
 	 */
-	@Column(length=512)
 	public String getCustomProperties() {
 		return customProperties;
 	}
@@ -308,7 +345,7 @@ public class Category
 		this.customProperties = customProperties;
 	}
 	
-    @Transient
+//    @Transient
 	public Map<String, Object> getCustomPropertiesAsMap() {
 		return StringListUtils.propertiesToMap(getCustomProperties());
 	}
@@ -316,7 +353,6 @@ public class Category
 	/**
 	 * Custom pattern to be applied at code generation.
 	 */
-	@Column(length=12)
     public String getCustomNumberPattern() {
 		return customNumberPattern;
 	}
@@ -324,7 +360,6 @@ public class Category
 		this.customNumberPattern = customNumberPattern;
 	}
 	
-    @Override
     public String getPatternPrefix() {
 		return patternPrefix;
 	}
@@ -356,7 +391,6 @@ public class Category
      * of partner discriminators to narrow the choices.
      * </p>
      */
-    @Column(length=20)
     public String getPartnerFilterPattern() {
 		return partnerFilterPattern;
 	}
@@ -367,7 +401,7 @@ public class Category
     /**
      * <<Transient>> Partner (if any) filter pattern converted to array.
      */
-    @Transient
+//    @Transient
     public String[] getPartnerFilterPatternAsArray() {
 		return StringListUtils.stringToArray(getPartnerFilterPattern());
 	}
@@ -375,7 +409,6 @@ public class Category
     /**
      * Key-value pair list of scripts, separated by comma.
      */
-    @Column(length=255)
     public String getScriptItems() {
 		return scriptItems;
 	}
@@ -386,10 +419,11 @@ public class Category
     /**
      * <<Transient>> Key-value pair list of scripts converted to array.
      */
-    @Transient
+//    @Transient
     public String[] getScriptItemsAsArray() {
     	return StringListUtils.stringToArray(getScriptItems());
 	}
+	@JsonIgnore
 	public void setScriptItemsAsArray(String[] scriptItemsArray) {
 		setScriptItems(StringListUtils.arrayToString(scriptItemsArray));
 	}
@@ -397,7 +431,6 @@ public class Category
     /**
      * <<Transient>> Script list, likely to be loaded at runtime.
      */
-    @Transient
     public List<String> getScriptList() {
     	return scriptList;
     }
@@ -406,7 +439,7 @@ public class Category
 	}
     
     /**
-     * Adiciona conteúdo de um script à lista.
+     * <<Transient>> Add  script content to a list.
      * 
      * @param scriptContent
      */
@@ -415,9 +448,8 @@ public class Category
 	}
 
     /**
-     * Count items.
+     * <<Transient>> Count items.
      */
-    @Transient
     public int getCountItems() {
 		return countItems;
 	}
@@ -426,9 +458,8 @@ public class Category
 	}
     
     /**
-     * Count alerts.
+     * <<Transient>> Count alerts.
      */
-    @Transient
     public int getCountAlerts() {
 		return countAlerts;
 	}

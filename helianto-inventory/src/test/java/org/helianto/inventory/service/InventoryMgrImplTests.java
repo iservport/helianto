@@ -7,16 +7,10 @@ import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.assertSame;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.helianto.core.SequenceMgr;
-import org.helianto.core.domain.Entity;
-import org.helianto.core.filter.Filter;
 import org.helianto.inventory.domain.ProcessAgreement;
 import org.helianto.inventory.domain.ProcessRequirement;
 import org.helianto.inventory.domain.Tax;
-import org.helianto.inventory.filter.classic.ProcessRequirementFilter;
 import org.helianto.inventory.repository.ProcessAgreementRepository;
 import org.helianto.inventory.repository.ProcessRequirementRepository;
 import org.helianto.inventory.repository.TaxRepository;
@@ -30,18 +24,6 @@ import org.junit.Test;
  */
 public class InventoryMgrImplTests {
 
-	@Test
-	public void findProcessRequirements() {
-		List<ProcessRequirement> requirementList = new ArrayList<ProcessRequirement>();
-		Filter filter = new ProcessRequirementFilter(new Entity());
-		
-		expect(processRequirementRepository.find(filter)).andReturn(requirementList);
-		replay(processRequirementRepository);
-		
-		assertSame(requirementList, inventoryMgr.findProcessRequirements(filter));
-		verify(processRequirementRepository);
-	}
-	
 	@Test
 	public void storeProcessRequirement() {
 		ProcessRequirement requirement = new ProcessRequirement();

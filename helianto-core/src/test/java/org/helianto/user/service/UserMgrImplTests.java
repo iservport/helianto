@@ -21,7 +21,6 @@ import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
 import java.util.ArrayList;
@@ -31,7 +30,6 @@ import java.util.List;
 import org.easymock.EasyMock;
 import org.helianto.core.IdentityMgr;
 import org.helianto.core.PublicEntityMgr;
-import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.PublicEntity;
 import org.helianto.core.filter.Filter;
@@ -49,7 +47,6 @@ import org.helianto.user.repository.UserGroupRepository;
 import org.helianto.user.repository.UserLogRepository;
 import org.helianto.user.repository.UserRepository;
 import org.helianto.user.repository.UserRoleRepository;
-import org.helianto.user.service.UserMgrImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -69,22 +66,6 @@ public class UserMgrImplTests {
     	
     	assertSame(userList, userMgr.findUsers(form));
     	verify(userGroupRepository);
-    }
-    
-	@Test(expected=IllegalArgumentException.class)
-    public void storeUserGroupNullKey() {
-		UserGroup userGroup = new UserGroup();
-		userGroup.setUserKey(null);
-		
-		userMgr.storeUserGroup(userGroup);
-    }
-    
-	@Test(expected=IllegalArgumentException.class)
-    public void storeUserGroupEmptyKey() {
-		UserGroup userGroup = new UserGroup();
-		userGroup.setUserKey("");
-		
-		userMgr.storeUserGroup(userGroup);
     }
     
 	@Test

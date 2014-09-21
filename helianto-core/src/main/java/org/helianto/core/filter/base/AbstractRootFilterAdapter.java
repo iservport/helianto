@@ -7,11 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Base class to filter adapters that require an <code>Operator</code> form.
+ * Base class to filter adapters that require a context form.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public abstract class AbstractRootFilterAdapter<F extends RootEntity> extends AbstractFilterAdapter<F> {
+public abstract class AbstractRootFilterAdapter<F extends RootEntity> 
+	extends AbstractFilterAdapter<F> 
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,12 +27,25 @@ public abstract class AbstractRootFilterAdapter<F extends RootEntity> extends Ab
 	}
 	
 	/**
-	 * The operator.
+	 * The context (operator).
 	 */
 	public Operator getOperator() {
 		return getForm().getOperator();
 	}
 
+	/**
+	 * The context id.
+	 */
+	public int getContextId() {
+		if (getOperator()!=null) {
+			return getOperator().getId();
+		}
+		if (getForm()!=null) {
+			return getForm().getContextId();
+		}
+		return 0;
+	}
+	
 	/**
 	 * Restrict selection to a given operator, if any. 
 	 */
@@ -45,7 +60,7 @@ public abstract class AbstractRootFilterAdapter<F extends RootEntity> extends Ab
 	}
 	
 	public boolean isSelection() {
-		return getOperator()!=null && getOperator().getId()>0;
+		return getContextId()>0;
 	}
 	
 	/**
@@ -54,7 +69,7 @@ public abstract class AbstractRootFilterAdapter<F extends RootEntity> extends Ab
 	 * @param mainCriteriaBuilder
 	 */
 	public void preProcessOperatorFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("operator.id", getOperator().getId(), mainCriteriaBuilder);
+		appendEqualFilter("operator.id", getContextId(), mainCriteriaBuilder);
 		logger.debug("Filter constraint set to {}.", getOperator());
 	}
 	
@@ -62,7 +77,7 @@ public abstract class AbstractRootFilterAdapter<F extends RootEntity> extends Ab
 	 * True if there is a segment for operator criterion.
 	 */
 	protected boolean hasOperatorCriterion() {
-		return getOperator()!=null;
+		return getContextId()>0;
 	}
 	
 	private static final Logger logger  = LoggerFactory.getLogger(AbstractRootFilterAdapter.class);

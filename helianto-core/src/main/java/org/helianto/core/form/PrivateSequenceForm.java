@@ -8,7 +8,8 @@ import org.helianto.core.domain.type.TrunkEntity;
  * @author Mauricio Fernandes de Castro
  */
 public interface PrivateSequenceForm 
-	extends TrunkEntity, SearchForm {
+	extends TrunkEntity, EntityIdForm, SearchForm 
+{
 	
 	/**
 	 * Type name filter.

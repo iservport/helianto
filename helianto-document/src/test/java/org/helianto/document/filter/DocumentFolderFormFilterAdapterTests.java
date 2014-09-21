@@ -17,8 +17,6 @@ package org.helianto.document.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.domain.Entity;
-import org.helianto.core.test.EntityTestSupport;
 import org.helianto.document.form.DocumentFolderForm;
 import org.junit.After;
 import org.junit.Before;
@@ -32,7 +30,7 @@ import org.mockito.Mockito;
  */
 public class DocumentFolderFormFilterAdapterTests {
 	
-	private String OB = "order by alias.priority ,  alias.folderCode ";
+	private String OB = "order by alias.folderCode ASC ";
 	private String C1 = "alias.entity.id = 1 ";
 	private String C2 = "AND alias.folderCode = 'CODE' ";
 	private String C3 = "AND alias.contentType = 'X' ";
@@ -59,10 +57,9 @@ public class DocumentFolderFormFilterAdapterTests {
 	
 	@Before
 	public void setUp() {
-		Entity entity = EntityTestSupport.createEntity(1);
 		form = Mockito.mock(DocumentFolderForm.class);
-		Mockito.when(form.getEntity()).thenReturn(entity);
 		filter = new DocumentFolderFormFilterAdapter<DocumentFolderForm>(form);
+		Mockito.when(form.getEntityId()).thenReturn(1);
 	}
 	
 	@After

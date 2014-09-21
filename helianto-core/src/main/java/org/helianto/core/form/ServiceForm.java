@@ -7,7 +7,9 @@ import org.helianto.core.domain.type.RootEntity;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface ServiceForm extends RootEntity {
+public interface ServiceForm 
+	extends RootEntity 
+{
 	
     /**
      * Service name.

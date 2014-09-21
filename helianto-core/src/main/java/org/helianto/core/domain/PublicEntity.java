@@ -15,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
@@ -34,7 +33,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  */
 @javax.persistence.Entity
 @Table(name = "core_public"
-	, uniqueConstraints = { @UniqueConstraint(columnNames = {"entityId", "entityAlias", "type"}) })
+	, uniqueConstraints = { @UniqueConstraint(columnNames = {"entityId", "type"}) })
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.CHAR)
 @DiscriminatorValue("P")
@@ -42,24 +41,44 @@ public class PublicEntity
 	extends AbstractAddress 
 	implements 
 	  RootEntity
-	, EntityAddress {
+	, EntityAddress 
+{
 	
 	/**
 	 * Exposes the discriminator.
 	 */
-	@Transient
+//	@Transient
 	public char getDiscriminator() {
 		return 'P';
 	}
 
 	private static final long serialVersionUID = 1L;
-	private int version;
+	
+    @Version
+    private int version;
+    
+	@JsonBackReference 
+	@ManyToOne
+	@JoinColumn(name = "entityId")
 	private Entity entity;
+	
+	@Column(length=20)
 	private String entityAlias = "";
+	
+	@Column(length=64)
 	private String entityName = "";
+	
+    @Column(length=128)
     private String nature = "";
-    private Phone mainPhone;
+    
+    @Embedded
+    private Phone mainPhone = new Phone();
+    
+    @Column(length=40)
     private String mainEmail = "";
+    
+	@JsonManagedReference 
+	@OneToMany(mappedBy="publicEntity")
 	private Set<PublicEntityKey> publicEntityKeys = new HashSet<PublicEntityKey>();
 
 	/**
@@ -67,8 +86,6 @@ public class PublicEntity
 	 */
 	public PublicEntity() {
 		super();
-		setMainPhone(new Phone());
-		setMainEmail("");
 	}
 
 	/**
@@ -84,7 +101,6 @@ public class PublicEntity
 	/**
 	 * Optimistic locking version.
 	 */
-	@Version
 	public int getVersion() {
 		return version;
 	}
@@ -95,7 +111,7 @@ public class PublicEntity
 	/**
 	 * Operator.
 	 */
-	@Transient
+//	@Transient
 	public Operator getOperator() {
 		if (getEntity()!=null) {
 			return getEntity().getOperator();
@@ -103,12 +119,17 @@ public class PublicEntity
 		return null;
 	}
 
+//    @Transient
+    public int getContextId() {
+    	if (getOperator()!=null) {
+    		return getOperator().getId();
+    	}
+    	return 0;
+    }
+    
 	/**
 	 * Entity.
 	 */
-	@JsonBackReference 
-	@ManyToOne
-	@JoinColumn(name = "entityId")
 	public Entity getEntity() {
 		return entity;
 	}
@@ -124,7 +145,7 @@ public class PublicEntity
 	 * service layer for installation procedures.
 	 * <p>
 	 */
-	@Transient
+//	@Transient
 	public boolean isEntityInstalled() {
 		if (getEntity()!=null) {
 			return getEntity().isInstalled();
@@ -135,7 +156,6 @@ public class PublicEntity
 	/**
 	 * Entity alias
 	 */
-	@Column(length=20)
 	public String getEntityAlias() {
 		if (getDiscriminator()=='P' && getEntity()!=null) {
 			return getEntity().getAlias();
@@ -153,7 +173,7 @@ public class PublicEntity
 	 * Default implementation forces entity alias to follow the owning entity alias.
 	 * </p>
 	 */
-	@Transient
+//	@Transient
 	protected String getInternalEntityAlias() {
 		return entityAlias;
 	}
@@ -161,7 +181,6 @@ public class PublicEntity
 	/**
 	 * Entity name.
 	 */
-	@Column(length=64)
 	public String getEntityName() {
 		return entityName;
 	}
@@ -172,18 +191,19 @@ public class PublicEntity
     /**
      * Short name.
      */
-    @Transient
     public String getShortName() {
-    	if (getEntityName().length() > 20) {
-            return getEntityName().substring(0, 20)+"...";
+    	if (getEntityName()!=null) {
+        	if (getEntityName().length() > 20) {
+                return getEntityName().substring(0, 20)+"...";
+        	}
+            return getEntityName();
     	}
-        return getEntityName();
+    	return "";
     }
     
     /**
      * Private entity nature determining Partners to be maintained as aggregates, as a keyword csv.
      */
-    @Column(length=128)
 	public String getNature() {
 		return nature;
 	}
@@ -191,7 +211,7 @@ public class PublicEntity
 		this.nature = nature;
 	}
 	
-	@Transient
+//	@Transient
 	public String[] getNatureAsArray() {
 		if (getNature()!=null && getNature().length()>0) {
 			return getNature().replace(" ", "").split(",");
@@ -231,7 +251,6 @@ public class PublicEntity
     /**
      * Main phone.
      */
-    @Embedded
     public Phone getMainPhone() {
 		return mainPhone;
 	}
@@ -244,7 +263,7 @@ public class PublicEntity
     /**
      * Phone number.
      */
-    @Transient
+//    @Transient
     public String getPhoneNumber() {
     	if (getMainPhone()!=null) {
     		return getMainPhone().getPhoneNumber();
@@ -260,7 +279,7 @@ public class PublicEntity
     /**
      * Area code.
      */
-    @Transient
+//    @Transient
     public String getAreaCode() {
     	if (getMainPhone()!=null) {
     		return getMainPhone().getAreaCode();
@@ -276,7 +295,7 @@ public class PublicEntity
     /**
      * Branch.
      */
-    @Transient
+//    @Transient
     public String getBranch() {
     	if (getMainPhone()!=null) {
     		return getMainPhone().getBranch();
@@ -292,7 +311,7 @@ public class PublicEntity
     /**
      * Phone type.
      */
-    @Transient
+//    @Transient
     public char getPhoneType() {
     	if (getMainPhone()!=null) {
     		return getMainPhone().getPhoneType();
@@ -313,7 +332,6 @@ public class PublicEntity
     /**
      * Main e-mail.
      */
-    @Column(length=40)
     public String getMainEmail() {
 		return mainEmail;
 	}
@@ -324,8 +342,6 @@ public class PublicEntity
     /**
      * Keys.
      */
-	@JsonManagedReference 
-	@OneToMany(mappedBy="publicEntity")
 	public Set<PublicEntityKey> getPublicEntityKeys() {
 		return publicEntityKeys;
 	}
@@ -362,36 +378,34 @@ public class PublicEntity
         return buffer.toString();
     }
 
-	/**
-	 * equals
-	 */
-	public boolean equals(Object other) {
-		if ((this == other))
-			return true;
-		if ((other == null))
-			return false;
-		if (!(other instanceof PublicEntity))
-			return false;
-		PublicEntity castOther = (PublicEntity) other;
-
-		return ((this.getOperator() == castOther.getOperator()) || (this
-				.getOperator() != null
-				&& castOther.getOperator() != null && this.getOperator()
-				.equals(castOther.getOperator())))
-				&& ((this.getEntity() == castOther.getEntity()) || (this
-						.getEntity() != null
-						&& castOther.getEntity() != null && this.getEntity()
-						.equals(castOther.getEntity())));
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((entity == null) ? 0 : entity.hashCode());
+		return result;
 	}
 
-	/**
-	 * hashCode
-	 */
-	public int hashCode() {
-		int result = 17;
-		result = 37 * result + (getOperator() == null ? 0 : this.getOperator().hashCode());
-		result = 37 * result + (getEntity() == null ? 0 : this.getEntity().hashCode());
-		return result;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof PublicEntity)) {
+			return false;
+		}
+		PublicEntity other = (PublicEntity) obj;
+		if (entity == null) {
+			if (other.entity != null) {
+				return false;
+			}
+		} else if (!entity.equals(other.entity)) {
+			return false;
+		}
+		return true;
 	}
 
 }

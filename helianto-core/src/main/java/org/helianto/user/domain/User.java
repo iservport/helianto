@@ -19,18 +19,16 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 import org.helianto.core.PersonalEntity;
 import org.helianto.core.def.Appellation;
 import org.helianto.core.def.Gender;
-import org.helianto.core.def.UserType;
+import org.helianto.core.def.PrivacyLevel;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
@@ -58,16 +56,25 @@ public class User extends UserGroup implements PersonalEntity {
 	/**
 	 * <<Transient>> Exposes the discriminator.
 	 */
-	@Transient
+//	@Transient
 	public char getDiscriminator() {
 		return 'U';
 	}
 
     private static final long serialVersionUID = 1L;
+    
+    @JsonBackReference 
+    @ManyToOne
+    @JoinColumn(name="identityId", nullable=true)
     private Identity identity;
+    
+    @Column(length=4)
     private String initials;
-    private char userType;
-    private char privacyLevel;
+    
+    private char privacyLevel = PrivacyLevel.PUBLIC.getValue();
+    
+	@JsonManagedReference 
+	@OneToMany(mappedBy="user")
 	private Set<UserLog> userLogs = new HashSet<UserLog>(0);
 
 	/** 
@@ -76,8 +83,6 @@ public class User extends UserGroup implements PersonalEntity {
     public User() {
     	super();
         setAccountNonExpired(false);
-    	setUserTypeAsEnum(UserType.INTERNAL);
-    	setPrivacyLevel('0');
     }
 
 	/** 
@@ -121,7 +126,7 @@ public class User extends UserGroup implements PersonalEntity {
     /**
      * Overridden to obtain the user key from the identity principal.
      */
-    @Transient
+//    @Transient
     protected String getInternalUserKey() {
     	if (getIdentity()!=null && getIdentity().getPrincipal()!=null && getIdentity().getPrincipal().length()>0) {
     		return getIdentity().getPrincipal();
@@ -132,9 +137,6 @@ public class User extends UserGroup implements PersonalEntity {
     /**
      * Identity.
      */
-    @JsonBackReference 
-    @ManyToOne(cascade=CascadeType.REFRESH)
-    @JoinColumn(name="identityId", nullable=true)
     public Identity getIdentity() {
         return this.identity;
     }
@@ -151,7 +153,7 @@ public class User extends UserGroup implements PersonalEntity {
     /**
      * <<Transient>> Safe user principal.
      */
-    @Transient
+//    @Transient
     public String getUserPrincipal() {
     	if (getIdentity()==null) {
     		return "";
@@ -162,7 +164,7 @@ public class User extends UserGroup implements PersonalEntity {
     /**
      * "<<Transient>> Safe user principal name.
      */
-    @Transient
+//    @Transient
     public String getUserPrincipalName() {
     	if (getIdentity()!=null) {
     		return getIdentity().getPrincipalName();
@@ -173,7 +175,7 @@ public class User extends UserGroup implements PersonalEntity {
     /**
      * <<Transient>> Internal user full name.
      */
-    @Transient
+//    @Transient
     @Override
     protected String getInternalUserName() {
     	if (getIdentity()!=null) {
@@ -185,7 +187,7 @@ public class User extends UserGroup implements PersonalEntity {
     /**
      * <<Transient>> Safe user principal domain.
      */
-    @Transient
+//    @Transient
     public String getUserPrincipalDomain() {
     	if (getIdentity()!=null) {
     		return getIdentity().getPrincipalDomain();
@@ -197,7 +199,7 @@ public class User extends UserGroup implements PersonalEntity {
      * <<Transient>> Safe user optional alias.
      * @deprecated
      */
-    @Transient
+//    @Transient
     public String getUserOptionalAlias() {
     	if (getIdentity()!=null) {
     		return getIdentity().getDisplayName();
@@ -208,7 +210,7 @@ public class User extends UserGroup implements PersonalEntity {
     /**
      * <<Transient>> Safe user display name.
      */
-    @Transient
+//    @Transient
     public String getUserDisplayName() {
     	if (getIdentity()!=null) {
     		return getIdentity().getDisplayName();
@@ -219,7 +221,7 @@ public class User extends UserGroup implements PersonalEntity {
     /**
      * <<Transient>> Safe user first name.
      */
-    @Transient
+//    @Transient
     public String getUserFirstName() {
     	if (getIdentity()!=null) {
     		return getIdentity().getIdentityFirstName();
@@ -230,7 +232,7 @@ public class User extends UserGroup implements PersonalEntity {
     /**
      * <<Transient>> Safe user last name.
      */
-    @Transient
+//    @Transient
     public String getUserLastName() {
     	if (getIdentity()!=null) {
     		return getIdentity().getIdentityLastName();
@@ -241,7 +243,7 @@ public class User extends UserGroup implements PersonalEntity {
     /**
      * <<Transient>> Safe user gender.
      */
-    @Transient
+//    @Transient
     public char getUserGender() {
     	if (getIdentity()!=null) {
     		return getIdentity().getGender();
@@ -252,7 +254,7 @@ public class User extends UserGroup implements PersonalEntity {
     /**
      * <<Transient>> Safe user appellation.
      */
-    @Transient
+//    @Transient
     public char getUserAppelation() {
     	if (getIdentity()!=null) {
     		return getIdentity().getAppellation();
@@ -263,7 +265,7 @@ public class User extends UserGroup implements PersonalEntity {
     /**
      * <<Transient>> Safe user birth date.
      */
-    @Transient
+//    @Transient
     public Date getUserBirthDate() {
     	if (getIdentity()!=null) {
     		return getIdentity().getBirthDate();
@@ -274,26 +276,12 @@ public class User extends UserGroup implements PersonalEntity {
     /**
      * User initials (optional), like JFK, etc..
      */
-    @Column(length=4)
     public String getInitials() {
 		return initials;
 	}
     public void setInitials(String initials) {
 		this.initials = initials;
 	}
-
-    /**
-     * UserType getter.
-     */
-    public char getUserType() {
-        return this.userType;
-    }
-    public void setUserType(char userType) {
-        this.userType = userType;
-    }
-    public void setUserTypeAsEnum(UserType userType) {
-        this.userType = userType.getValue();
-    }
 
     /**
      * Privacy level
@@ -304,12 +292,13 @@ public class User extends UserGroup implements PersonalEntity {
     public void setPrivacyLevel(char privacyLevel) {
         this.privacyLevel = privacyLevel;
     }
+    public void setPrivacyLevelAsEnum(PrivacyLevel privacyLevel) {
+        this.privacyLevel = privacyLevel.getValue();
+    }
 
 	/**
 	 * A collection of user logs.
 	 */
-	@JsonManagedReference 
-	@OneToMany(mappedBy="user")
 	public Set<UserLog> getUserLogs() {
 		return userLogs;
 	}

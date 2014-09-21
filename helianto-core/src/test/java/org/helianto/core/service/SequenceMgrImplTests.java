@@ -246,6 +246,14 @@ public class SequenceMgrImplTests {
 		public String getPublicNumberKey() {
 			return "PUBLIC";
 		}
+	    
+	    public int getContextId() {
+	    	if (getOperator()!=null) {
+	    		return getOperator().getId();
+	    	}
+	    	return 0;
+	    }
+	    
 
     }
     

@@ -21,23 +21,17 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.def.AssociationState;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.internal.AbstractAssociation;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 /**
  * User group associations.
  * 
@@ -56,12 +50,17 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class UserAssociation 
 	extends AbstractAssociation<UserGroup, UserGroup> 
 	implements java.io.Serializable 
-
 {
 
     private static final long serialVersionUID = 1L;
-    private Date associationDate;
-    private char resolution;
+    
+    @DateTimeFormat(style="SS")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date associationDate = new Date();
+    
+    private char resolution = AssociationState.ACTIVE.getValue();
+    
+    @Column(length=512)
     private String parsedContent;
 
     /** 
@@ -69,8 +68,6 @@ public class UserAssociation
      */
     public UserAssociation() {
     	super();
-    	setResolutionAsEnum(AssociationState.ACTIVE);
-    	setAssociationDate(new Date());
     }
 
     /** 
@@ -115,32 +112,6 @@ public class UserAssociation
     	this(parent, new User(parent.getEntity(), childCredential));
     }
     
-    @Transient
-    public void reset() {
-    	setResolution(' ');
-    	setAssociationDate(null);
-    }
-
-    /**
-     * Parent user group.
-     */
-    @JsonBackReference 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="parentId", nullable=true)
-    public UserGroup getParent() {
-        return this.parent;
-    }
-    
-    /**
-     * Child user group.
-     */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="childId", nullable=true)
-    public UserGroup getChild() {
-        return this.child;
-    }
-
 	@Override
     protected int compareChild(AbstractAssociation<UserGroup, UserGroup> other) {
     	if (this.getChild()!=null && other.getChild()!=null) {
@@ -149,17 +120,6 @@ public class UserAssociation
     	return 0;
     }
        
-    /**
-     * Natural key info.
-     */
-    @Transient
-    public boolean isKeyEmpty() {
-    	if (this.getChild()!=null) {
-    		return this.getChild().isKeyEmpty();
-    	}
-    	throw new IllegalArgumentException("Natural key must not be null");
-    }
-    
     /**
      * Association resolution.
      */
@@ -176,8 +136,6 @@ public class UserAssociation
     /**
      * Association date.
      */
-    @DateTimeFormat(style="SS")
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getAssociationDate() {
 		return associationDate;
 	}
@@ -188,7 +146,6 @@ public class UserAssociation
     /**
      * Parsed content.
      */
-    @Column(length=512)
     public String getParsedContent() {
 		return parsedContent;
 	}
@@ -196,7 +153,6 @@ public class UserAssociation
 		this.parsedContent = parsedContent;
 	}
     
-	@Transient
 	public String[] getParsedContentAsArray() {
 		if (getParsedContent()!=null) {
 			return getParsedContent().split(",");

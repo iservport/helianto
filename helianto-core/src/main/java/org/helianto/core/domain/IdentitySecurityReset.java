@@ -30,7 +30,7 @@ public class IdentitySecurityReset implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    private long id;
+    private int id;
     private int version;
     private IdentitySecurity identitySecurity;
     private String resetToken;
@@ -57,10 +57,10 @@ public class IdentitySecurityReset implements Serializable {
      * Primary key.
      */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public long getId() {
+    public int getId() {
         return this.id;
     }
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

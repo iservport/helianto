@@ -18,23 +18,19 @@ package org.helianto.inventory.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.Entity;
+import org.helianto.core.internal.AbstractTrunkEntity;
 import org.helianto.core.number.Sequenceable;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -54,24 +50,35 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("P")
-public class Picking implements Serializable, Sequenceable {
+public class Picking 
+	extends AbstractTrunkEntity
+	implements Serializable, Sequenceable 
+{
 
 	private static final long serialVersionUID = 1L;
-	private int id;
-    private Entity entity;
+
     private long internalNumber;
+
+	@JsonBackReference 
+	@ManyToOne
+	@JoinColumn(name="invoiceId")
 	private Invoice invoice;
+	
     private BigDecimal quantity;
-    private String packaging;
+    
+    @Column(length=60)
+    private String packaging = "";
+    
     private BigDecimal netWeight;
+    
     private BigDecimal grossWeight;
     
-    @Transient
+//    @Transient
 	public String getInternalNumberKey() {
 		return "PICKING";
 	}
     
-    @Transient
+//    @Transient
     public int getStartNumber() {
     	return 1;
     }
@@ -80,7 +87,7 @@ public class Picking implements Serializable, Sequenceable {
      * Constructor.
      */
     public Picking() {
-    	setPackaging("");
+    	super();
     }
 
     /**
@@ -107,31 +114,6 @@ public class Picking implements Serializable, Sequenceable {
     }
 
     /**
-     * Primary key
-     */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-    /**
-     * <<NaturalKey>> Owning entity.
-     * @see {@link Entity}
-     */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="entityId", nullable=true)
-    public Entity getEntity() {
-        return this.entity;
-    }
-    public void setEntity(Entity entity) {
-        this.entity = entity;
-    }
-
-    /**
      * <<NaturalKey>> Picking number.
      */
     public long getInternalNumber() {
@@ -144,9 +126,6 @@ public class Picking implements Serializable, Sequenceable {
 	/**
 	 * Invoice.
 	 */
-	@JsonBackReference 
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="invoiceId")
 	public Invoice getInvoice() {
 		return this.invoice;
 	}
@@ -167,7 +146,6 @@ public class Picking implements Serializable, Sequenceable {
     /**
      * Packaging.
      */
-    @Column(length=60)
     public String getPackaging() {
         return this.packaging;
     }

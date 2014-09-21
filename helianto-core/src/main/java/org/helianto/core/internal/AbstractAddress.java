@@ -23,7 +23,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
 
 import org.helianto.core.Address;
 import org.helianto.core.domain.City;
@@ -41,18 +40,44 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public abstract class AbstractAddress 
 	implements Address, Serializable {
 
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @Column(length=64)
     private String address1 = "";
+    
+    @Column(length=10)
     private String addressClassifier = "";
+    
+    @Column(length=32)
     private String address2 = "";
+    
+    @Column(length=10)
     private String postalCode = "";
+    
+    @JsonBackReference("state")
+    @ManyToOne
+    @JoinColumn(name="stateId")
     private State state;
+    
+    @JsonBackReference("city")
+    @ManyToOne
+    @JoinColumn(name="cityId")
     private City city;
+    
+    @Column(length=64)
     private String cityName = "";
 
+    @Column(length=8)
     private String addressNumber = "";
+    
+    @Column(length=24)
 	private String addressDetail = "";
+	
+    @Column(length=32)
     private String address3 = "";
+    
+    @Column(length=10)
     private String postOfficeBox = "";
 
     /** 
@@ -119,7 +144,6 @@ public abstract class AbstractAddress
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -130,7 +154,6 @@ public abstract class AbstractAddress
     /**
      * Address1.
      */
-    @Column(length=64)
     public String getAddress1() {
         return this.address1;
     }
@@ -141,7 +164,6 @@ public abstract class AbstractAddress
     /**
      * Address classifier (like St, Av.)
      */
-    @Column(length=10)
     public String getAddressClassifier() {
 		return addressClassifier;
 	}
@@ -152,7 +174,6 @@ public abstract class AbstractAddress
     /**
      * Address2.
      */
-    @Column(length=32)
     public String getAddress2() {
         return this.address2;
     }
@@ -163,7 +184,6 @@ public abstract class AbstractAddress
     /**
      * Postal code.
      */
-    @Column(length=10)
     public String getPostalCode() {
         return this.postalCode;
     }
@@ -174,9 +194,6 @@ public abstract class AbstractAddress
     /**
      * State.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="stateId")
     public State getState() {
     	if (getCity()!=null) {
     		return getCity().getState();
@@ -190,7 +207,7 @@ public abstract class AbstractAddress
     /**
      * <<Transient>> Convenience method to expose the state code.
      */
-    @Transient
+//    @Transient
     public String getStateCode() {
     	if (getState()!=null) {
     		return getState().getStateCode();
@@ -201,7 +218,7 @@ public abstract class AbstractAddress
     /**
      * <<Transient>> Convenience method to expose the state name.
      */
-    @Transient
+//    @Transient
     public String getStateName() {
     	if (getState()!=null) {
     		return getState().getStateName();
@@ -212,9 +229,6 @@ public abstract class AbstractAddress
     /**
      * City.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="cityId")
     public City getCity() {
 		return city;
 	}
@@ -225,7 +239,7 @@ public abstract class AbstractAddress
     /**
      * <<Transient>> Convenience method to expose the city code.
      */
-    @Transient
+//    @Transient
     public String getCityCode() {
     	if (getCity()!=null) {
     		return getCity().getCityCode();
@@ -236,7 +250,6 @@ public abstract class AbstractAddress
     /**
      * The city name.
      */
-    @Column(length=64)
     public String getCityName() {
     	if (getCity()!=null) {
     		return getCity().getCityName();
@@ -247,7 +260,6 @@ public abstract class AbstractAddress
         this.cityName = cityName;
     }
 
-    @Column(length=8)
     public String getAddressNumber() {
 		return addressNumber;
 	}
@@ -255,7 +267,6 @@ public abstract class AbstractAddress
 		this.addressNumber = addressNumber;
 	}
 
-    @Column(length=24)
 	public String getAddressDetail() {
 		return addressDetail;
 	}
@@ -263,7 +274,6 @@ public abstract class AbstractAddress
 		this.addressDetail = addressDetail;
 	}
 
-    @Column(length=32)
     public String getAddress3() {
         return this.address3;
     }
@@ -271,7 +281,6 @@ public abstract class AbstractAddress
         this.address3 = address3;
     }
 
-    @Column(length=10)
     public String getPostOfficeBox() {
         return this.postOfficeBox;
     }
@@ -279,7 +288,7 @@ public abstract class AbstractAddress
         this.postOfficeBox = postOfficeBox;
     }
     
-    @Transient
+//    @Transient
     public String getShortAddress() {
     	StringBuilder sb = new StringBuilder(getAddress1())
     		.append(getAddressNumber());

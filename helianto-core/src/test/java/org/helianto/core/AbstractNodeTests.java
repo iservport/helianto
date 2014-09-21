@@ -45,11 +45,11 @@ public class AbstractNodeTests {
 
 		private static final long serialVersionUID = 1L;
 
-		public StubNode(long id, StubContent payLoad, int level, int sequence) {
+		public StubNode(int id, StubContent payLoad, int level, int sequence) {
 			super(id, payLoad, level, sequence);
 		}
 
-		public StubNode(long id, StubContent payLoad, int level, int sequence, boolean editable) {
+		public StubNode(int id, StubContent payLoad, int level, int sequence, boolean editable) {
 			super(id, payLoad, level, sequence, editable);
 		}
 

@@ -6,12 +6,14 @@ import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Entity repository.
  * 
  * @author mauriciofernandesdecastro
  */
+@Transactional
 public interface EntityRepository extends FilterRepository<Entity, Serializable> {
 	
 	/**

@@ -17,6 +17,7 @@ package org.helianto.core.filter.base;
 
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.filter.CriteriaFilter;
@@ -80,6 +81,37 @@ public abstract class AbstractAliasFilter
     	return null;
     }
     
+	/**
+	 * The selection clause.
+	 * 
+	 * @param selectionClass
+	 * @param entityClass
+	 */
+	protected String createSelectAsString(Class<?> selectionClass, Class<?> entityClass) {
+		StringBuilder selection = new StringBuilder("select new ")
+			.append(selectionClass.getName())
+			.append("(id");
+		String[] fieldNames = getFieldNames(selectionClass);
+		for (String fieldName: fieldNames) {
+			selection.append(", ").append(fieldName);
+		}
+		selection.append(") from ")
+			.append(entityClass.getSimpleName())
+			.append(" ")
+			.append(getObjectAlias())
+			.append(" ");
+		return selection.toString();
+	}
+	
+	protected String[] getFieldNames(Class<?> selectionClass) {
+		String[] fieldNames = new String[selectionClass.getDeclaredFields().length];
+		int i = 0;
+		for (Field field: selectionClass.getDeclaredFields()) {
+			fieldNames[i++] = field.getName();
+		}
+		return fieldNames;
+	}
+	
 	/**
 	 * Delegate criteria creation to a chain of criteria builder processors.
 	 * 

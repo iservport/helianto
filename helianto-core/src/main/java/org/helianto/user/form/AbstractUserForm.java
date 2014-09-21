@@ -142,7 +142,7 @@ public abstract class AbstractUserForm
         this.identity = identity;
     }
     
-    public long getIdentityId() {
+    public int getIdentityId() {
     	if (getIdentity()!=null) {
     		return getIdentity().getId();
     	}

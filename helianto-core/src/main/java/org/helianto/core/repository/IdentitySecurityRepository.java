@@ -29,7 +29,7 @@ public interface IdentitySecurityRepository
 	 * 
 	 * @param identityId
 	 */
-	List<IdentitySecurity> findByIdentityId(long identityId);
+	List<IdentitySecurity> findByIdentityId(int identityId);
 	
 	/**
 	 * Find by natural key.

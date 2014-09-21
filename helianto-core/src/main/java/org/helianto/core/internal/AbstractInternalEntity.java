@@ -14,6 +14,7 @@ public abstract class AbstractInternalEntity
 	implements Internal {
 
     private static final long serialVersionUID = 1L;
+    
     private long internalNumber;
     
     /**

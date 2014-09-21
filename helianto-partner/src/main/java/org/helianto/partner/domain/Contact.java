@@ -19,11 +19,8 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
 
-import org.helianto.core.Privacy;
 import org.helianto.core.def.AddressType;
-import org.helianto.core.def.PrivacyLevel;
 import org.helianto.core.domain.Identity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -35,12 +32,23 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  */
 @javax.persistence.Entity
 @DiscriminatorValue("C")
-public class Contact extends PrivateAddress implements Privacy {
+public class Contact 
+	extends PrivateAddress 
+{
 
 	private static final long serialVersionUID = 1L;
+	
+    @JsonBackReference("identity")
+    @ManyToOne
+    @JoinColumn(name="identityId", nullable=true)
 	private Identity owner;
-    private String departament;
-    private String jobReference;
+	
+    @Column(length=20)
+    private String departament = "";
+    
+    @Column(length=64)
+    private String jobReference = "";
+    
     private int priority;
 
     /** 
@@ -49,9 +57,6 @@ public class Contact extends PrivateAddress implements Privacy {
     public Contact() {
     	super();
         setAddressType(AddressType.PERSONAL.getValue());
-        setPrivacyLevel(PrivacyLevel.PUBLIC.getValue());
-        setDepartament("");
-        setJobReference("");
     }
 
     /** 
@@ -78,18 +83,9 @@ public class Contact extends PrivateAddress implements Privacy {
     	setOwner(owner);
     }
     
-    @Transient
-    public void reset() {
-        setAddressType(' ');
-        setPrivacyLevel(' ');
-    }
-    
     /**
      * Owner.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="identityId", nullable=true)
     public Identity getOwner() {
 		return owner;
 	}
@@ -100,7 +96,6 @@ public class Contact extends PrivateAddress implements Privacy {
     /**
      * Departament.
      */
-    @Column(length=20)
     public String getDepartament() {
         return this.departament;
     }
@@ -111,7 +106,6 @@ public class Contact extends PrivateAddress implements Privacy {
     /**
      * Job reference.
      */
-    @Column(length=64)
     public String getJobReference() {
         return this.jobReference;
     }

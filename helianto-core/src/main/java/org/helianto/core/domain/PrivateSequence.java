@@ -38,6 +38,10 @@ public class PrivateSequence
 	implements TrunkEntity {
 
     private static final long serialVersionUID = 1L;
+    
+    @JsonBackReference 
+    @ManyToOne
+    @JoinColumn(name="entityId", nullable=true)
     private Entity entity;
 
     /**
@@ -97,9 +101,6 @@ public class PrivateSequence
     /**
      * Entity.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="entityId", nullable=true)
     public Entity getEntity() {
         return this.entity;
     }

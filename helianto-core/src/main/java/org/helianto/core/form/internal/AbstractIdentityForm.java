@@ -11,7 +11,7 @@ import org.helianto.core.form.IdentityForm;
  * @author mauriciofernandesdecastro
  */
 public abstract class AbstractIdentityForm 
-	extends AbstractControllable implements IdentityForm {
+	extends AbstractControlForm implements IdentityForm {
 	
 	private static final long serialVersionUID = 1L;
 	private String principal;

@@ -10,7 +10,6 @@ import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.filter.base.AbstractFilter;
 import org.helianto.core.form.PriorityForm;
-import org.helianto.core.test.EntityTestSupport;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,14 +36,6 @@ public class FilterTests {
 	public void mainCriteriaBuilder() {
 		filter.createCriteriaAsString();
 		assertEquals("TEST_ALIAS", createdCriteriaBuilder.getAlias());
-	}
-	
-	@Test
-	public void preProcessParent() {
-		filter = new ParentStub();
-		assertTrue(filter instanceof ParentFilter);
-		assertTrue(((ParentFilter) filter).getParentId()>0);
-		assertEquals("TEST_ALIAS.parent.id = 100 ", filter.createCriteriaAsString());
 	}
 	
 	@Test
@@ -241,18 +232,5 @@ public class FilterTests {
 		public void setClazz(Class<? extends Entity> clazz) { }
 		
 	}
-
-	/**
-	 * Private parent filter stub class.
-	 */
-	@SuppressWarnings("serial")
-	private class ParentStub extends FilterStub  implements ParentFilter {
-
-		@SuppressWarnings("unchecked") public Entity getParent() { return EntityTestSupport.createEntity(); }
-
-		public long getParentId() { return 100; }
-
-	}
-
 
 }

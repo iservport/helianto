@@ -33,7 +33,7 @@ import org.helianto.core.internal.AbstractAddress;
 import org.helianto.core.repository.CityRepository;
 import org.helianto.core.utils.AddressUtils;
 import org.helianto.partner.PartnerMgr;
-import org.helianto.partner.PartnerState;
+import org.helianto.partner.def.PartnerState;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PartnerCategory;
 import org.helianto.partner.domain.PartnerKey;
@@ -53,6 +53,7 @@ import org.helianto.partner.domain.nature.TransportPartner;
 import org.helianto.partner.filter.ContactGroupFormFilterAdapter;
 import org.helianto.partner.filter.PartnerCategoryFormFilterAdapter;
 import org.helianto.partner.filter.PartnerFormFilterAdapter;
+import org.helianto.partner.filter.PartnerKeyFilterAdapter;
 import org.helianto.partner.filter.PartnerPhoneFormFilterAdapter;
 import org.helianto.partner.filter.PrivateAddressFormFilterAdapter;
 import org.helianto.partner.filter.PrivateEntityFormFilterAdapter;
@@ -61,6 +62,7 @@ import org.helianto.partner.filter.PrivateSegmentFilterAdapter;
 import org.helianto.partner.form.ContactGroupForm;
 import org.helianto.partner.form.PartnerCategoryForm;
 import org.helianto.partner.form.PartnerForm;
+import org.helianto.partner.form.PartnerKeyForm;
 import org.helianto.partner.form.PartnerPhoneForm;
 import org.helianto.partner.form.PrivateAddressForm;
 import org.helianto.partner.form.PrivateEntityForm;
@@ -104,7 +106,8 @@ public class PartnerMgrImpl implements PartnerMgr {
 	public PrivateEntity storePrivateEntity(PrivateEntity privateEntity) {
 		privateEntity = privateEntityRepository.save(privateEntity);
 		sequenceMgr.validateInternalNumber(privateEntity);
-		Set<Partner> partners = privateEntity.getPartners();
+		List<Partner> partners = partnerRepository.findByPrivateEntity(privateEntity);
+//		Set<Partner> partners = privateEntity.getPartners();
 		
 		// create partner, if does not exist, or activate it
 		Partner partner = null;
@@ -160,7 +163,7 @@ public class PartnerMgrImpl implements PartnerMgr {
 	 * @param partners
 	 * @param clazz
 	 */
-	protected boolean reviewPartner(Set<Partner> partners, Class<? extends Partner> clazz) {
+	protected boolean reviewPartner(List<Partner> partners, Class<? extends Partner> clazz) {
 		boolean create = true;
 		for (Partner partner: partners) {
 			if (partner.getClass().isAssignableFrom(clazz)) {
@@ -238,6 +241,16 @@ public class PartnerMgrImpl implements PartnerMgr {
 			partnerKeyMap.put(partnerKey.getKeyType().getKeyCode(), partnerKey);
 		}
 		return partnerKeyMap;
+	}
+
+	@Transactional(readOnly=true)
+	public List<PartnerKey> findPartnerKeys(PartnerKeyForm form) {
+		PartnerKeyFilterAdapter filter = new PartnerKeyFilterAdapter(form);
+		List<PartnerKey> partnerKeyList = (List<PartnerKey>) partnerKeyRepository.find(filter);
+    	if (logger.isDebugEnabled() && partnerKeyList!=null) {
+    		logger.debug("Found partner key list of size {}", partnerKeyList.size());
+    	}
+		return partnerKeyList;
 	}
 
 	@Transactional

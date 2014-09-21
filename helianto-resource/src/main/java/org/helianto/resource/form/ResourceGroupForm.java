@@ -1,6 +1,6 @@
 package org.helianto.resource.form;
 
-import org.helianto.core.domain.type.TrunkEntity;
+import org.helianto.core.form.EntityIdForm;
 import org.helianto.core.form.SearchForm;
 import org.helianto.core.form.TypeForm;
 
@@ -10,8 +10,7 @@ import org.helianto.core.form.TypeForm;
  * @author mauriciofernandesdecastro
  */
 public interface ResourceGroupForm 
-
-	extends TrunkEntity
+	extends EntityIdForm
 	, TypeForm
 	, SearchForm 
 	, ResourceGroupIdForm

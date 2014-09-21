@@ -26,7 +26,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.def.ActivityState;
@@ -47,19 +46,33 @@ public class UserRole
 	implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long id;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    private int id;
+    
+    @JsonBackReference("userGroup")
+    @ManyToOne
+    @JoinColumn(name="userId", nullable=true)
     private UserGroup userGroup;
+    
+    @ManyToOne
+    @JoinColumn(name="serviceId", nullable=true)
     private Service service;
-    private String serviceExtension;
-    private String partnershipExtension;
-    private char activityState;
+    
+    // TODO change name to getServiceExtensions() (append "s" to current method name).
+    @Column(length=64)
+    private String serviceExtension = "";
+    
+    @Column(length=64)
+    private String partnershipExtension = "";
+    
+    private char activityState = ActivityState.ACTIVE.getValue();
 
     /** 
      * Empty constructor.
      */
     public UserRole() {
-    	setServiceExtension("");
-    	setActivityStateAsEnum(ActivityState.ACTIVE);
+    	super();
     }
    
     /** 
@@ -79,20 +92,16 @@ public class UserRole
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public long getId() {
+    public int getId() {
         return this.id;
     }
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     /**
      * User group.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="userId", nullable=true)
     public UserGroup getUserGroup() {
         return this.userGroup;
     }
@@ -103,9 +112,6 @@ public class UserRole
     /**
      * Service.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="serviceId", nullable=true)
     public Service getService() {
         return this.service;
     }
@@ -116,7 +122,7 @@ public class UserRole
     /**
      * <<Transient>> Service name.
      */
-    @Transient
+//    @Transient
     public String getServiceName() {
     	if (getService()==null) {
     		return "";
@@ -127,8 +133,6 @@ public class UserRole
     /**
      * Service extension list of comma separated values.
      */
-    // TODO change name to getServiceExtensions() (append "s" to current method name).
-    @Column(length=64)
     public String getServiceExtension() {
         return this.serviceExtension;
     }
@@ -139,7 +143,7 @@ public class UserRole
     /**
      * Service extensions as array.
      */
-    @Transient
+//    @Transient
     // TODO change name to getServiceExtensionAsArray() (insert "s" into current method name).
     public String[] getServiceExtensionAsArray() {
     	if (getServiceExtension()!=null && getServiceExtension().replace(" ", "").length()>0) {
@@ -151,7 +155,7 @@ public class UserRole
     /**
      * UserRole name.
      */
-    @Transient
+//    @Transient
     public String getUserRoleName() {
         return formatRole(service.getServiceName(), serviceExtension);
     }
@@ -215,7 +219,6 @@ public class UserRole
      * C,S means customers and suppliers, while C,L,M means customers, laboratories and
      * manufacturers.
      */
-    @Column(length=64)
     public String getPartnershipExtension() {
 		return partnershipExtension;
 	}
@@ -226,7 +229,7 @@ public class UserRole
     /**
      * Partnership extensions as array.
      */
-    @Transient
+//    @Transient
     public String[] getPartnershipExtensionAsArray() {
     	if (getPartnershipExtension()!=null && getPartnershipExtension().replace(" ", "").length()>0) {
         	return getPartnershipExtension().replace(" ", "").split(",");

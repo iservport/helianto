@@ -16,7 +16,6 @@
 package org.helianto.core.internal;
 
 import javax.persistence.Column;
-import javax.persistence.Transient;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.type.FolderEntity;
@@ -28,18 +27,22 @@ import org.helianto.core.domain.type.FolderEntity;
  */
 @javax.persistence.MappedSuperclass
 public abstract class AbstractFolder
-	extends AbstractTrunkEntity
+	extends AbstractCounter
 	implements FolderEntity {
 
 	private static final long serialVersionUID = 1L;
-	private String folderCode;
-	private String folderName;
-	private String folderDecorationUrl;
-    
-	// Transients.
-	private int countItems;
-	private int countAlerts;
 	
+    // TODO rename in table
+    @Column(length=24, name="builderCode")
+	private String folderCode = "";
+	
+    // TODO rename in table
+    @Column(length=128, name="builderName")
+	private String folderName = "";
+	
+    @Column(length=64)
+	private String folderDecorationUrl = "";
+    
     /** 
      * Empty constructor.
      * 
@@ -48,8 +51,6 @@ public abstract class AbstractFolder
      */
     public AbstractFolder() {
     	super();
-    	setFolderName("");
-		setFolderDecorationUrl("");
     }
 
     /** 
@@ -64,8 +65,6 @@ public abstract class AbstractFolder
     	setFolderCode(folderCode);
     }
 
-    // TODO rename in table
-    @Column(length=24, name="builderCode")
     public String getFolderCode() {
         return getInternalBuilderCode();
     }
@@ -76,13 +75,10 @@ public abstract class AbstractFolder
     /**
      * Sublcasses may change the way a folder code is retrieved.
      */
-    @Transient
     protected String getInternalBuilderCode() {
         return this.folderCode;
     }
 
-    // TODO rename in table
-    @Column(length=128, name="builderName")
 	public String getFolderName() {
 		return getInternalBuilderName();
 	}
@@ -93,12 +89,13 @@ public abstract class AbstractFolder
     /**
      * Sublcasses may change the way a folder name is retrieved.
      */
-    @Transient
     protected String getInternalBuilderName() {
     	return folderName;
     }
     
-    @Column(length=64)
+    /**
+     * Folder decoration url.
+     */
     public String getFolderDecorationUrl() {
 		return folderDecorationUrl;
 	}
@@ -109,7 +106,6 @@ public abstract class AbstractFolder
     /**
      * True if {@link #getFolderDecorationUrl()} is not empty.
      */
-    @Transient
     public boolean isFolderDecorated() {
 		if (getFolderDecorationUrl()!=null && getFolderDecorationUrl().length()>0) {
 			return true;
@@ -117,28 +113,6 @@ public abstract class AbstractFolder
 		return false;
 	}
 
-    /**
-     * Count items.
-     */
-    @Transient
-    public int getCountItems() {
-		return countItems;
-	}
-    public void setCountItems(int countItems) {
-		this.countItems = countItems;
-	}
-    
-    /**
-     * Count alerts.
-     */
-    @Transient
-    public int getCountAlerts() {
-		return countAlerts;
-	}
-    public void setCountAlerts(int countAlerts) {
-		this.countAlerts = countAlerts;
-	}
-    
     /**
      * toString
      * @return String

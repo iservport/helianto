@@ -21,7 +21,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
 
 import org.helianto.core.domain.KeyType;
 
@@ -33,10 +32,18 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public abstract class AbstractKeyValue implements java.io.Serializable {
+public abstract class AbstractKeyValue 
+	implements java.io.Serializable 
+{
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @JsonBackReference("keyType")
+    @ManyToOne
+    @JoinColumn(name="keyTypeId", nullable=true)
     private KeyType keyType;
 
     /** 
@@ -48,7 +55,6 @@ public abstract class AbstractKeyValue implements java.io.Serializable {
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -63,15 +69,12 @@ public abstract class AbstractKeyValue implements java.io.Serializable {
      * For example, key owner may be a partner or a document.
      * </p>
      */
-    @Transient
+//    @Transient
     protected abstract Object getKeyOwner();
 
     /**
      * Key type.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="keyTypeId", nullable=true)
     public KeyType getKeyType() {
         return this.keyType;
     }

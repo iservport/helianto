@@ -19,7 +19,6 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -31,17 +30,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.inventory.AgreementLevel;
 import org.helianto.inventory.AgreementState;
 import org.helianto.inventory.ProcurementOption;
-import org.helianto.inventory.domain.internal.AbstractRequirement;
+import org.helianto.inventory.internal.AbstractRequirement;
 import org.helianto.partner.domain.Partner;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
@@ -69,12 +66,26 @@ public class ProcessAgreement
 	extends AbstractRequirement {
 
 	private static final long serialVersionUID = 1L;
+	
+    @ManyToOne
+    @JoinColumn(name="partnerId", nullable=true)
 	private Partner partner;
-	private String agreementDesc;
-	private char agreementLevel;
+	
+    @Column(length=512)
+	private String agreementDesc = "";
+	
+	private Character agreementLevel = AgreementState.PENDING.getValue();
+	
+	@Column(precision=10, scale=3)
 	private BigDecimal agreementPrice = BigDecimal.ZERO;
+	
 	private int minimalOrderDuration;
-	private char procurementOption;
+	
+	private Character procurementOption = ProcurementOption.UNRESOLVED.getValue();
+	
+	@JsonManagedReference 
+	@OneToMany(mappedBy="processAgreement")
+	@MapKey(name="taxCode")
 	private Map<String, Tax> taxes = new HashMap<String, Tax>(); 
 
 	/** 
@@ -82,8 +93,6 @@ public class ProcessAgreement
 	 */
     public ProcessAgreement() {
     	super();
-    	setResolution(AgreementState.PENDING);
-    	setAgreementLevel(AgreementLevel.REQUIRE_CREDIT_ASSESSMENT);
     }
 
 	/** 
@@ -108,12 +117,12 @@ public class ProcessAgreement
     	setPartner(partner);
     }
 
-    @Transient
+//    @Transient
 	public String getInternalNumberKey() {
 		return "AGREEM";
 	}
 
-    @Transient
+//    @Transient
     public int getStartNumber() {
     	return 1;
     }
@@ -121,9 +130,6 @@ public class ProcessAgreement
     /**
      * Customer or supplier.
      */
-    @JsonBackReference 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="partnerId", nullable=true)
     public Partner getPartner() {
         return this.partner;
     }
@@ -134,7 +140,7 @@ public class ProcessAgreement
     /**
      * <<Transient>> Customer or supplier alias.
      */
-    @Transient
+//    @Transient
     public String getPartnerAlias() {
     	if (partner==null) return "";
         return this.partner.getEntityAlias();
@@ -143,7 +149,6 @@ public class ProcessAgreement
     /**
      * Description.
      */
-    @Column(length=512)
     public String getAgreementDesc() {
 		return agreementDesc;
 	}
@@ -156,9 +161,6 @@ public class ProcessAgreement
      */
     @Override
     protected final char validateResolution(char agreementState) {
-    	if (getState().isLate()) {
-    		return AgreementState.EXPIRED.getValue();
-    	}
         return agreementState;
     }
 
@@ -172,7 +174,7 @@ public class ProcessAgreement
     /**
      * True if approved.
      */
-    @Transient
+//    @Transient
     public boolean isApproved() {
     	if (getResolution()==AgreementState.APPROVED.getValue()) {
     		return true;
@@ -183,20 +185,19 @@ public class ProcessAgreement
     /**
      * Credit level assigned to the partner.
      */
-	public char getAgreementLevel() {
+	public Character getAgreementLevel() {
 		return agreementLevel;
 	}
-	public void setAgreementLevel(char agreementLevel) {
+	public void setAgreementLevel(Character agreementLevel) {
 		this.agreementLevel = agreementLevel;
 	}
-	public void setAgreementLevel(AgreementLevel agreementLevel) {
+	public void setAgreementLevelAsEnum(AgreementLevel agreementLevel) {
 		this.agreementLevel = agreementLevel.getValue();
 	}
 
 	/**
 	 * Agreement price.
 	 */
-	@Column(precision=10, scale=3)
 	public BigDecimal getAgreementPrice() {
 		return agreementPrice;
 	}
@@ -217,22 +218,19 @@ public class ProcessAgreement
 	/**
 	 * Procurement option (make, buy local, import)
 	 */
-	public char getProcurementOption() {
+	public Character getProcurementOption() {
 		return procurementOption;
 	}
-	public void setProcurementOption(char procurementOption) {
+	public void setProcurementOption(Character procurementOption) {
 		this.procurementOption = procurementOption;
 	}
-	public void setProcurementOption(ProcurementOption procurementOption) {
+	public void setProcurementOptionAsEnum(ProcurementOption procurementOption) {
 		this.procurementOption = procurementOption.getValue();
 	}
 
 	/**
 	 * A map of taxes.
 	 */
-	@JsonManagedReference 
-	@OneToMany(mappedBy="processAgreement", cascade=CascadeType.ALL)
-	@MapKey(name="taxCode")
 	public Map<String, Tax> getTaxes() {
 		return taxes;
 	}

@@ -16,7 +16,7 @@
 package org.helianto.partner.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
+import org.helianto.core.filter.internal.AbstractEntityIdFilterAdapter;
 import org.helianto.partner.form.PrivateEntityForm;
 
 /**
@@ -24,7 +24,9 @@ import org.helianto.partner.form.PrivateEntityForm;
  * 
  * @author Maurício Fernandes de Castro
  */
-public class PrivateEntityFormFilterAdapter extends AbstractTrunkFilterAdapter<PrivateEntityForm> {
+public class PrivateEntityFormFilterAdapter 
+	extends AbstractEntityIdFilterAdapter<PrivateEntityForm> 
+{
 	
 	private static final long serialVersionUID = 1L;
 

@@ -17,12 +17,12 @@ package org.helianto.partner.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.domain.Entity;
-import org.helianto.core.test.EntityTestSupport;
-import org.helianto.partner.PartnerState;
-import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.def.PartnerState;
+import org.helianto.partner.form.PartnerForm;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * 
@@ -31,7 +31,7 @@ import org.junit.Test;
 public class PartnerFilterAdapterTests {
 	
     public static String OB = "order by alias.privateEntity.entityAlias ";
-    public static String C0 = "alias.privateEntity.entity.id = 1 ";
+    public static String C0 = "alias.privateEntity.id = 1 ";
     public static String C1 = "alias.class = 'C' ";
     public static String C2 = "alias.privateEntity.id = 10 ";
     public static String C3 = "lower(alias.privateEntity.entityAlias) like '%partner%' ";
@@ -48,65 +48,60 @@ public class PartnerFilterAdapterTests {
     
     @Test
     public void select() {
-    	form.getParent().setId(10);
-        ((CompositeTestPartnerForm) form).setPartnerType('C');
+    	Mockito.when(form.getPrivateEntityId()).thenReturn(10);
+    	Mockito.when(form.getPartnerType()).thenReturn('C');
         assertEquals(C2+"AND "+C1, filter.createCriteriaAsString());
     }
     
     @Test
     public void parent() {
-    	form.getParent().setId(10);
+    	Mockito.when(form.getPrivateEntityId()).thenReturn(10);
         assertEquals(C2+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void entityAlias() {
-    	form.setEntityAlias("PARTNER");
+    	Mockito.when(form.getEntityAlias()).thenReturn("PARTNER");
         assertEquals(C0+"AND "+C3+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void name() {
-    	form.setEntityName("NAME");
+    	Mockito.when(form.getEntityName()).thenReturn("NAME");
         assertEquals(C0+"AND "+C4+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void partnerState() {
-        form.setPartnerState(PartnerState.ACTIVE.getValue());
+    	Mockito.when(form.getPartnerState()).thenReturn(PartnerState.ACTIVE.getValue());
         assertEquals(C0+"AND "+C5+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void priority() {
-        form.setPriority('1');
+    	Mockito.when(form.getPriority()).thenReturn('1');
         assertEquals(C0+"AND "+C6+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void type() {
-        form.setPartnerType('C');
-        assertEquals(C0+"AND "+C7+OB, filter.createCriteriaAsString());
-    }
-    
-    @Test
-    public void entity() {
-    	Entity entity = EntityTestSupport.createEntity(2);
-    	form = new CompositeTestPartnerForm(entity);
-    	form.setParent(null);
-    	filter = new PartnerFormFilterAdapter(form);
-        assertEquals(C8+OB, filter.createCriteriaAsString());
+    	Mockito.when(form.getPartnerType()).thenReturn('C');
+        assertEquals(C0+"AND "+C7, filter.createCriteriaAsString());
     }
     
     private PartnerFormFilterAdapter filter;
-    private CompositeTestPartnerForm form;
+    private PartnerForm form;
     
     @Before
     public void setUp() {
-    	Entity entity = EntityTestSupport.createEntity(1);
-    	PrivateEntity privateEntity = new PrivateEntity(entity, "");
-    	form = new CompositeTestPartnerForm(privateEntity);
+    	form = Mockito.mock(PartnerForm.class);
     	filter = new PartnerFormFilterAdapter(form);
+    	Mockito.when(form.getPrivateEntityId()).thenReturn(1);
+    }
+    
+    @After
+    public void tearDown() {
+    	Mockito.reset(form);
     }
     
 }

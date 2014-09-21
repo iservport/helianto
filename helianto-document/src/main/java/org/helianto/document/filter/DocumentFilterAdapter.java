@@ -2,6 +2,8 @@ package org.helianto.document.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
 import org.helianto.document.domain.Document;
+import org.helianto.document.filter.internal.AbstractCustomDocumentFormFilterAdapter;
+import org.helianto.document.filter.internal.AbstractDocumentFilterAdapter;
 
 /**
  * Document filter adapter.

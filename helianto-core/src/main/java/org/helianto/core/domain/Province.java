@@ -15,11 +15,11 @@
 
 package org.helianto.core.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,6 +33,7 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.domain.type.RootEntity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Provinces.
@@ -58,12 +59,31 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Province  implements RootEntity, Comparable<Province> {
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @JsonIgnore
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="operatorId", nullable=true)
     private Operator operator;
+    
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="parentId", nullable=true)
     private Province parent;
+    
+    @Column(length=12)
     private String provinceCode = "";
+    
+    @Column(length=32)
     private String provinceName = "";
+    
+    @JsonBackReference("country")
+    @ManyToOne
+    @JoinColumn(name="countryId")
     private Country country;
+    
     private char priority;
 
 	/**
@@ -112,7 +132,6 @@ public class Province  implements RootEntity, Comparable<Province> {
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -123,9 +142,6 @@ public class Province  implements RootEntity, Comparable<Province> {
     /**
      * Namespace operator.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
         return this.operator;
     }
@@ -133,12 +149,17 @@ public class Province  implements RootEntity, Comparable<Province> {
         this.operator = operator;
     }
     
+//    @Transient
+    public int getContextId() {
+    	if (getOperator()!=null) {
+    		return getOperator().getId();
+    	}
+    	return 0;
+    }
+    
 	/**
 	 * Parent province.
 	 */
-	@JsonBackReference 
-	@ManyToOne(cascade={CascadeType.ALL})
-	@JoinColumn(name="parentId", nullable=true)
 	public Province getParent() {
 		return parent;
 	}
@@ -149,7 +170,6 @@ public class Province  implements RootEntity, Comparable<Province> {
     /**
      * Province code.
      */
-    @Column(length=12)
     public String getProvinceCode() {
         return this.provinceCode;
     }
@@ -160,7 +180,6 @@ public class Province  implements RootEntity, Comparable<Province> {
     /**
      * Province name.
      */
-    @Column(length=32)
     public String getProvinceName() {
         return this.provinceName;
     }
@@ -171,9 +190,6 @@ public class Province  implements RootEntity, Comparable<Province> {
     /**
      * Country.
      */
-    @JsonBackReference 
-    @ManyToOne(cascade={CascadeType.ALL})
-    @JoinColumn(name="countryId")
     public Country getCountry() {
 		return country;
 	}

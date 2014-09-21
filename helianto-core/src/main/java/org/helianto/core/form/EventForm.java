@@ -1,27 +1,22 @@
 package org.helianto.core.form;
 
-import java.util.Date;
-
-import org.helianto.core.domain.Identity;
-import org.helianto.core.domain.type.TrunkEntity;
+import org.helianto.core.filter.DateForm;
 
 /**
  * Event interface.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public interface EventForm 
-	extends TrunkEntity {
-	
-    /**
-     * Date issued.
-     */
-	public Date getIssueDate();
+	extends EntityIdForm
+	, DateForm 
+{
 	
 	/**
-	 * Event owner.
+	 * Event owner id.
 	 */
-	public Identity getOwner();
+	int getOwnerId();
 
     /**
      * Resolution.

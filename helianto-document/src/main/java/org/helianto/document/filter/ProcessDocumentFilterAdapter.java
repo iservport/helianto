@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
  * Filter to <code>User</code>.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public class ProcessDocumentFilterAdapter extends AbstractTrunkFilterAdapter<ProcessDocument> {
 

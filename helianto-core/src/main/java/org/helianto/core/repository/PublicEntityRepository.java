@@ -21,4 +21,11 @@ public interface PublicEntityRepository extends FilterRepository<PublicEntity, S
 	 */
 	PublicEntity findByEntityAndEntityAlias(Entity entity, String entityAlias);
 	
+	/**
+	 * Find by natural key.
+	 * 
+	 * @param entity
+	 */
+	PublicEntity findByEntity(Entity entity);
+	
 }

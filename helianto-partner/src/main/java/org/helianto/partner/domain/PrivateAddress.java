@@ -23,7 +23,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.def.AddressType;
@@ -47,21 +46,29 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("A")
-public class PrivateAddress extends AbstractAddress implements Comparable<PrivateAddress> {
+public class PrivateAddress 
+	extends AbstractAddress 
+	implements Comparable<PrivateAddress> 
+{
 
     private static final long serialVersionUID = 1L;
+    
+    @JsonBackReference("privateEntity")
+    @ManyToOne
+    @JoinColumn(name="partnerRegistryId", nullable=true)
     private PrivateEntity privateEntity;
+    
     private int sequence;
-    private char addressType;
-    private char privacyLevel;
+    
+    private char addressType = AddressType.MAIN.getValue();
+    
+    private char privacyLevel = PrivacyLevel.PUBLIC.getValue();
 
     /** 
      * Empty constructor.
 	 */
     public PrivateAddress() {
         super();
-        setAddressTypeAsEnum(AddressType.MAIN);
-        setPrivacyLevelAsEnum(PrivacyLevel.PUBLIC);
     }
     
     /** 
@@ -75,16 +82,10 @@ public class PrivateAddress extends AbstractAddress implements Comparable<Privat
     	setSequence(sequence);
     }
     
-    @Transient
-    public void reset() {
-        setAddressType(' ');
-        setPrivacyLevel(' ');
-    }
-    
     /**
      * Partner registry (old name).
      */
-    @Transient
+//    @Transient
     public PrivateEntity getPartnerRegistry() {
         return this.privateEntity;
     }
@@ -92,9 +93,6 @@ public class PrivateAddress extends AbstractAddress implements Comparable<Privat
     /**
      * Private entity.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="partnerRegistryId", nullable=true)
     public PrivateEntity getPrivateEntity() {
         return this.privateEntity;
     }
@@ -102,13 +100,13 @@ public class PrivateAddress extends AbstractAddress implements Comparable<Privat
         this.privateEntity = privateEntity;
     }
 
-    @Transient
+//    @Transient
     public String getEntityAlias() {
     	if (getPrivateEntity()==null) return "";
     	return getPrivateEntity().getEntityAlias();
     }
     
-    @Transient
+//    @Transient
     public String getEntityName() {
     	if (getPrivateEntity()==null) return "";
     	return getPrivateEntity().getEntityName();

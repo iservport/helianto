@@ -11,10 +11,11 @@ import org.slf4j.LoggerFactory;
  * 
  * @author mauriciofernandesdecastro
  */
-public class PublicEntityFormFilterAdapter extends AbstractRootFilterAdapter<PublicEntityForm> {
+public class PublicEntityFormFilterAdapter 
+	extends AbstractRootFilterAdapter<PublicEntityForm> 
+{
 
 	private static final long serialVersionUID = 1L;
-	private static final String NON_PUBLIC_TYPES = "R";
 	
 	/**
 	 * Default constructor.
@@ -31,29 +32,27 @@ public class PublicEntityFormFilterAdapter extends AbstractRootFilterAdapter<Pub
 	 * @param mainCriteriaBuilder
 	 */
 	public void preProcessOperatorFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("entity.operator.id", getOperator().getId(), mainCriteriaBuilder);
 		logger.debug("Filter constraint set to {}.", getOperator());
 	}
 	
 	@Override
 	public boolean isSelection() {
-		return getForm().getEntity()!=null
-				&& getForm().getEntity().getId()>0
-				&& getForm().getEntityAlias()!=null
-				&& getForm().getEntityAlias().length()>0;
+		return false;
 	}
-
+	
 	@Override
-	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("entity.id", getForm().getEntity().getId(), mainCriteriaBuilder);
-		appendEqualFilter("entityAlias", getForm().getEntityAlias(), mainCriteriaBuilder);
-	}
+	protected void doSelect(OrmCriteriaBuilder mainCriteriaBuilder) { }
 
 	@Override
 	public void doFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		if (getForm().getEntity()!=null && (getForm().getOperator()==null | NON_PUBLIC_TYPES.indexOf(getForm().getType())>=0)) {
-			appendEqualFilter("entity.id", getForm().getEntity().getId(), mainCriteriaBuilder);
+		if (getOperator()!=null) {
+			appendEqualFilter("entity.operator.id", getOperator().getId(), mainCriteriaBuilder);
 		}
+		else {
+			appendEqualFilter("entity.operator.id", getForm().getContextId(), mainCriteriaBuilder);
+		}
+		appendEqualFilter("entity.id", getForm().getEntityId(), mainCriteriaBuilder);
+		appendEqualFilter("entityAlias", getForm().getEntityAlias(), mainCriteriaBuilder);
 		appendLikeFilter("entityName", getForm().getEntityName(), mainCriteriaBuilder);
 	}
 	

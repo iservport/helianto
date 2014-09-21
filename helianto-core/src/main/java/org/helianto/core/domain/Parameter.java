@@ -10,10 +10,16 @@ import javax.persistence.DiscriminatorValue;
  */
 @javax.persistence.Entity
 @DiscriminatorValue("P")
-public class Parameter extends ParameterGroup {
+public class Parameter 
+	extends ParameterGroup 
+{
 
 	private static final long serialVersionUID = 1L;
+	
+    @Column(length=32)
 	private String parameterType;
+	
+    @Column(length=128)
 	private String parameterPattern;
 	
     /** 
@@ -38,7 +44,6 @@ public class Parameter extends ParameterGroup {
     /**
      * Parameter type.
      */
-    @Column(length=32)
     public String getParameterType() {
 		return parameterType;
 	}
@@ -49,7 +54,6 @@ public class Parameter extends ParameterGroup {
     /**
      * Parameter pattern.
      */
-    @Column(length=128)
     public String getParameterPattern() {
 		return parameterPattern;
 	}

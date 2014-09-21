@@ -15,11 +15,7 @@ public class AbstractCategoryForm
 	private static final long serialVersionUID = 1L;
 	private String categoryCode;
 	private String categoryName;
-	private char categoryGroup;
-	
-	public void reset() {
-		setCategoryGroup(' ');
-	}
+	private char categoryGroup = ' ';
 	
 	public String getCategoryCode() {
 		return categoryCode;

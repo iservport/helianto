@@ -4,7 +4,7 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.type.TrunkEntity;
 
 /**
- * Base class to implement <code>RootEntity</code>.
+ * Base class to implement <code>TrunkEntity</code>.
  * 
  * @author mauriciofernandesdecastro
  */

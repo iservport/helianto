@@ -11,6 +11,6 @@ public interface IdentityIdForm {
 	/**
 	 * Identity id filter.
 	 */
-	long getIdentityId();
+	int getIdentityId();
 
 }

@@ -16,8 +16,7 @@
 package org.helianto.partner.filter;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.domain.Entity;
-import org.helianto.core.filter.base.AbstractTrunkFilterAdapter;
+import org.helianto.core.filter.internal.AbstractEntityIdFilterAdapter;
 import org.helianto.partner.form.PartnerForm;
 
 /**
@@ -25,7 +24,9 @@ import org.helianto.partner.form.PartnerForm;
  * 
  * @author Maurício Fernandes de Castro
  */
-public class PartnerFormFilterAdapter extends AbstractTrunkFilterAdapter<PartnerForm> {
+public class PartnerFormFilterAdapter 
+	extends AbstractEntityIdFilterAdapter<PartnerForm> 
+{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -39,16 +40,13 @@ public class PartnerFormFilterAdapter extends AbstractTrunkFilterAdapter<Partner
 	}
 	
 	@Override
-	protected void appendEntityFilter(Entity entity, OrmCriteriaBuilder mainCriteriaBuilder) {
-		mainCriteriaBuilder.appendSegment("privateEntity.entity.id", "=").append(entity.getId());	}
-	
 	protected boolean hasParentCriterion() {
-		return getForm().getParent()!=null && getForm().getParent().getId()>0;
+		return getForm().getPrivateEntityId()>0;
 	}
 	
 	@Override
 	protected void preProcessParentFilter(OrmCriteriaBuilder mainCriteriaBuilder) {
-		appendEqualFilter("privateEntity.id", getForm().getParent().getId(), mainCriteriaBuilder);
+		appendEqualFilter("privateEntity.id", getForm().getPrivateEntityId(), mainCriteriaBuilder);
 	}
 
 	public boolean isSelection() {

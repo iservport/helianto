@@ -46,7 +46,7 @@ public interface IdentityMgr {
      * 
      * @param id
      */
-    public Identity loadIdentity(long id);
+    public Identity loadIdentity(int id);
     
     /**
      * Load the <core>Identity</core> photo.

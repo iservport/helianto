@@ -12,6 +12,7 @@ import org.helianto.user.domain.User;
  * Card set filter.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public class CardSetFilter extends AbstractUserBackedCriteriaFilter {
 	

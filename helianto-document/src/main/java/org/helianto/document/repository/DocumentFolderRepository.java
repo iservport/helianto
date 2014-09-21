@@ -6,6 +6,7 @@ import java.util.List;
 import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.Entity;
 import org.helianto.document.domain.DocumentFolder;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Document folder repository interface.
@@ -37,4 +38,11 @@ public interface DocumentFolderRepository extends FilterRepository<DocumentFolde
 	 */
 	List<DocumentFolder> findByEntityAlias(String entityAlias);
 
+	/**
+	 * Find by entity id and content type.
+	 * 
+	 * @param entityAlias
+	 */
+	List<DocumentFolder> findByEntity_IdAndContentType(int entityId, char contentType, Pageable page);
+	
 }

@@ -19,19 +19,16 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Unit;
 import org.helianto.document.def.InheritanceType;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
@@ -46,11 +43,19 @@ public class ProcessDocument
 	implements Comparator<DocumentAssociation> {
 
     private static final long serialVersionUID = 1L;
+    
+    @ManyToOne
+    @JoinColumn(name="unitId")
     private Unit unit;
+    
+    @JsonManagedReference 
+    @OneToMany(mappedBy="processDocument")
     private Set<ProcessDocumentKey> processDocumentKeys = new HashSet<ProcessDocumentKey>(0);
+    
     private char inheritanceType = InheritanceType.FINAL.getValue();
+    
+	@Column(length=6)
     private String processColor = "";
-
 
     /** 
 	 * Default constructor.
@@ -80,9 +85,6 @@ public class ProcessDocument
      * the Inventory class.
      * </p>
      */
-    @JsonBackReference 
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="unitId")
     public Unit getUnit() {
 		return unit;
 	}
@@ -93,8 +95,6 @@ public class ProcessDocument
     /**
      * Process document keys.
      */
-    @JsonManagedReference 
-    @OneToMany(mappedBy="processDocument", cascade={CascadeType.ALL})
     public Set<ProcessDocumentKey> getProcessDocumentKeys() {
         return this.processDocumentKeys;
     }
@@ -115,14 +115,13 @@ public class ProcessDocument
 	public void setInheritanceType(char inheritanceType) {
 		this.inheritanceType = inheritanceType;
 	}
-	public void setInheritanceType(InheritanceType inheritanceType) {
+	public void setInheritanceTypeAsEnum(InheritanceType inheritanceType) {
 		this.inheritanceType = inheritanceType.getValue();
 	}
 
 	/**
 	 * Optional 3-byte hexadecimal color (RGB).
 	 */
-	@Column(length=6)
 	public String getProcessColor() {
 		return processColor;
 	}
@@ -139,7 +138,7 @@ public class ProcessDocument
          return super.equals(other);
    }
 
-   @Transient
+//   @Transient
 	public String[] getProcessColorChain() {
 		// TODO Auto-generated method stub
 		return null;

@@ -6,6 +6,7 @@ import org.helianto.core.domain.KeyType;
  * Key form interface.
  * 
  * @author mauriciofernandesdecastro
+ * @deprecated
  */
 public interface KeyForm {
 

@@ -24,6 +24,7 @@ import org.helianto.document.domain.Document;
 import org.helianto.document.domain.DocumentFolder;
 import org.helianto.document.domain.PrivateDocument;
 import org.helianto.document.form.DocumentFolderForm;
+import org.helianto.document.form.DocumentForm;
 import org.helianto.document.form.PrivateDocumentForm;
 
 /**
@@ -36,7 +37,15 @@ public interface DocumentMgr {
 	/**
 	 * Find a <code>Document</code> list.
 	 * 
+	 * @param form
+	 */
+	List<? extends Document> findDocuments(DocumentForm form);
+	
+	/**
+	 * Find a <code>Document</code> list.
+	 * 
 	 * @param documentFilter
+	 * @deprecated
 	 */
 	List<? extends Document> findDocuments(Filter documentFilter);
 	

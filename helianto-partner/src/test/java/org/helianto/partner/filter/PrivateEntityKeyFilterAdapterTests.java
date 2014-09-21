@@ -17,17 +17,14 @@ package org.helianto.partner.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.domain.Entity;
-import org.helianto.core.domain.KeyType;
-import org.helianto.core.domain.Operator;
-import org.helianto.core.test.EntityTestSupport;
-import org.helianto.partner.domain.PrivateEntity;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * 
- * @author Maurício Fernandes de Castro
+ * @author mauriciofernandesdecastro
  */
 public class PrivateEntityKeyFilterAdapterTests {
 	
@@ -43,22 +40,20 @@ public class PrivateEntityKeyFilterAdapterTests {
     
     @Test
     public void select() {
-    	form.getParent().setId(10);
-    	KeyType keyType = new KeyType(new Operator("DEFAULT"), "KEYTYPE");
-    	keyType.setId(30);
-        ((CompositeTestPartnerForm) form).setKeyType(keyType);
+    	Mockito.when(form.getPrivateEntityId()).thenReturn(10);
+    	Mockito.when(form.getKeyTypeId()).thenReturn(30);
         assertEquals(C1+"AND "+C2, filter.createCriteriaAsString());
     }
     
     @Test
     public void parent() {
-    	form.getParent().setId(10);
+    	Mockito.when(form.getPrivateEntityId()).thenReturn(10);
         assertEquals(C1+OB, filter.createCriteriaAsString());
     }
     
     @Test
     public void keyValue() {
-    	((CompositeTestPartnerForm) form).setKeyValue("VALUE");
+    	Mockito.when(form.getKeyValue()).thenReturn("VALUE");
         assertEquals(C3+OB, filter.createCriteriaAsString());
     }
     
@@ -67,9 +62,13 @@ public class PrivateEntityKeyFilterAdapterTests {
     
     @Before
     public void setUp() {
-    	Entity entity = EntityTestSupport.createEntity(1);
-    	PrivateEntity privateEntity = new PrivateEntity(entity, "");
-    	form = new CompositeTestPartnerForm(privateEntity);
+    	form = Mockito.mock(CompositeTestPartnerForm.class);
     	filter = new PrivateEntityKeyFormFilterAdapter(form);
     }
+    
+    @After
+    public void tearDown() {
+    	Mockito.reset(form);
+    }
+    
 }

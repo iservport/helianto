@@ -18,7 +18,6 @@ package org.helianto.inventory.domain;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
@@ -28,15 +27,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.inventory.InvoiceType;
-import org.helianto.inventory.domain.internal.AbstractInventoryDocument;
+import org.helianto.inventory.internal.AbstractInventoryDocument;
 import org.helianto.partner.domain.Partner;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
@@ -54,11 +51,20 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("I")
-public class Invoice extends AbstractInventoryDocument {
+public class Invoice 
+	extends AbstractInventoryDocument 
+{
 
     private static final long serialVersionUID = 1L;
-    private char invoiceType;
+    
+    private char invoiceType = InvoiceType.OUTPUT.getValue();
+    
+    @ManyToOne
+    @JoinColumn(name="partnerId")
     private Partner partner;
+    
+    @JsonManagedReference 
+    @OneToMany(mappedBy="invoice")
     private Set<Picking> pickingSet = new HashSet<Picking>();
     
 	/**
@@ -66,7 +72,6 @@ public class Invoice extends AbstractInventoryDocument {
      */
     public Invoice() {
     	super();
-    	setInvoiceTypeAsEnum(InvoiceType.OUTPUT);
     }
     
 	/**
@@ -84,8 +89,8 @@ public class Invoice extends AbstractInventoryDocument {
 	/**
 	 * Add the prefix "INV" to differentiate invoice keys.
 	 */
-	@Override
-	@Transient
+//	@Override
+//	@Transient
 	public String getInternalDocCodeKey() {
 		return "INV";
 	}
@@ -106,9 +111,6 @@ public class Invoice extends AbstractInventoryDocument {
     /**
 	 * Partner sending or receiving the invoice.
 	 */
-    @JsonBackReference 
-    @ManyToOne(cascade={CascadeType.ALL})
-    @JoinColumn(name="partnerId")
     public Partner getPartner() {
 		return partner;
 	}
@@ -119,8 +121,6 @@ public class Invoice extends AbstractInventoryDocument {
     /**
 	 * Picking set.
 	 */
-    @JsonManagedReference 
-    @OneToMany(mappedBy="invoice", cascade=CascadeType.ALL)
 	public Set<Picking> getPickingSet() {
 		return pickingSet;
 	}

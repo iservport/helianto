@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import org.helianto.core.def.UserType;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.test.DomainTestSupport;
@@ -24,7 +23,6 @@ public class UserTests {
 		assertTrue(user instanceof UserGroup);
 		assertEquals('U', user.getDiscriminator());
     	assertFalse(user.isAccountNonExpired());
-    	assertEquals(UserType.INTERNAL.getValue(), user.getUserType());
     	assertEquals('0', user.getPrivacyLevel());
 	}
     

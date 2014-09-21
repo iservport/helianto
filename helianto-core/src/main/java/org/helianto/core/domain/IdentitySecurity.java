@@ -20,7 +20,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -60,20 +59,48 @@ public class IdentitySecurity implements Serializable {
         "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%_";
     public static final int DEFAULT_PASSWORD_SIZE = 8;
     
-    private long id;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    private int id;
+    
+    @Version
     private int version;
+    
+    @JsonBackReference 
+    @ManyToOne
+    @JoinColumn(name="identityId", nullable=true)
     private Identity identity;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(length=12)
     private ProviderType providerType;
+    
+    @Column(length=40)
     private String consumerKey = "";
+    
+    @Column(length=60)
     private String consumerSecret = "";
+    
+    @Column(length=20)
     private String password = "inactive";
+    
     private char credentialState = ActivityState.ACTIVE.getValue();
+    
+    @DateTimeFormat(style="SS")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date lastModified;
+    
+    @DateTimeFormat(style="SS")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date expirationDate;
     
-    //transient fields
+    @Transient
     private String rawPassword = "";
+    
+    @Transient
     private String verifyPassword = "";
+    
+    @Transient
     private boolean passwordDirty = false;
 
 
@@ -107,7 +134,7 @@ public class IdentitySecurity implements Serializable {
     public IdentitySecurity(Identity identity, String rawPassword) {
     	this(identity, ProviderType.email);
         setRawPassword(rawPassword);
-        setCredentialState(ActivityState.INITIAL);
+        setCredentialStateAsEnum(ActivityState.INITIAL);
     }
 
     /** 
@@ -134,18 +161,16 @@ public class IdentitySecurity implements Serializable {
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public long getId() {
+    public int getId() {
         return this.id;
     }
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     /**
      * Version.
      */
-    @Version
     public int getVersion() {
         return this.version;
     }
@@ -156,9 +181,6 @@ public class IdentitySecurity implements Serializable {
     /**
      * <<Cascading>> Identity owning this credential.
      */
-    @JsonBackReference 
-    @ManyToOne(cascade={CascadeType.ALL})
-    @JoinColumn(name="identityId", nullable=true)
     public Identity getIdentity() {
         return this.identity;
     }
@@ -169,7 +191,6 @@ public class IdentitySecurity implements Serializable {
     /**
      * <<Transient>> Convenience to read identity principal.
      */
-    @Transient
     public String getPrincipal() {
 		return getIdentity().getPrincipal();
 	}
@@ -177,8 +198,6 @@ public class IdentitySecurity implements Serializable {
     /**
      * Provider type.
      */
-    @Enumerated(EnumType.STRING)
-    @Column(length=12)
     public ProviderType getProviderType() {
 		return providerType;
 	}
@@ -189,7 +208,6 @@ public class IdentitySecurity implements Serializable {
     /**
      * Consumer key.
      */
-    @Column(length=40)
     public String getConsumerKey() {
 		return consumerKey;
 	}
@@ -200,7 +218,6 @@ public class IdentitySecurity implements Serializable {
     /**
      * Encoded consumer secret.
      */
-    @Column(length=60)
     public String getConsumerSecret() {
 		return consumerSecret;
 	}
@@ -212,7 +229,6 @@ public class IdentitySecurity implements Serializable {
      * Plain text password.
      * @deprecated
      */
-    @Column(length=20)
     public String getPassword() {
         return this.password;
     }
@@ -226,7 +242,6 @@ public class IdentitySecurity implements Serializable {
 //    /**
 //     * Password generator.
 //     */
-//    @Transient
 //    public void generatePassword() {
 //        this.password = IdentitySecurity.passwordFactory();
 //    }
@@ -240,19 +255,16 @@ public class IdentitySecurity implements Serializable {
     public void setCredentialState(char credentialState) {
         this.credentialState = credentialState;
     }
-    public void setCredentialState(ActivityState credentialState) {
+    public void setCredentialStateAsEnum(ActivityState credentialState) {
         this.credentialState = credentialState.getValue();
     }
 
     /**
      * Last modified.
      */
-    @DateTimeFormat(style="SS")
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getLastModified() {
         return this.lastModified;
     }
-    @Transient
     public String getLastModifiedDateAsString() {
     	if (getLastModified()==null) {
     		return "";
@@ -260,7 +272,6 @@ public class IdentitySecurity implements Serializable {
     	DateFormat formatter = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
         return formatter.format(getLastModified());
     }
-    @Transient
     public String getLastModifiedTimeAsString() {
     	if (getLastModified()==null) {
     		return "";
@@ -275,12 +286,9 @@ public class IdentitySecurity implements Serializable {
     /**
      * Expiration date.
      */
-    @DateTimeFormat(style="SS")
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getExpirationDate() {
         return this.expirationDate;
     }
-    @Transient
     public boolean isExpired() {
     	if (getExpirationDate()==null) {
     		// null means never expires
@@ -288,7 +296,6 @@ public class IdentitySecurity implements Serializable {
     	}
     	return getExpirationDate().before(new Date());
     }
-    @Transient
     public String getExpirationDateAsString() {
     	if (getExpirationDate()==null) {
     		return "";
@@ -296,7 +303,6 @@ public class IdentitySecurity implements Serializable {
     	DateFormat formatter = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
         return formatter.format(getExpirationDate());
     }
-    @Transient
     public String getExpirationTimeAsString() {
     	if (getExpirationDate()==null) {
     		return "";
@@ -328,7 +334,6 @@ public class IdentitySecurity implements Serializable {
      * Required before a new password is to be set.
      * </p>
      */
-    @Transient
 	public String getRawPassword() {
 		return rawPassword;
 	}
@@ -339,7 +344,6 @@ public class IdentitySecurity implements Serializable {
     /**
      * <<Transient>> Verify password.
      */
-    @Transient
     public String getVerifyPassword() {
         return verifyPassword;
     }
@@ -354,7 +358,6 @@ public class IdentitySecurity implements Serializable {
     /**
      * PasswordDirty getter.
      */
-    @Transient
     public boolean isPasswordDirty() {
         return passwordDirty;
     }
@@ -368,7 +371,6 @@ public class IdentitySecurity implements Serializable {
     /**
      * True if the raw password is not empty.
      */
-    @Transient
     public boolean isRawPasswordNotEmpty() {
     	return getRawPassword()!=null && getRawPassword().length()>0;
     }
@@ -376,7 +378,6 @@ public class IdentitySecurity implements Serializable {
     /**
      * True if the raw password matches the verified password field.
      */
-    @Transient
     public boolean isRawPasswordVerified() {
     	if (isRawPasswordNotEmpty() && getRawPassword().compareTo(getVerifyPassword())==0) {
             setVerifyPassword("");

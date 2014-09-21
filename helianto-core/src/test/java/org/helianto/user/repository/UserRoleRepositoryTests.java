@@ -1,7 +1,6 @@
 package org.helianto.user.repository;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
 import java.io.Serializable;
 import java.util.List;

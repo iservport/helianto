@@ -6,11 +6,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.helianto.core.filter.Filter;
+import org.helianto.query.data.jpa.QueryFilterRepositoryImpl;
 import org.hibernate.Session;
 import org.hibernate.ejb.HibernateEntityManager;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -19,9 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @param <T>
  * @param <ID>
+ * 
+ * @deprecated
  */
-public class JpaFilterRepositoryImpl<T, ID extends Serializable> extends
-		SimpleJpaRepository<T, ID> implements FilterRepository<T, ID> {
+public class JpaFilterRepositoryImpl<T, ID extends Serializable> 
+	extends QueryFilterRepositoryImpl<T, ID> implements FilterRepository<T, ID> {
 
 	private EntityManager entityManager;
 	private JpaEntityInformation<T, ID> metadata;
@@ -92,5 +94,5 @@ public class JpaFilterRepositoryImpl<T, ID extends Serializable> extends
 	public void refresh(T entity) {
 		entityManager.refresh(entity);
 	}
-
+	
 }

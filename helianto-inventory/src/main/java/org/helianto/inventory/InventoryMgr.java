@@ -17,10 +17,12 @@ package org.helianto.inventory;
 
 import java.util.List;
 
-import org.helianto.core.filter.Filter;
 import org.helianto.inventory.domain.ProcessAgreement;
 import org.helianto.inventory.domain.ProcessRequirement;
 import org.helianto.inventory.domain.Tax;
+import org.helianto.inventory.form.ProcessAgreementForm;
+import org.helianto.inventory.form.ProcessRequirementForm;
+import org.helianto.inventory.form.TaxForm;
 
 /**
  * Inventory service interface.
@@ -32,45 +34,43 @@ public interface InventoryMgr {
 	/**
 	 * Find process requirement.
 	 * 
-	 * @param filter
+	 * @param form
 	 */
-	public List<ProcessRequirement> findProcessRequirements(Filter filter);
+	List<ProcessRequirement> findProcessRequirements(ProcessRequirementForm form);
 
 	/**
 	 * Store agreement.
 	 * 
 	 * @param requirement
 	 */
-	public ProcessRequirement storeProcessRequirement(ProcessRequirement requirement);
+	ProcessRequirement storeProcessRequirement(ProcessRequirement requirement);
 
 	/**
 	 * Find process agreement.
 	 * 
-	 * @param filter
+	 * @param form
 	 */
-	public List<ProcessAgreement> findProcessAgreement(Filter filter);
+	List<ProcessAgreement> findProcessAgreement(ProcessAgreementForm form);
 
 	/**
 	 * Store process agreement.
 	 * 
 	 * @param agreement
 	 */
-	public ProcessAgreement storeProcessAgreement(ProcessAgreement agreement);
+	ProcessAgreement storeProcessAgreement(ProcessAgreement agreement);
 	
 	/**
 	 * Find taxes.
 	 * 
-	 * @param filter
+	 * @param form
 	 */
-	public List<Tax> findTaxes(Filter filter);
+	List<Tax> findTaxes(TaxForm form);
 
 	/**
 	 * Store tax.
 	 * 
 	 * @param tax
 	 */
-	public Tax storeTax(Tax tax);
-
-	
+	Tax storeTax(Tax tax);
 
 }

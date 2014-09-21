@@ -22,7 +22,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -39,8 +38,16 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class PrivateKey implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @JsonBackReference 
+    @ManyToOne
+    @JoinColumn(name="credentialId", nullable=true)
     private Credential credential;
+    
+    @Column(length=2048)
     private String privateKey;
 
     /** 
@@ -64,7 +71,6 @@ public class PrivateKey implements java.io.Serializable {
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -75,9 +81,6 @@ public class PrivateKey implements java.io.Serializable {
     /**
      * Credential.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="credentialId", nullable=true)
     public Credential getCredential() {
         return this.credential;
     }
@@ -88,31 +91,11 @@ public class PrivateKey implements java.io.Serializable {
     /**
      * PrivateKey content.
      */
-    @Column(length=2048)
     public String getPrivateKey() {
         return this.privateKey;
     }
     public void setPrivateKey(String privateKey) {
         this.privateKey = privateKey;
-    }
-
-    /**
-     * <code>PrivateKey</code> factory.
-     * 
-     * @param credential
-     */
-    public static PrivateKey privateKeyFactory(Credential credential) {
-        PrivateKey privateKey = new PrivateKey();
-        privateKey.setCredential(credential);
-        return privateKey;
-    }
-
-    /**
-     * <code>PrivateKey</code> natural id query.
-     */
-    @Transient
-    public static String getPrivateKeyNaturalIdQueryString() {
-        return "select privateKey from PrivateKey privateKey where privateKey.credential = ? ";
     }
 
     /**

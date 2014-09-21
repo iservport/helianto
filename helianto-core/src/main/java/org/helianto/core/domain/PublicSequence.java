@@ -33,9 +33,16 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name="core_publicenum",
     uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "typeName"})}
 )
-public class PublicSequence extends AbstractEnumerator implements RootEntity {
+public class PublicSequence 
+	extends AbstractEnumerator 
+	implements RootEntity 
+{
 
     private static final long serialVersionUID = 1L;
+    
+    @JsonBackReference 
+    @ManyToOne
+    @JoinColumn(name="operatorId", nullable=true)
     private Operator operator;
 
     /**
@@ -60,9 +67,6 @@ public class PublicSequence extends AbstractEnumerator implements RootEntity {
     /**
      * Entity.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
 		return operator;
 	}
@@ -70,6 +74,14 @@ public class PublicSequence extends AbstractEnumerator implements RootEntity {
 		this.operator = operator;
 	}
 
+//    @Transient
+    public int getContextId() {
+    	if (getOperator()!=null) {
+    		return getOperator().getId();
+    	}
+    	return 0;
+    }
+    
    /**
     * equals
     */

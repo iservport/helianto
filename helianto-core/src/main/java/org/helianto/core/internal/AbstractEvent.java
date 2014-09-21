@@ -25,13 +25,13 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.helianto.core.def.PrivacyLevel;
+import org.helianto.core.def.Resolution;
 import org.helianto.core.def.ResolutionExtended;
 import org.helianto.core.domain.Identity;
-import org.helianto.core.form.EventForm;
-import org.helianto.core.form.PrivacyForm;
+import org.helianto.core.domain.type.ResolvableEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
@@ -44,32 +44,41 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  * 
  * @author Mauricio Fernandes de Castro
  */
-
 @javax.persistence.MappedSuperclass
 public abstract class AbstractEvent 
 	extends AbstractTrunkEntity
-	implements PrivacyForm, EventForm {
+	implements ResolvableEntity
+{
 
     private static final long serialVersionUID = 1L;
+    
+    @ManyToOne
+    @JoinColumn(name="ownerId", nullable=true)
     private Identity owner;
+    
+    @DateTimeFormat(style="SS")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date issueDate;
-    private char resolution;
-    private char privacyLevel;
-    // transient, convenience for filters
+    
+    private char resolution = Resolution.PRELIMINARY.getValue();
+    
+    private char privacyLevel = PrivacyLevel.PUBLIC.getValue();
+    
+    @Transient
     private int interval;
 
     /** 
      * Empty constructor
 	 */
     public AbstractEvent() {
-        setPrivacyLevel(PrivacyLevel.PUBLIC.getValue());
+        super();
         setIssueDate(new Date());
     }
     
     /**
      * Locale.
      */
-    @Transient
+//    @Transient
     public Locale getLocale() {
     	return Locale.getDefault();
     }
@@ -78,18 +87,23 @@ public abstract class AbstractEvent
      * Record owner.
      * @see {@link Identity}
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="ownerId", nullable=true)
 	public Identity getOwner() {
 		return owner;
 	}
     
+	@Transient
+	public int getOwnerId() {
+		if (getOwner()!=null) {
+			return getOwner().getId();
+		}
+		return 0;
+	}
+
     /**
      * Safe presentation record owner alias.
      * @deprecated
      */
-    @Transient
+//    @Transient
 	public String getOwnerOptionalAlias() {
         return getOwner()==null ? "" : owner.getDisplayName();
 	}
@@ -105,7 +119,7 @@ public abstract class AbstractEvent
     /**
      * Safe presentation record owner name.
      */
-    @Transient
+//    @Transient
 	public String getOwnerName() {
         return getOwner()==null ? "" : owner.getIdentityName();
 	}
@@ -116,8 +130,6 @@ public abstract class AbstractEvent
     /**
      * Issue date.
      */
-    @DateTimeFormat(style="SS")
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getIssueDate() {
         return this.issueDate;
     }
@@ -131,6 +143,7 @@ public abstract class AbstractEvent
     public void setResolution(char resolution) {
         this.resolution = resolution;
     }
+    @JsonIgnore
     public void setResolution(String resolution) {
         this.resolution = resolution.charAt(0);
     }
@@ -154,14 +167,13 @@ public abstract class AbstractEvent
     public void setPrivacyLevel(char privacyLevel) {
         this.privacyLevel = privacyLevel;
     }
-    public void setPrivacyLevel(PrivacyLevel privacyLevel) {
+    public void setPrivacyLevelAsEnum(PrivacyLevel privacyLevel) {
         this.privacyLevel = privacyLevel.getValue();
     }
     
     /**
      * <<Transient>> Convenience to pass date intervals when used as a filter.
      */
-    @Transient
     public int getInterval() {
 		return interval;
 	}

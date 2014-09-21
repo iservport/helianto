@@ -16,11 +16,7 @@
 
 package org.helianto.inventory.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -28,6 +24,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.Entity;
+import org.helianto.core.internal.AbstractTrunkEntity;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.document.domain.ProcessDocument;
 import org.helianto.inventory.CardType;
@@ -44,15 +41,24 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name="inv_cardset",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "internalNumber"})}
 )
-public class CardSet implements java.io.Serializable, Sequenceable {
+public class CardSet 
+	extends AbstractTrunkEntity
+	implements Sequenceable 
+{
 
     private static final long serialVersionUID = 1L;
-    private int id;
-    private Entity entity;
+    
     private long internalNumber;
+    
+    @JsonBackReference 
+    @ManyToOne
+    @JoinColumn(name="processId", nullable=true)
     private ProcessDocument process;
+    
+	@Column(precision=6, scale=0)
     private int cardRange;
-    private char cardType;
+    
+    private char cardType = CardType.TEST.getPrefix();
 
     /** 
      * Default constructor.
@@ -100,37 +106,12 @@ public class CardSet implements java.io.Serializable, Sequenceable {
     }
 
     /**
-     * Primary key.
-     */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
-        return this.id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * <<NaturalKey>>Owning entity.
-     * @see {@link Entity}
-     */
-    @JsonBackReference 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="entityId", nullable=true)
-    public Entity getEntity() {
-        return this.entity;
-    }
-    public void setEntity(Entity entity) {
-        this.entity = entity;
-    }
-
-    /**
      * <<NaturalKey>>Card set serial number.
      */
     public long getInternalNumber() {
         return this.internalNumber;
     }
-    @Transient
+//    @Transient
 	public static long getInternalNumber(String cardSetLabel) {
 		try {
 			return Long.parseLong(cardSetLabel.substring(1, 5));
@@ -147,12 +128,12 @@ public class CardSet implements java.io.Serializable, Sequenceable {
 		return "CARDSET";
 	}
     
-    @Transient
+//    @Transient
     public int getStartNumber() {
     	return 1;
     }
 
-    @Transient
+//    @Transient
     public String getCardSetLabel() {
     	return new StringBuilder()
     	.append(getCardType())
@@ -163,26 +144,24 @@ public class CardSet implements java.io.Serializable, Sequenceable {
     /**
 	 * Card process.
 	 */
-    @JsonBackReference @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="processId", nullable=true)
 	public ProcessDocument getProcess() {
 		return process;
 	}
-    @Transient
+//    @Transient
     public String getProcessCode() {
     	if (this.process!=null) {
     		return this.process.getDocCode();
     	}
     	return "";
     }
-    @Transient
+//    @Transient
     public String getProcessName() {
     	if (this.process!=null) {
     		return this.process.getDocName();
     	}
     	return "";
     }
-    @Transient
+//    @Transient
     public String[] getProcessColorChain() {
     	if (this.process!=null && process instanceof ProcessDocument) {
     		return ((ProcessDocument) this.process).getProcessColorChain();
@@ -196,7 +175,6 @@ public class CardSet implements java.io.Serializable, Sequenceable {
     /**
 	 * Card range.
 	 */
-	@Column(precision=6, scale=0)
 	public int getCardRange() {
 		return cardRange;
 	}
@@ -210,7 +188,7 @@ public class CardSet implements java.io.Serializable, Sequenceable {
 	public char getCardType() {
 		return cardType;
 	}
-	@Transient
+//	@Transient
 	public CardType getCardType(char cardType) {
 		return CardType.getCardType(cardType);
 	}
@@ -220,15 +198,6 @@ public class CardSet implements java.io.Serializable, Sequenceable {
 	public void setCardSetType(CardType cardType) {
 		this.cardType = cardType.getPrefix();
 	}
-
-	/**
-	 * Card factory method.
-	 * 
-	 * @param cardLabel
-	 */
-    public Card cardFactory(String cardLabel) {
-        return new Card(this, cardLabel);
-    }
 
     /**
      * toString

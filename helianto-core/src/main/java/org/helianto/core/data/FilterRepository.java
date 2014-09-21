@@ -3,21 +3,27 @@ package org.helianto.core.data;
 import java.io.Serializable;
 
 import org.helianto.core.filter.Filter;
+import org.helianto.query.data.QueryRepository;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
 /**
  * Shared behavior.
+ * 
+ * <p>
+ * This interface will replaced by QueryRepository from the helianto-query project.
+ * </p>
  * 
  * @author mauriciofernandesdecastro
  *
  * @param <T>
  * @param <ID>
  * @param <F>
+ * 
+ * @deprecated
  */
 @NoRepositoryBean
-public interface FilterRepository<T, ID extends Serializable> extends JpaRepository<T, ID> {
+public interface FilterRepository<T, ID extends Serializable> extends QueryRepository<T, ID> {
 
 	/**
 	 * Add find by filter.

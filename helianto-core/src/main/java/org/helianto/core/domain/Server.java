@@ -15,6 +15,7 @@
 
 package org.helianto.core.domain;
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -48,19 +49,42 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name="core_serv",
     uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "serverName"})}
 )
-public class Server  implements RootEntity {
+public class Server  
+	implements RootEntity 
+{
 
 	private static final long serialVersionUID = 1L;
-	private int id;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    private int id;
+    
+    @JsonBackReference("operator")
+    @ManyToOne
+    @JoinColumn(name="operatorId", nullable=true)
     private Operator operator;
+    
+    @Column(length=20)
     private String serverName;
+    
+    @Column(length=64)
     private String serverHostAddress;
+    
     private int serverPort;
+    
+    @Column(length=64)
     private String serverDesc;
+    
     private char serverType;
+    
     private byte priority;
+    
     private char serverState;
+    
     private char requiredEncription;
+    
+    @JsonBackReference("credential")
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name="credentialId", nullable=true)
     private Credential credential;
 
     /**
@@ -105,7 +129,6 @@ public class Server  implements RootEntity {
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -116,9 +139,6 @@ public class Server  implements RootEntity {
     /**
      * Operator.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
         return this.operator;
     }
@@ -126,10 +146,17 @@ public class Server  implements RootEntity {
         this.operator = operator;
     }
     
+//    @Transient
+    public int getContextId() {
+    	if (getOperator()!=null) {
+    		return getOperator().getId();
+    	}
+    	return 0;
+    }
+    
     /**
      * Server name.
      */
-    @Column(length=20)
     public String getServerName() {
         return this.serverName;
     }
@@ -140,7 +167,6 @@ public class Server  implements RootEntity {
     /**
      * Server host address.
      */
-    @Column(length=64)
     public String getServerHostAddress() {
         return this.serverHostAddress;
     }
@@ -161,7 +187,6 @@ public class Server  implements RootEntity {
     /**
      * Server description.
      */
-    @Column(length=64)
     public String getServerDesc() {
         return this.serverDesc;
     }
@@ -218,9 +243,6 @@ public class Server  implements RootEntity {
     /**
      * Credential.
      */
-    @JsonBackReference 
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name="credentialId", nullable=true)
     public Credential getCredential() {
         return this.credential;
     }

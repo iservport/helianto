@@ -34,41 +34,44 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  * @author Mauricio Fernandes de Castro
  */
 @MappedSuperclass
-public class AbstractNamespaceData implements RootEntity {
-
-    /**
-     * Factory method.
-     * 
-     * @param requiredOperator
-     */
-    public static AbstractNamespaceData dataFactory(Operator requiredOperator) {
-    	AbstractNamespaceData data = new AbstractNamespaceData();
-        data.setOperator(requiredOperator);
-        return data;
-    }
-
+public class AbstractNamespaceData 
+	implements RootEntity 
+{
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @JsonBackReference 
+    @ManyToOne
+    @JoinColumn(name="operatorId", nullable=true)
     private Operator operator;
-    private String dataCode;
-    private String dataName;
+    
+    @Column(length=12)
+    private String dataCode = "";
+    
+    @Column(length=256)
+    private String dataName = "";
 
-    /** default constructor */
+    /** 
+     * Default constructor 
+     */
     public AbstractNamespaceData() {
-        this("");
+        super();
     }
 
-    /** Code constructor */
+    /** 
+     * Code constructor
+     */
     public AbstractNamespaceData(String dataCode) {
+    	this();
         setDataCode(dataCode);
-        setDataName("");
     }
 
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -79,9 +82,6 @@ public class AbstractNamespaceData implements RootEntity {
     /**
      * Namespace operator.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
         return this.operator;
     }
@@ -89,10 +89,17 @@ public class AbstractNamespaceData implements RootEntity {
         this.operator = operator;
     }
     
+//    @Transient
+    public int getContextId() {
+    	if (getOperator()!=null) {
+    		return getOperator().getId();
+    	}
+    	return 0;
+    }
+    
     /**
      * Data code.
      */
-    @Column(length=12)
     public String getDataCode() {
         return this.dataCode;
     }
@@ -103,7 +110,6 @@ public class AbstractNamespaceData implements RootEntity {
     /**
      * Data name.
      */
-    @Column(length=256)
     public String getDataName() {
         return this.dataName;
     }

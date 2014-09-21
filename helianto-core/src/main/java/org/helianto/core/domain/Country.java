@@ -16,6 +16,7 @@
 package org.helianto.core.domain;
 
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +27,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.type.RootEntity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Countries.
@@ -37,24 +38,24 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name="core_country",
     uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "countryCode"})}
 )
-public class Country implements RootEntity {
-
-    /**
-     * Factory method.
-     * 
-     * @param requiredOperator
-     */
-    public static Country countryFactory(Operator requiredOperator) {
-    	Country country = new Country();
-        country.setOperator(requiredOperator);
-        return country;
-    }
-
+public class Country 
+	implements RootEntity 
+{
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @JsonIgnore
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="operatorId", nullable=true)
     private Operator operator;
+    
+    @Column(length=7)
     private String countryCode = "";
+    
+    @Column(length=32)
     private String countryName = "";
 
     /** 
@@ -79,7 +80,6 @@ public class Country implements RootEntity {
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -90,9 +90,6 @@ public class Country implements RootEntity {
     /**
      * Namespace operator.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
         return this.operator;
     }
@@ -100,10 +97,17 @@ public class Country implements RootEntity {
         this.operator = operator;
     }
     
+//    @Transient
+    public int getContextId() {
+    	if (getOperator()!=null) {
+    		return getOperator().getId();
+    	}
+    	return 0;
+    }
+    
     /**
      * Country code.
      */
-    @Column(length=7)
     public String getCountryCode() {
         return this.countryCode;
     }
@@ -114,7 +118,6 @@ public class Country implements RootEntity {
     /**
      * Country name.
      */
-    @Column(length=32)
     public String getCountryName() {
         return this.countryName;
     }

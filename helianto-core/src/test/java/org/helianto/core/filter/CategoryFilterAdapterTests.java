@@ -18,9 +18,7 @@ package org.helianto.core.filter;
 import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.def.CategoryGroup;
-import org.helianto.core.domain.Entity;
 import org.helianto.core.form.CategoryForm;
-import org.helianto.core.test.EntityTestSupport;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -65,10 +63,9 @@ public class CategoryFilterAdapterTests {
     
 	@Before
     public void setUp() {
-		Entity entity = EntityTestSupport.createEntity(1);
     	form = Mockito.mock(CategoryForm.class);
     	filter = new CategoryFormFilterAdapter(form);
-    	Mockito.when(form.getEntity()).thenReturn(entity);
+    	Mockito.when(form.getEntityId()).thenReturn(1);
     }
     
     @After

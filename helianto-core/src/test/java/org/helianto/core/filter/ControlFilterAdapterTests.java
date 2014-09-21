@@ -18,9 +18,7 @@ package org.helianto.core.filter;
 import static org.junit.Assert.assertEquals;
 
 import org.helianto.core.criteria.OrmCriteriaBuilder;
-import org.helianto.core.domain.Entity;
-import org.helianto.core.domain.Operator;
-import org.helianto.core.filter.base.AbstractEventControlInternalFilterAdapter;
+import org.helianto.core.filter.internal.AbstractEventControlInternalFilterAdapter;
 import org.helianto.core.form.EventControlInternalForm;
 import org.junit.After;
 import org.junit.Before;
@@ -55,13 +53,10 @@ public class ControlFilterAdapterTests {
 	
 	private AbstractEventControlInternalFilterAdapter<EventControlInternalForm> filter;
 	private EventControlInternalForm form;
-	private Entity entity;
 	
 	@SuppressWarnings("serial")
 	@Before
 	public void setUp() {
-		entity = new Entity(new Operator("DEFAULT"), "ENTITY");
-		entity.setId(1);
 		form = Mockito.mock(EventControlInternalForm.class);
 		filter = new AbstractEventControlInternalFilterAdapter<EventControlInternalForm>(form) {
 			@Override
@@ -69,7 +64,7 @@ public class ControlFilterAdapterTests {
 				super.doFilter(mainCriteriaBuilder);
 			}
 		};
-		Mockito.when(filter.getForm().getEntity()).thenReturn(entity);
+		Mockito.when(filter.getForm().getEntityId()).thenReturn(1);
 	}
 	
 	@After

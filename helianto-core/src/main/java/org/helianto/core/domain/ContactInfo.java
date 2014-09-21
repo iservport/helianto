@@ -28,7 +28,10 @@ import org.helianto.core.def.ContactType;
 public class ContactInfo implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    @Column(length=64)
     private String contactAddress;
+    
     private char contactType;
 
     /** 
@@ -61,7 +64,6 @@ public class ContactInfo implements java.io.Serializable {
     /**
      * Contact address.
      */
-    @Column(length=64)
     public String getContactAddress() {
 		return contactAddress;
 	}

@@ -17,11 +17,11 @@ package org.helianto.partner.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.domain.Entity;
-import org.helianto.core.test.EntityTestSupport;
-import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.form.ContactGroupForm;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * 
@@ -40,18 +40,21 @@ public class ContractGroupFilterAdapterTests {
     
     @Test
     public void parent() {
-    	form.getParent().setId(10);
+    	Mockito.when(form.getPrivateEntityId()).thenReturn(10);
         assertEquals(C1+"AND "+C2+OB, filter.createCriteriaAsString());
     }
     
     private ContactGroupFormFilterAdapter filter;
-    private CompositeTestPartnerForm form;
+    private ContactGroupForm form;
     
     @Before
     public void setUp() {
-    	Entity entity = EntityTestSupport.createEntity(1);
-    	PrivateEntity privateEntity = new PrivateEntity(entity, "");
-    	form = new CompositeTestPartnerForm(privateEntity);
+    	form = Mockito.mock(ContactGroupForm.class);
     	filter = new ContactGroupFormFilterAdapter(form);
+    }
+    
+    @After
+    public void tearDown() {
+    	Mockito.reset(form);
     }
 }

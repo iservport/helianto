@@ -27,6 +27,8 @@ public class FilterAdapterTests {
 		assertEquals("alias.alias = 'teste' AND alias.userState = 'A' ", filter1.createCriteriaAsString());
 		filter1.getForm().setUserState('B');
 		assertEquals("alias.alias = 'teste' AND alias.userState = 'B' ", filter1.createCriteriaAsString());
+		
+		user.setUserType('I');
 		SecondFilter filter2 = new SecondFilter(user);
 		assertEquals("alias.type = 'I' ", filter2.createCriteriaAsString());
 	}

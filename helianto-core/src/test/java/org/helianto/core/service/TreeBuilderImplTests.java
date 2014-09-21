@@ -43,7 +43,7 @@ public class TreeBuilderImplTests {
 
 		private static final long serialVersionUID = 1L;
 
-		public NodeStub(long id, Identity content, int level, int sequence) {
+		public NodeStub(int id, Identity content, int level, int sequence) {
 			super(id, content, level, sequence);
 		}
 

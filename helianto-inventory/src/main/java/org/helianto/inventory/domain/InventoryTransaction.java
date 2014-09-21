@@ -20,7 +20,6 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
@@ -58,20 +57,16 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @DiscriminatorValue("T")
 public class InventoryTransaction implements Serializable {
 	
-	public static <T extends InventoryTransaction> T inventoryTransactionFactory(Class<T> clazz, Inventory moveFrom, Inventory moveTo, BigDecimal quantity) {
-		T inventoryTransaction = null;
-		try {
-			inventoryTransaction = clazz.newInstance();
-			inventoryTransaction.move(moveFrom, moveTo, quantity);
-			return inventoryTransaction;
-		} catch (Exception e) {
-			throw new IllegalArgumentException("Unable to intantiate class"+clazz, e);
-		}
-	}
-
 	private static final long serialVersionUID = 1L;
+	
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @Version
     private Integer version;
+    
+	@JsonManagedReference("inventoryTransaction")
+	@OneToMany(mappedBy="inventoryTransaction")
 	private Set<Movement> movements = new HashSet<Movement>();
 	
 	/**
@@ -80,11 +75,22 @@ public class InventoryTransaction implements Serializable {
 	public InventoryTransaction() {
 		super();
 	}
+	
+	/**
+	 * Move constructor.
+	 * 
+	 * @param moveFrom
+	 * @param moveTo
+	 * @param quantity
+	 */
+	public InventoryTransaction(Inventory moveFrom, Inventory moveTo, BigDecimal quantity) {
+		this();
+		move(moveFrom, moveTo, quantity);
+	}
 
     /**
      * Primary key.
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -95,7 +101,6 @@ public class InventoryTransaction implements Serializable {
     /**
      * Version.
      */
-    @Version
     public Integer getVersion() {
         return this.version;
     }
@@ -107,8 +112,6 @@ public class InventoryTransaction implements Serializable {
 	/**
 	 * Set of movements.
 	 */
-	@JsonManagedReference 
-	@OneToMany(mappedBy="inventoryTransaction", cascade={CascadeType.ALL})
 	public Set<Movement> getMovements() {
 		return movements;
 	}

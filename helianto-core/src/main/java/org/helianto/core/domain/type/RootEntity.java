@@ -13,7 +13,13 @@ public interface RootEntity extends Serializable {
 	
 	/**
 	 * The owning operator.
+	 * @deprecated
 	 */
 	public Operator getOperator();
+
+	/**
+	 * The owning context id.
+	 */
+	public int getContextId();
 
 }

@@ -24,7 +24,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.type.RootEntity;
@@ -39,13 +38,25 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name="core_service",
     uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "serviceName"})}
 )
-public class Service implements RootEntity {
+public class Service 
+	implements RootEntity 
+{
 
     private static final long serialVersionUID = 1L;
+    
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @JsonBackReference 
+    @ManyToOne
+    @JoinColumn(name="operatorId", nullable=true)
     private Operator operator;
-    private String serviceName;
-    private String serviceExtensions;
+    
+    @Column(length=12)
+    private String serviceName = "";
+    
+    @Column(length=72)
+    private String serviceExtensions = "";
 
     /** 
      * Empty constructor.
@@ -69,7 +80,6 @@ public class Service implements RootEntity {
     /**
      * Primary key
      */
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return this.id;
     }
@@ -80,9 +90,6 @@ public class Service implements RootEntity {
     /**
      * Operator.
      */
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="operatorId", nullable=true)
     public Operator getOperator() {
         return this.operator;
     }
@@ -90,10 +97,17 @@ public class Service implements RootEntity {
         this.operator = operator;
     }
 
+//    @Transient
+    public int getContextId() {
+    	if (getOperator()!=null) {
+    		return getOperator().getId();
+    	}
+    	return 0;
+    }
+    
     /**
      * Service name.
      */
-    @Column(length=12)
     public String getServiceName() {
         return this.serviceName;
     }
@@ -104,7 +118,6 @@ public class Service implements RootEntity {
     /**
      * Comma separated list of applicable service extension codes.
      */
-    @Column(length=72)
     public String getServiceExtensions() {
 		return serviceExtensions;
 	}
@@ -115,7 +128,7 @@ public class Service implements RootEntity {
     /**
      * Array of applicable service extension codes.
      */
-	@Transient
+//	@Transient
 	public String[] getServiceExtensionsAsArray() {
 		if (getServiceExtensions()!=null) {
 			return getServiceExtensions().replace(" ", "").split(",");

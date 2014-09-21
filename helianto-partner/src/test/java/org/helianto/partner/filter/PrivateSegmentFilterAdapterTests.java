@@ -2,8 +2,6 @@ package org.helianto.partner.filter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.domain.Entity;
-import org.helianto.core.test.EntityTestSupport;
 import org.helianto.partner.form.PrivateSegmentForm;
 import org.junit.After;
 import org.junit.Before;
@@ -15,14 +13,14 @@ import org.mockito.Mockito;
 public class PrivateSegmentFilterAdapterTests {
 
 	public static String OB = "order by alias.segmentAlias ";
-    public static String C1 = "alias.entity.id = 0 ";
+    public static String C1 = "alias.entity.id = 1 ";
     public static String C2 = "AND alias.segmentAlias = 'CODE' ";
     public static String C3 = "AND lower(alias.segmentName) like '%name%' ";
     public static String C4 = "AND alias.segmentType = 'X' ";
 
     @Test
     public void empty() {
-    	Mockito.when(form.getEntity()).thenReturn(null);
+    	Mockito.when(form.getEntityId()).thenReturn(0);
         assertEquals(OB, filter.createCriteriaAsString());
     }
     
@@ -46,14 +44,12 @@ public class PrivateSegmentFilterAdapterTests {
     
     private PrivateSegmentForm form;
     private PrivateSegmentFilterAdapter filter;
-    private Entity entity;
     
     @Before
     public void setUp() {
-    	entity = EntityTestSupport.createEntity();
     	form = Mockito.mock(PrivateSegmentForm.class);
     	filter = new PrivateSegmentFilterAdapter(form);
-    	Mockito.when(form.getEntity()).thenReturn(entity);
+    	Mockito.when(form.getEntityId()).thenReturn(1);
     }
     
     @After

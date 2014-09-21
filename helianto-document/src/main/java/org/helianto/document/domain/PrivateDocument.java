@@ -10,9 +10,11 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.def.Uploadable;
 import org.helianto.core.domain.Entity;
 import org.helianto.document.DocumentContentType;
-import org.helianto.document.base.AbstractDocument;
+import org.helianto.document.internal.AbstractDocument;
 import org.helianto.user.domain.User;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A document visible only to the entity.
@@ -29,9 +31,13 @@ public class PrivateDocument
 	, Uploadable {
 
     private static final long serialVersionUID = 1L;
+    
+    @Lob
     private byte[] content;
+    
     private char contentType;
-    // transient
+    
+	@Transient
     private transient MultipartFile file;
 
 	/** 
@@ -64,13 +70,13 @@ public class PrivateDocument
     	setResolution('D');
     }
 
-    @Lob
     public byte[] getContent() {
         return this.content;
     }
     public void setContent(byte[] content) {
         this.content = content;
     }
+    @JsonIgnore
     public void setContent(String content) {
     	this.content = content.getBytes();
     }
@@ -78,7 +84,7 @@ public class PrivateDocument
     /**
      * Helper method to get text content as String.
      */
-    @Transient
+//    @Transient
     public String getContentAsString() {
     	if (getContent()!=null && isText()) {
     		return new String(getContent());
@@ -89,9 +95,12 @@ public class PrivateDocument
 		setContent(contentAsString);
 	}
     
-    @Transient
+//    @Transient
     public int getContentSize() {
-    	return this.content.length;
+    	if (getContent()!=null) {
+    		return getContent().length;
+    	}
+    	return 0;
     }
     
 	/**
@@ -110,7 +119,7 @@ public class PrivateDocument
     /**
      * Allow subclasses to override how multipartFileContentType is determined.
      */
-    @Transient
+//    @Transient
     protected String internalMultipartFileContentType(String multipartFileContentType) {
     	if (getContentType()==DocumentContentType.TEXT.getValue()) {
     		return DocumentContentType.TEXT.getMultipartFileContentType();
@@ -127,7 +136,6 @@ public class PrivateDocument
 	/**
 	 * <<Transient>> Convenience property to hold uploaded data.
 	 */
-	@Transient
 	public MultipartFile getFile() {
 		return file;
 	}
@@ -138,7 +146,7 @@ public class PrivateDocument
 	/**
 	 * <<Transient>> Convenience method to read uploaded data.
 	 */
-	@Transient
+//	@Transient
 	public void processFile() throws IOException {
 		setContent(file.getBytes());
 		setMultipartFileContentType(file.getContentType());
