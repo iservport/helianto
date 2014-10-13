@@ -145,6 +145,9 @@ public class Entity
     
     private char activityState = 'A';
     
+    @Column(length=128)
+    private String entityDomain = "";
+    
     @OneToMany(mappedBy="entity")
     private Set<UserGroup> users = new HashSet<UserGroup>(0);
     
@@ -415,6 +418,16 @@ public class Entity
 	}
     public void setActivityStateAsEnum(ActivityState activityState) {
 		this.activityState = activityState.getValue();
+	}
+    
+    /**
+     * Domain associated with the entity. e.g. helianto.org.
+     */
+    public String getEntityDomain() {
+		return entityDomain;
+	}
+    public void setEntityDomain(String entityDomain) {
+		this.entityDomain = entityDomain;
 	}
 
     /**
