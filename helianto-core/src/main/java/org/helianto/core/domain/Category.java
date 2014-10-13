@@ -115,6 +115,8 @@ public class Category
     
     @Column(length=255)
     private String scriptItems = "";
+    
+    private Character activityCode = 'A';
 
     @Transient
 	private List<String> scriptList = new ArrayList<String>();
@@ -139,11 +141,26 @@ public class Category
      * @param entity
      * @param categoryGroup
      * @param categoryCode
+     * @deprecated
      */
     public  Category(Entity entity, CategoryGroup categoryGroup, String categoryCode) {
     	this();
     	setEntity(entity);
         setCategoryGroupAsEnum(categoryGroup);
+        setCategoryCode(categoryCode);
+    }
+
+    /** 
+     * Key constructor
+     * 
+     * @param entity
+     * @param categoryGroup
+     * @param categoryCode
+     */
+    public  Category(Entity entity, char categoryGroup, String categoryCode) {
+    	this();
+    	setEntity(entity);
+        setCategoryGroup(categoryGroup);
         setCategoryCode(categoryCode);
     }
 
@@ -154,8 +171,22 @@ public class Category
      * @param categoryGroup
      * @param categoryCode
      * @param categoryName
+     * @deprecated
      */
     public  Category(Entity entity, CategoryGroup categoryGroup, String categoryCode, String categoryName) {
+    	this(entity, categoryGroup, categoryCode);
+    	setCategoryName(categoryName);
+    }
+
+    /** 
+     * Name constructor
+     * 
+     * @param entity
+     * @param categoryGroup
+     * @param categoryCode
+     * @param categoryName
+     */
+    public  Category(Entity entity, char categoryGroup, String categoryCode, String categoryName) {
     	this(entity, categoryGroup, categoryCode);
     	setCategoryName(categoryName);
     }
@@ -396,6 +427,19 @@ public class Category
 	}
     public void setPartnerFilterPattern(String partnerFilterPattern) {
 		this.partnerFilterPattern = partnerFilterPattern;
+	}
+    
+    /**
+     * Can deactivate a category.
+     */
+    public Character getActivityCode() {
+    	if (activityCode==null) {
+    		return 'A';
+    	}
+		return activityCode;
+	}
+    public void setActivityCode(Character activityCode) {
+		this.activityCode = activityCode;
 	}
     
     /**
