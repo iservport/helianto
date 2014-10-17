@@ -115,6 +115,10 @@ public class Identity implements java.io.Serializable {
     @OneToMany(mappedBy="identity")
     private Set<IdentitySecurity> connections = new HashSet<IdentitySecurity>();
 
+    @JsonManagedReference 
+    @OneToMany(mappedBy="identity")
+    private Set<IdentityAlias> aliases = new HashSet<IdentityAlias>();
+
 	@Transient
     private transient MultipartFile file;
 	
@@ -471,6 +475,16 @@ public class Identity implements java.io.Serializable {
 	}
     public void setConnections(Set<IdentitySecurity> connections) {
 		this.connections = connections;
+	}
+    
+    /**
+     * A set of aliases.
+     */
+    public Set<IdentityAlias> getAliases() {
+		return aliases;
+	}
+    public void setAliases(Set<IdentityAlias> aliases) {
+		this.aliases = aliases;
 	}
     
     /**

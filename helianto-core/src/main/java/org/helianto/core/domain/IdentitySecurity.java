@@ -113,6 +113,19 @@ public class IdentitySecurity implements Serializable {
     }
 
     /** 
+     * Identity constructor.
+     * 
+     * @param identity
+     * @param providerType
+     */
+    public IdentitySecurity(Identity identity) {
+    	this();
+    	setIdentity(identity);
+    	setProviderType(ProviderType.email);
+    	setConsumerKey(identity.getPrincipal());
+    }
+
+    /** 
      * Key constructor.
      * 
      * @param identity
@@ -224,6 +237,17 @@ public class IdentitySecurity implements Serializable {
     public void setConsumerSecret(String consumerSecret) {
 		this.consumerSecret = consumerSecret;
 	}
+    
+    /**
+     * Generate a password.
+     * 
+     * @param generator
+     * @param plainPassword
+     */
+    public IdentitySecurity generateEncryptedPassword(IdentityPasswordGenerator generator, String plainPassword) {
+    	setConsumerSecret(generator.generatePassword(plainPassword));
+    	return this;
+    }
 
     /**
      * Plain text password.
@@ -238,13 +262,6 @@ public class IdentitySecurity implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
-//    /**
-//     * Password generator.
-//     */
-//    public void generatePassword() {
-//        this.password = IdentitySecurity.passwordFactory();
-//    }
 
     /**
      * Credential state.
