@@ -30,6 +30,8 @@ import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -40,6 +42,7 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.Programmable;
 import org.helianto.core.def.CreateIdentity;
 import org.helianto.core.def.UserState;
+import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.type.FolderEntity;
@@ -107,6 +110,10 @@ public class UserGroup
     private Character userType = ' ';
     
     private boolean accountNonExpired = true;
+    
+    @ManyToOne
+    @JoinColumn(name="categoryId", nullable=true)
+    private Category category;
     
     @Transient
     private char createIdentity = CreateIdentity.REJECT.getValue();
@@ -385,6 +392,16 @@ public class UserGroup
 	}
 	public void setMinimalExperienceRequirement(int minimalExperienceRequirement) {
 		this.minimalExperienceRequirement = minimalExperienceRequirement;
+	}
+	
+	/**
+	 * Category attached to user or group.
+	 */
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 	
     /**
