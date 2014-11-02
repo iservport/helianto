@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -75,6 +77,9 @@ public class Category
     private Entity entity;
     
     private char categoryGroup;
+    
+    @Enumerated(EnumType.STRING)
+    private CategoryGroup categoryGroupType;
     
     @Column(length=20)
     private String categoryCode = "";
@@ -215,6 +220,7 @@ public class Category
 
     /**
      * Group of categories.
+     * @deprecated
      */
 	public char getCategoryGroup() {
 		return categoryGroup;
@@ -224,6 +230,26 @@ public class Category
 	}
 	public void setCategoryGroupAsEnum(CategoryGroup categoryGroup) {
 		this.categoryGroup = categoryGroup.getValue();
+	}
+	
+	
+    /**
+     * Group of categories.
+     */
+	public CategoryGroup getCategoryGroupType() {
+		// workaraund to avoid nulls in existing instances
+		if (categoryGroupType==null && categoryGroup!=0) {
+			for (CategoryGroup c: CategoryGroup.values()) {
+				if (c.getValue()==categoryGroup) {
+					return c;
+				}
+			}
+		}
+		return categoryGroupType;
+	}
+	public void setCategoryGroupType(CategoryGroup categoryGroupType) {
+		this.categoryGroupType = categoryGroupType;
+		setCategoryGroup(categoryGroupType.getValue());
 	}
 
     /**
