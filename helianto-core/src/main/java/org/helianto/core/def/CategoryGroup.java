@@ -32,9 +32,17 @@ public enum CategoryGroup {
 	 */
 	STOCK('S'),
 	/**
+	 * Process.
+	 */
+	PROCESS('O'),
+	/**
 	 * Product.
 	 */
 	PRODUCT('P'),
+	/**
+	 * Order.
+	 */
+	ORDER('Y'),
 	/**
 	 * Service.
 	 */
@@ -47,6 +55,10 @@ public enum CategoryGroup {
 	 * Planning.
 	 */
 	PLANNING('R'),
+	/**
+	 * User.
+	 */
+	USER('Z'),
 	/**
 	 * Competence.
 	 */
