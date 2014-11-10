@@ -61,4 +61,32 @@ public class DocumentFolderTests {
 		assertFalse(docBuilder.equals(other));		
 	}
 	
+	@Test
+	public void prefix() {
+		DocumentFolder docBuilder = new DocumentFolder();
+		docBuilder.setNumberPattern("'ABC'000");
+		assertEquals("ABC", docBuilder.getPrefix());
+		docBuilder.setNumberPattern(null);
+		assertEquals("", docBuilder.getPrefix());
+		docBuilder.setNumberPattern("");
+		assertEquals("", docBuilder.getPrefix());
+		docBuilder.setNumberPattern("''");
+		assertEquals("", docBuilder.getPrefix());
+		docBuilder.setNumberPattern("0");
+		assertEquals("", docBuilder.getPrefix());
+	}
+	
+	@Test
+	public void numberOfDigits() {
+		DocumentFolder docBuilder = new DocumentFolder();
+		docBuilder.setNumberPattern("'ABC'000");
+		assertEquals(3, docBuilder.getNumberOfDigits());
+		docBuilder.setNumberPattern("'ABC'0");
+		assertEquals(1, docBuilder.getNumberOfDigits());
+		docBuilder.setNumberPattern("'ABC'");
+		assertEquals(0, docBuilder.getNumberOfDigits());
+		docBuilder.setNumberPattern("000");
+		assertEquals(3, docBuilder.getNumberOfDigits());
+	}
+	
 }

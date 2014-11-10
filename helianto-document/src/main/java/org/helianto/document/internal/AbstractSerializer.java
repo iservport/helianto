@@ -69,6 +69,26 @@ public abstract class AbstractSerializer<D>
 		this.numberPattern = numberPattern;
 	}
 	
+	/**
+	 * Calculates prefix from number pattern.
+	 */
+	public String getPrefix() {
+		if (getNumberPattern()!=null && !getNumberPattern().isEmpty()) {
+			if (getNumberPattern().lastIndexOf(39)>=0) {
+				return getNumberPattern().substring(0, getNumberPattern().lastIndexOf(39)).replace("'", "");
+			}
+		}
+		return "";
+	}
+	
+	public int getNumberOfDigits() {
+		if (getNumberPattern()!=null && !getNumberPattern().isEmpty()) {
+			String zeroes = getNumberPattern().replace("'", "").replace(getPrefix(), "");
+			return zeroes.lastIndexOf("0")+1;
+		}
+		return 0;
+	}
+	
     /**
      * Content type.
      */
