@@ -65,7 +65,7 @@ public class PublicEntity
 	@Column(length=20)
 	private String entityAlias = "";
 	
-	@Column(length=64)
+	@Column(length=128)
 	private String entityName = "";
 	
     @Column(length=128)
