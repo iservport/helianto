@@ -25,6 +25,14 @@ public interface UserGroupRepository extends FilterRepository<UserGroup, Seriali
 	UserGroup findByEntityAndUserKey(Entity entity, String userKey);
 	
 	/**
+	 * Find by natural key.
+	 * 
+	 * @param entityId
+	 * @param userKey
+	 */
+	UserGroup findByEntity_IdAndUserKey(int entityId, String userKey);
+	
+	/**
 	 * Find by user key.
 	 * 
 	 * @param entity
@@ -59,6 +67,15 @@ public interface UserGroupRepository extends FilterRepository<UserGroup, Seriali
 	@Query(value="select association.parent from UserAssociation association " +
     		   	"where association.child = ?1 ")
 	List<UserGroup> findParentsByChild(UserGroup child);
+	
+	/**
+	 * Find parents by child.
+	 * 
+	 * @param childId
+	 */
+	@Query(value="select association.parent from UserAssociation association " +
+    		   	"where association.child.id = ?1 ")
+	List<UserGroup> findParentsByChildId(int childId);
 	
 	/**
 	 * Find by entity userType.
