@@ -77,4 +77,20 @@ public interface UserGroupRepository extends FilterRepository<UserGroup, Seriali
 	 */
 	List<UserGroup> findByEntity_IdAndNatureContainingOrderByUserKeyAsc(int entityId, String userNature);
 
+	/**
+	 * Find by identity id.
+	 * 
+	 * @param identityId
+	 * @return
+	 */
+	@Query("select new "
+			+ "org.helianto.user.repository.UserReadAdapter"
+			+ "(user.id, user.entity.operator.id, user.entity.id, user.identity.id, "
+			+ "user.userKey, user.userName, user.userState) "
+			+ "from User user "
+			+ "where user.identity.id = ?1 "
+			+ "and user.class = 'U' "
+			+ "order by user.lastEvent DESC ")
+	List<UserReadAdapter> findByIdentityIdOrderByLastEventDesc(int identityId);
+
 }

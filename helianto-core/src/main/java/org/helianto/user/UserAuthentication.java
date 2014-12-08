@@ -15,9 +15,6 @@
 
 package org.helianto.user;
 
-import org.helianto.core.domain.Entity;
-import org.helianto.core.domain.Operator;
-import org.helianto.user.domain.User;
 
 /**
  * An interface to reveal public user details.
@@ -27,19 +24,9 @@ import org.helianto.user.domain.User;
 public interface UserAuthentication {
     
     /**
-     * Return the <code>User</code>.
-     */
-    User getUser();
-    
-    /**
      * Return the <code>User</code> id.
      */
     int getUserId();
-    
-    /**
-     * Convenience to retrieve the entity from the user.
-     */
-    Entity getEntity();
     
     /**
      * Convenience to retrieve the entity id from the user.
@@ -47,9 +34,14 @@ public interface UserAuthentication {
     int getEntityId();
     
     /**
-     * Convenience to retrieve the operator from the user.
+     * Convenience to retrieve the identity id from the user.
      */
-    Operator getOperator();
+    int getIdentityId();
+    
+    /**
+     * Convenience to retrieve the context (a.k.a. operator) id from the user.
+     */
+    int getContextId();
     
     /**
      * Identity security id.

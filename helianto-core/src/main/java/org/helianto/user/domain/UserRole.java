@@ -184,16 +184,28 @@ public class UserRole
      * @param userRole
      * @param identityId
      */
-    private static Set<String> getUserRolesAsString(UserRole userRole, long identityId) {
+    public static Set<String> getUserRolesAsString(UserRole userRole, long identityId) {
+        return getUserRolesAsString(userRole.getService().getServiceName(), userRole.getService().getServiceExtensions(), identityId);
+    }
+    
+    /**
+     * Converts user roles to authorities, including "ROLE_SELF_ID_x", where
+     * x is the authorized user identity primary key.
+     * 
+     * @param serviceName
+     * @param serviceExtensions
+     * @param identityId
+     */
+    public static Set<String> getUserRolesAsString(String serviceName, String serviceExtensions, long identityId) {
         Set<String> roleNames = new HashSet<String>();
         if (identityId>0) {
             roleNames.add(formatRole("SELF", new StringBuilder("ID_").append(identityId).toString()));
         }
-        roleNames.add(formatRole(userRole.getService().getServiceName(), null));
+        roleNames.add(formatRole(serviceName, null));
 
-        String[] extensions = userRole.getServiceExtension().split(",");
+        String[] extensions = serviceExtensions.split(",");
         for (String extension: extensions) {
-        	roleNames.add(formatRole(userRole.getService().getServiceName(), extension));
+        	roleNames.add(formatRole(serviceName, extension));
         }
         return roleNames;
     }

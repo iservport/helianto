@@ -34,6 +34,21 @@ public interface UserRoleRepository extends FilterRepository<UserRole, Serializa
 	List<UserRole> findByUserGroup(UserGroup userGroup);
 	
 	/**
+	 * Find by user id.
+	 * 
+	 * @param userGroup
+	 */
+	@Query("select new "
+			+ "org.helianto.user.repository.UserRoleReadAdapter"
+			+ "(userRole.id, userRole.service.id, userAssociation.parent.id"
+			+ ", userRole.service.serviceName, userRole.serviceExtension"
+			+ ", userRole.partnershipExtension)"
+			+ "from UserAssociation userAssociation "
+			+ "inner join userAssociation.parent.roles userRole "
+			+ "where userAssociation.child.id = ?1 ")
+	List<UserRoleReadAdapter> findByUserId(int userId);
+	
+	/**
 	 * Find by service name.
 	 * 
 	 * @param entity
