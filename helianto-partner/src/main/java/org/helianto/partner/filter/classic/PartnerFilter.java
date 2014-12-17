@@ -33,7 +33,7 @@ import org.helianto.user.domain.User;
 /**
  * Partner filter.
  * 
- * @author Maurício Fernandes de Castro
+ * @author Mauricio Fernandes de Castro
  * @deprecated see PartnerFilterAdapter
  */
 public class PartnerFilter extends AbstractUserBackedCriteriaFilter implements Serializable, PolymorphicFilter<Partner> {

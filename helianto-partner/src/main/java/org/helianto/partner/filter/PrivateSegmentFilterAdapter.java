@@ -22,7 +22,7 @@ import org.helianto.partner.form.PrivateSegmentForm;
 /**
  * Private segment filter adapter.
  * 
- * @author Maurício Fernandes de Castro
+ * @author Mauricio Fernandes de Castro
  */
 public class PrivateSegmentFilterAdapter 
 	extends AbstractEntityIdFilterAdapter<PrivateSegmentForm> {

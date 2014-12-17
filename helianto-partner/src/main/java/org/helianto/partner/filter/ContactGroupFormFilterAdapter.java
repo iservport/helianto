@@ -7,7 +7,7 @@ import org.helianto.partner.form.ContactGroupForm;
 /**
  * Contact group form filter adapter.
  * 
- * @author Maurício Fernandes de Castro
+ * @author Mauricio Fernandes de Castro
  */
 public class ContactGroupFormFilterAdapter extends AbstractFilterAdapter<ContactGroupForm> {
 	

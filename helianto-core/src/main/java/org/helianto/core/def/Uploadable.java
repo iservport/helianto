@@ -18,8 +18,7 @@ package org.helianto.core.def;
 
 
 /**
- * A ser implementado por classes que podem ter seu conteúdo carregado 
- * a partir de arquivos ou editado diretamente.
+ * To be implemented by classes that upload human readable content.
  * 
  * @author Mauricio Fernandes de Castro
  */

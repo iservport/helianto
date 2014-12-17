@@ -7,7 +7,7 @@ import org.helianto.core.form.PublicAddressForm;
 /**
  * Public address adapter database filter.
  * 
- * @author Maurício Fernandes de Castro
+ * @author MaurÃ­cio Fernandes de Castro
  */
 public class PublicAddressFilterAdapter extends AbstractRootFilterAdapter<PublicAddressForm> {
 

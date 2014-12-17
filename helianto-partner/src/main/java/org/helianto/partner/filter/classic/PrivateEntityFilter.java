@@ -25,7 +25,7 @@ import org.helianto.user.domain.User;
 /**
  * Partner registry filter.
  * 
- * @author Maurício Fernandes de Castro
+ * @author Mauricio Fernandes de Castro
  * @deprecated see PartnerEntityFilterAdapter
  */
 public class PrivateEntityFilter extends AbstractUserBackedCriteriaFilter implements Serializable {

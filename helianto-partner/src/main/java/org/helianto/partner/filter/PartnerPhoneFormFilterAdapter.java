@@ -22,7 +22,7 @@ import org.helianto.partner.form.PartnerPhoneForm;
 /**
  * Partner phone form filter adapter.
  * 
- * @author Maurício Fernandes de Castro
+ * @author Mauricio Fernandes de Castro
  */
 public class PartnerPhoneFormFilterAdapter extends AbstractFilterAdapter<PartnerPhoneForm> {
 	

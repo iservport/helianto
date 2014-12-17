@@ -40,24 +40,17 @@ public class CategoryMgrImpl implements CategoryMgr {
 	
 	@Transactional(readOnly=true)
 	public long countCategory(final Entity entity, final char categoryGroup, final String searchString) {
-		@SuppressWarnings("serial")
-		CategoryForm form = new CategoryForm() {
-			public int getEntityId() { return entity.getId(); }
-			public char getCategoryGroup() { return categoryGroup; }
-			public String getCategoryCode() { return searchString; }
-			public String getCategoryName() { return "";}
-		};
-		return categoryRepository.count(new CategoryFormFilterAdapter(form));
+		return categoryRepository.countByEntity_IdAndCategoryGroupAndCategoryCode(entity.getId(), categoryGroup, searchString);
 	}
     
-	@Transactional(readOnly=true)
-	public List<Category> findCategories(CategoryForm form) {
-		CategoryFormFilterAdapter filter = new CategoryFormFilterAdapter(form);
-    	List<Category> categoryList = (List<Category>) categoryRepository.find(filter);
-    	logger.debug("Found category list of size {}", categoryList.size());
-    	return categoryList;
-	}
-
+//	@Transactional(readOnly=true)
+//	public List<Category> findCategories(CategoryForm form) {
+//		CategoryFormFilterAdapter filter = new CategoryFormFilterAdapter(form);
+//    	List<Category> categoryList = (List<Category>) categoryRepository.find(filter);
+//    	logger.debug("Found category list of size {}", categoryList.size());
+//    	return categoryList;
+//	}
+//
 	@Transactional
 	public Category storeCategory(Category category) {
     	return categoryRepository.saveAndFlush(category);

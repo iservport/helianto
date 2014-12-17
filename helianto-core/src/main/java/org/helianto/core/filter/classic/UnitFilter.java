@@ -23,7 +23,7 @@ import org.helianto.user.domain.User;
 /**
  * Unit filter.
  * 
- * @author Maurício Fernandes de Castro
+ * @author Mauricio Fernandes de Castro
  * @deprecated see UnitFilterAdapter
  */
 public class UnitFilter extends AbstractUserBackedCriteriaFilter {

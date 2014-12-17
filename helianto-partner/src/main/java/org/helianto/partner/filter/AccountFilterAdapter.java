@@ -22,7 +22,7 @@ import org.helianto.partner.form.AccountForm;
 /**
  * Account filter adapter.
  * 
- * @author Maurício Fernandes de Castro
+ * @author Mauricio Fernandes de Castro
  */
 public class AccountFilterAdapter 
 	extends AbstractEntityIdFilterAdapter<AccountForm> {

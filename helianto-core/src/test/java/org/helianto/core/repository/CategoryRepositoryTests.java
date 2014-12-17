@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.helianto.core.def.CategoryGroup;
 import org.helianto.core.domain.Category;
-import org.helianto.core.test.AbstractJpaRepositoryIntegrationTest;
+import org.helianto.core.test.AbstractQueryRepositoryIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author mauriciofernandesdecastro
  */
 public class CategoryRepositoryTests 
-	extends AbstractJpaRepositoryIntegrationTest<Category, CategoryRepository> {
+	extends AbstractQueryRepositoryIntegrationTest<Category, CategoryRepository> {
 
 	@Autowired
 	private CategoryRepository repository;
@@ -22,7 +22,7 @@ public class CategoryRepositoryTests
 	}
 	
 	protected Category getNewTarget() {
-		return new Category(entity, CategoryGroup.NOT_DEFINED, "CODE");	
+		return new Category(entity, 'N', "CODE");	
 	}
 	
 	protected Serializable getTargetId(Category target) {
@@ -30,7 +30,7 @@ public class CategoryRepositoryTests
 	}
 	
 	protected Category findByKey() {
-		return getRepository().findByEntityAndCategoryGroupAndCategoryCode(entity, CategoryGroup.NOT_DEFINED.getValue(), "CODE");
+		return getRepository().findByEntityAndCategoryGroupAndCategoryCode(entity, 'N', "CODE");
 	}
 	
 }

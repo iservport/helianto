@@ -22,7 +22,7 @@ import org.helianto.core.form.UnitForm;
 /**
  * Unit filter adapter.
  * 
- * @author Maurício Fernandes de Castro
+ * @author Mauricio Fernandes de Castro
  */
 public class UnitFilterAdapter 
 	extends AbstractEntityIdFilterAdapter<UnitForm> 

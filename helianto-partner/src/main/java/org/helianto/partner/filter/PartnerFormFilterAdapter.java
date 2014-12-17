@@ -22,7 +22,7 @@ import org.helianto.partner.form.PartnerForm;
 /**
  * Partner filter adapter.
  * 
- * @author Maurício Fernandes de Castro
+ * @author Mauricio Fernandes de Castro
  */
 public class PartnerFormFilterAdapter 
 	extends AbstractEntityIdFilterAdapter<PartnerForm> 

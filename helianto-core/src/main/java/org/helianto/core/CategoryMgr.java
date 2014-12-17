@@ -15,12 +15,9 @@
 
 package org.helianto.core;
 
-import java.util.List;
-
 import org.helianto.core.def.CategoryGroup;
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
-import org.helianto.core.form.CategoryForm;
 
 /**
  * Service interface to categories.
@@ -38,13 +35,13 @@ public interface CategoryMgr {
 	 */
 	long countCategory(Entity entity, char categoryGroup, String searchString);
 
-	/**
-	 * List categories.
-	 * 
-	 * @param form
-	 */
-	List<Category> findCategories(CategoryForm form);
-
+//	/**
+//	 * List categories.
+//	 * 
+//	 * @param form
+//	 */
+//	List<Category> findCategories(CategoryForm form);
+//
 	/**
 	 * Store category.
 	 * 

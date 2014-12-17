@@ -25,7 +25,7 @@ import org.junit.Test;
 
 /**
  * 
- * @author Maurício Fernandes de Castro
+ * @author Mauricio Fernandes de Castro
  */
 public class PrivateAddressFilterAdapterTests {
 	

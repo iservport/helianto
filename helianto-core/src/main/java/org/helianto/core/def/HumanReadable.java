@@ -30,7 +30,7 @@ public interface HumanReadable extends Serializable {
     void setContentAsString(String contentAsString);
     
     /**
-     * Codificação dos caracteres, quando texto.
+     * Encoding.
      */
 	String getEncoding() ;
 	

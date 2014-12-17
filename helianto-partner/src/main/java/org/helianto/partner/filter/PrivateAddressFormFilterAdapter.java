@@ -22,7 +22,7 @@ import org.helianto.partner.form.PrivateAddressForm;
 /**
  * Private address filter adapter.
  * 
- * @author Maurício Fernandes de Castro
+ * @author Mauricio Fernandes de Castro
  */
 public class PrivateAddressFormFilterAdapter extends AbstractFilterAdapter<PrivateAddressForm> {
 	

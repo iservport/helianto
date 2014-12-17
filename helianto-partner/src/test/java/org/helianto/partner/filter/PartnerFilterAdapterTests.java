@@ -26,7 +26,7 @@ import org.mockito.Mockito;
 
 /**
  * 
- * @author Maurício Fernandes de Castro
+ * @author Mauricio Fernandes de Castro
  */
 public class PartnerFilterAdapterTests {
 	

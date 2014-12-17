@@ -24,7 +24,7 @@ import org.helianto.core.form.UnitForm;
 /**
  * Service interface to units.
  * 
- * @author Maurício Fernandes de Castro
+ * @author Mauricio Fernandes de Castro
  */
 public interface UnitMgr {
 	
