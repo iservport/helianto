@@ -7,7 +7,9 @@ import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.City;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.State;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * City repository.
@@ -40,5 +42,34 @@ public interface CityRepository extends FilterRepository<City, Serializable> {
 	 * @param sort
 	 */
 	List<City> findByState(State state, Sort sort);
+	
+	/**
+	 * Search cities.
+	 * 
+	 * @param search
+	 */
+	List<City> findByCityCodeContainingOrCityNameContainingOrStateStateNameContainingOrStateStateCodeContaining
+				(String cityCode, String cityName, String stateName, String stateCode , Pageable pageable);
+	
+	/**
+	 * Find by name and state.
+	 * 
+	 * @param cityName
+	 * @param stateName
+	 * @param pageable
+	 */
+	@Query("select city "
+			+ "from City city "
+			+ "where lower(city.cityName) like lower(?1) "
+			+ "AND city.state.stateCode = ?2 ")
+	List<City> findByCityNameAndStateCode(String cityName, String stateCode, Pageable pageable);
+	
+	/**
+	 * Find by state id.
+	 * 
+	 * @param stateId
+	 */
+	List<City> findByStateId(int stateId);
+	
 	
 }
