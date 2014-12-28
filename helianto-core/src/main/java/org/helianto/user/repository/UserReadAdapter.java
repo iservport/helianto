@@ -1,5 +1,7 @@
 package org.helianto.user.repository;
 
+import java.io.Serializable;
+
 import org.helianto.core.def.ActivityState;
 
 /**
@@ -7,9 +9,13 @@ import org.helianto.core.def.ActivityState;
  * 
  * @author mauriciofernandesdecastro
  */
-public class UserReadAdapter {
+public class UserReadAdapter 
+	implements Serializable
+{
 	
-    private int userId;
+	private static final long serialVersionUID = 1L;
+
+	private int userId;
     
     private int userGroupId;
     
