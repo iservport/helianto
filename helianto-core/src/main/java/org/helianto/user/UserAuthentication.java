@@ -15,6 +15,9 @@
 
 package org.helianto.user;
 
+import java.util.Locale;
+import java.util.Set;
+
 
 /**
  * An interface to reveal public user details.
@@ -48,5 +51,14 @@ public interface UserAuthentication {
      */
     int getIdentitySecurityId();
     
+    /**
+     * Authority set convenience.
+     */
+    Set<String> getAuthoritySet();
+    
+    /**
+     * User locale.
+     */
+    Locale getUserLocale();
     
 }
