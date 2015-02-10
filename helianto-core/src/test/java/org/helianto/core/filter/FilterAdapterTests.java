@@ -24,9 +24,9 @@ public class FilterAdapterTests {
 		user.getIdentity().setPrincipal("TESTE");
 		
 		FirstFilter filter1 = new FirstFilter(user);
-		assertEquals("alias.alias = 'teste' AND alias.userState = 'A' ", filter1.createCriteriaAsString());
+		assertEquals("alias.alias = 'p' AND alias.userState = 'A' ", filter1.createCriteriaAsString());
 		filter1.getForm().setUserState('B');
-		assertEquals("alias.alias = 'teste' AND alias.userState = 'B' ", filter1.createCriteriaAsString());
+		assertEquals("alias.alias = 'p' AND alias.userState = 'B' ", filter1.createCriteriaAsString());
 		
 		user.setUserType('I');
 		SecondFilter filter2 = new SecondFilter(user);

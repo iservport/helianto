@@ -126,12 +126,13 @@ public class User extends UserGroup implements PersonalEntity {
     /**
      * Overridden to obtain the user key from the identity principal.
      */
-//    @Transient
     protected String getInternalUserKey() {
-    	if (getIdentity()!=null && getIdentity().getPrincipal()!=null && getIdentity().getPrincipal().length()>0) {
-    		return getIdentity().getPrincipal();
-    	}
-        return super.getInternalUserKey();
+		if (super.getInternalUserKey()==null || super.getInternalUserKey().isEmpty()) {
+	    	if (getIdentity()!=null && getIdentity().getPrincipal()!=null && getIdentity().getPrincipal().length()>0) {
+	    		return getIdentity().getPrincipal();
+	    	}
+		}
+		return super.getInternalUserKey();
     }
     
     /**
@@ -153,7 +154,6 @@ public class User extends UserGroup implements PersonalEntity {
     /**
      * <<Transient>> Safe user principal.
      */
-//    @Transient
     public String getUserPrincipal() {
     	if (getIdentity()==null) {
     		return "";
@@ -164,7 +164,6 @@ public class User extends UserGroup implements PersonalEntity {
     /**
      * "<<Transient>> Safe user principal name.
      */
-//    @Transient
     public String getUserPrincipalName() {
     	if (getIdentity()!=null) {
     		return getIdentity().getPrincipalName();
@@ -175,19 +174,19 @@ public class User extends UserGroup implements PersonalEntity {
     /**
      * <<Transient>> Internal user full name.
      */
-//    @Transient
     @Override
     protected String getInternalUserName() {
-    	if (getIdentity()!=null) {
-    		return getIdentity().getIdentityName();
+    	if (super.getInternalUserName()==null || super.getInternalUserName().isEmpty()) {
+        	if (getIdentity()!=null) {
+        		return getIdentity().getIdentityName();
+        	}
     	}
-    	return getUserPrincipalName();
+    	return super.getInternalUserName();
     }
     
     /**
      * <<Transient>> Safe user principal domain.
      */
-//    @Transient
     public String getUserPrincipalDomain() {
     	if (getIdentity()!=null) {
     		return getIdentity().getPrincipalDomain();
@@ -199,7 +198,6 @@ public class User extends UserGroup implements PersonalEntity {
      * <<Transient>> Safe user optional alias.
      * @deprecated
      */
-//    @Transient
     public String getUserOptionalAlias() {
     	if (getIdentity()!=null) {
     		return getIdentity().getDisplayName();

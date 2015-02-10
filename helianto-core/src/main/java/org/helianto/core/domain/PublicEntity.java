@@ -23,7 +23,7 @@ import org.helianto.core.def.PhoneType;
 import org.helianto.core.domain.type.RootEntity;
 import org.helianto.core.internal.AbstractAddress;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
@@ -47,7 +47,6 @@ public class PublicEntity
 	/**
 	 * Exposes the discriminator.
 	 */
-//	@Transient
 	public char getDiscriminator() {
 		return 'P';
 	}
@@ -57,7 +56,7 @@ public class PublicEntity
     @Version
     private int version;
     
-	@JsonBackReference 
+    @JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "entityId")
 	private Entity entity;
@@ -111,7 +110,6 @@ public class PublicEntity
 	/**
 	 * Operator.
 	 */
-//	@Transient
 	public Operator getOperator() {
 		if (getEntity()!=null) {
 			return getEntity().getOperator();
@@ -119,7 +117,6 @@ public class PublicEntity
 		return null;
 	}
 
-//    @Transient
     public int getContextId() {
     	if (getOperator()!=null) {
     		return getOperator().getId();
@@ -145,7 +142,6 @@ public class PublicEntity
 	 * service layer for installation procedures.
 	 * <p>
 	 */
-//	@Transient
 	public boolean isEntityInstalled() {
 		if (getEntity()!=null) {
 			return getEntity().isInstalled();
@@ -173,7 +169,6 @@ public class PublicEntity
 	 * Default implementation forces entity alias to follow the owning entity alias.
 	 * </p>
 	 */
-//	@Transient
 	protected String getInternalEntityAlias() {
 		return entityAlias;
 	}
@@ -211,7 +206,6 @@ public class PublicEntity
 		this.nature = nature;
 	}
 	
-//	@Transient
 	public String[] getNatureAsArray() {
 		if (getNature()!=null && getNature().length()>0) {
 			return getNature().replace(" ", "").split(",");
@@ -263,7 +257,6 @@ public class PublicEntity
     /**
      * Phone number.
      */
-//    @Transient
     public String getPhoneNumber() {
     	if (getMainPhone()!=null) {
     		return getMainPhone().getPhoneNumber();
@@ -279,7 +272,6 @@ public class PublicEntity
     /**
      * Area code.
      */
-//    @Transient
     public String getAreaCode() {
     	if (getMainPhone()!=null) {
     		return getMainPhone().getAreaCode();
@@ -295,7 +287,6 @@ public class PublicEntity
     /**
      * Branch.
      */
-//    @Transient
     public String getBranch() {
     	if (getMainPhone()!=null) {
     		return getMainPhone().getBranch();
@@ -311,7 +302,6 @@ public class PublicEntity
     /**
      * Phone type.
      */
-//    @Transient
     public char getPhoneType() {
     	if (getMainPhone()!=null) {
     		return getMainPhone().getPhoneType();

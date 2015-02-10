@@ -148,10 +148,11 @@ public class Entity
     @Column(length=128)
     private String entityDomain = "";
     
+    @JsonIgnore
     @OneToMany(mappedBy="entity")
     private Set<UserGroup> users = new HashSet<UserGroup>(0);
     
-    @JsonManagedReference 
+    @JsonIgnore
     @OneToMany(mappedBy="entity")
     private Set<PublicEntity> publicEntities = new HashSet<PublicEntity>(0);
     
