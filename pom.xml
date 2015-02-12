@@ -32,6 +32,7 @@
 			<module>helianto-document</module>
 			<module>helianto-resource</module>
 			<module>helianto-inventory</module>
+			<module>helianto-order</module>
 	</modules>
 	
 	<inceptionYear>2005</inceptionYear>
@@ -54,6 +55,7 @@
 	</licenses>
 
 	<properties>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.test.failure.ignore>false</maven.test.failure.ignore>
 		<helianto-query.version>0.0.2-SNAPSHOT</helianto-query.version>
 		<spring.framework.version>4.0.4.RELEASE</spring.framework.version>
