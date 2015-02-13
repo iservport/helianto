@@ -1,6 +1,7 @@
 package org.helianto.order.repository;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -14,39 +15,93 @@ public class OrderReadAdapter
 	
 	private static final long serialVersionUID = 1L;
 
-	private int id;
+	protected int id;
 	
-	private long internalNumber; 
+	protected long internalNumber; 
 	
-	private String docCode; 
+	protected String docCode; 
 	
-	private String docName; 
+	protected String docName; 
 	
-	private Date issueDate;
+	protected Date issueDate;
 	
-	private Date checkOutTime;
+	protected int ownerId;
 	
-	private int categoryId;
+	protected String ownerDisplayName = ""; 
 	
-    private String categoryCode = "";
+	protected String ownerImageUrl = ""; 
+	
+	protected Date checkOutTime;
+	
+	protected int categoryId;
+	
+	protected String categoryCode = "";
     
-    private String categoryName = "";
+	protected String categoryName = "";
 	
+	protected String remarks = "";
+	
+	protected int currencyId;
+	
+	protected BigDecimal faceValue;
+	
+	/**
+	 * Constructor.
+	 */
 	public OrderReadAdapter() {
 		super();
 	}
 	
-	public OrderReadAdapter(int id, long internalNumber, String docCode, String docName, Date issueDate, Date checkOutTime, int categoryId, String categoryCode, String categoryName ) {
-		super();
+	/**
+	 * Constructor.
+	 * 
+	 * @param id
+	 * @param internalNumber
+	 * @param docCode
+	 * @param docName
+	 * @param issueDate
+	 * @param ownerId
+	 * @param ownerDisplayName
+	 * @param ownerImageUrl
+	 * @param checkOutTime
+	 * @param categoryId
+	 * @param categoryCode
+	 * @param categoryName
+	 * @param remarks
+	 * @param currencyId
+	 */
+	public OrderReadAdapter(int id
+			, long internalNumber
+			, String docCode
+			, String docName
+			, Date issueDate
+			, int ownerId
+			, String ownerDisplayName
+			, String ownerImageUrl
+			, Date checkOutTime
+			, int categoryId
+			, String categoryCode
+			, String categoryName
+		    , String remarks 
+			, int currencyId
+			, BigDecimal faceValue
+		    ) {
+		this();
 		this.id = id;
 		this.internalNumber = internalNumber;
 		this.docCode = docCode;
 		this.docName = docName;
 		this.issueDate = issueDate;
+		this.ownerId = ownerId;
+		this.ownerDisplayName = ownerDisplayName;
+		this.ownerImageUrl = ownerImageUrl;
 		this.checkOutTime = checkOutTime; 
 		this.categoryId = categoryId;
 		this.categoryCode = categoryCode;
 		this.categoryName = categoryName;
+		this.remarks = remarks;
+		this.currencyId = currencyId;
+		this.faceValue = faceValue;
 	}
 
 	public int getId() {
@@ -59,57 +114,57 @@ public class OrderReadAdapter
 	public long getInternalNumber() {
 		return internalNumber;
 	}
-	public void setInternalNumber(long internalNumber) {
-		this.internalNumber = internalNumber;
-	}
 
 	public String getDocCode() {
 		return docCode;
-	}
-	public void setDocCode(String docCode) {
-		this.docCode = docCode;
 	}
 
 	public String getDocName() {
 		return docName;
 	}
-	public void setDocName(String docName) {
-		this.docName = docName;
-	}
 
 	public Date getIssueDate() {
 		return issueDate;
 	}
-	public void setIssueDate(Date issueDate) {
-		this.issueDate = issueDate;
+	
+	public int getOwnerId() {
+		return ownerId;
+	}
+	
+	public String getOwnerDisplayName() {
+		return ownerDisplayName;
+	}
+	
+	public String getOwnerImageUrl() {
+		return ownerImageUrl;
 	}
 	
 	public int getCategoryId() {
 		return categoryId;
 	}
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
-	}
 	
 	public Date getCheckOutTime() {
 		return checkOutTime;
-	}
-	public void setCheckOutTime(Date checkOutTime) {
-		this.checkOutTime = checkOutTime;
 	}
 	
 	public String getCategoryCode() {
 		return categoryCode;
 	}
-	public void setCategoryCode(String categoryCode) {
-		this.categoryCode = categoryCode;
-	}
 	
 	public String getCategoryName() {
 		return categoryName;
 	}
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
+	
+	public String getRemarks() {
+		return remarks;
+	}
+	
+	public int getCurrencyId() {
+		return currencyId;
+	}
+	
+	public BigDecimal getFaceValue() {
+		return faceValue;
 	}
 
 	@Override
@@ -136,15 +191,22 @@ public class OrderReadAdapter
 
 	@Override
 	public String toString() {
-		return "OrderAdapter [id=" + id + ", internalNumber=" + internalNumber
-				+ ", docCode=" + docCode + ", docName=" + docName
-				+ ", issueDate=" + issueDate + ", checkOutTime=" + checkOutTime
-				+ ", categoryId=" + categoryId + ", categoryCode="
-				+ categoryCode + ", categoryName=" + categoryName + "]";
+		return "OrderAdapter [id=" + id 
+				+ ", internalNumber=" + internalNumber
+				+ ", docCode=" + docCode
+				+ ", docName=" + docName
+				+ ", issueDate=" + issueDate
+				+ ", ownerId=" + ownerId
+				+ ", ownerDisplayName=" + ownerDisplayName
+				+ ", ownerImageUrl=" + ownerImageUrl
+				+ ", checkOutTime=" + checkOutTime
+				+ ", categoryId=" + categoryId
+				+ ", categoryCode=" + categoryCode
+				+ ", categoryName=" + categoryName
+				+ ", remarks=" + remarks
+				+ ", currencyId=" + currencyId
+				+ ", faceValue=" + faceValue
+				+ "]";
 	}
-
-	
-	
-	
 
 }
