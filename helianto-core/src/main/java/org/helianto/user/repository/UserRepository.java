@@ -6,6 +6,7 @@ import java.util.List;
 import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.Entity;
 import org.helianto.user.domain.User;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
@@ -34,14 +35,126 @@ public interface UserRepository extends FilterRepository<User, Serializable> {
 	User findByEntity_IdAndIdentity_Id(int entityId, int identityId);
 	
 	/**
+	 * Find by user id.
+	 * 
+	 * @param userId
+	 */
+	@Query("select new "
+			+ "org.helianto.user.repository.UserReadAdapter"
+			+ "(user_.id"
+			+ ", user_.entity.operator.id"
+			+ ", user_.entity.id"
+			+ ", user_.entity.alias"
+			+ ", user_.identity.id"
+			+ ", user_.identity.personalData.firstName"
+			+ ", user_.identity.personalData.lastName"
+			+ ", user_.identity.displayName"
+			+ ", user_.identity.personalData.gender"
+			+ ", user_.identity.personalData.imageUrl"
+			+ ", user_.userKey"
+			+ ", user_.userName"
+			+ ", user_.userState"
+			+ ", user_.userType"
+			+ ", user_.accountNonExpired"
+			+ ") "
+			+ "from User user_ "
+			+ "where user_.id = ?1 ")
+	UserReadAdapter findAdapter(int userId);
+
+	/**
+	 * Page by entity.
+	 * 
+	 * @param entityId
+	 * @param page
+	 */
+	@Query("select new "
+			+ "org.helianto.user.repository.UserReadAdapter"
+			+ "(user_.id"
+			+ ", user_.entity.operator.id"
+			+ ", user_.entity.id"
+			+ ", user_.entity.alias"
+			+ ", user_.identity.id"
+			+ ", user_.identity.personalData.firstName"
+			+ ", user_.identity.personalData.lastName"
+			+ ", user_.identity.displayName"
+			+ ", user_.identity.personalData.gender"
+			+ ", user_.identity.personalData.imageUrl"
+			+ ", user_.userKey"
+			+ ", user_.userName"
+			+ ", user_.userState"
+			+ ", user_.userType"
+			+ ", user_.accountNonExpired"
+			+ ") "
+			+ "from User user_ "
+			+ "where user_.entity.id = ?1 "
+			)
+	Page<UserReadAdapter> findByEntity_Id2(Integer entityId, Pageable page);
+
+	/**
+	 * Page by user key.
+	 * 
+	 * @param userKey
+	 * @param page
+	 */
+	@Query("select new "
+			+ "org.helianto.user.repository.UserReadAdapter"
+			+ "(user_.id"
+			+ ", user_.entity.operator.id"
+			+ ", user_.entity.id"
+			+ ", user_.entity.alias"
+			+ ", user_.identity.id"
+			+ ", user_.identity.personalData.firstName"
+			+ ", user_.identity.personalData.lastName"
+			+ ", user_.identity.displayName"
+			+ ", user_.identity.personalData.gender"
+			+ ", user_.identity.personalData.imageUrl"
+			+ ", user_.userKey"
+			+ ", user_.userName"
+			+ ", user_.userState"
+			+ ", user_.userType"
+			+ ", user_.accountNonExpired"
+			+ ") "
+			+ "from User user_ "
+			+ "where user_.identity.id = ?1 "
+			)
+	Page<UserReadAdapter> pageByIdentityId(int identityId, Pageable page);
+
+	/**
+	 * Page by user key.
+	 * 
+	 * @param userKey
+	 * @param page
+	 */
+	@Query("select new "
+			+ "org.helianto.user.repository.UserReadAdapter"
+			+ "(user_.id"
+			+ ", user_.entity.operator.id"
+			+ ", user_.entity.id"
+			+ ", user_.entity.alias"
+			+ ", user_.identity.id"
+			+ ", user_.identity.personalData.firstName"
+			+ ", user_.identity.personalData.lastName"
+			+ ", user_.identity.displayName"
+			+ ", user_.identity.personalData.gender"
+			+ ", user_.identity.personalData.imageUrl"
+			+ ", user_.userKey"
+			+ ", user_.userName"
+			+ ", user_.userState"
+			+ ", user_.userType"
+			+ ", user_.accountNonExpired"
+			+ ") "
+			+ "from User user_ "
+			+ "where user_.userKey = ?1 "
+			)
+	Page<UserReadAdapter> pageByUserKey(String userKey, Pageable page);
+
+	/**
 	 * Find by user key.
 	 * 
 	 * @param entity
 	 * @param userKey
 	 */
 	List<User> findByUserKey(String userKey);
-	
-//	select user from User user where user.userKey = ? order by lastEvent DESC
 	
 	/**
 	 * Find by user key order by lastEvent DESC.

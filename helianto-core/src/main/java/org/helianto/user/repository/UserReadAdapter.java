@@ -15,23 +15,41 @@ public class UserReadAdapter
 	
 	private static final long serialVersionUID = 1L;
 
-	private int userId;
+	protected int userId;
     
-    private int userGroupId;
+	protected int userGroupId;
     
-    private int contextId;
+	protected int contextId;
     
-    private int entityId;
+	protected int entityId;
     
-    private int identityId;
+	protected String entityAlias;
     
-    private String userKey;
+	protected int identityId;
     
-    private String userName;
+	private String firstName;
+
+	private String lastName;
+
+	private String displayName;
+
+	protected Character userGender;
+	
+	protected String userImageUrl;
+	
+	protected String userKey;
     
-    private char userState;
+	protected String userName;
     
-	private Character userGender;
+	protected Character userState;
+    
+	private Character userType;
+
+	private Boolean accountNonExpired = true;
+	
+	public UserReadAdapter() {
+		super();
+	}
 	
     /**
      * Constructor.
@@ -39,21 +57,138 @@ public class UserReadAdapter
      * @param userId
      * @param contextId
      * @param entityId
+     * @param entityAlias
      * @param identityId
      * @param userKey
      * @param userName
      * @param userState
+     * 
+     * @deprecated
      */
-	public UserReadAdapter(int userId, int contextId, int entityId, int identityId
-			, String userKey, String userName, char userState) {
-		super();
+	public UserReadAdapter(int userId
+			, int contextId
+			, int entityId
+			, String entityAlias
+			, int identityId
+			, String userKey
+			, String userName
+			, char userState
+			) {
+		this();
 		this.userId = userId;
 		this.contextId = contextId;
 		this.entityId = entityId;
+		this.entityAlias = entityAlias;
 		this.identityId = identityId;
 		this.userKey = userKey;
 		this.userName = userName;
 		this.userState = userState;
+	}
+	
+    /**
+     * Constructor.
+     * 
+     * @param userId
+     * @param contextId
+     * @param entityId
+     * @param entityAlias
+     * @param identityId
+     * @param firstName
+     * @param lastName
+     * @param displayName
+     * @param userGender
+     * @param userImageUrl
+     * @param userKey
+     * @param userName
+     * @param userState
+     * @param userType
+     * @param accountNonExpired
+     */
+	public UserReadAdapter(int userId
+			, int contextId
+			, int entityId
+			, String entityAlias
+			, int identityId
+			, String firstName
+			, String lastName
+			, String displayName
+			, Character userGender
+			, String userImageUrl
+			, String userKey
+			, String userName
+			, Character userState
+			, Character userType
+			, Boolean accountNonExpired
+			) {
+		this();
+		this.userId = userId;
+		this.contextId = contextId;
+		this.entityId = entityId;
+		this.entityAlias = entityAlias;
+		this.identityId = identityId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.displayName = displayName;
+		this.userGender = userGender;
+		this.userImageUrl = userImageUrl;
+		this.userKey = userKey;
+		this.userName = userName;
+		this.userState = userState;
+		this.userType = userType;
+		this.accountNonExpired = accountNonExpired;
+	}
+	
+    /**
+     * Constructor.
+     * 
+     * @param userId
+     * @param contextId
+     * @param entityId
+     * @param entityAlias
+     * @param identityId
+     * @param firstName
+     * @param lastName
+     * @param displayName
+     * @param userGender
+     * @param userImageUrl
+     * @param userKey
+     * @param userName
+     * @param userState
+     * @param userType
+     * @param accountNonExpired
+     */
+	public UserReadAdapter(int userId
+			, int contextId
+			, int entityId
+			, String entityAlias
+			, int identityId
+			, String firstName
+			, String lastName
+			, String displayName
+			, String userGender
+			, String userImageUrl
+			, String userKey
+			, String userName
+			, String userState
+			, String userType
+			, Integer accountNonExpired
+			) {
+		this(userId
+		, contextId
+		, entityId
+		, entityAlias
+		, identityId
+		, firstName
+		, lastName
+		, displayName
+		, userGender!=null && userGender.length()>0 ? userGender.charAt(0) : 'N'
+		, userImageUrl
+		, userKey
+		, userName
+		, userState!=null  && userState.length()>0 ? userState.charAt(0) : 'I'
+		, userType!=null  && userType.length()>0 ? userType.charAt(0) : 'I'
+		, accountNonExpired!=null && accountNonExpired.equals(1)
+		);
 	}
 	
 	/**
@@ -66,8 +201,13 @@ public class UserReadAdapter
 	 * @param userState
 	 * @param userGender
 	 */
-	public UserReadAdapter(int userId, int userGroupId, String userKey, String userName,
-			Character userState, Character userGender) {
+	public UserReadAdapter(int userId
+			, int userGroupId
+			, String userKey
+			, String userName
+			, Character userState
+			, Character userGender
+			) {
 		super();
 		this.userId = userId;
 		this.userGroupId = userGroupId;
@@ -92,9 +232,25 @@ public class UserReadAdapter
 	public int getEntityId() {
 		return entityId;
 	}
+	
+	public String getEntityAlias() {
+		return entityAlias;
+	}
 
 	public int getIdentityId() {
 		return identityId;
+	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+	
+	public String getLastName() {
+		return lastName;
+	}
+	
+	public String getDisplayName() {
+		return displayName;
 	}
 	
 	public String getUserKey() {
@@ -103,12 +259,6 @@ public class UserReadAdapter
 	
 	public String getUserName() {
 		return userName;
-	}
-	
-	public boolean isAccountNonExpired() {
-		// TODO include expirationDate in User
-		//
-		return true;
 	}
 	
 	public char getUserState() {
@@ -126,4 +276,36 @@ public class UserReadAdapter
 		return userGender;
 	}
     
+    public Character getUserType() {
+		return userType;
+	}
+    
+	public boolean isAccountNonExpired() {
+		return accountNonExpired;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + userId;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserReadAdapter other = (UserReadAdapter) obj;
+		if (userId != other.userId)
+			return false;
+		return true;
+	}
+	
+	
+	
 }
