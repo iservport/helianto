@@ -25,6 +25,28 @@ public interface EntityRepository extends FilterRepository<Entity, Serializable>
 	Entity findByOperatorAndAlias(Operator operator, String alias);
 	
 	/**
+	 * Find adapter.
+	 * 
+	 * @param entityId
+	 */
+	@Query("select new "
+			+ "org.helianto.core.repository.EntityReadAdapter"
+			+ "(entity_.id"
+			+ ", entity_.operator.id"
+			+ ", entity_.alias"
+			+ ", entity_.installDate"
+			+ ", entity_.summary"
+			+ ", entity_.entityDomain"
+			+ ", entity_.externalLogoUrl"
+			+ ", entity_.customProperties"
+			+ ", entity_.activityState"
+			+ ", entity_.entityType"
+			+ ") "
+			+ "from Entity entity_ "
+			+ "where entity_.id = ?1 ")
+	EntityReadAdapter findAdapter(int entityId);
+	
+	/**
 	 * Find by Operator name and alias.
 	 * 
 	 * @param operator
