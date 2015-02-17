@@ -15,9 +15,9 @@ public class OrderReadAdapter
 	
 	private static final long serialVersionUID = 1L;
 
-	protected int id;
+	protected Integer id;
 	
-	protected long internalNumber; 
+	protected Long internalNumber; 
 	
 	protected String docCode; 
 	
@@ -25,7 +25,7 @@ public class OrderReadAdapter
 	
 	protected Date issueDate;
 	
-	protected int ownerId;
+	protected Integer ownerId;
 	
 	protected String ownerDisplayName = ""; 
 	
@@ -33,7 +33,7 @@ public class OrderReadAdapter
 	
 	protected Date checkOutTime;
 	
-	protected int categoryId;
+	protected Integer categoryId;
 	
 	protected String categoryCode = "";
     
@@ -41,7 +41,7 @@ public class OrderReadAdapter
 	
 	protected String remarks = "";
 	
-	protected int currencyId;
+	protected Integer currencyId;
 	
 	protected BigDecimal faceValue;
 	
@@ -71,19 +71,19 @@ public class OrderReadAdapter
 	 * @param currencyId
 	 */
 	public OrderReadAdapter(int id
-			, long internalNumber
+			, Long internalNumber
 			, String docCode
 			, String docName
 			, Date issueDate
-			, int ownerId
+			, Integer ownerId
 			, String ownerDisplayName
 			, String ownerImageUrl
 			, Date checkOutTime
-			, int categoryId
+			, Integer categoryId
 			, String categoryCode
 			, String categoryName
 		    , String remarks 
-			, int currencyId
+			, Integer currencyId
 			, BigDecimal faceValue
 		    ) {
 		this();
@@ -104,14 +104,14 @@ public class OrderReadAdapter
 		this.faceValue = faceValue;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public long getInternalNumber() {
+	public Long getInternalNumber() {
 		return internalNumber;
 	}
 
@@ -127,7 +127,7 @@ public class OrderReadAdapter
 		return issueDate;
 	}
 	
-	public int getOwnerId() {
+	public Integer getOwnerId() {
 		return ownerId;
 	}
 	
@@ -159,7 +159,7 @@ public class OrderReadAdapter
 		return remarks;
 	}
 	
-	public int getCurrencyId() {
+	public Integer getCurrencyId() {
 		return currencyId;
 	}
 	

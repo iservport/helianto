@@ -17,7 +17,7 @@ public class OrderReadAdapterTests {
 	public void constructor() {
 		OrderReadAdapter adapter = new OrderReadAdapter(
 				1
-				, 1000
+				, 1000L
 				, "CODE"
 				, "NAME"
 				, new DateTime(2001, 01, 01, 12, 30).toDate()
@@ -32,12 +32,12 @@ public class OrderReadAdapterTests {
 				, 40
 				, new BigDecimal(10)
 				);
-		assertEquals(1, adapter.getId());
-		assertEquals(1000, adapter.getInternalNumber());
+		assertEquals(1, (int) adapter.getId());
+		assertEquals(1000L, (long) adapter.getInternalNumber());
 		assertEquals("CODE", adapter.getDocCode());
 		assertEquals("NAME", adapter.getDocName());
 		assertEquals(new DateTime(2001, 01, 01, 12, 30).toDate(), adapter.getIssueDate());
-		assertEquals(20, adapter.getOwnerId());
+		assertEquals(20, (int) adapter.getOwnerId());
 		assertEquals("PERSON", adapter.getOwnerDisplayName());
 		assertEquals("IMAGE", adapter.getOwnerImageUrl());
 		assertEquals(new DateTime(2001, 01, 02, 12, 30).toDate(), adapter.getCheckOutTime());
@@ -45,7 +45,7 @@ public class OrderReadAdapterTests {
 		assertEquals("CAT", adapter.getCategoryCode());
 		assertEquals("CATEGORY", adapter.getCategoryName());
 		assertEquals("REMARKS", adapter.getRemarks());
-		assertEquals(40, adapter.getCurrencyId());
+		assertEquals(40, (int) adapter.getCurrencyId());
 		assertEquals(new BigDecimal(10), adapter.getFaceValue());
 	}
 

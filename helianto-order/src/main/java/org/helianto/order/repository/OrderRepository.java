@@ -91,7 +91,7 @@ public interface OrderRepository extends
 			+ "where order_.entity.id = ?1 "
 			+ "and order_.category.id = ?2 "
 			+ "and order_.resolution in ?3   ")
-	Page<OrderReadAdapter> findByCategoryIdAndResolution(int entityId, Integer categoryId, char[] resolution,Pageable page);
+	Page<OrderReadAdapter> findByCategoryIdAndResolution(int entityId, Integer categoryId, char[] resolution, Pageable page);
 	
 	/**
 	 * Page by number.
