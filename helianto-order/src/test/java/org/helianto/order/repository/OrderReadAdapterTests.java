@@ -18,12 +18,14 @@ public class OrderReadAdapterTests {
 		OrderReadAdapter adapter = new OrderReadAdapter(
 				1
 				, 1000L
+				, 5
 				, "CODE"
 				, "NAME"
 				, new DateTime(2001, 01, 01, 12, 30).toDate()
 				, 20
 				, "PERSON"
 				, "IMAGE"
+				, "T"
 				, new DateTime(2001, 01, 02, 12, 30).toDate()
 				, 30
 				, "CAT"
@@ -34,6 +36,7 @@ public class OrderReadAdapterTests {
 				);
 		assertEquals(1, (int) adapter.getId());
 		assertEquals(1000L, (long) adapter.getInternalNumber());
+		assertEquals(5, (int) adapter.getPartId());
 		assertEquals("CODE", adapter.getDocCode());
 		assertEquals("NAME", adapter.getDocName());
 		assertEquals(new DateTime(2001, 01, 01, 12, 30).toDate(), adapter.getIssueDate());

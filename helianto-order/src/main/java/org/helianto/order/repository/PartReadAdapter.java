@@ -53,6 +53,13 @@ public class PartReadAdapter
 	private BigDecimal docValue;
 
     private String template = "";
+    
+    /**
+     * Constructor.
+     */
+    public PartReadAdapter() {
+		super();
+	}
 	
 	/**
 	 * Construtor.
@@ -70,7 +77,7 @@ public class PartReadAdapter
 		, String categoryCode
 		, String categoryName
 		) {
-		super();
+		this();
 		this.id = id;
 		this.entityId = entityId;
 		this.categoryId = categoryId;

@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.helianto.order.domain.AbstractOrder;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Order adapter.
  * 
@@ -14,10 +18,14 @@ public class OrderReadAdapter
 {
 	
 	private static final long serialVersionUID = 1L;
+	
+	private AbstractOrder adaptee;
 
 	protected Integer id;
 	
 	protected Long internalNumber; 
+	
+	protected Integer partId; 
 	
 	protected String docCode; 
 	
@@ -30,6 +38,8 @@ public class OrderReadAdapter
 	protected String ownerDisplayName = ""; 
 	
 	protected String ownerImageUrl = ""; 
+	
+	protected Character resolution;
 	
 	protected Date checkOutTime;
 	
@@ -55,6 +65,16 @@ public class OrderReadAdapter
 	/**
 	 * Constructor.
 	 * 
+	 * @param adaptee
+	 */
+	public OrderReadAdapter(AbstractOrder adaptee) {
+		super();
+		this.adaptee = adaptee;
+	}
+	
+	/**
+	 * Constructor.
+	 * 
 	 * @param id
 	 * @param internalNumber
 	 * @param docCode
@@ -63,6 +83,7 @@ public class OrderReadAdapter
 	 * @param ownerId
 	 * @param ownerDisplayName
 	 * @param ownerImageUrl
+	 * @param resolution
 	 * @param checkOutTime
 	 * @param categoryId
 	 * @param categoryCode
@@ -72,12 +93,14 @@ public class OrderReadAdapter
 	 */
 	public OrderReadAdapter(int id
 			, Long internalNumber
+			, Integer partId
 			, String docCode
 			, String docName
 			, Date issueDate
 			, Integer ownerId
 			, String ownerDisplayName
 			, String ownerImageUrl
+			, String resolution
 			, Date checkOutTime
 			, Integer categoryId
 			, String categoryCode
@@ -89,12 +112,14 @@ public class OrderReadAdapter
 		this();
 		this.id = id;
 		this.internalNumber = internalNumber;
+		this.partId = partId;
 		this.docCode = docCode;
 		this.docName = docName;
 		this.issueDate = issueDate;
 		this.ownerId = ownerId;
 		this.ownerDisplayName = ownerDisplayName;
 		this.ownerImageUrl = ownerImageUrl;
+		this.resolution = resolution!=null && !resolution.isEmpty() ? resolution.charAt(0) : 'P';
 		this.checkOutTime = checkOutTime; 
 		this.categoryId = categoryId;
 		this.categoryCode = categoryCode;
@@ -102,6 +127,15 @@ public class OrderReadAdapter
 		this.remarks = remarks;
 		this.currencyId = currencyId;
 		this.faceValue = faceValue;
+	}
+
+	@JsonIgnore
+	public AbstractOrder getAdaptee() {
+		return adaptee;
+	}
+	public OrderReadAdapter setAdaptee(AbstractOrder adaptee) {
+		this.adaptee = adaptee;
+		return this;
 	}
 
 	public Integer getId() {
@@ -113,6 +147,10 @@ public class OrderReadAdapter
 
 	public Long getInternalNumber() {
 		return internalNumber;
+	}
+	
+	public Integer getPartId() {
+		return partId;
 	}
 
 	public String getDocCode() {
@@ -137,6 +175,10 @@ public class OrderReadAdapter
 	
 	public String getOwnerImageUrl() {
 		return ownerImageUrl;
+	}
+	
+	public Character getResolution() {
+		return resolution;
 	}
 	
 	public int getCategoryId() {
@@ -199,6 +241,7 @@ public class OrderReadAdapter
 				+ ", ownerId=" + ownerId
 				+ ", ownerDisplayName=" + ownerDisplayName
 				+ ", ownerImageUrl=" + ownerImageUrl
+				+ ", resolution=" + resolution
 				+ ", checkOutTime=" + checkOutTime
 				+ ", categoryId=" + categoryId
 				+ ", categoryCode=" + categoryCode
