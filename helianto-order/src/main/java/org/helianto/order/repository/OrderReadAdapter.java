@@ -100,7 +100,7 @@ public class OrderReadAdapter
 			, Integer ownerId
 			, String ownerDisplayName
 			, String ownerImageUrl
-			, String resolution
+			, Character resolution
 			, Date checkOutTime
 			, Integer categoryId
 			, String categoryCode
@@ -119,7 +119,7 @@ public class OrderReadAdapter
 		this.ownerId = ownerId;
 		this.ownerDisplayName = ownerDisplayName;
 		this.ownerImageUrl = ownerImageUrl;
-		this.resolution = resolution!=null && !resolution.isEmpty() ? resolution.charAt(0) : 'P';
+		this.resolution = resolution!=null ? resolution : 'P';
 		this.checkOutTime = checkOutTime; 
 		this.categoryId = categoryId;
 		this.categoryCode = categoryCode;

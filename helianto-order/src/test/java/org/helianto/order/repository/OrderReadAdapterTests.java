@@ -25,7 +25,7 @@ public class OrderReadAdapterTests {
 				, 20
 				, "PERSON"
 				, "IMAGE"
-				, "T"
+				, 'T'
 				, new DateTime(2001, 01, 02, 12, 30).toDate()
 				, 30
 				, "CAT"
@@ -43,6 +43,7 @@ public class OrderReadAdapterTests {
 		assertEquals(20, (int) adapter.getOwnerId());
 		assertEquals("PERSON", adapter.getOwnerDisplayName());
 		assertEquals("IMAGE", adapter.getOwnerImageUrl());
+		assertEquals('T', (char) adapter.getResolution());
 		assertEquals(new DateTime(2001, 01, 02, 12, 30).toDate(), adapter.getCheckOutTime());
 		assertEquals(30, adapter.getCategoryId());
 		assertEquals("CAT", adapter.getCategoryCode());
