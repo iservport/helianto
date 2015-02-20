@@ -10,6 +10,8 @@ import org.helianto.core.domain.Identity;
 import org.helianto.order.domain.Currency;
 import org.helianto.order.domain.Part;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * Part adapter.
@@ -22,37 +24,37 @@ public class PartReadAdapter
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer id;
+	protected Integer id;
 
-	private Part adaptee;
+	protected Part adaptee;
 
-	private Integer entityId;
+	protected Integer entityId;
 
-	private Integer categoryId;
+	protected Integer categoryId;
 
-    private String categoryCode = "";
+	protected String categoryCode = "";
     
-    private String categoryName = "";
+	protected String categoryName = "";
     
-	private Integer ownerId;
+	protected Integer ownerId;
 
-	private Integer currencyId;
+	protected Integer currencyId;
 
-	private Date issueDate;
+	protected Date issueDate;
 
-	private String docCode = "";
+	protected String docCode = "";
 
-	private String docName = "";
+	protected String docName = "";
 
-	private String docAbstract = "";
+	protected String docAbstract = "";
 
-	private Character activityState;
+	protected Character activityState;
 
-	private Boolean docFlag;
+	protected Boolean docFlag;
 
-	private BigDecimal docValue;
+	protected BigDecimal docValue;
 
-    private String template = "";
+	protected String template = "";
     
     /**
      * Constructor.
@@ -174,8 +176,13 @@ public class PartReadAdapter
 		);
 	}
 
+	@JsonIgnore
 	public Part getAdaptee() {
 		return adaptee;
+	}
+	public PartReadAdapter setAdaptee(Part adaptee) {
+		this.adaptee = adaptee;
+		return this;
 	}
 
 	public Integer getId() {
