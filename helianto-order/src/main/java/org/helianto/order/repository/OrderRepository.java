@@ -230,9 +230,8 @@ public interface OrderRepository extends
 	/**
 	 * Find the id from last InternalNumber.
 	 */
-	@Query("select max(order_.internalNumber) "
-			+ "from AbstractOrder order_ ")
-	Integer findLastInternalNumber();
+	@Query("select max(order_.internalNumber) from AbstractOrder order_ ")
+	Long findLastInternalNumber();
 
 	/**
 	 * List id like docCode.
