@@ -55,6 +55,8 @@ public class OrderReadAdapter
 	
 	protected BigDecimal faceValue;
 	
+	protected Character position;
+	
 	/**
 	 * Constructor.
 	 */
@@ -90,6 +92,7 @@ public class OrderReadAdapter
 	 * @param categoryName
 	 * @param remarks
 	 * @param currencyId
+	 * @deprecated
 	 */
 	public OrderReadAdapter(int id
 			, Long internalNumber
@@ -127,6 +130,65 @@ public class OrderReadAdapter
 		this.remarks = remarks;
 		this.currencyId = currencyId;
 		this.faceValue = faceValue;
+	}
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param id
+	 * @param internalNumber
+	 * @param docCode
+	 * @param docName
+	 * @param issueDate
+	 * @param ownerId
+	 * @param ownerDisplayName
+	 * @param ownerImageUrl
+	 * @param resolution
+	 * @param checkOutTime
+	 * @param categoryId
+	 * @param categoryCode
+	 * @param categoryName
+	 * @param remarks
+	 * @param currencyId
+	 */
+	public OrderReadAdapter(int id
+			, Long internalNumber
+			, Integer partId
+			, String docCode
+			, String docName
+			, Date issueDate
+			, Integer ownerId
+			, String ownerDisplayName
+			, String ownerImageUrl
+			, Character resolution
+			, Date checkOutTime
+			, Integer categoryId
+			, String categoryCode
+			, String categoryName
+		    , String remarks 
+			, Integer currencyId
+			, BigDecimal faceValue
+			, Character position
+		    ) {
+		this();
+		this.id = id;
+		this.internalNumber = internalNumber;
+		this.partId = partId;
+		this.docCode = docCode;
+		this.docName = docName;
+		this.issueDate = issueDate;
+		this.ownerId = ownerId;
+		this.ownerDisplayName = ownerDisplayName;
+		this.ownerImageUrl = ownerImageUrl;
+		this.resolution = resolution!=null ? resolution : 'P';
+		this.checkOutTime = checkOutTime; 
+		this.categoryId = categoryId;
+		this.categoryCode = categoryCode;
+		this.categoryName = categoryName;
+		this.remarks = remarks;
+		this.currencyId = currencyId;
+		this.faceValue = faceValue;
+		this.position = position;
 	}
 
 	@JsonIgnore
@@ -207,6 +269,10 @@ public class OrderReadAdapter
 	
 	public BigDecimal getFaceValue() {
 		return faceValue;
+	}
+	
+	public Character getPosition() {
+		return position;
 	}
 
 	@Override

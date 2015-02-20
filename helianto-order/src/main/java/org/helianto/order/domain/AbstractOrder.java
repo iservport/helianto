@@ -68,6 +68,8 @@ public class AbstractOrder
 	@Column(length=255)
 	private String remarks;
 	
+	private Character position;
+	
 	public String getDiscriminator() {
 		return "P";
 	}
@@ -149,6 +151,13 @@ public class AbstractOrder
 	}
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+	
+	public Character getPosition() {
+		return position;
+	}
+	public void setPosition(Character position) {
+		this.position = position;
 	}
 	
     /**
