@@ -228,6 +228,43 @@ public interface OrderRepository extends
 	Page<OrderReadAdapter> findByEntity_IdAndDocName(int entityId, String docName, Pageable page);
 	
 	/**
+	 * Page by search string.
+	 * 
+	 * @param entityId
+	 * @param categoryId
+	 * @param resolution
+	 * @param search
+	 * @param page
+	 */
+	@Query("select new "
+			+ "org.helianto.order.repository.OrderReadAdapter"
+			+ "(order_.id"
+			+ ", order_.internalNumber"
+			+ ", order_.part.id"
+			+ ", order_.part.docCode"
+			+ ", order_.part.docName"
+			+ ", order_.issueDate"
+			+ ", order_.owner.id"
+			+ ", order_.owner.displayName"
+			+ ", order_.owner.personalData.imageUrl"
+			+ ", order_.resolution"
+			+ ", order_.checkOutTime"
+			+ ", order_.category.id"
+			+ ", order_.part.category.categoryCode"
+			+ ", order_.part.category.categoryName"
+			+ ", order_.remarks"
+			+ ", order_.part.currency.id"
+			+ ", order_.faceValue"
+			+ ") "
+			+ "from AbstractOrder order_ "
+			+ "where order_.entity.id = ?1 "
+			+ "and order_.category.id = ?2 "
+			+ "and order_.resolution in ?3 "
+			+ "and (order_.part.docName like %?4%) "
+			+ "")
+	Page<OrderReadAdapter> findBySearchString(int entityId, Integer categoryId, char[] resolution, String search, Pageable page);
+
+	/**
 	 * Find the id from last InternalNumber.
 	 */
 	@Query("select max(order_.internalNumber) from AbstractOrder order_ ")
