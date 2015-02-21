@@ -35,8 +35,7 @@ import org.helianto.document.domain.DocumentFolder;
  */
 @MappedSuperclass
 public abstract class AbstractCustomDocument 
-	extends AbstractDocument 
-	implements Sequenceable {
+	extends AbstractDocument {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -101,7 +100,6 @@ public abstract class AbstractCustomDocument
 	/**
 	 * Subclasses may override this method to change how the prefix is created.
 	 */
-//	@Transient
 	public StringBuilder getPrefix() {
 		if (getSeries()!=null) {
 			return new StringBuilder(getSeries().getFolderCode());
@@ -109,16 +107,6 @@ public abstract class AbstractCustomDocument
 		return new StringBuilder();
 	}
 
-	/**
-	 * Required by {@link Sequenceable}.
-	 */
-	public String getInternalNumberKey() {
-		return validateInternalNumberKey(internalNumberKey);
-	}
-	public void setInternalNumberKey(String internalNumberKey) {
-		this.internalNumberKey = internalNumberKey;
-	}
-	
 	/**
 	 * <<Transient>> Allow subclasses to override internal number key.
 	 * 
@@ -147,74 +135,23 @@ public abstract class AbstractCustomDocument
 	}
 	public void setInternalNumber(long internalNumber) {
 		this.internalNumber = internalNumber;
-		afterInternalNumberSet(internalNumber);
 	}
 	
 	/**
 	 * The number pattern, if available, or null.
 	 */
-//	@Transient
 	protected String getNumberPattern() {
 		if (getFolder()!=null) {
 			return getFolder().getNumberPattern();
 		}
-		return null;
-	}
-	
-	/**
-	 * True if a new internal number is required.
-	 * <p>
-	 * Default implementation checks if {@link #internalNumber} is 
-	 * greater or equal than {@link #getStartNumber()} and {@link #isKeyEmpty()} is true .
-	 * </p>
-	 */
-//	@Transient
-	protected boolean isNewNumberRequired() {
-		return isKeyEmpty() && getInternalNumber() >= getStartNumber();
-	}
-	
-	/**
-	 * Reset docCode and internalNumber to allow the number pattern to be re-applied.
-	 */
-//	@Transient
-	public void resetDocCode() {
-		setDocCode("");
-		setInternalNumber(getStartNumber());
-	}
-	
-	/**
-	 * True if a pattern should be applied to docCode after internalNumber changed.
-	 * 
-	 * <p>
-	 * Default implementation checks if {@link #isNewNumberRequired()} is true 
-	 * and {@link #getNumberPattern()} is not null.
-	 * </p>
-	 */
-//	@Transient
-	protected boolean isPatternRequired() {
-		return isNewNumberRequired() && getNumberPattern()!=null;
+		return "";
 	}
 	
     /**
-     * Apply a number pattern.
-     * 
-     * @see #afterInternalNumberSet(long)
+     * Apply a number pattern to build a docCode.
      */
-//	@Transient
-	protected String applyNumberPattern(long internalNumber) {
-		return new DecimalFormat(getNumberPattern()).format(internalNumber);
-	}
-
-	/**
-	 * Called after {@link #setInternalNumber(long)} if {@link #isPatternRequired()}. 
-	 * 
-	 * @param internalNumber
-	 */
-//	@Transient
-	protected void afterInternalNumberSet(long internalNumber) {
-		if (isPatternRequired()) {
-			setDocCode(applyNumberPattern(internalNumber));
-		}
+	public void applyNumberPattern() {
+		setDocCode(new DecimalFormat(getNumberPattern()).format(internalNumber));
 	}
 
     /**

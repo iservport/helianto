@@ -36,7 +36,9 @@ public abstract class AbstractSerializer<D>
 	private static final long serialVersionUID = 1L;
 	
     @Column(length=20)
-	private String numberPattern = "0000";
+	private String patternPrefix = "F";
+	
+	private Integer numberOfDigits = 3;
 	
     private char contentType = ' ';
     
@@ -54,39 +56,34 @@ public abstract class AbstractSerializer<D>
     }
 
     /**
-     * Pattern used in association with <code>SequenceMgr</code>.
-     * 
-     * <p>
-     * Patterns like "P0000" will produce document codes
-     * like P0001, P0002, etc., while 0000/'09' builds
-     * 0001/09, 0002/09, etc.
-     * </p>
+     * Pattern to generate new docCode.
      */
 	public String getNumberPattern() {
-		return numberPattern;
-	}
-	public void setNumberPattern(String numberPattern) {
-		this.numberPattern = numberPattern;
+		return new StringBuilder("'")
+		.append(getPatternPrefix())
+		.append("'")
+		.append("00000000000".substring(0, getNumberOfDigits()))
+		.toString();
 	}
 	
 	/**
-	 * Calculates prefix from number pattern.
+	 * Pattern prefix.
 	 */
-	public String getPrefix() {
-		if (getNumberPattern()!=null && !getNumberPattern().isEmpty()) {
-			if (getNumberPattern().lastIndexOf(39)>=0) {
-				return getNumberPattern().substring(0, getNumberPattern().lastIndexOf(39)).replace("'", "");
-			}
-		}
-		return "";
+	public String getPatternPrefix() {
+		return patternPrefix;
+	}
+	public void setPatternPrefix(String patternPrefix) {
+		this.patternPrefix = patternPrefix;
 	}
 	
-	public int getNumberOfDigits() {
-		if (getNumberPattern()!=null && !getNumberPattern().isEmpty()) {
-			String zeroes = getNumberPattern().replace("'", "").replace(getPrefix(), "");
-			return zeroes.lastIndexOf("0")+1;
-		}
-		return 0;
+	/**
+	 * Number of digits.
+	 */
+	public Integer getNumberOfDigits() {
+		return numberOfDigits;
+	}
+	public void setNumberOfDigits(Integer numberOfDigits) {
+		this.numberOfDigits = numberOfDigits;
 	}
 	
     /**

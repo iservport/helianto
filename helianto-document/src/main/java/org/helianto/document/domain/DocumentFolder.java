@@ -88,7 +88,6 @@ public class DocumentFolder
 	 * Default implementation does not replace the private field.
 	 * </p>
 	 */
-//	@Transient
 	protected Category getInternalCategory(Category category) {
 		return category;
 	}
@@ -96,7 +95,6 @@ public class DocumentFolder
 	/**
 	 * <<Transient>> True if category is not null.
 	 */
-//	@Transient
 	public boolean isCategoryEnabled() {
 		return getCategory()!=null;
 	}
