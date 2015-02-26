@@ -55,11 +55,16 @@ public class KeyType
     @Column(length=20)
     private String keyCode = "";
     
+    private Character keyGroup = 'A';
+    
     @Column(length=48)
     private String keyName = "";
     
     @Column(length=255)
     private String purpose = "";
+
+    @Column(length=512)
+    private String synonyms = "";
 
     /** 
      * Default constructor
@@ -100,7 +105,6 @@ public class KeyType
         this.operator = operator;
     }
 
-//    @Transient
     public int getContextId() {
     	if (getOperator()!=null) {
     		return getOperator().getId();
@@ -118,6 +122,16 @@ public class KeyType
         this.keyCode = keyCode;
         return this;
     }
+    
+    /**
+     * Group to distinguish some keys from others, when applicable.
+     */
+    public Character getKeyGroup() {
+		return keyGroup;
+	}
+    public void setKeyGroup(Character keyGroup) {
+		this.keyGroup = keyGroup;
+	}
 
     /**
      * Key name.
@@ -138,6 +152,16 @@ public class KeyType
     public void setPurpose(String purpose) {
         this.purpose = purpose;
     }
+    
+    /**
+     * Comma separated list of synonyms.
+     */
+    public String getSynonyms() {
+		return synonyms;
+	}
+    public void setSynonyms(String synonyms) {
+		this.synonyms = synonyms;
+	}
 
     /**
      * toString
