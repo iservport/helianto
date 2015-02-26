@@ -134,6 +134,11 @@ public class CategoryAdapter
 	}
 
 	@Override
+	public String getCode() {
+		return getCategoryCode();
+	}
+
+	@Override
 	public String getName() {
 		return getCategoryName();
 	}

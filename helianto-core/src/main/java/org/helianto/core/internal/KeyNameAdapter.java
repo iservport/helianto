@@ -15,7 +15,13 @@ public interface KeyNameAdapter {
 	Serializable getKey();
 	
 	/**
+	 * Code.
+	 */
+	String getCode();
+	
+	/**
 	 * Name.
 	 */
 	String getName();
+	
 }

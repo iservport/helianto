@@ -262,6 +262,14 @@ public class Category
         this.categoryCode = categoryCode;
     }
     
+    @Transient
+    public String getCode() {
+    	if (getCategoryCode()!=null) {
+    		return getCategoryCode();
+    	}
+    	return "";
+    }
+
     /**
      * Category label.
      */
