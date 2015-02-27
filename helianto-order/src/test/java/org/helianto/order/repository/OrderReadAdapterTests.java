@@ -27,9 +27,12 @@ public class OrderReadAdapterTests {
 				, "IMAGE"
 				, 'T'
 				, new DateTime(2001, 01, 02, 12, 30).toDate()
+				, new DateTime(2001, 01, 03, 12, 30).toDate()
 				, 30
 				, "CAT"
 				, "CATEGORY"
+				, "TOKEN1 TOKEN2"
+				, "TOKEN3 TOKEN4"
 				, "REMARKS"
 				, 40
 				, new BigDecimal(10)
@@ -44,10 +47,13 @@ public class OrderReadAdapterTests {
 		assertEquals("PERSON", adapter.getOwnerDisplayName());
 		assertEquals("IMAGE", adapter.getOwnerImageUrl());
 		assertEquals('T', (char) adapter.getResolution());
-		assertEquals(new DateTime(2001, 01, 02, 12, 30).toDate(), adapter.getCheckOutTime());
+		assertEquals(new DateTime(2001, 01, 02, 12, 30).toDate(), adapter.getNextCheckDate());
+		assertEquals(new DateTime(2001, 01, 03, 12, 30).toDate(), adapter.getCheckOutTime());
 		assertEquals(30, adapter.getCategoryId());
 		assertEquals("CAT", adapter.getCategoryCode());
 		assertEquals("CATEGORY", adapter.getCategoryName());
+		assertEquals("TOKEN1 TOKEN2".split(" "), adapter.getCheckInDataAsArray());
+		assertEquals("REMARKS", adapter.getRemarks());
 		assertEquals("REMARKS", adapter.getRemarks());
 		assertEquals(40, (int) adapter.getCurrencyId());
 		assertEquals(new BigDecimal(10), adapter.getFaceValue());

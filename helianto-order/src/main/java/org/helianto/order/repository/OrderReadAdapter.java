@@ -41,6 +41,8 @@ public class OrderReadAdapter
 	
 	protected Character resolution;
 	
+	protected Date nextCheckDate;
+	
 	protected Date checkOutTime;
 	
 	protected Integer categoryId;
@@ -48,6 +50,10 @@ public class OrderReadAdapter
 	protected String categoryCode = "";
     
 	protected String categoryName = "";
+	
+	protected String checkInData = "";
+	
+	protected String checkOutData = "";
 	
 	protected String remarks = "";
 	
@@ -79,6 +85,7 @@ public class OrderReadAdapter
 	 * 
 	 * @param id
 	 * @param internalNumber
+	 * @param partId
 	 * @param docCode
 	 * @param docName
 	 * @param issueDate
@@ -86,12 +93,16 @@ public class OrderReadAdapter
 	 * @param ownerDisplayName
 	 * @param ownerImageUrl
 	 * @param resolution
+	 * @param nextCheckDate
 	 * @param checkOutTime
 	 * @param categoryId
 	 * @param categoryCode
 	 * @param categoryName
+	 * @param checkInData
+	 * @param checkOutData
 	 * @param remarks
 	 * @param currencyId
+	 * @param faceValue
 	 * @deprecated
 	 */
 	public OrderReadAdapter(int id
@@ -104,10 +115,13 @@ public class OrderReadAdapter
 			, String ownerDisplayName
 			, String ownerImageUrl
 			, Character resolution
+			, Date nextCheckDate
 			, Date checkOutTime
 			, Integer categoryId
 			, String categoryCode
 			, String categoryName
+			, String checkInData
+			, String checkOutData
 		    , String remarks 
 			, Integer currencyId
 			, BigDecimal faceValue
@@ -123,10 +137,13 @@ public class OrderReadAdapter
 		this.ownerDisplayName = ownerDisplayName;
 		this.ownerImageUrl = ownerImageUrl;
 		this.resolution = resolution!=null ? resolution : 'P';
+		this.nextCheckDate = nextCheckDate; 
 		this.checkOutTime = checkOutTime; 
 		this.categoryId = categoryId;
 		this.categoryCode = categoryCode;
 		this.categoryName = categoryName;
+		this.checkInData = checkInData;
+		this.checkOutData = checkOutData;
 		this.remarks = remarks;
 		this.currencyId = currencyId;
 		this.faceValue = faceValue;
@@ -137,6 +154,7 @@ public class OrderReadAdapter
 	 * 
 	 * @param id
 	 * @param internalNumber
+	 * @param partId
 	 * @param docCode
 	 * @param docName
 	 * @param issueDate
@@ -144,12 +162,17 @@ public class OrderReadAdapter
 	 * @param ownerDisplayName
 	 * @param ownerImageUrl
 	 * @param resolution
+	 * @param nextCheckDate
 	 * @param checkOutTime
 	 * @param categoryId
 	 * @param categoryCode
 	 * @param categoryName
+	 * @param checkInData
+	 * @param checkOutData
 	 * @param remarks
 	 * @param currencyId
+	 * @param faceValue
+	 * @param position
 	 */
 	public OrderReadAdapter(int id
 			, Long internalNumber
@@ -161,10 +184,13 @@ public class OrderReadAdapter
 			, String ownerDisplayName
 			, String ownerImageUrl
 			, Character resolution
+			, Date nextCheckDate
 			, Date checkOutTime
 			, Integer categoryId
 			, String categoryCode
 			, String categoryName
+			, String checkInData
+			, String checkOutData
 		    , String remarks 
 			, Integer currencyId
 			, BigDecimal faceValue
@@ -181,10 +207,13 @@ public class OrderReadAdapter
 		this.ownerDisplayName = ownerDisplayName;
 		this.ownerImageUrl = ownerImageUrl;
 		this.resolution = resolution!=null ? resolution : 'P';
+		this.nextCheckDate = nextCheckDate; 
 		this.checkOutTime = checkOutTime; 
 		this.categoryId = categoryId;
 		this.categoryCode = categoryCode;
 		this.categoryName = categoryName;
+		this.checkInData = checkInData;
+		this.checkOutData = checkOutData;
 		this.remarks = remarks;
 		this.currencyId = currencyId;
 		this.faceValue = faceValue;
@@ -247,6 +276,10 @@ public class OrderReadAdapter
 		return categoryId;
 	}
 	
+	public Date getNextCheckDate() {
+		return nextCheckDate;
+	}
+	
 	public Date getCheckOutTime() {
 		return checkOutTime;
 	}
@@ -257,6 +290,28 @@ public class OrderReadAdapter
 	
 	public String getCategoryName() {
 		return categoryName;
+	}
+	
+	public String getCheckInData() {
+		return checkInData;
+	}
+	
+	public String[] getCheckInDataAsArray() {
+		if (getCheckInData()!=null) {
+			return getCheckInData().split(" ");
+		}
+		return new String[0];
+	}
+	
+	public String getCheckOutData() {
+		return checkOutData;
+	}
+	
+	public String[] getCheckOutDataAsArray() {
+		if (getCheckOutData()!=null) {
+			return getCheckOutData().split(" ");
+		}
+		return new String[0];
 	}
 	
 	public String getRemarks() {
@@ -308,6 +363,7 @@ public class OrderReadAdapter
 				+ ", ownerDisplayName=" + ownerDisplayName
 				+ ", ownerImageUrl=" + ownerImageUrl
 				+ ", resolution=" + resolution
+				+ ", nextCheckDate=" + nextCheckDate
 				+ ", checkOutTime=" + checkOutTime
 				+ ", categoryId=" + categoryId
 				+ ", categoryCode=" + categoryCode

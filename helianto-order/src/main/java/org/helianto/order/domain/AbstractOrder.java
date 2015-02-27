@@ -63,7 +63,17 @@ public class AbstractOrder
 
 	@DateTimeFormat(style="SS")
 	@Temporal(TemporalType.TIMESTAMP)
+	private Date nextCheckDate;
+	
+	@DateTimeFormat(style="SS")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date checkOutTime;
+	
+	@Column(length=4096)
+	private String checkInData = "";
+	
+	@Column(length=4096)
+	private String checkOutData = "";
 	
 	@Column(length=255)
 	private String remarks;
@@ -130,7 +140,7 @@ public class AbstractOrder
 	}
 	
 	/**
-	 * Conveniente para recuperar o código da peça.
+	 * Helper to retrieve part code.
 	 */
 	public String getPartCode() {
 		if (getPart()!=null) {
@@ -139,11 +149,32 @@ public class AbstractOrder
 		return "";
 	}
 	
+	public Date getNextCheckDate() {
+		return nextCheckDate;
+	}
+	public void setNextCheckDate(Date nextCheckDate) {
+		this.nextCheckDate = nextCheckDate;
+	}
+	
 	public BigDecimal getFaceValue() {
 		return faceValue;
 	}
 	public void setFaceValue(BigDecimal faceValue) {
 		this.faceValue = faceValue;
+	}
+	
+	public String getCheckInData() {
+		return checkInData;
+	}
+	public void setCheckInData(String checkInData) {
+		this.checkInData = checkInData;
+	}
+	
+	public String getCheckOutData() {
+		return checkOutData;
+	}
+	public void setCheckOutData(String checkOutData) {
+		this.checkOutData = checkOutData;
 	}
 	
 	public String getRemarks() {
