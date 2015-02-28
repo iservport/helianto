@@ -64,31 +64,29 @@ public class PartReadAdapter
 	}
 	
 	/**
-	 * Construtor.
+	 * Constructor.
 	 *
 	 * @param id
 	 * @param entityId
 	 * @param categoryId
-	 * @param categoryCode
-	 * @param categoryName
+	 * @param ownerId
+	 * @param currencyId
 	 */
 	public PartReadAdapter(
-		Integer id
-		, Integer entityId
+		Integer entityId
 		, Integer categoryId
-		, String categoryCode
-		, String categoryName
+		, Integer ownerId
+		, Integer currencyId
 		) {
 		this();
-		this.id = id;
 		this.entityId = entityId;
 		this.categoryId = categoryId;
-		this.categoryCode = categoryCode; 
-		this.categoryName = categoryName;
+		this.ownerId = ownerId; 
+		this.currencyId = currencyId;
 	}
 
 	/**
-	 * Construtor.
+	 * Constructor.
 	 *
 	 * @param id
 	 * @param entityId
@@ -123,9 +121,10 @@ public class PartReadAdapter
 		, BigDecimal docValue
 	    , String template
 		) {
-		this(id, entityId, categoryId, categoryCode, categoryName);
-		this.ownerId = ownerId;
-		this.currencyId = currencyId;
+		this(entityId, categoryId, ownerId, currencyId);
+		this.id = id; 
+		this.categoryCode = categoryCode; 
+		this.categoryName = categoryName;
 		this.issueDate = issueDate;
 		this.docCode = docCode;
 		this.docName = docName;
@@ -137,16 +136,6 @@ public class PartReadAdapter
 	}
 
 	/**
-	 * Adaptee contructor.
-	 *
-	 * @param adaptee
-	 */
-	public PartReadAdapter(Part part) {
-		super();
-		this.adaptee = part;
-	}
-
-	/**
 	 * Adaptee builder.
 	 *
 	 * @param entity
@@ -155,23 +144,49 @@ public class PartReadAdapter
 	 * @param currency
 	 */
 	public PartReadAdapter build(Entity entity, Category category, Identity owner, Currency currency){
+		if (entity==null) throw new UnsupportedOperationException("Entity required.");
+		if (category==null) throw new UnsupportedOperationException("Category required.");
+		if (owner==null) throw new UnsupportedOperationException("Identity required.");
+		if (currency==null) throw new UnsupportedOperationException("Currency required.");
 		if (adaptee==null) {
-			throw new RuntimeException("Null part cannot be persisted.");
+			adaptee = new Part(entity, "");
+			this.entityId = entity.getId();
+			this.docCode = "";
 		}
+		adaptee.setCategory(category);
+		this.categoryId = category.getId();
+		this.categoryCode = category.getCategoryCode();
+		this.categoryName = category.getCategoryName();
+		this.template = category.getScriptItems();
+		adaptee.setOwner(owner);
+		this.ownerId = owner.getId();
+		adaptee.setCurrency(currency);
+		this.currencyId = currency.getId();
+		return build(adaptee);
+	}
+
+	/**
+	 * Adaptee builder.
+	 *
+	 * @param adaptee
+	 */
+	public PartReadAdapter build(Part adaptee) {
+		if (adaptee==null) throw new UnsupportedOperationException("Part required.");
+		this.adaptee = adaptee;
 		return new PartReadAdapter(adaptee.getId() 
-		, entity.getId()
-		, category.getId()
-		, category.getCategoryCode()
-		, category.getCategoryName()
-		, owner.getId()
-		, currency.getId()
-		, getIssueDate()
-		, getDocCode()
-		, getDocName()
-		, getDocAbstract()
-		, getActivityState()
-		, getDocFlag()
-		, getDocValue()
+		, getEntityId()
+		, getCategoryId()
+		, getCategoryCode()
+		, getCategoryName()
+		, getOwnerId()
+		, getCurrencyId()
+		, adaptee.getIssueDate()
+		, adaptee.getDocCode()
+		, adaptee.getDocName()
+		, adaptee.getDocAbstract()
+		, adaptee.getActivityState()
+		, adaptee.isDocFlag()
+		, adaptee.getDocValue()
 		, getTemplate()
 		);
 	}
@@ -187,6 +202,10 @@ public class PartReadAdapter
 
 	public Integer getId() {
 		return id;
+	}
+	public PartReadAdapter setId(Integer id) {
+		this.id = id;
+		return this;
 	}
 
 	public Integer getEntityId() {
