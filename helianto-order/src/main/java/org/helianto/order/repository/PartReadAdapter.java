@@ -149,9 +149,8 @@ public class PartReadAdapter
 		if (owner==null) throw new UnsupportedOperationException("Identity required.");
 		if (currency==null) throw new UnsupportedOperationException("Currency required.");
 		if (adaptee==null) {
-			adaptee = new Part(entity, "");
+			adaptee = new Part(entity, getCategoryCode());
 			this.entityId = entity.getId();
-			this.docCode = "";
 		}
 		adaptee.setCategory(category);
 		this.categoryId = category.getId();
@@ -162,33 +161,43 @@ public class PartReadAdapter
 		this.ownerId = owner.getId();
 		adaptee.setCurrency(currency);
 		this.currencyId = currency.getId();
-		return build(adaptee);
+		return this;
 	}
 
 	/**
-	 * Adaptee builder.
+	 * Adaptee merger.
+	 */
+	public PartReadAdapter merge() {
+		if (adaptee==null) throw new UnsupportedOperationException("Part required.");
+		adaptee.setId(this.id);
+		adaptee.setDocCode(this.docCode);
+		adaptee.setIssueDate(this.issueDate);
+		adaptee.setDocCode(this.docCode);
+		adaptee.setDocName(this.docName);
+		adaptee.setDocAbstract(this.docAbstract);
+		adaptee.setActivityState(this.activityState);
+		adaptee.setDocFlag(this.docFlag);
+		adaptee.setDocValue(this.docValue);
+		return this;
+	}
+
+	/**
+	 * Adaptee merger.
 	 *
 	 * @param adaptee
 	 */
-	public PartReadAdapter build(Part adaptee) {
+	public PartReadAdapter merge(Part adaptee) {
 		if (adaptee==null) throw new UnsupportedOperationException("Part required.");
 		this.adaptee = adaptee;
-		return new PartReadAdapter(adaptee.getId() 
-		, getEntityId()
-		, getCategoryId()
-		, getCategoryCode()
-		, getCategoryName()
-		, getOwnerId()
-		, getCurrencyId()
-		, adaptee.getIssueDate()
-		, adaptee.getDocCode()
-		, adaptee.getDocName()
-		, adaptee.getDocAbstract()
-		, adaptee.getActivityState()
-		, adaptee.isDocFlag()
-		, adaptee.getDocValue()
-		, getTemplate()
-		);
+		this.id = adaptee.getId();
+		this.docCode = adaptee.getDocCode();
+		this.issueDate = adaptee.getIssueDate();
+		this.docName = adaptee.getDocName();
+		this.docAbstract = adaptee.getDocAbstract();
+		this.activityState = adaptee.getActivityState();
+		this.docFlag = adaptee.isDocFlag();
+		this.docValue = adaptee.getDocValue();
+		return this;
 	}
 
 	@JsonIgnore
