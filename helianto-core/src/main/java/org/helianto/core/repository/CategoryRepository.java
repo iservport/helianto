@@ -47,11 +47,14 @@ public interface CategoryRepository extends QueryRepository<Category, Serializab
 	 * @param entityId
 	 * @param categoryGroup
 	 * @param sort
-	 * @return
 	 */
 	@Query("select new "
 			+ "org.helianto.core.repository.CategoryAdapter"
-			+ "(category.id, category.categoryCode, category.categoryName) "
+			+ "(category.id"
+			+ ", category.categoryCode"
+			+ ", category.categoryName"
+			+ ", category.categoryIcon"
+			+ ") "
 			+ "from Category category "
 			+ "where category.entity.id = ?1 "
 			+ "and category.categoryGroup = ?2 ")

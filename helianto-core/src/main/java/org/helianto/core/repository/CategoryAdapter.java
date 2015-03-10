@@ -27,7 +27,7 @@ public class CategoryAdapter
 	
 	private int countOthers;
 	
-	private String fontIcon;
+	private String categoryIcon;
 
 	/**
 	 * Constructor.
@@ -41,6 +41,19 @@ public class CategoryAdapter
 		this.id = id;
 		this.categoryCode = categoryCode;
 		this.categoryName = categoryName;
+	}
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param id
+	 * @param categoryCode
+	 * @param categoryName
+	 * @param categoryIcon
+	 */
+	public CategoryAdapter(int id, String categoryCode, String categoryName, String categoryIcon) {
+		this(id, categoryCode, categoryName);
+		setCategoryIcon(categoryIcon);
 	}
 
 	public int getId() {
@@ -95,11 +108,11 @@ public class CategoryAdapter
 		this.countOthers = countOthers;
 	}
     
-	public String getFontIcon() {
-		return fontIcon;
+	public String getCategoryIcon() {
+		return categoryIcon;
 	}
-	public void setFontIcon(String fontIcon) {
-		this.fontIcon = fontIcon;
+	public void setCategoryIcon(String categoryIcon) {
+		this.categoryIcon = categoryIcon;
 	}
 	
 	@Override

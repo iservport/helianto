@@ -90,6 +90,9 @@ public class Category
     @Column(length=64)
     private String categoryName = "";
     
+    @Column(length=64)
+    private String categoryIcon = "";
+    
     private char priority = '0';
 
     @Column(length=1024)
@@ -297,6 +300,13 @@ public class Category
     	}
     	return "";
     }
+    
+    public String getCategoryIcon() {
+		return categoryIcon;
+	}
+    public void setCategoryIcon(String categoryIcon) {
+		this.categoryIcon = categoryIcon;
+	}
 
     /**
      * Priority.
