@@ -58,7 +58,7 @@ public interface CategoryRepository extends QueryRepository<Category, Serializab
 			+ "from Category category "
 			+ "where category.entity.id = ?1 "
 			+ "and category.categoryGroup = ?2 ")
-	List<CategoryAdapter> findByEntity_IdAndCategoryGroup(int entityId, char categoryGroup
+	List<CategoryReadAdapter> findByEntity_IdAndCategoryGroup(int entityId, char categoryGroup
 			, Sort sort);
 
 	/**

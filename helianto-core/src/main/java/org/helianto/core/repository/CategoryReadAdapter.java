@@ -2,18 +2,25 @@ package org.helianto.core.repository;
 
 import java.io.Serializable;
 
+import org.helianto.core.domain.Category;
 import org.helianto.core.internal.KeyNameAdapter;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Category adapter.
  * 
  * @author mauriciofernandesdecastro
  */
-public class CategoryAdapter 
+public class CategoryReadAdapter 
 	implements KeyNameAdapter
 {
 	
+	private Category adaptee;
+	
 	private int id;
+	
+	private Character categoryGroup;
 	
 	private String categoryCode;
 	
@@ -28,6 +35,23 @@ public class CategoryAdapter
 	private int countOthers;
 	
 	private String categoryIcon;
+	
+	/**
+	 * Default constructor.
+	 */
+	public CategoryReadAdapter() {
+		super();
+	}
+
+	/**
+	 * Adaptee constructor.
+	 * 
+	 * @param category
+	 */
+	public CategoryReadAdapter(Category category) {
+		this();
+		setAdaptee(category);
+	}
 
 	/**
 	 * Constructor.
@@ -36,7 +60,7 @@ public class CategoryAdapter
 	 * @param categoryCode
 	 * @param categoryName
 	 */
-	public CategoryAdapter(int id, String categoryCode, String categoryName) {
+	public CategoryReadAdapter(int id, String categoryCode, String categoryName) {
 		super();
 		this.id = id;
 		this.categoryCode = categoryCode;
@@ -47,17 +71,61 @@ public class CategoryAdapter
 	 * Constructor.
 	 * 
 	 * @param id
+	 * @param categoryGroup
 	 * @param categoryCode
 	 * @param categoryName
 	 * @param categoryIcon
 	 */
-	public CategoryAdapter(int id, String categoryCode, String categoryName, String categoryIcon) {
+	public CategoryReadAdapter(int id
+			, Character categoryGroup
+			, String categoryCode
+			, String categoryName
+			, String categoryIcon
+			) {
 		this(id, categoryCode, categoryName);
+		this.categoryGroup = categoryGroup;
 		setCategoryIcon(categoryIcon);
 	}
+	
+	/**
+	 * Builder.
+	 */
+	public CategoryReadAdapter build() {
+		this.id = adaptee.getId();
+		this.categoryGroup = adaptee.getCategoryGroup();
+		this.categoryCode = adaptee.getCategoryCode();
+		this.categoryName = adaptee.getCategoryName();
+		this.categoryIcon = adaptee.getCategoryIcon();
+		return this;
+	}
 
+	/**
+	 * Merger.
+	 */
+	public Category merge() {
+		adaptee.setId(id);
+		adaptee.setCategoryGroup(categoryGroup);
+		adaptee.setCategoryCode(categoryCode);
+		adaptee.setCategoryName(categoryName);
+		adaptee.setCategoryIcon(categoryIcon);
+		return adaptee;
+	}
+
+	@JsonIgnore
+	public Category getAdaptee() {
+		return adaptee;
+	}
+	public CategoryReadAdapter setAdaptee(Category adaptee) {
+		this.adaptee = adaptee;
+		return this;
+	}
+	
 	public int getId() {
 		return id;
+	}
+	
+	public Character getCategoryGroup() {
+		return categoryGroup;
 	}
 
 	public String getCategoryCode() {
@@ -131,7 +199,7 @@ public class CategoryAdapter
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CategoryAdapter other = (CategoryAdapter) obj;
+		CategoryReadAdapter other = (CategoryReadAdapter) obj;
 		if (id != other.id)
 			return false;
 		return true;
