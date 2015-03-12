@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.helianto.core.domain.Category;
 import org.helianto.core.internal.KeyNameAdapter;
+import org.helianto.core.utils.StringListUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -35,6 +36,8 @@ public class CategoryReadAdapter
 	private int countOthers;
 	
 	private String categoryIcon;
+	
+	private String scriptItems;
 	
 	/**
 	 * Default constructor.
@@ -85,6 +88,27 @@ public class CategoryReadAdapter
 		this(id, categoryCode, categoryName);
 		this.categoryGroup = categoryGroup;
 		setCategoryIcon(categoryIcon);
+	}
+	
+	/**
+	 * Constructor.
+	 * 
+	 * @param id
+	 * @param categoryGroup
+	 * @param categoryCode
+	 * @param categoryName
+	 * @param categoryIcon
+	 * @param scriptItems
+	 */
+	public CategoryReadAdapter(int id
+			, Character categoryGroup
+			, String categoryCode
+			, String categoryName
+			, String categoryIcon
+			, String scriptItems
+			) {
+		this(id, categoryGroup, categoryCode, categoryName, categoryIcon);
+		this.scriptItems = scriptItems;
 	}
 	
 	/**
@@ -181,6 +205,14 @@ public class CategoryReadAdapter
 	}
 	public void setCategoryIcon(String categoryIcon) {
 		this.categoryIcon = categoryIcon;
+	}
+	
+	public String getScriptItems() {
+		return scriptItems;
+	}
+	
+    public String[] getScriptItemsAsArray() {
+    	return StringListUtils.stringToArray(getScriptItems());
 	}
 	
 	@Override
