@@ -8,6 +8,7 @@ import org.helianto.core.domain.Entity;
 import org.helianto.query.data.QueryRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 
 /**
@@ -44,6 +45,27 @@ public interface CategoryRepository extends QueryRepository<Category, Serializab
 	
 	/**
 	 * Category adapter list.
+	 * 
+	 * @param entityId
+	 * @param categoryGroup
+	 * @param sort
+	 */
+	@Query("select new "
+			+ "org.helianto.core.repository.CategoryReadAdapter"
+			+ "(category.id"
+			+ ", category.categoryGroup"
+			+ ", category.categoryCode"
+			+ ", category.categoryName"
+			+ ", category.categoryIcon"
+			+ ", category.scriptItems"
+			+ ") "
+			+ "from Category category "
+			+ "where category.entity.id = ?1 "
+			+ "and category.categoryGroup = ?2 ")
+	List<CategoryReadAdapter> findByEntity_IdAndCategoryGroup(int entityId, char categoryGroup, Sort sort);
+
+	/**
+	 * Category adapter page.
 	 * 
 	 * @param entityId
 	 * @param categoryGroup
