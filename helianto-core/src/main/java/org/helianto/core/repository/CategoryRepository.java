@@ -99,4 +99,30 @@ public interface CategoryRepository extends QueryRepository<Category, Serializab
 			+ "and category.categoryCode like ?3 ")
 	Long countByEntity_IdAndCategoryGroupAndCategoryCode(int entityId, char categoryGroup, String categoryCode);
 
+	/**
+	 * Category existing.
+	 * 
+	 * @param entityId
+	 * @param categoryGroup
+	 * @param categoryCode
+	 */
+	@Query("select category.id "
+			+ "from Category category "
+			+ "where category.entity.id = ?1 "
+			+ "and category.categoryGroup = ?2 "
+			+ "and category.categoryCode = ?3 ")
+	Integer findByEntity_IdAndCategoryGroupAndCategoryCode(int entityId, char categoryGroup, String categoryCode);
+
+	/**
+	 * Find adapter by Id.
+	 * 
+	 * @param id
+	 */
+	@Query("select new "
+			+ "org.helianto.core.repository.CategoryReadAdapter"
+			+ "(category.id, category.categoryCode, category.categoryName) "
+			+ "from Category category "
+			+ "where category.id = ?1 ")
+	CategoryReadAdapter findAdapter(int id);
+
 }
