@@ -44,6 +44,24 @@ public interface CategoryRepository extends QueryRepository<Category, Serializab
 	List<Category> findByEntity_Id(int entityId);
 	
 	/**
+	 * Find adapter by Id.
+	 * 
+	 * @param id
+	 */
+	@Query("select new "
+			+ "org.helianto.core.repository.CategoryReadAdapter"
+			+ "(category.id"
+			+ ", category.categoryGroup"
+			+ ", category.categoryCode"
+			+ ", category.categoryName"
+			+ ", category.categoryIcon"
+			+ ", category.scriptItems"
+			+ ") "
+			+ "from Category category "
+			+ "where category.id = ?1 ")
+	CategoryReadAdapter findAdapter(int id);
+
+	/**
 	 * Category adapter list.
 	 * 
 	 * @param entityId
@@ -112,17 +130,5 @@ public interface CategoryRepository extends QueryRepository<Category, Serializab
 			+ "and category.categoryGroup = ?2 "
 			+ "and category.categoryCode = ?3 ")
 	Integer findByEntity_IdAndCategoryGroupAndCategoryCode(int entityId, char categoryGroup, String categoryCode);
-
-	/**
-	 * Find adapter by Id.
-	 * 
-	 * @param id
-	 */
-	@Query("select new "
-			+ "org.helianto.core.repository.CategoryReadAdapter"
-			+ "(category.id, category.categoryCode, category.categoryName) "
-			+ "from Category category "
-			+ "where category.id = ?1 ")
-	CategoryReadAdapter findAdapter(int id);
 
 }
