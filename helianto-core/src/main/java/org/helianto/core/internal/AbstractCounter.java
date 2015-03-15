@@ -15,10 +15,14 @@
 
 package org.helianto.core.internal;
 
+import java.util.List;
+
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
- * Base class to represent a transient counter.
+ * Base class to add counting methods.
  * 
  * @author Mauricio Fernandes de Castro
  */
@@ -50,6 +54,16 @@ public abstract class AbstractCounter
     	super();
     }
 
+	/**
+	 * True if base class matches id.
+	 * 
+	 * @param counter
+	 */
+    @JsonIgnore
+	protected boolean match(SimpleCounter counter) {
+		return counter.getBaseClass()!=null && counter.getBaseClass().equals(getId());
+	}
+	
     /**
      * Count items.
      */
@@ -61,6 +75,22 @@ public abstract class AbstractCounter
 	}
     
     /**
+     * Count items.
+     * 
+     * @param counterList
+     */
+    @JsonIgnore
+	public AbstractCounter setCountItems(List<SimpleCounter> counterList) {
+		for (SimpleCounter counter: counterList) {
+			if (match(counter)) {
+				setCountItems((int) counter.getItemCount());
+				break;
+			}
+		}
+		return this;
+	}
+	
+    /**
      * Count alerts.
      */
     public int getCountAlerts() {
@@ -70,6 +100,22 @@ public abstract class AbstractCounter
 		this.countAlerts = countAlerts;
 	}
     
+    /**
+     * Count alerts.
+     * 
+     * @param counterList
+     */
+    @JsonIgnore
+	public AbstractCounter setCountAlerts(List<SimpleCounter> counterList) {
+		for (SimpleCounter counter: counterList) {
+			if (match(counter)) {
+				setCountAlerts((int) counter.getItemCount());
+				break;
+			}
+		}
+		return this;
+	}
+	
     /**
      * Count warnings.
      */
@@ -81,6 +127,22 @@ public abstract class AbstractCounter
 	}
     
     /**
+     * Count warnings.
+     * 
+     * @param counterList
+     */
+    @JsonIgnore
+	public AbstractCounter setCountWarnings(List<SimpleCounter> counterList) {
+		for (SimpleCounter counter: counterList) {
+			if (match(counter)) {
+				setCountWarnings((int) counter.getItemCount());
+				break;
+			}
+		}
+		return this;
+	}
+	
+    /**
      * Count others.
      */
     public int getCountOthers() {
@@ -88,6 +150,22 @@ public abstract class AbstractCounter
 	}
     public void setCountOthers(int countOthers) {
 		this.countOthers = countOthers;
+	}
+    
+    /**
+     * Count others.
+     * 
+     * @param counterList
+     */
+    @JsonIgnore
+	public AbstractCounter setCountOthers(List<SimpleCounter> counterList) {
+		for (SimpleCounter counter: counterList) {
+			if (match(counter)) {
+				setCountOthers((int) counter.getItemCount());
+				break;
+			}
+		}
+		return this;
 	}
     
 }
