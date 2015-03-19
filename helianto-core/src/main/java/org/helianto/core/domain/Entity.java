@@ -113,7 +113,7 @@ public class Entity
     @JoinColumn(name="operatorId", nullable=true)
     private Operator operator;
     
-    @Column(length=20)
+    @Column(length=32)
     private String alias = "";
     
     @DateTimeFormat(style="S-")

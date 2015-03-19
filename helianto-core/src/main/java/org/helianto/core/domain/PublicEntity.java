@@ -61,7 +61,7 @@ public class PublicEntity
 	@JoinColumn(name = "entityId")
 	private Entity entity;
 	
-	@Column(length=20)
+	@Column(length=32)
 	private String entityAlias = "";
 	
 	@Column(length=128)
