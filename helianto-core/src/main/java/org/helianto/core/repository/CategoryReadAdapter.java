@@ -19,7 +19,9 @@ public class CategoryReadAdapter
 	
 	private Category adaptee;
 	
-	private int id;
+	private Integer id;
+	
+	private Integer entityId;
 	
 	private Character categoryGroup;
 	
@@ -78,6 +80,7 @@ public class CategoryReadAdapter
 	 * @param categoryCode
 	 * @param categoryName
 	 * @param categoryIcon
+	 * @deprecated
 	 */
 	public CategoryReadAdapter(int id
 			, Character categoryGroup
@@ -94,20 +97,25 @@ public class CategoryReadAdapter
 	 * Constructor.
 	 * 
 	 * @param id
+	 * @param entityId
 	 * @param categoryGroup
 	 * @param categoryCode
 	 * @param categoryName
 	 * @param categoryIcon
 	 * @param scriptItems
 	 */
-	public CategoryReadAdapter(int id
+	public CategoryReadAdapter(Integer id
+			, Integer entityId
 			, Character categoryGroup
 			, String categoryCode
 			, String categoryName
 			, String categoryIcon
 			, String scriptItems
 			) {
-		this(id, categoryGroup, categoryCode, categoryName, categoryIcon);
+		this(id, categoryCode, categoryName);
+		this.entityId = entityId;
+		this.categoryGroup = categoryGroup;
+		setCategoryIcon(categoryIcon);
 		this.scriptItems = scriptItems;
 	}
 	
@@ -144,8 +152,12 @@ public class CategoryReadAdapter
 		return this;
 	}
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
+	}
+	
+	public Integer getEntityId() {
+		return entityId;
 	}
 	
 	public Character getCategoryGroup() {

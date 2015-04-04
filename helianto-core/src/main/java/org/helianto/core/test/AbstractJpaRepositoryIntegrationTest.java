@@ -8,10 +8,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.helianto.core.config.HeliantoServiceConfig;
-import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
-import org.helianto.core.filter.TestingFilter;
 import org.helianto.core.repository.ContextRepository;
 import org.helianto.core.repository.EntityRepository;
 import org.junit.Before;
@@ -20,6 +18,7 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -36,7 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 @ContextConfiguration(classes={TestDataSourceConfig.class, HeliantoServiceConfig.class})
 @ActiveProfiles("standalone")
 @Transactional
-public abstract class AbstractJpaRepositoryIntegrationTest<T, R extends FilterRepository<T, Serializable>> {
+public abstract class AbstractJpaRepositoryIntegrationTest<T, R extends JpaRepository<T, Serializable>> {
 
 	@Autowired
     protected EntityRepository entityRepository;
@@ -82,7 +81,7 @@ public abstract class AbstractJpaRepositoryIntegrationTest<T, R extends FilterRe
 		assertNotNull(getTargetId(target));
 		T other = findByKey();
 		assertEquals(target, other);
-		Iterable<T> resultList = getRepository().find(new TestingFilter(""));
+		Iterable<T> resultList = getRepository().findAll();
 		assertTrue(((List<T>) resultList).contains(other));
 	}
 	

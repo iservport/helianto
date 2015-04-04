@@ -15,6 +15,7 @@
 
 package org.helianto.user.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -47,6 +48,7 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.type.FolderEntity;
 import org.helianto.core.internal.AbstractCounter;
+import org.helianto.core.internal.KeyNameAdapter;
 import org.helianto.core.utils.StringListUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -76,6 +78,7 @@ public class UserGroup
 	  FolderEntity
 	, Comparable<UserGroup>
 	, Programmable
+	, KeyNameAdapter
 
 {
 	
@@ -454,7 +457,28 @@ public class UserGroup
     	getScriptList().add(scriptContent);
 	}
     
-	/**
+    @Override
+    public Serializable getKey() {
+    	return getId();
+    }
+
+    @Override
+    public String getCode() {
+    	if (getUserKey()!=null) {
+    		return getUserKey();
+    	}
+    	return "";
+    }
+
+    @Override
+    public String getName() {
+    	if (getUserName()!=null) {
+    		return getUserName();
+    	}
+    	return "";
+    }
+
+    /**
      * Parent associations.
      */
     public Set<UserAssociation> getParentAssociations() {
@@ -549,5 +573,6 @@ public class UserGroup
          result = 37 * result + ( getUserKey() == null ? 0 : this.getUserKey().hashCode() );
          return result;
    }
+
 
 }

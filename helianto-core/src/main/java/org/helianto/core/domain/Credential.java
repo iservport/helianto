@@ -42,6 +42,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  * Provides <code>Identity</code> with authentication information. 
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated see IdentityKey
  */
 @javax.persistence.Entity
 @Table(name="core_credential",

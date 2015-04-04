@@ -148,6 +148,10 @@ public class Entity
     @Column(length=128)
     private String entityDomain = "";
     
+    @ManyToOne
+    @JoinColumn(name="cityId")
+    private City city;
+    
     @JsonIgnore
     @OneToMany(mappedBy="entity")
     private Set<UserGroup> users = new HashSet<UserGroup>(0);
@@ -429,6 +433,16 @@ public class Entity
 	}
     public void setEntityDomain(String entityDomain) {
 		this.entityDomain = entityDomain;
+	}
+    
+    /**
+     * City.
+     */
+    public City getCity() {
+		return city;
+	}
+    public void setCity(City city) {
+		this.city = city;
 	}
 
     /**

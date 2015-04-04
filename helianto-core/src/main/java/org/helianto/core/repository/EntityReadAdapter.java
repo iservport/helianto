@@ -14,9 +14,11 @@ public class EntityReadAdapter
 	
 	private static final long serialVersionUID = 1L;
 
-	protected int id;
+	protected Integer id;
     
-	protected int contextId;
+	protected Integer contextId;
+    
+	protected Integer userId;
     
 	protected String entityAlias;
 	
@@ -34,6 +36,18 @@ public class EntityReadAdapter
     
 	protected Character entityType;
 
+	protected Integer cityId;
+
+	protected String cityName;
+
+	protected Integer stateId;
+
+	protected String stateCode;
+
+	protected String stateName;
+
+	protected Integer countryId;
+
 	public EntityReadAdapter() {
 		super();
 	}
@@ -43,6 +57,7 @@ public class EntityReadAdapter
 	 * 
 	 * @param id
 	 * @param contextId
+	 * @param userId
 	 * @param entityAlias
 	 * @param installDate
 	 * @param summary
@@ -51,9 +66,16 @@ public class EntityReadAdapter
 	 * @param customProperties
 	 * @param activityState
 	 * @param entityType
+	 * @param cityId
+	 * @param cityName
+	 * @param stateId
+	 * @param stateCode
+	 * @param stateName
+	 * @param countryId
 	 */
 	public EntityReadAdapter(int id
-			, int contextId
+			, Integer contextId
+			, Integer userId
 			, String entityAlias
 			, Date installDate
 			, String summary
@@ -62,10 +84,17 @@ public class EntityReadAdapter
 			, String customProperties
 			, Character activityState
 			, Character entityType
+			, Integer cityId
+			, String cityName
+			, Integer stateId
+			, String stateCode
+			, String stateName
+			, Integer countryId
 			) {
 		super();
 		this.id = id;
 		this.contextId = contextId;
+		this.userId = userId;
 		this.entityAlias = entityAlias;
 		this.installDate = installDate;
 		this.summary = summary;
@@ -74,6 +103,12 @@ public class EntityReadAdapter
 		this.customProperties = customProperties;
 		this.activityState = activityState;
 		this.entityType = entityType;
+		this.cityId = cityId;
+		this.cityName = cityName;
+		this.stateId = stateId;
+		this.stateCode = stateCode;
+		this.stateName = stateName;
+		this.countryId = countryId;
 	}
 
 	/**
@@ -81,6 +116,7 @@ public class EntityReadAdapter
 	 * 
 	 * @param id
 	 * @param contextId
+	 * @param userId
 	 * @param entityAlias
 	 * @param installDate
 	 * @param summary
@@ -89,9 +125,16 @@ public class EntityReadAdapter
 	 * @param customProperties
 	 * @param activityState
 	 * @param entityType
+	 * @param cityId
+	 * @param cityName
+	 * @param stateId
+	 * @param stateCode
+	 * @param stateName
+	 * @param countryId
 	 */
-	public EntityReadAdapter(int id
-			, int contextId
+	public EntityReadAdapter(Integer id
+			, Integer contextId
+			, Integer userId
 			, String entityAlias
 			, Date installDate
 			, String summary
@@ -100,9 +143,16 @@ public class EntityReadAdapter
 			, String customProperties
 			, String activityState
 			, String entityType
+			, Integer cityId
+			, String cityName
+			, Integer stateId
+			, String stateCode
+			, String stateName
+			, Integer countryId
 			) {
 		this(id
 			, contextId
+			, userId
 			, entityAlias
 			, installDate
 			, summary
@@ -111,15 +161,25 @@ public class EntityReadAdapter
 			, customProperties
 			, activityState!=null  && activityState.length()>0 ? activityState.charAt(0) : 'I'
 			, entityType!=null  && entityType.length()>0 ? entityType.charAt(0) : 'C'
+			, cityId
+			, cityName
+			, stateId
+			, stateCode
+			, stateName
+			, countryId
 		);
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public int getContextId() {
+	public Integer getContextId() {
 		return contextId;
+	}
+
+	public Integer getUserId() {
+		return userId;
 	}
 
 	public String getEntityAlias() {
@@ -152,6 +212,30 @@ public class EntityReadAdapter
 
 	public Character getEntityType() {
 		return entityType;
+	}
+	
+	public Integer getCityId() {
+		return cityId;
+	}
+	
+	public String getCityName() {
+		return cityName;
+	}
+	
+	public Integer getStateId() {
+		return stateId;
+	}
+	
+	public String getStateCode() {
+		return stateCode;
+	}
+	
+	public String getStateName() {
+		return stateName;
+	}
+	
+	public Integer getCountryId() {
+		return countryId;
 	}
 
 	@Override
