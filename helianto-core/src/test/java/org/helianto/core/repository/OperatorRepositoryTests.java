@@ -9,9 +9,9 @@ import org.helianto.core.test.AbstractJpaRepositoryIntegrationTest;
  * 
  * @author mauriciofernandesdecastro
  */
-public class OperatorRepositoryTests extends AbstractJpaRepositoryIntegrationTest<Operator, ContextRepository> {
+public class OperatorRepositoryTests extends AbstractJpaRepositoryIntegrationTest<Operator, OperatorRepository> {
 
-	protected ContextRepository getRepository() {
+	protected OperatorRepository getRepository() {
 		return operatorRepository;
 	}
 	

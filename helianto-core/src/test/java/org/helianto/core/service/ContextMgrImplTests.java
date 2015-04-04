@@ -40,9 +40,9 @@ import org.helianto.core.form.EntityForm;
 import org.helianto.core.form.KeyTypeForm;
 import org.helianto.core.form.ProvinceForm;
 import org.helianto.core.form.ServiceForm;
-import org.helianto.core.repository.ContextRepository;
 import org.helianto.core.repository.EntityRepository;
 import org.helianto.core.repository.KeyTypeRepository;
+import org.helianto.core.repository.OperatorRepository;
 import org.helianto.core.repository.ProvinceRepository;
 import org.helianto.core.repository.ServiceRepository;
 import org.helianto.core.test.EntityTestSupport;
@@ -214,7 +214,7 @@ public class ContextMgrImplTests {
 //	}
 	
 	private ContextMgrImpl contextMgr;
-	private ContextRepository contextRepository;
+	private OperatorRepository contextRepository;
 	private ProvinceRepository provinceRepository;
 	private EntityRepository entityRepository;
 	private KeyTypeRepository keyTypeRepository;
@@ -224,8 +224,8 @@ public class ContextMgrImplTests {
 	@Before
 	public void setUp() {
 		contextMgr = new ContextMgrImpl();
-		contextRepository = createMock(ContextRepository.class);
-		contextMgr.setContextRepository(contextRepository);
+		contextRepository = createMock(OperatorRepository.class);
+		contextMgr.setOperatorRepository(contextRepository);
 		provinceRepository = createMock(ProvinceRepository.class);
 		contextMgr.setProvinceRepository(provinceRepository);
 		entityRepository = createMock(EntityRepository.class);

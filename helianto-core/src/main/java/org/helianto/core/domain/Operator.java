@@ -70,6 +70,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  * </p>
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated see Context
  */
 @javax.persistence.Entity
 @Table(name="core_operator",
@@ -92,7 +93,7 @@ public class Operator implements java.io.Serializable {
     
     private Locale locale;
     
-    private char operationMode = OperationMode.LOCAL.getValue();
+    private Character operationMode = OperationMode.LOCAL.getValue();
     
     @Column(length=64)
     private String operatorHostAddress = "http://www.helianto.org";

@@ -10,10 +10,8 @@ import java.util.List;
 import org.helianto.core.config.HeliantoServiceConfig;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
-import org.helianto.core.repository.ContextRepository;
 import org.helianto.core.repository.EntityRepository;
-import org.helianto.core.test.EntityTestSupport;
-import org.helianto.core.test.OperatorTestSupport;
+import org.helianto.core.repository.OperatorRepository;
 import org.helianto.query.data.QueryRepository;
 import org.helianto.query.jpa.JPAQueryBuilder;
 import org.junit.Before;
@@ -44,7 +42,7 @@ public abstract class AbstractQueryRepositoryIntegrationTest<T, R extends QueryR
     protected EntityRepository entityRepository;
     
 	@Autowired
-    protected ContextRepository operatorRepository;
+    protected OperatorRepository operatorRepository;
 
     /**
 	 * Provide the test infrastructure with an entity.

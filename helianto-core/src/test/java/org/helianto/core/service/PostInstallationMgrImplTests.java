@@ -16,9 +16,9 @@ import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
-import org.helianto.core.repository.ContextRepository;
 import org.helianto.core.repository.EntityRepository;
 import org.helianto.core.repository.KeyTypeRepository;
+import org.helianto.core.repository.OperatorRepository;
 import org.helianto.core.repository.ProvinceRepository;
 import org.helianto.core.repository.ServiceRepository;
 import org.helianto.core.service.internal.ProvinceResourceParserStrategy;
@@ -127,7 +127,7 @@ public class PostInstallationMgrImplTests {
 	
 	// collabs
 	
-	private ContextRepository contextRepository;
+	private OperatorRepository contextRepository;
 	private ProvinceRepository provinceRepository;
 	private KeyTypeRepository keyTypeRepository;
 	private ServiceRepository serviceRepository;
@@ -140,7 +140,7 @@ public class PostInstallationMgrImplTests {
     
 	@Before
     public void setUp() {
-        contextRepository = createMock(ContextRepository.class);
+        contextRepository = createMock(OperatorRepository.class);
         provinceRepository = createMock(ProvinceRepository.class);
         keyTypeRepository = createMock(KeyTypeRepository.class);
         serviceRepository = createMock(ServiceRepository.class);
@@ -151,7 +151,7 @@ public class PostInstallationMgrImplTests {
         identityMgr = createMock(IdentityMgr.class);
         userMgr = createMock(UserMgr.class);
         postInstallationMgr = new PostInstallationMgrImpl();
-        postInstallationMgr.setContextRepository(contextRepository);
+        postInstallationMgr.setOperatorRepository(contextRepository);
         postInstallationMgr.setProvinceRepository(provinceRepository);
         postInstallationMgr.setKeyTypeRepository(keyTypeRepository);
         postInstallationMgr.setServiceRepository(serviceRepository);

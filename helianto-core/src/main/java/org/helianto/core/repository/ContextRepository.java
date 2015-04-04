@@ -2,21 +2,21 @@ package org.helianto.core.repository;
 
 import java.io.Serializable;
 
-import org.helianto.core.data.FilterRepository;
-import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.Context;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Context repository.
  * 
  * @author mauriciofernandesdecastro
  */
-public interface ContextRepository extends FilterRepository<Operator, Serializable> {
+public interface ContextRepository extends JpaRepository<Context, Serializable> {
 	
 	/**
 	 * Find by natural key.
 	 * 
-	 * @param operatorName
+	 * @param contextName
 	 */
-	Operator findByOperatorName(String operatorName);
+	Context findByContextName(String contextName);
 	
 }

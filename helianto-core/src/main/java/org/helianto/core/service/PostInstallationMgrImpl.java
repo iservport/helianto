@@ -29,9 +29,9 @@ import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
-import org.helianto.core.repository.ContextRepository;
 import org.helianto.core.repository.EntityRepository;
 import org.helianto.core.repository.KeyTypeRepository;
+import org.helianto.core.repository.OperatorRepository;
 import org.helianto.core.repository.ProvinceRepository;
 import org.helianto.core.repository.ServiceRepository;
 import org.helianto.core.service.internal.ProvinceResourceParserStrategy;
@@ -65,11 +65,11 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		logger.debug("Check operator {} installation with 'reinstall={}'", defaultOperatorName, reinstall);
 		Operator defaultOperator = null;
 		if (!reinstall) {
-			defaultOperator = contextRepository.findByOperatorName(defaultOperatorName);
+			defaultOperator = opertatorRepository.findByOperatorName(defaultOperatorName);
 		}
 		if (defaultOperator==null) {
 			logger.debug("Will install operator {} ...", defaultOperatorName); 
-			defaultOperator = contextRepository.save(new Operator(defaultOperatorName, Locale.getDefault()));
+			defaultOperator = opertatorRepository.save(new Operator(defaultOperatorName, Locale.getDefault()));
 		}
 		logger.debug("Default operator AVAILABLE as {}.", defaultOperator);
 		
@@ -78,7 +78,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		
 		Service userService = installService(defaultOperator, "USER");
 		defaultOperator.getServiceMap().put("USER", userService);
-		contextRepository.flush();
+		opertatorRepository.flush();
 		return defaultOperator;
 	}
 
@@ -175,7 +175,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		if (entity.getOperator()==null) {
 			throw new IllegalArgumentException("An opertor is required.");
 		}
-		operator = contextRepository.save(operator);
+		operator = opertatorRepository.save(operator);
 		String alias = entity.getAlias();
 		
 		logger.debug("Check entity {} installation with 'reinstall={}'", alias, reinstall);
@@ -202,7 +202,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 		if (entity.getOperator()==null) {
 			throw new IllegalArgumentException("An opertor is required.");
 		}
-		operator = contextRepository.save(operator);
+		operator = opertatorRepository.save(operator);
 		String alias = entity.getAlias();		
 		
 		logger.debug("Check if is there already a current entity {} installation'", alias);
@@ -333,7 +333,7 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 //	
 	// collabs
 	
-	private ContextRepository contextRepository;
+	private OperatorRepository opertatorRepository;
 	private ProvinceRepository provinceRepository;
 	private KeyTypeRepository keyTypeRepository;
 	private ServiceRepository serviceRepository;
@@ -346,8 +346,8 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 	private UserMgr userMgr;
 
 	@javax.annotation.Resource
-	public void setContextRepository(ContextRepository contextRepository) {
-		this.contextRepository = contextRepository;
+	public void setOperatorRepository(OperatorRepository contextRepository) {
+		this.opertatorRepository = contextRepository;
 	}
 	
 	@javax.annotation.Resource

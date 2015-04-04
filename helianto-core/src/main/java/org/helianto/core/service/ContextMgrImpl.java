@@ -50,9 +50,9 @@ import org.helianto.core.form.ServiceForm;
 import org.helianto.core.form.StateForm;
 import org.helianto.core.repository.CityRepository;
 import org.helianto.core.repository.ContextEventRepository;
-import org.helianto.core.repository.ContextRepository;
 import org.helianto.core.repository.EntityRepository;
 import org.helianto.core.repository.KeyTypeRepository;
+import org.helianto.core.repository.OperatorRepository;
 import org.helianto.core.repository.ProvinceRepository;
 import org.helianto.core.repository.ServiceRepository;
 import org.helianto.core.repository.StateRepository;
@@ -74,17 +74,17 @@ public class ContextMgrImpl
 
 	@Transactional(readOnly=true)
 	public List<Operator> findAllContexts() {
-    	return contextRepository.findAll();
+    	return operatorRepository.findAll();
 	}
 	
 	@Transactional(readOnly=true)
 	public Operator findOneContext(String contextName) {
-    	return contextRepository.findByOperatorName(contextName);
+    	return operatorRepository.findByOperatorName(contextName);
 	}
 	
 	@Transactional
 	public Operator storeContext(Operator operator) {
-		return contextRepository.saveAndFlush(operator);
+		return operatorRepository.saveAndFlush(operator);
 	}
 	
 	public List<State> findStates(Operator context) {
@@ -197,7 +197,7 @@ public class ContextMgrImpl
 
 	@Transactional
 	public Map<String, String> loadServiceNameMap(Operator operator, UserRole userRole) {
-		Operator managedOperator = contextRepository.save(operator);
+		Operator managedOperator = operatorRepository.save(operator);
 		Map<String, String> serviceNameMap = new HashMap<String, String>();
 		Collection<Service> services = managedOperator.getServiceMap().values();
 		if (services!=null && services.size()>0) {
@@ -233,7 +233,8 @@ public class ContextMgrImpl
 	
 	// collabs
 	
-	private ContextRepository contextRepository;
+	private OperatorRepository operatorRepository;
+	
 	private StateRepository stateRepository;
 	private CityRepository cityRepository;
 	private EntityRepository entityRepository;
@@ -244,9 +245,9 @@ public class ContextMgrImpl
 	
 	private ProvinceRepository provinceRepository;
 
-	@Resource
-	public void setContextRepository(ContextRepository contextRepository) {
-		this.contextRepository = contextRepository;
+	@javax.annotation.Resource
+	public void setOperatorRepository(OperatorRepository contextRepository) {
+		this.operatorRepository = contextRepository;
 	}
 	
 	@Resource
