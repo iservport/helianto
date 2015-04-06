@@ -44,6 +44,7 @@ import org.helianto.core.Programmable;
 import org.helianto.core.def.CreateIdentity;
 import org.helianto.core.def.UserState;
 import org.helianto.core.domain.Category;
+import org.helianto.core.domain.ContextGroup;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.type.FolderEntity;
@@ -177,6 +178,19 @@ public class UserGroup
     public UserGroup(Entity entity, String userKey) {
     	this(entity);
     	setUserKey(userKey);
+    }
+
+	/** 
+	 * User group constructor.
+	 * 
+	 * @param entity
+	 * @param contextGroup
+	 */
+    public UserGroup(Entity entity, ContextGroup contextGroup) {
+    	this(entity);
+    	setUserKey(contextGroup.getContextGroupCode());
+    	setUserName(contextGroup.getContextGroupName());
+    	setUserType('S');
     }
 
     /**
