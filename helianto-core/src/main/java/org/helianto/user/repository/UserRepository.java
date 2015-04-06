@@ -35,6 +35,20 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 	User findByEntity_IdAndIdentity_Id(int entityId, int identityId);
 	
 	/**
+	 * Find by key names.
+	 * 
+	 * @param contextName
+	 * @param entityAlias
+	 * @param principal
+	 */
+	@Query("select user_ "
+			+ "from User user_ "
+			+ "where user_.entity.operator.operatorName = ?1 "
+			+ "and user_.entity.alias = ?2 "
+			+ "and user_.identity.principal = ?3 ")
+	User findByEntityAliasAndPrincipal(String contextName, String entityAlias, String principal);
+	
+	/**
 	 * Find by user id.
 	 * 
 	 * @param userId

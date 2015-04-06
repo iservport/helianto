@@ -1,6 +1,7 @@
 package org.helianto.core.repository;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import org.helianto.core.domain.ContextGroup;
@@ -22,7 +23,6 @@ public interface ContextGroupRepository
 	 * 
 	 * @param contextId
 	 * @param contextGroupCode
-	 * @return
 	 */
 	@Query("select contextGroup "
 			+ "from ContextGroup contextGroup "
@@ -31,11 +31,22 @@ public interface ContextGroupRepository
 	public ContextGroup findByContextIdAndContextGroupCode(int contextId, String contextGroupCode);
 	
 	/**
+	 * Find by context name.
+	 * 
+	 * @param contextName
+	 * @param contextGroupCodes
+	 */
+	@Query("select contextGroup_ "
+			+ "from ContextGroup contextGroup_ "
+			+ "where contextGroup_.context.operatorName = ?1 "
+			+ "and contextGroup_.contextGroupCode in ?2 ")
+	public List<ContextGroup> findByContextName(String contextName, Collection<String> contextGroupCodes);
+	
+	/**
 	 * List context groups.
 	 * 
 	 * @param operator
 	 * @param page
-	 * @return
 	 */
 	@Query("select new "
 			+ "org.helianto.core.repository.ContextGroupReadAdapter"
@@ -50,7 +61,6 @@ public interface ContextGroupRepository
 	 * 
 	 * @param operatorId
 	 * @param page
-	 * @return
 	 */
 	@Query("select new "
 			+ "org.helianto.core.repository.ContextGroupReadAdapter"
