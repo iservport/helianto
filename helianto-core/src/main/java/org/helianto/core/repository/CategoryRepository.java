@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
-import org.helianto.query.data.QueryRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 /**
@@ -16,7 +16,7 @@ import org.springframework.data.jpa.repository.Query;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface CategoryRepository extends QueryRepository<Category, Serializable> {
+public interface CategoryRepository extends JpaRepository<Category, Serializable> {
 	
 	/**
 	 * Find by category group.

@@ -22,15 +22,11 @@ import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.Service;
-import org.helianto.core.filter.Filter;
-import org.helianto.core.form.AssociationForm;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserAssociation;
 import org.helianto.user.domain.UserGroup;
 import org.helianto.user.domain.UserLog;
 import org.helianto.user.domain.UserRole;
-import org.helianto.user.form.UserGroupForm;
-import org.helianto.user.form.UserRoleForm;
 
 /**
  * Default user service layer interface for the core package.
@@ -53,13 +49,6 @@ public interface UserMgr {
 	 */
 	UserGroup findAdminGroup(Entity entity);
 	
-	/**
-     * <p>List <code>UserGroup</code> by string criteria.</p>
-     * 
-     * @param form
-     */
-    List<? extends UserGroup> findUsers(UserGroupForm form);
-    
     /**
      * Find users sharing the same user key.
      * 
@@ -84,26 +73,12 @@ public interface UserMgr {
      */
     List<User> findUsers(String parent, String userKey, char entityType);
 
-//    /**
-//     * Find users sharing the same identity.
-//     * 
-//     * @param identity
-//     */
-//    public List<? extends UserGroup> findUsers(Identity identity);
-//
     /**
      * <p>Store <code>UserGroup</code> and return a managed instance.</p>
      * 
      * @param userGroup
      */
     UserGroup storeUserGroup(UserGroup userGroup);
-    
-    /**
-     * Find user associations.
-     * 
-     * @param form
-     */
-    List<UserAssociation> findUserAssociations(AssociationForm form);
     
     /**
      * Find user associations.
@@ -170,22 +145,6 @@ public interface UserMgr {
 	 */
 	UserGroup installUserGroup(Entity defaultEntity, String userGroupName, boolean reinstall);
 
-	/**
-	 * Find <code>UserRole</code>(s).
-	 * 
-	 * @param userRoleFilter
-	 * @deprecated
-	 * @see #findUserRoles(UserRoleForm)
-	 */
-	List<UserRole> findUserRoles(Filter userRoleFilter);
-	
-	/**
-	 * Find <code>UserRole</code>(s).
-	 * 
-	 * @param form
-	 */
-	List<UserRole> findUserRoles(UserRoleForm form);
-	
 	/**
 	 * Install an UserRole, if does not exist.
 	 * 

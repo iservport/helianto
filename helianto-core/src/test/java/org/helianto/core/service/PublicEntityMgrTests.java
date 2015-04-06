@@ -2,9 +2,7 @@ package org.helianto.core.service;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.easymock.EasyMock;
 import org.helianto.core.PublicEntityMgr;
@@ -12,8 +10,6 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.PublicAddress;
 import org.helianto.core.domain.PublicEntity;
-import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.classic.TestingFilter;
 import org.helianto.core.repository.PublicAddressRepository;
 import org.helianto.core.repository.PublicEntityRepository;
 import org.junit.After;
@@ -27,18 +23,6 @@ import org.junit.Test;
 public class PublicEntityMgrTests {
 	
 	private PublicEntityMgr publicEntityMgr;
-	
-	@Test
-	public void findPublicAddress() {
-		Filter filter = new TestingFilter();
-		List<PublicAddress> publicAddressList = new ArrayList<PublicAddress>();
-		
-		EasyMock.expect(publicAddressRepository.find(filter)).andReturn(publicAddressList);
-		EasyMock.replay(publicAddressRepository);
-		
-		assertEquals(publicAddressList, publicEntityMgr.findPublicAddress(filter));
-		EasyMock.verify(publicAddressRepository);
-	}
 	
 	@Test
 	public void storePublicAddress() {
@@ -63,18 +47,6 @@ public class PublicEntityMgrTests {
 	}
 	
 	///
-	
-	@Test
-	public void findPublicEntities() {
-		Filter filter = new TestingFilter();
-		List<PublicEntity> publicEntityList = new ArrayList<PublicEntity>();
-		
-		EasyMock.expect(publicEntityRepository.find(filter)).andReturn(publicEntityList);
-		EasyMock.replay(publicEntityRepository);
-		
-		assertEquals(publicEntityList, publicEntityMgr.findPublicEntities(filter));
-		EasyMock.verify(publicEntityRepository);
-	}
 	
 	@Test
 	public void storePublicEntity() {

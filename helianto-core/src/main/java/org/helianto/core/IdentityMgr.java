@@ -15,7 +15,6 @@
 
 package org.helianto.core;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.helianto.core.domain.ContactInfo;
@@ -24,8 +23,6 @@ import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.PersonalAddress;
 import org.helianto.core.domain.Phone;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.form.IdentityForm;
-import org.helianto.core.form.PersonalAddressForm;
 
 /**
  * Default identity service layer interface for the core package.
@@ -56,22 +53,6 @@ public interface IdentityMgr {
     public byte[] loadIdentityPhoto(Identity identity);
     
     /**
-     * <p>Selects an <code>Identity</code> list.
-     * 
-     * @param filter
-     * @param exclusions list to be removed after selection
-     * @deprecated
-     */
-    public List<Identity> findIdentities(Filter filter, Collection<Identity> exclusions);
-    
-    /**
-     * <p>Selects an <code>Identity</code> list.
-     * 
-     * @param form
-     */
-    public List<Identity> findIdentities(IdentityForm form);
-    
-    /**
      * Store the given <code>Identity</code>.
      * 
      * @param identity
@@ -93,13 +74,6 @@ public interface IdentityMgr {
      * @deprecated
      */
     public List<PersonalAddress> findPersonalAddresses(Filter filter);
-    
-    /**
-     * Find a <code>PersonalAddress</code> list.
-     * 
-     * @param form
-     */
-    public List<PersonalAddress> findPersonalAddresses(PersonalAddressForm form);
     
     /**
      * Store the given <code>PersonalAddress</code>.

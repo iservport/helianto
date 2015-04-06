@@ -27,13 +27,6 @@ import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
 import org.helianto.core.domain.State;
-import org.helianto.core.form.CityForm;
-import org.helianto.core.form.ContextEventForm;
-import org.helianto.core.form.EntityForm;
-import org.helianto.core.form.KeyTypeForm;
-import org.helianto.core.form.ProvinceForm;
-import org.helianto.core.form.ServiceForm;
-import org.helianto.core.form.StateForm;
 import org.helianto.user.domain.UserRole;
 
 /**
@@ -82,13 +75,6 @@ public interface ContextMgr {
 	List<State> findStates(Operator context);
 	
     /**
-     * Find <code>State</code>s.
-     * 
-     * @param form
-     */
-	List<State> findStates(StateForm form);
-	
-    /**
      * Store <code>State</code> to the data store.
      * 
      * @param state
@@ -109,13 +95,6 @@ public interface ContextMgr {
      * @param stateCode
      */
 	List<City> findCities(Operator context, String stateCode);
-	
-	/**
-     * Find <code>City</code>.
-     * 
-     * @param form
-     */
-	List<City> findCities(CityForm form);
 	
     /**
      * Store <code>City</code>.
@@ -140,13 +119,6 @@ public interface ContextMgr {
 	Entity findOneEntity(String contextName, String alias);
 
     /**
-     * Find <code>Entity</code> list.
-     * 
-     * @param form
-     */
-	List<Entity> findEntities(EntityForm form);
-
-    /**
      * Store <code>Entity</code> to the data store.
      * 
      * @param entity
@@ -160,13 +132,6 @@ public interface ContextMgr {
      */
 	List<KeyType> findKeyTypes(Operator operator);
 	
-    /**
-     * Find <code>KeyType</code>(s).
-     * 
-     * @param form
-     */
-	List<KeyType> findKeyTypes(KeyTypeForm form);
-
     /**
      * Store <code>KeyType</code> to the data store.
      * 
@@ -182,25 +147,11 @@ public interface ContextMgr {
 	List<Service> findServices(Operator operator);
 
     /**
-     * Find <code>Service</code>(s).
-     * 
-     * @param form
-     */
-	List<Service> findServices(ServiceForm form);
-
-    /**
      * Store <code>Service</code> to the data store.
      * 
      * @param service
      */
 	Service storeService(Service service);
-	
-    /**
-     * Find <code>ContextEvent</code>(s).
-     * 
-     * @param form
-     */
-	List<ContextEvent> findContextEvents(ContextEventForm form);
 	
     /**
      * Store <code>Service</code> to the data store.
@@ -214,13 +165,6 @@ public interface ContextMgr {
 	 */
 	Map<String, String> loadServiceNameMap(Operator operator, UserRole userRole);
 
-    /**
-     * Find <code>Province</code>s.
-     * 
-     * @param form
-     */
-	List<Province> findProvinces(ProvinceForm form);
-	
     /**
      * Store <code>Province</code> to the data store.
      * 

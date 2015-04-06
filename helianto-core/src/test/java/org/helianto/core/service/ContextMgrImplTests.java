@@ -36,8 +36,6 @@ import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
 import org.helianto.core.filter.Filter;
 import org.helianto.core.filter.ServiceFormFilterAdapter;
-import org.helianto.core.form.EntityForm;
-import org.helianto.core.form.KeyTypeForm;
 import org.helianto.core.form.ProvinceForm;
 import org.helianto.core.form.ServiceForm;
 import org.helianto.core.repository.EntityRepository;
@@ -115,18 +113,6 @@ public class ContextMgrImplTests {
 	}
 	
 	@Test
-	public void findEntities() {
-		EntityForm form = EasyMock.createMock(EntityForm.class);
-		List<Entity> entityList = new ArrayList<Entity>();
-		
-		expect(entityRepository.find(EasyMock.isA(Filter.class))).andReturn(entityList);
-		replay(entityRepository);
-		
-		assertSame(entityList , contextMgr.findEntities(form));
-		verify(entityRepository);
-	}
-	
-	@Test
 	public void storeEntity() {
 		Entity entity = EntityTestSupport.createEntity();
 		
@@ -135,18 +121,6 @@ public class ContextMgrImplTests {
 		
 		assertSame(entity , contextMgr.storeEntity(entity));
 		verify(entityRepository);
-	}
-	
-	@Test
-	public void findKeyTypes() {
-		List<KeyType> keyTypeList = new ArrayList<KeyType>();
-		KeyTypeForm form = createMock(KeyTypeForm.class);
-		
-		expect(keyTypeRepository.find(isA(Filter.class))).andReturn(keyTypeList);
-		replay(keyTypeRepository);
-		
-		assertSame(keyTypeList , contextMgr.findKeyTypes(form));
-		verify(keyTypeRepository);
 	}
 	
 	@Test

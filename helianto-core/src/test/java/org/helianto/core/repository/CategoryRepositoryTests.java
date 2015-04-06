@@ -2,9 +2,8 @@ package org.helianto.core.repository;
 
 import java.io.Serializable;
 
-import org.helianto.core.def.CategoryGroup;
 import org.helianto.core.domain.Category;
-import org.helianto.core.test.AbstractQueryRepositoryIntegrationTest;
+import org.helianto.core.test.AbstractJpaRepositoryIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -12,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author mauriciofernandesdecastro
  */
 public class CategoryRepositoryTests 
-	extends AbstractQueryRepositoryIntegrationTest<Category, CategoryRepository> {
+	extends AbstractJpaRepositoryIntegrationTest<Category, CategoryRepository> {
 
 	@Autowired
 	private CategoryRepository repository;

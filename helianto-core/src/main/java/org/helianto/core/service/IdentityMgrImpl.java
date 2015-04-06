@@ -15,7 +15,6 @@
 
 package org.helianto.core.service;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -31,9 +30,7 @@ import org.helianto.core.domain.PersonalAddress;
 import org.helianto.core.domain.Phone;
 import org.helianto.core.domain.Province;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.IdentityFormFilterAdapter;
 import org.helianto.core.filter.PersonalAddressFormFilterAdapter;
-import org.helianto.core.form.IdentityForm;
 import org.helianto.core.form.PersonalAddressForm;
 import org.helianto.core.repository.CredentialRepository;
 import org.helianto.core.repository.IdentityRepository;
@@ -74,29 +71,6 @@ public class IdentityMgrImpl implements IdentityMgr {
     	}
     	logger.debug("Identity {} photo not available.", identity);
     	return null;
-    }
-
-	@Transactional(readOnly=true)
-    public List<Identity> findIdentities(Filter filter, Collection<Identity> exclusions) {
-        List<Identity> identityList = (List<Identity>) identityRepository.find(filter);
-        logger.debug("Found {} item(s).", identityList.size());
-        if (exclusions!=null) {
-            identityList.removeAll(exclusions);
-            logger.debug("Removed {} item(s)", exclusions.size());
-        }
-        return identityList ;
-    }
-
-	@Transactional(readOnly=true)
-    public List<Identity> findIdentities(IdentityForm form) {
-    	IdentityFormFilterAdapter filter = new IdentityFormFilterAdapter(form);
-        List<Identity> identityList = (List<Identity>) identityRepository.find(filter);
-        logger.debug("Found {} item(s).", identityList.size());
-        if (form.getExclusions()!=null) {
-            identityList.removeAll(form.getExclusions());
-            logger.debug("Removed {} item(s)", form.getExclusions().size());
-        }
-        return identityList ;
     }
 
     /**

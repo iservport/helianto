@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.helianto.core.domain.Feature;
-import org.helianto.core.test.AbstractQueryRepositoryIntegrationTest;
+import org.helianto.core.test.AbstractJpaRepositoryIntegrationTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author mauriciofernandesdecastro
  */
 public class FeatureRepositoryTests 
-	extends AbstractQueryRepositoryIntegrationTest<Feature, FeatureRepository> 
+	extends AbstractJpaRepositoryIntegrationTest<Feature, FeatureRepository> 
 {
 
 	@Autowired

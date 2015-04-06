@@ -3,10 +3,10 @@ package org.helianto.user.repository;
 import java.io.Serializable;
 import java.util.List;
 
-import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.Entity;
 import org.helianto.user.domain.UserGroup;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 /**
@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.Query;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface UserGroupRepository extends FilterRepository<UserGroup, Serializable> {
+public interface UserGroupRepository extends JpaRepository<UserGroup, Serializable> {
 	
 	/**
 	 * Find by natural key.

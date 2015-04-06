@@ -3,7 +3,7 @@ package org.helianto.core.repository;
 import java.io.Serializable;
 
 import org.helianto.core.domain.License;
-import org.helianto.query.data.QueryRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * License repository.
@@ -11,7 +11,7 @@ import org.helianto.query.data.QueryRepository;
  * @author mauriciofernandesdecastro
  */
 public interface LicenseRepository 
-	extends QueryRepository<License, Serializable> {
+	extends JpaRepository<License, Serializable> {
 	
 	/**
 	 * Find by natural key.

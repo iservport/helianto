@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.helianto.core.domain.Feature;
 import org.helianto.core.domain.Operator;
-import org.helianto.query.data.QueryRepository;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 /**
@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.Query;
  * @author mauriciofernandesdecastro
  */
 public interface FeatureRepository 
-	extends QueryRepository<Feature, Serializable> {
+	extends JpaRepository<Feature, Serializable> {
 	
 	/**
 	 * Find by natural key.

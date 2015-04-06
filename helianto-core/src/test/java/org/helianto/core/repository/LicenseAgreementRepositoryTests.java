@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.helianto.core.domain.License;
 import org.helianto.core.domain.LicenseAgreement;
-import org.helianto.core.test.AbstractQueryRepositoryIntegrationTest;
+import org.helianto.core.test.AbstractJpaRepositoryIntegrationTest;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class LicenseAgreementRepositoryTests 
-	extends AbstractQueryRepositoryIntegrationTest<LicenseAgreement, LicenseAgreementRepository> 
+	extends AbstractJpaRepositoryIntegrationTest<LicenseAgreement, LicenseAgreementRepository> 
 {
 	
 	@Autowired

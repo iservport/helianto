@@ -24,25 +24,17 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import org.helianto.core.IdentityMgr;
-import org.helianto.core.PublicEntityMgr;
 import org.helianto.core.def.EventType;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.Service;
-import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.UserAssociationFormFilterAdapter;
-import org.helianto.core.form.AssociationForm;
 import org.helianto.user.UserMgr;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserAssociation;
 import org.helianto.user.domain.UserGroup;
 import org.helianto.user.domain.UserLog;
 import org.helianto.user.domain.UserRole;
-import org.helianto.user.filter.UserFormFilterAdapter;
-import org.helianto.user.filter.UserRoleFormFilterAdapter;
-import org.helianto.user.form.UserGroupForm;
-import org.helianto.user.form.UserRoleForm;
 import org.helianto.user.repository.UserAssociationRepository;
 import org.helianto.user.repository.UserGroupRepository;
 import org.helianto.user.repository.UserLogRepository;
@@ -95,7 +87,7 @@ public class UserMgrImpl
 	@Transactional
 	public UserGroup storeUserGroup(UserGroup userGroup) {
     	userGroupRepository.saveAndFlush(userGroup);
-    	publicEntityMgr.installPublicEntity(userGroup.getEntity());
+//    	publicEntityMgr.installPublicEntity(userGroup.getEntity());
         return userGroup;
     }
     
@@ -139,14 +131,6 @@ public class UserMgrImpl
     }
 
 	@Transactional(readOnly=true)
-	public List<? extends UserGroup> findUsers(UserGroupForm form) {
-		UserFormFilterAdapter filter = new UserFormFilterAdapter(form);
-		List<UserGroup> userList = (List<UserGroup>) userGroupRepository.find(filter);
-    	logger.debug("Found user list of size {}", userList.size());
-        return userList;
-	}
-
-	@Transactional(readOnly=true)
 	public List<? extends UserGroup> findUsers(String userKey) {
 		List<UserGroup> userList = userGroupRepository.findByUserKeyOrderByLastEventDesc(userKey);
     	logger.debug("Found user list of size {}.", userList.size());
@@ -174,34 +158,13 @@ public class UserMgrImpl
         return userAssociationList;
 	}
 
-//    public List<? extends UserGroup> findUsers(Identity identity) {
-//    	CompositeUserForm form = new CompositeUserForm();
-//		form.setIdentity(identity);
-//		form.setUserState(UserState.ACTIVE.getValue());
-//        logger.debug("Filter users having state {}", form.getUserState());
-//        try {
-//    		return findUsers(new UserFormFilterAdapter(form));
-//        } catch (Exception e) {
-//        	logger.warn("Unable to find users ", e);
-//        }
-//        return null;
-//    }
-//
-	@Transactional(readOnly=true)
-	public List<UserAssociation> findUserAssociations(AssociationForm form) {
-		Filter filter = new UserAssociationFormFilterAdapter(form);
-		List<UserAssociation> userAssociationList = (List<UserAssociation>) userAssociationRepository.find(filter);
-    	logger.debug("Found user association list of size {}", userAssociationList.size());
-        return userAssociationList;
-	}
-
 	@Transactional
     public UserAssociation storeUserAssociation(UserAssociation parentAssociation) {
     	return userAssociationRepository.saveAndFlush(parentAssociation);
     }
     
     /**
-     * Limted (so far) to one level.
+     * Limited (so far) to one level.
      * 
      * @param userGroup
      */
@@ -354,25 +317,6 @@ public class UserMgrImpl
         throw new RuntimeException("Principal should not be null or empty.");
     }
     
-	@Transactional(readOnly=true)
-	public List<UserRole> findUserRoles(Filter filter) {
-		List<UserRole> userRoleList = (List<UserRole>) userRoleRepository.find(filter);
-    	if (userRoleList!=null && userRoleList.size()>0) {
-    		logger.debug("Loaded user role list of size {}", userRoleList.size());
-    	}
-    	return userRoleList;
-	}
-
-	@Transactional(readOnly=true)
-	public List<UserRole> findUserRoles(UserRoleForm form) {
-		Filter filter = new UserRoleFormFilterAdapter(form);
-		List<UserRole> userRoleList = (List<UserRole>) userRoleRepository.find(filter);
-    	if (userRoleList!=null && userRoleList.size()>0) {
-    		logger.debug("Loaded user role list of size {}", userRoleList.size());
-    	}
-    	return userRoleList;
-	}
-
 	@Transactional
 	public UserRole storeUserRole(UserRole userRole) {
 		return userRoleRepository.saveAndFlush(userRole);
@@ -406,7 +350,6 @@ public class UserMgrImpl
     private UserRoleRepository userRoleRepository;
     private UserLogRepository userLogRepository;
 	private IdentityMgr identityMgr;
-	private PublicEntityMgr publicEntityMgr;
 	
 
     @Resource
@@ -439,11 +382,6 @@ public class UserMgrImpl
 		this.identityMgr = identityMgr;
 	}
     
-    @Resource
-    public void setPublicEntityMgr(PublicEntityMgr publicEntityMgr) {
-		this.publicEntityMgr = publicEntityMgr;
-	}
-
     private static final Logger logger = LoggerFactory.getLogger(UserMgrImpl.class);
 
 

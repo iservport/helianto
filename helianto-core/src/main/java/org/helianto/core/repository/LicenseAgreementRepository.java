@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.helianto.core.domain.LicenseAgreement;
-import org.helianto.query.data.QueryRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 /**
@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.Query;
  * @author mauriciofernandesdecastro
  */
 public interface LicenseAgreementRepository 
-	extends QueryRepository<LicenseAgreement, Serializable> {
+	extends JpaRepository<LicenseAgreement, Serializable> {
 	
 	/**
 	 * Find by natural key.

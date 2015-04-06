@@ -15,10 +15,7 @@
 
 package org.helianto.core;
 
-import java.util.List;
-
 import org.helianto.user.domain.UserRequest;
-import org.helianto.user.form.UserRequestForm;
 
 /**
  * User request service interface.
@@ -26,13 +23,6 @@ import org.helianto.user.form.UserRequestForm;
  * @author Mauricio Fernandes de Castro
  */
 public interface UserRequestMgr {
-	
-	/**
-	 * Find a <code>UserRequest</code> list.
-	 * 
-	 * @param form
-	 */
-	public List<UserRequest> findUserRequests(UserRequestForm form);
 	
 	/**
 	 * Store <code>UserRequest</code>.

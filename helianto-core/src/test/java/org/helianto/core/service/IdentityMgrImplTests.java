@@ -23,15 +23,11 @@ import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.helianto.core.DuplicateIdentityException;
 import org.helianto.core.def.ActivityState;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
-import org.helianto.core.filter.IdentityFilterAdapter;
 import org.helianto.core.repository.CredentialRepository;
 import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.service.internal.PrincipalGenerationStrategy;
@@ -115,20 +111,6 @@ public class IdentityMgrImplTests {
         verify(identityRepository);
     }
 
-	@Test
-    public void selectIdentities() {
-        IdentityFilterAdapter filter = new IdentityFilterAdapter("");
-        List<Identity> identityList = new ArrayList<Identity>();
-        List<Identity> exclusions = new ArrayList<Identity>();
-
-        expect(identityRepository.find(filter)).andReturn(identityList);
-        replay(identityRepository);
-
-        assertSame(identityList, identityMgr.findIdentities(filter, exclusions));
-        verify(identityRepository);
-        
-    }
-    
 	@Test
     public void userState() {
         User user = new User(new Entity(), new Identity());

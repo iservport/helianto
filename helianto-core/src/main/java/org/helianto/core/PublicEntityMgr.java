@@ -15,16 +15,12 @@
 
 package org.helianto.core;
 
-import java.util.List;
 import java.util.Map;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.PublicAddress;
 import org.helianto.core.domain.PublicEntity;
 import org.helianto.core.domain.PublicEntityKey;
-import org.helianto.core.filter.Filter;
-import org.helianto.core.form.PublicAddressForm;
-import org.helianto.core.form.PublicEntityForm;
 
 /**
  * Public entity service interface.
@@ -33,21 +29,6 @@ import org.helianto.core.form.PublicEntityForm;
  */
 public interface PublicEntityMgr {
 
-	/**
-     * Find <code>PublicAddress</code> list.
-     * 
-     * @param form
-     */
-	public List<PublicAddress> findPublicAddress(PublicAddressForm form);
-	
-	/**
-     * Find <code>PublicAddress</code> list.
-     * 
-     * @param filter
-     * @deprecated
-     */
-	public List<PublicAddress> findPublicAddress(Filter filter);
-	
     /**
      * Write <code>PublicAddress</code> to the datastore.
      * 
@@ -63,33 +44,11 @@ public interface PublicEntityMgr {
 	public void removePublicAddress(PublicAddress publicAddress);
 	
 	/**
-     * Find <code>PublicEntity</code> list.
-     * 
-     * @param publicEntityFilter
-     * @deprecated
-     */
-	public List<? extends PublicEntity> findPublicEntities(Filter publicEntityFilter);
-	
-	/**
-     * Find <code>PublicEntity</code> list.
-     * 
-     * @param form
-     */
-	public List<? extends PublicEntity> findPublicEntities(PublicEntityForm form);
-	
-	/**
      * Find <code>PublicEntity</code>.
      * 
      * @param entity
      */
 	public PublicEntity findPublicEntity(Entity entity);
-	
-	/**
-     * Install <code>PublicEntity</code>.
-     * 
-     * @param entity
-     */
-	public PublicEntity installPublicEntity(Entity entity);
 	
     /**
      * Write <code>PublicEntity</code> to the datastore.

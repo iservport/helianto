@@ -3,12 +3,12 @@ package org.helianto.core.repository;
 import java.io.Serializable;
 import java.util.List;
 
-import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.City;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.State;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 /**
@@ -16,7 +16,7 @@ import org.springframework.data.jpa.repository.Query;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface CityRepository extends FilterRepository<City, Serializable> {
+public interface CityRepository extends JpaRepository<City, Serializable> {
 	
 	/**
 	 * Find by natural key.

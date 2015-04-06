@@ -27,21 +27,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.easymock.EasyMock;
 import org.helianto.core.IdentityMgr;
-import org.helianto.core.PublicEntityMgr;
 import org.helianto.core.domain.Identity;
-import org.helianto.core.domain.PublicEntity;
-import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.classic.TestingFilter;
 import org.helianto.core.test.UserGroupTestSupport;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserAssociation;
 import org.helianto.user.domain.UserGroup;
 import org.helianto.user.domain.UserLog;
 import org.helianto.user.domain.UserRole;
-import org.helianto.user.filter.UserFormFilterAdapter;
-import org.helianto.user.form.UserGroupForm;
 import org.helianto.user.repository.UserAssociationRepository;
 import org.helianto.user.repository.UserGroupRepository;
 import org.helianto.user.repository.UserLogRepository;
@@ -57,18 +50,6 @@ import org.junit.Test;
 public class UserMgrImplTests {
     
 	@Test
-    public void findUsers() {
-    	List<UserGroup> userList = new ArrayList<UserGroup>();
-    	UserGroupForm form = EasyMock.createMock(UserGroupForm.class);
-    	
-    	expect(userGroupRepository.find(EasyMock.isA(UserFormFilterAdapter.class))).andReturn(userList);
-    	replay(userGroupRepository);
-    	
-    	assertSame(userList, userMgr.findUsers(form));
-    	verify(userGroupRepository);
-    }
-    
-	@Test
     public void storeUserGroup() {
     	UserGroup userGroup = UserGroupTestSupport.createUserGroup();
     	
@@ -77,24 +58,6 @@ public class UserMgrImplTests {
     	
     	assertSame(userGroup, userMgr.storeUserGroup(userGroup));
     	verify(userGroupRepository);
-    }
-	
-	@Test
-    public void publicEntity() {
-    	UserGroup userGroup = UserGroupTestSupport.createUserGroup();
-    	userGroup.getEntity().setNature("S, E");
-    	PublicEntity publicEntity = new PublicEntity(userGroup.getEntity());
-    	
-    	expect(userGroupRepository.saveAndFlush(userGroup)).andReturn(userGroup);
-    	replay(userGroupRepository);
-    	    	
-		EasyMock.expect(publicEntityMgr.installPublicEntity(userGroup.getEntity())).andReturn(publicEntity);
-//    	EasyMock.expect(publicEntityMgr.storePublicEntity(EasyMock.eq(publicEntity))).andReturn(publicEntity);
-    	replay(publicEntityMgr);
-    	
-    	assertSame(userGroup, userMgr.storeUserGroup(userGroup));
-    	verify(userGroupRepository);
-    	verify(publicEntityMgr);
     }
 	
 	@Test
@@ -143,18 +106,6 @@ public class UserMgrImplTests {
     }
 
 	@Test
-	public void findUserRoles() {
-		List<UserRole> userRoleList = new ArrayList<UserRole>();
-		Filter filter = new TestingFilter();
-		
-		expect(userRoleRepository.find(filter)).andReturn(userRoleList);
-		replay(userRoleRepository);
-		
-		assertSame(userRoleList , userMgr.findUserRoles(filter));
-		verify(userRoleRepository);
-	}
-	
-	@Test
 	public void storeUserRole() {
 		UserRole userRole = new UserRole();
 		
@@ -175,7 +126,6 @@ public class UserMgrImplTests {
     private UserLogRepository userLogRepository;
     private UserRoleRepository userRoleRepository;
 	private IdentityMgr identityMgr;
-	private PublicEntityMgr publicEntityMgr;
     
 	@Before
     public void setUp() {
@@ -192,8 +142,6 @@ public class UserMgrImplTests {
 		userMgr.setUserRoleRepository(userRoleRepository);
 		identityMgr = createMock(IdentityMgr.class);
 		userMgr.setIdentityMgr(identityMgr);
-		publicEntityMgr = createMock(PublicEntityMgr.class);
-		userMgr.setPublicEntityMgr(publicEntityMgr);
     }
     
     @After
@@ -204,7 +152,6 @@ public class UserMgrImplTests {
         reset(userLogRepository);
 		reset(userRoleRepository);
         reset(identityMgr);
-        reset(publicEntityMgr);
     }
     
 }

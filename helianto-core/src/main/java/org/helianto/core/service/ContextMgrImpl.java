@@ -33,21 +33,13 @@ import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
 import org.helianto.core.domain.State;
-import org.helianto.core.filter.CityFilterAdapter;
 import org.helianto.core.filter.ContextEventFilterAdapter;
-import org.helianto.core.filter.EntityFormFilterAdapter;
 import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.KeyTypeFormFilterAdapter;
 import org.helianto.core.filter.ProvinceFormFilterAdapter;
 import org.helianto.core.filter.ServiceFormFilterAdapter;
-import org.helianto.core.filter.StateFilterAdapter;
-import org.helianto.core.form.CityForm;
 import org.helianto.core.form.ContextEventForm;
-import org.helianto.core.form.EntityForm;
-import org.helianto.core.form.KeyTypeForm;
 import org.helianto.core.form.ProvinceForm;
 import org.helianto.core.form.ServiceForm;
-import org.helianto.core.form.StateForm;
 import org.helianto.core.repository.CityRepository;
 import org.helianto.core.repository.ContextEventRepository;
 import org.helianto.core.repository.EntityRepository;
@@ -91,10 +83,6 @@ public class ContextMgrImpl
 		return (List<State>) stateRepository.findByContext(context, new Sort(Direction.ASC, "stateName"));
 	}
 	
-	public List<State> findStates(StateForm form) {
-		return (List<State>) stateRepository.find(new StateFilterAdapter(form));
-	}
-	
 	public State storeState(State state) {
 		return stateRepository.saveAndFlush(state);
 	}
@@ -105,10 +93,6 @@ public class ContextMgrImpl
 	
 	public List<City> findCities(Operator context, String stateCode) {
 		return (List<City>) cityRepository.findByContextAndStateStateCode(context, stateCode, new Sort(Direction.ASC, "cityName"));
-	}
-	
-	public List<City> findCities(CityForm form) {
-		return (List<City>) cityRepository.find(new CityFilterAdapter(form));
 	}
 	
 	public City storeCity(City city) {
@@ -125,16 +109,6 @@ public class ContextMgrImpl
 		return entityRepository.findByContextNameAndAlias(contextName, alias);
 	}
 	
-	@Transactional(readOnly=true)
-	public List<Entity> findEntities(EntityForm form) {
-		Filter filter = new EntityFormFilterAdapter(form);
-		List<Entity> entityList = (List<Entity>) entityRepository.find(filter);
-		if (entityList!=null && entityList.size()>0) {
-			logger.debug("Found {} entity(ies).", entityList.size());
-		}
-		return entityList;
-	}
-	
 	@Transactional
 	public Entity storeEntity(Entity entity) {
 		return entityRepository.saveAndFlush(entity);
@@ -143,16 +117,6 @@ public class ContextMgrImpl
 	@Transactional(readOnly=true)
 	public List<KeyType> findKeyTypes(Operator operator) {
 		List<KeyType> keyTypeList = (List<KeyType>) keyTypeRepository.findByOperator(operator);
-    	if (keyTypeList!=null && keyTypeList.size()>0) {
-        	logger.debug("Found key type list of size {}", keyTypeList.size());
-    	}
-    	return keyTypeList;
-	}
-
-	@Transactional(readOnly=true)
-	public List<KeyType> findKeyTypes(KeyTypeForm form) {
-		Filter filter = new KeyTypeFormFilterAdapter(form);
-		List<KeyType> keyTypeList = (List<KeyType>) keyTypeRepository.find(filter);
     	if (keyTypeList!=null && keyTypeList.size()>0) {
         	logger.debug("Found key type list of size {}", keyTypeList.size());
     	}
