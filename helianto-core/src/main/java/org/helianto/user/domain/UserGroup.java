@@ -83,11 +83,6 @@ public class UserGroup
 
 {
 	
-//	-    @JsonIgnore
-//	-    @ManyToOne(fetch=FetchType.LAZY)
-//	-    @JoinColumn(name="entityId", nullable=true)
-//	-    private Entity entity;
-
 	/**
 	 * <<Transient>> Exposes the discriminator.
 	 */
@@ -190,7 +185,7 @@ public class UserGroup
     	this(entity);
     	setUserKey(contextGroup.getContextGroupCode());
     	setUserName(contextGroup.getContextGroupName());
-    	setUserType('S');
+    	setUserType(contextGroup.getUserType());
     }
 
     /**

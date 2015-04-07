@@ -50,6 +50,8 @@ public class ContextGroup
 	@Enumerated(EnumType.STRING)
 	private ContextGroupType contextGroupType;
 	
+    private Character userType = ' ';
+	
 	/**
 	 * Constructor.
 	 */
@@ -121,6 +123,13 @@ public class ContextGroup
 	}
 	public void setContextGroupType(ContextGroupType contextGroupType) {
 		this.contextGroupType = contextGroupType;
+	}
+	
+	public Character getUserType() {
+		return userType;
+	}
+	public void setUserType(Character userType) {
+		this.userType = userType;
 	}
 	
 	public boolean isAutoCreate() {
