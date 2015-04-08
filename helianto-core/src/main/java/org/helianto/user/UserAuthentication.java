@@ -23,6 +23,7 @@ import java.util.Set;
  * An interface to reveal public user details.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 public interface UserAuthentication {
     
