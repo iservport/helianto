@@ -118,7 +118,7 @@ public class Entity
     
     @DateTimeFormat(style="S-")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date installDate;
+    private Date installDate = new Date();
     
     private char entityType = 'C';
     
@@ -189,8 +189,7 @@ public class Entity
     public Entity(Operator operator, String alias) {
     	this(operator);
     	setAlias(alias);
-    	setInstallDate(new Date());
-    }
+   }
 
     /** 
      * User constructor.
@@ -201,8 +200,27 @@ public class Entity
     	this(user.getOperator());
     	setManager(user.getIdentity());
     }
+    
+    /**
+     * Prototype constructor.
+     * 
+     * @param operator
+     * @param prototype
+     */
+    public Entity(Operator context, Entity prototype) {
+		this(context, prototype.getAlias());
+		this.entityType = prototype.getEntityType();
+		this.nature = prototype.getNature();
+		this.customColors = prototype.getCustomColors();
+		this.customStyle = prototype.getCustomStyle();
+		this.customProperties = prototype.getCustomProperties();
+		this.summary = prototype.getSummary();
+		this.externalLogoUrl = prototype.getExternalLogoUrl();
+		this.entityDomain = prototype.getEntityDomain();
+		this.city = prototype.getCity();
+	}
 
-    public int getId() {
+	public int getId() {
         return this.id;
     }
     public void setId(int id) {
