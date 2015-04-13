@@ -85,6 +85,28 @@ public interface CategoryRepository extends JpaRepository<Category, Serializable
 	List<CategoryReadAdapter> findByEntity_IdAndCategoryGroup(int entityId, char categoryGroup, Sort sort);
 
 	/**
+	 * Category adapter list.
+	 * 
+	 * @param entityId
+	 * @param categoryGroup
+	 * @param sort
+	 */
+	@Query("select new "
+			+ "org.helianto.core.repository.CategoryReadAdapter"
+			+ "(category.id"
+			+ ", category.entity.id"
+			+ ", category.categoryGroup"
+			+ ", category.categoryCode"
+			+ ", category.categoryName"
+			+ ", category.categoryIcon"
+			+ ", category.scriptItems"
+			+ ") "
+			+ "from Category category "
+			+ "where category.entity.id = ?1 "
+			+ "and category.categoryCode like %?2% ")
+	Page<CategoryReadAdapter> findByEntity_IdAndCategoryCodeLike(int entityId, String categoryCode, Pageable sort);
+
+	/**
 	 * Category adapter page.
 	 * 
 	 * @param entityId
