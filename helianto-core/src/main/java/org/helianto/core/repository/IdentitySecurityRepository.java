@@ -3,10 +3,10 @@ package org.helianto.core.repository;
 import java.io.Serializable;
 import java.util.List;
 
-import org.helianto.core.data.FilterRepository;
 import org.helianto.core.def.ProviderType;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.IdentitySecurity;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Authorization repository.
@@ -14,7 +14,7 @@ import org.helianto.core.domain.IdentitySecurity;
  * @author mauriciofernandesdecastro
  */
 public interface IdentitySecurityRepository 
-	extends FilterRepository<IdentitySecurity, Serializable> {
+	extends JpaRepository<IdentitySecurity, Serializable> {
 	
 	/**
 	 * Find by natural key.

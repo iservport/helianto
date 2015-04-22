@@ -2,9 +2,9 @@ package org.helianto.core.repository;
 
 import java.io.Serializable;
 
-import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Province repository.
@@ -13,7 +13,7 @@ import org.helianto.core.domain.Province;
  * @see StateRepository
  * @author mauriciofernandesdecastro
  */
-public interface ProvinceRepository extends FilterRepository<Province, Serializable> {
+public interface ProvinceRepository extends JpaRepository<Province, Serializable> {
 	
 	/**
 	 * Find by natural key.

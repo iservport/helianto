@@ -1,7 +1,6 @@
 package org.helianto.core.service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,9 +11,6 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.PublicAddress;
 import org.helianto.core.domain.PublicEntity;
 import org.helianto.core.domain.PublicEntityKey;
-import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.PublicAddressFilterAdapter;
-import org.helianto.core.form.PublicAddressForm;
 import org.helianto.core.repository.PublicAddressRepository;
 import org.helianto.core.repository.PublicEntityKeyRepository;
 import org.helianto.core.repository.PublicEntityRepository;
@@ -31,25 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("publicEntityMgr")
 public class PublicEntityMgrImpl implements PublicEntityMgr {
 
-	@Transactional(readOnly=true)
-	public List<PublicAddress> findPublicAddress(PublicAddressForm form) {
-		Filter filter = new PublicAddressFilterAdapter(form);
-		List<PublicAddress> publicAddressList = (List<PublicAddress>) publicAddressRepository.find(filter);
-		if (publicAddressList!=null) {
-			logger.debug("Found {} public addresses.", publicAddressList.size());
-		}
-		return publicAddressList;
-	}
-	
-	@Transactional(readOnly=true)
-	public List<PublicAddress> findPublicAddress(Filter filter) {
-		List<PublicAddress> publicAddressList = (List<PublicAddress>) publicAddressRepository.find(filter);
-		if (publicAddressList!=null) {
-			logger.debug("Found {} public addresses.", publicAddressList.size());
-		}
-		return publicAddressList;
-	}
-	
 	@Transactional
 	public PublicAddress storePublicAddress(PublicAddress publicAddress) {
 		return publicAddressRepository.saveAndFlush(publicAddress);

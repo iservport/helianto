@@ -205,31 +205,6 @@ public class UserMgrImpl
 	}
 	
 	@Transactional
-	public UserAssociation installUser(UserGroup parent, String principal, boolean accountNonExpired) {
-		
-		logger.info("Check user installation with 'principal={}' as member of {}.", principal, parent);
-		User user = (User) userRepository.findByEntityAndUserKey(parent.getEntity(), principal);
-		if (user==null) {
-			Credential credential = identityMgr.installIdentity(principal);
-			user = new User(parent.getEntity(), credential);
-		}
-		
-		user.setAccountNonExpired(true);
-		logger.warn("User {} set to {} expired.", user, accountNonExpired ? "non" : "");
-
-		userRepository.save(user);
-		logger.info("User AVAILABLE as {}.", user);
-		
-		UserAssociation association = userAssociationRepository.findByParentAndChild(parent, user);
-		if(association==null) {
-			logger.info("Will install user association for user group {} and {}.", parent, user);
-			association = userAssociationRepository.saveAndFlush(new UserAssociation(parent, user));
-		}
-		logger.info("User {} available as part of association {}.", user, association);
-		return association;
-	}
-	
-	@Transactional
 	public UserAssociation installUser(UserGroup parent, Identity identity, boolean accountNonExpired) {
 
 		logger.info("Check user installation with 'principal={}' as member of {}.", identity.getPrincipal(), parent);

@@ -15,11 +15,8 @@
 
 package org.helianto.core;
 
-import java.util.List;
-
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Unit;
-import org.helianto.core.form.UnitForm;
 
 /**
  * Service interface to units.
@@ -35,13 +32,6 @@ public interface UnitMgr {
 	 * @param unitCode
 	 */
 	Unit findUnit(Entity entity, String unitCode);
-
-	/**
-	 * List units.
-	 * 
-	 * @param form
-	 */
-	List<Unit> findUnits(UnitForm form);
 
 	/**
 	 * Store unit.

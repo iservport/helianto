@@ -33,13 +33,6 @@ import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
 import org.helianto.core.domain.State;
-import org.helianto.core.filter.ContextEventFilterAdapter;
-import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.ProvinceFormFilterAdapter;
-import org.helianto.core.filter.ServiceFormFilterAdapter;
-import org.helianto.core.form.ContextEventForm;
-import org.helianto.core.form.ProvinceForm;
-import org.helianto.core.form.ServiceForm;
 import org.helianto.core.repository.CityRepository;
 import org.helianto.core.repository.ContextEventRepository;
 import org.helianto.core.repository.EntityRepository;
@@ -133,24 +126,9 @@ public class ContextMgrImpl
     	return (List<Service>) serviceRepository.findByOperator(operator);
 	}
 
-	@Transactional(readOnly=true)
-	public List<Service> findServices(ServiceForm form) {
-    	return (List<Service>) serviceRepository.find(new ServiceFormFilterAdapter(form));
-	}
-
 	@Transactional
 	public Service storeService(Service service) {
 		return serviceRepository.saveAndFlush(service);
-	}
-
-	@Transactional(readOnly=true)
-	public List<ContextEvent> findContextEvents(ContextEventForm form) {
-		Filter filter = new ContextEventFilterAdapter(form);
-		List<ContextEvent> contextEventList = (List<ContextEvent>) contextEventRepository.find(filter);
-    	if (contextEventList!=null && contextEventList.size()>0) {
-        	logger.debug("Found context event list of size {}", contextEventList.size());
-    	}
-    	return contextEventList;
 	}
 
 	@Transactional
@@ -178,16 +156,6 @@ public class ContextMgrImpl
 		}
     	logger.debug("Loaded service map {}", serviceNameMap);
 		return serviceNameMap;
-	}
-
-	@Transactional(readOnly=true)
-	public List<Province> findProvinces(ProvinceForm form) {
-		Filter filter = new ProvinceFormFilterAdapter(form);
-    	List<Province> provinceList = (List<Province>) provinceRepository.find(filter);
-    	if (provinceList!=null && provinceList.size()>0) {
-        	logger.debug("Found province list of size {}", provinceList.size());
-    	}
-    	return provinceList;
 	}
 
 	@Transactional

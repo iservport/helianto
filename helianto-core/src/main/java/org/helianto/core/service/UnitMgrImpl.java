@@ -15,16 +15,11 @@
 
 package org.helianto.core.service;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.helianto.core.UnitMgr;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Unit;
-import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.UnitFilterAdapter;
-import org.helianto.core.form.UnitForm;
 import org.helianto.core.repository.UnitRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,14 +38,6 @@ public class UnitMgrImpl
 	@Transactional(readOnly=true)
 	public Unit findUnit(Entity entity, String unitCode) {
     	return unitRepository.findByEntityAndUnitCode(entity, unitCode);
-	}
-
-	@Transactional(readOnly=true)
-	public List<Unit> findUnits(UnitForm form) {
-		Filter unitFilter = new UnitFilterAdapter(form);;
-    	List<Unit> unitList = (List<Unit>) unitRepository.find(unitFilter);
-    	logger.debug("Found unit list of size {}", unitList.size());
-    	return unitList;
 	}
 
 	@Transactional

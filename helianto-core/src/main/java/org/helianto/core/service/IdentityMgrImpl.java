@@ -15,23 +15,16 @@
 
 package org.helianto.core.service;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.helianto.core.DuplicateIdentityException;
 import org.helianto.core.IdentityMgr;
 import org.helianto.core.def.ActivityState;
-import org.helianto.core.def.AddressType;
 import org.helianto.core.domain.ContactInfo;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.PersonalAddress;
 import org.helianto.core.domain.Phone;
-import org.helianto.core.domain.Province;
-import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.PersonalAddressFormFilterAdapter;
-import org.helianto.core.form.PersonalAddressForm;
 import org.helianto.core.repository.CredentialRepository;
 import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.repository.PersonalAddressRepository;
@@ -112,25 +105,6 @@ public class IdentityMgrImpl implements IdentityMgr {
 		return identityRepository.saveAndFlush(identity);
 	}
 	
-	@Transactional(readOnly=true)
-	public List<PersonalAddress> findPersonalAddresses(Filter filter) {
-		List<PersonalAddress> personalAddressList = (List<PersonalAddress>) personalAddressRepository.find(filter);
-		if (personalAddressList!=null) {
-			logger.debug("Found {} personal addresses.", personalAddressList.size());
-		}
-		return personalAddressList;
-	}
-	
-	@Transactional(readOnly=true)
-	public List<PersonalAddress> findPersonalAddresses(PersonalAddressForm form) {
-		PersonalAddressFormFilterAdapter filter = new PersonalAddressFormFilterAdapter(form);
-		List<PersonalAddress> personalAddressList = (List<PersonalAddress>) personalAddressRepository.find(filter);
-		if (personalAddressList!=null) {
-			logger.debug("Found {} personal addresses.", personalAddressList.size());
-		}
-		return personalAddressList;
-	}
-	
 	@Transactional
 	public PersonalAddress storePersonalAddress(PersonalAddress personalAddress) {
 		return personalAddressRepository.saveAndFlush(personalAddress);
@@ -146,36 +120,6 @@ public class IdentityMgrImpl implements IdentityMgr {
 	public Identity storeIdentityContactInfo(ContactInfo contactInfo, Identity identity) {
 		identity.getContactInfos().add(contactInfo);
 		return identityRepository.saveAndFlush(identity);
-	}
-	
-	@Transactional
-	public Credential installIdentity(String principal) {
-		Identity identity = identityRepository.findByPrincipal(principal);
-		if (identity==null) {
-			logger.info("Will install identity for {}.", principal);
-			identity = identityRepository.saveAndFlush(new Identity(principal));
-		}
-		else {
-			logger.debug("Found existing identity for {}.", principal);
-		}
-		PersonalAddress personalAddress = new PersonalAddress(identity, AddressType.PERSONAL);
-		final int identityId = identity.getId();
-		PersonalAddressForm form = new PersonalAddressForm() {
-			
-			public Province getProvince() { return null;}
-			public String getPostalCode() { return ""; }
-			public String getCityName()   { return ""; }
-			public char getAddressType()  { return 0; }
-			
-			public int getIdentityId() {
-				return identityId;
-			}
-		};
-		List<PersonalAddress> personalAddressList = (List<PersonalAddress>) personalAddressRepository.find(new PersonalAddressFormFilterAdapter(form));
-		if (personalAddressList.size()==0) {
-			personalAddressRepository.saveAndFlush(personalAddress);
-		}
-		return installCredential(identity);
 	}
 	
 	@Transactional

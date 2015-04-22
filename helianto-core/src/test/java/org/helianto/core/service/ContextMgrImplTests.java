@@ -89,18 +89,6 @@ public class ContextMgrImplTests {
 	}
 	
 	@Test
-	public void findProvinces() {
-		List<Province> provinceList = new ArrayList<Province>();
-		ProvinceForm form = new EasyMockSupport().createMock(ProvinceForm.class);
-		
-		expect(provinceRepository.find(EasyMock.isA(Filter.class))).andReturn(provinceList);
-		replay(provinceRepository);
-		
-		assertSame(provinceList , contextMgr.findProvinces(form));
-		verify(provinceRepository);
-	}
-	
-	@Test
 	public void storeProvince() {
 		Province province = new Province();
 		Province managedProvince = new Province();
@@ -143,18 +131,6 @@ public class ContextMgrImplTests {
 		replay(serviceRepository);
 		
 		assertSame(serviceList , contextMgr.findServices(operator));
-		verify(serviceRepository);
-	}
-	
-	@Test
-	public void findServicesByForm() {
-		List<Service> serviceList = new ArrayList<Service>();
-		ServiceForm form = createMock(ServiceForm.class);
-		
-		expect(serviceRepository.find(isA(ServiceFormFilterAdapter.class))).andReturn(serviceList);
-		replay(serviceRepository);
-		
-		assertSame(serviceList , contextMgr.findServices(form));
 		verify(serviceRepository);
 	}
 	

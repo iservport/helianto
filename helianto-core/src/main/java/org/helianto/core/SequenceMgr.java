@@ -20,7 +20,6 @@ import java.util.List;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.PrivateSequence;
-import org.helianto.core.form.PrivateSequenceForm;
 import org.helianto.core.number.Numerable;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.core.number.Verifiable;
@@ -68,13 +67,6 @@ public interface SequenceMgr {
 	 * @param internalNumberKey
 	 */
 	long findOrCreateInternalNumber(Entity entity, String internalNumberKey);
-	
-	/**
-	 * Find private sequences.
-	 * 
-	 * @param form
-	 */
-	List<PrivateSequence> findPrivateSequences(PrivateSequenceForm form);
 	
 	/**
 	 * Store private sequences.

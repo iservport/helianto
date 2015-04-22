@@ -26,9 +26,6 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.PrivateSequence;
 import org.helianto.core.domain.PublicSequence;
-import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.PrivateSequenceFilterAdapter;
-import org.helianto.core.form.PrivateSequenceForm;
 import org.helianto.core.number.DigitGenerationStrategy;
 import org.helianto.core.number.Numerable;
 import org.helianto.core.number.Sequenceable;
@@ -96,13 +93,6 @@ public class SequenceMgrImpl implements SequenceMgr {
 	@Transactional
 	public long findOrCreateInternalNumber(Entity entity, String internalNumberKey) {
 		return findOrCreateInternalNumber(entity, internalNumberKey, 1);
-	}
-	
-	@Transactional(readOnly=true)
-	public List<PrivateSequence> findPrivateSequences(PrivateSequenceForm form) {
-		Filter filter = new PrivateSequenceFilterAdapter(form);
-		List<PrivateSequence> privateSequenceList = (List<PrivateSequence>) privateSequenceRepository.find(filter);
-		return privateSequenceList;
 	}
 	
 	@Transactional

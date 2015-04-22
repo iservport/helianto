@@ -15,14 +15,11 @@
 
 package org.helianto.core;
 
-import java.util.List;
-
 import org.helianto.core.domain.ContactInfo;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.PersonalAddress;
 import org.helianto.core.domain.Phone;
-import org.helianto.core.filter.Filter;
 
 /**
  * Default identity service layer interface for the core package.
@@ -68,14 +65,6 @@ public interface IdentityMgr {
 	public Identity storeIdentity(Identity identity, boolean generate);
 	
     /**
-     * Find a <code>PersonalAddress</code> list.
-     * 
-     * @param filter
-     * @deprecated
-     */
-    public List<PersonalAddress> findPersonalAddresses(Filter filter);
-    
-    /**
      * Store the given <code>PersonalAddress</code>.
      * 
      * @param personalAddress
@@ -97,13 +86,6 @@ public interface IdentityMgr {
      * @param identity
      */
     public Identity storeIdentityContactInfo(ContactInfo contactInfo, Identity identity);
-    
-    /**
-     * <p>Create <code>Credential</code> and <code>Identity</code>.</p>
-     * 
-     * @param principal
-     */
-    public Credential installIdentity(String principal);
     
     /**
      * <p>Create <code>Credential</code>.</p>
