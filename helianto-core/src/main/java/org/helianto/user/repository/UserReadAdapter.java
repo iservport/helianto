@@ -3,6 +3,9 @@ package org.helianto.user.repository;
 import java.io.Serializable;
 
 import org.helianto.core.def.ActivityState;
+import org.helianto.user.domain.User;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * User read adapter.
@@ -46,6 +49,8 @@ public class UserReadAdapter
 	private Character userType;
 
 	private Boolean accountNonExpired = true;
+	
+	private User adaptee;
 	
 	public UserReadAdapter() {
 		super();
@@ -215,6 +220,69 @@ public class UserReadAdapter
 		this.userName = userName;
 		this.userState = userState;
 		this.userGender = userGender;
+	}
+	
+	
+	/**
+	 * Adaptee contructor.
+	 * 
+	 * @param adaptee
+	 * 
+	 */
+	public UserReadAdapter(User adaptee) {
+		super();
+		this.adaptee = adaptee;
+	}
+
+	/**
+	 * Build an adapter from adaptee.
+	 */
+	public UserReadAdapter build(){
+		if (adaptee==null) {
+			throw new RuntimeException("Adaptee canoot be null.");
+		}
+		this.userId = adaptee.getId();
+		if (adaptee.getEntity()!=null) {
+			this.contextId = adaptee.getEntity().getContextId();
+			this.entityId = adaptee.getEntityId();
+			this.entityAlias = adaptee.getEntity().getAlias();
+		}
+		if (adaptee.getIdentity()!=null) {
+			this.identityId = adaptee.getIdentity().getId();
+			this.firstName = adaptee.getIdentity().getIdentityFirstName();
+			this.lastName = adaptee.getIdentity().getIdentityLastName();
+			this.displayName = adaptee.getIdentity().getDisplayName();
+			this.userGender = adaptee.getIdentity().getGender();
+			this.userImageUrl = adaptee.getIdentity().getImageUrl();
+		}
+		this.userKey = adaptee.getUserKey();
+		this.userName = adaptee.getUserName();
+		this.userState = adaptee.getUserState();
+		this.userType = adaptee.getUserType();
+		this.accountNonExpired = adaptee.isAccountNonExpired();
+		return this;
+	}
+	
+	/**
+	 * Merge adapter back into adaptee.
+	 */
+	public User merge(){
+		adaptee.setId(getUserId());
+		adaptee.setUserKey(getUserKey());
+		adaptee.setUserName(getUserName());
+		adaptee.setUserState(getUserState());
+		adaptee.setUserType(getUserType());
+		adaptee.setAccountNonExpired(isAccountNonExpired());
+		return adaptee; 
+	}
+	
+	@JsonIgnore
+	public User getAdaptee() {
+		return adaptee;
+	}
+	public UserReadAdapter setAdaptee(User adaptee) {
+		this.adaptee = adaptee;
+		return this;
 	}
 
 	public int getUserId() {
