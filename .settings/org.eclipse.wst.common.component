@@ -20,8 +20,6 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/helianto-document/src/test/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/helianto-resource/src/test/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/helianto-inventory/src/test/resources"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/helianto-order/src/main/java"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/helianto-order/src/test/java"/>
         <property name="context-root" value="helianto"/>
         <property name="java-output-path" value="/helianto/target/classes"/>
     </wb-module>
