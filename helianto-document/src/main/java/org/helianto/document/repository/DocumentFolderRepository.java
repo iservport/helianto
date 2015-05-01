@@ -3,17 +3,17 @@ package org.helianto.document.repository;
 import java.io.Serializable;
 import java.util.List;
 
-import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.Entity;
 import org.helianto.document.domain.DocumentFolder;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Document folder repository interface.
  * 
  * @author mauriciofernandesdecastro
  */
-public interface DocumentFolderRepository extends FilterRepository<DocumentFolder, Serializable> {
+public interface DocumentFolderRepository extends JpaRepository<DocumentFolder, Serializable> {
 	
 	/**
 	 * Find by natural key.

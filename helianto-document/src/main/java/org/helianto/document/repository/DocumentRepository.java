@@ -2,9 +2,9 @@ package org.helianto.document.repository;
 
 import java.io.Serializable;
 
-import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.Entity;
 import org.helianto.document.domain.Document;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 /**
@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.Query;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface DocumentRepository extends FilterRepository<Document, Serializable> {
+public interface DocumentRepository extends JpaRepository<Document, Serializable> {
 	
 	/**
 	 * Find by natural key.
