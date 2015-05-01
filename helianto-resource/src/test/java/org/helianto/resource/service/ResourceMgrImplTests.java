@@ -7,13 +7,7 @@ import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.assertSame;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.easymock.EasyMock;
-import org.helianto.core.filter.Filter;
 import org.helianto.resource.domain.ResourceGroup;
-import org.helianto.resource.form.ResourceGroupForm;
 import org.helianto.resource.repository.ResourceGroupRepository;
 import org.junit.After;
 import org.junit.Before;
@@ -23,19 +17,6 @@ import org.junit.Test;
  * @author Mauricio Fernandes de Castro
  */
 public class ResourceMgrImplTests {
-	
-	@Test
-	public void findResourceGroups() {
-		List<ResourceGroup> resourceGroupList = new ArrayList<ResourceGroup>();
-		ResourceGroupForm form = EasyMock.createMock(ResourceGroupForm.class);
-		
-		expect(resourceGroupRepository.find(EasyMock.isA(Filter.class))).andReturn(resourceGroupList);
-		replay(resourceGroupRepository);
-		replay(form);
-		
-		assertSame(resourceGroupList, resourceMgr.findResourceGroups(form));
-		verify(resourceGroupRepository);
-	}
 	
 	@Test
 	public void storeResourceGroup() {

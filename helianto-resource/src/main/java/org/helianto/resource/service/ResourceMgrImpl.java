@@ -15,15 +15,10 @@
 
 package org.helianto.resource.service;
 
-import java.util.List;
-
 import org.helianto.core.domain.Entity;
-import org.helianto.core.filter.Filter;
 import org.helianto.resource.ResourceMgr;
 import org.helianto.resource.def.ResourceType;
 import org.helianto.resource.domain.ResourceGroup;
-import org.helianto.resource.filter.ResourceGroupFormFilterAdapter;
-import org.helianto.resource.form.ResourceGroupForm;
 import org.helianto.resource.repository.ResourceGroupRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,16 +33,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("resourceMgr")
 public class ResourceMgrImpl implements ResourceMgr {
 	
-	@Transactional(readOnly=true)
-	public List<ResourceGroup> findResourceGroups(ResourceGroupForm form) {
-		Filter filter = new ResourceGroupFormFilterAdapter(form);
-		List<ResourceGroup> resourceGroupList = (List<ResourceGroup>) resourceGroupRepository.find(filter);
-		if (logger.isDebugEnabled() && resourceGroupList!=null) {
-			logger.debug("Found resource group list of size {}", resourceGroupList.size());
-		}
-		return resourceGroupList;
-	}
-    
 	@Transactional
 	public ResourceGroup installEquipmentTree(Entity entity, String rootEquipentCode) {
 		ResourceGroup resourceGroup = new ResourceGroup(entity, rootEquipentCode);

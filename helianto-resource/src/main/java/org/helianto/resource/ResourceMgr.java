@@ -15,11 +15,8 @@
 
 package org.helianto.resource;
 
-import java.util.List;
-
 import org.helianto.core.domain.Entity;
 import org.helianto.resource.domain.ResourceGroup;
-import org.helianto.resource.form.ResourceGroupForm;
 
 /**
  * Resource service interface.
@@ -27,13 +24,6 @@ import org.helianto.resource.form.ResourceGroupForm;
  * @author Mauricio Fernandes de Castro
  */
 public interface ResourceMgr {
-    
-    /**
-     * Find <tt>ResourceGroup</tt>s using filter.
-     * 
-     * @param form
-     */
-    public List<ResourceGroup> findResourceGroups(ResourceGroupForm form);
     
 	/**
      * <p>
