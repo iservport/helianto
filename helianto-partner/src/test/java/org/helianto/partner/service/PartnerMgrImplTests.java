@@ -39,7 +39,6 @@ import org.helianto.partner.domain.PrivateEntity;
 import org.helianto.partner.domain.PrivateEntityKey;
 import org.helianto.partner.domain.PrivateSegment;
 import org.helianto.partner.domain.nature.Customer;
-import org.helianto.partner.filter.classic.PartnerFilter;
 import org.helianto.partner.repository.ContactGroupRepository;
 import org.helianto.partner.repository.PartnerCategoryRepository;
 import org.helianto.partner.repository.PartnerKeyRepository;
@@ -115,18 +114,6 @@ public class PartnerMgrImplTests {
 	}
     
 	// partner...
-	
-	@Test
-	public void findPartners() {
-		PartnerFilter partnerFilter = new PartnerFilter();
-		List<Partner> partnerList = new ArrayList<Partner>();
-		
-    	expect(partnerRepository.find(partnerFilter)).andReturn(partnerList);
-    	replay(partnerRepository);
-		
-    	assertSame(partnerList, partnerMgr.findPartners(partnerFilter));
-    	verify(partnerRepository);
-	}
 	
 	@Test
 	public void storePartner1() {

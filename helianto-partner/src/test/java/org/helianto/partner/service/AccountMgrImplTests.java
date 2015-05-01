@@ -20,13 +20,8 @@ import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.assertSame;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.easymock.EasyMock;
 import org.helianto.partner.domain.Account;
-import org.helianto.partner.filter.AccountFilterAdapter;
-import org.helianto.partner.form.AccountForm;
 import org.helianto.partner.repository.AccountRepository;
 import org.junit.After;
 import org.junit.Before;
@@ -36,18 +31,6 @@ import org.junit.Test;
  * @author Mauricio Fernandes de Castro
  */
 public class AccountMgrImplTests {
-    
-	@Test
-    public void findAccounts() {
-		AccountForm form = EasyMock.createMock(AccountForm.class);
-    	List<Account> accountList = new ArrayList<Account>();
-    	
-    	expect(accountRepository.find(EasyMock.isA(AccountFilterAdapter.class))).andReturn(accountList);
-    	replay(accountRepository);
-    	
-    	assertSame(accountList, accountMgr.findAccounts(form));
-    	verify(accountRepository);
-    }
     
 	@Test
     public void storeAccount() {

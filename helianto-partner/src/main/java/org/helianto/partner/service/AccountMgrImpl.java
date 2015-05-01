@@ -16,18 +16,11 @@
 
 package org.helianto.partner.service;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
-import org.helianto.core.filter.Filter;
 import org.helianto.partner.AccountMgr;
 import org.helianto.partner.domain.Account;
-import org.helianto.partner.filter.AccountFilterAdapter;
-import org.helianto.partner.form.AccountForm;
 import org.helianto.partner.repository.AccountRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,16 +32,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("accountMgr")
 public class AccountMgrImpl 
 	implements AccountMgr {
-
-	@Transactional(readOnly=true)
-	public List<Account> findAccounts(AccountForm form) {
-		Filter filter = new AccountFilterAdapter(form);
-		List<Account> accountList = (List<Account>) accountRepository.find(filter);
-    	if (logger.isDebugEnabled() && accountList!=null) {
-    		logger.debug("Found account list of size {}", accountList.size());
-    	}
-		return accountList;
-	}
 
 	@Transactional
 	public Account storeAccount(Account account) {
@@ -68,8 +51,5 @@ public class AccountMgrImpl
     public void setAccountRepository(AccountRepository accountRepository) {
 		this.accountRepository = accountRepository;
 	}
-
-    
-    private Logger logger = LoggerFactory.getLogger(AccountMgrImpl.class);
 
 }

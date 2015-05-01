@@ -2,16 +2,16 @@ package org.helianto.partner.repository;
 
 import java.io.Serializable;
 
-import org.helianto.core.data.FilterRepository;
 import org.helianto.partner.domain.PrivateAddress;
 import org.helianto.partner.domain.PrivateEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Private address repository.
  * 
  * @author mauriciofernandesdecastro
  */
-public interface PrivateAddressRepository extends FilterRepository<PrivateAddress, Serializable> {
+public interface PrivateAddressRepository extends JpaRepository<PrivateAddress, Serializable> {
 	
 	/**
 	 * Find by natural key.

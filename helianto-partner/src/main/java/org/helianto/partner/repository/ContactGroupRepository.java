@@ -3,9 +3,9 @@ package org.helianto.partner.repository;
 import java.io.Serializable;
 import java.util.List;
 
-import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.Entity;
 import org.helianto.partner.domain.ContactGroup;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 /**
@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.Query;
  * @author mauriciofernandesdecastro
  */
 public interface ContactGroupRepository 
-	extends FilterRepository<ContactGroup, Serializable> 
+	extends JpaRepository<ContactGroup, Serializable> 
 {
 	
 	/**

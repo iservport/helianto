@@ -28,7 +28,6 @@ import org.helianto.core.domain.City;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Operator;
-import org.helianto.core.filter.Filter;
 import org.helianto.core.internal.AbstractAddress;
 import org.helianto.core.repository.CityRepository;
 import org.helianto.core.utils.AddressUtils;
@@ -50,24 +49,6 @@ import org.helianto.partner.domain.nature.Laboratory;
 import org.helianto.partner.domain.nature.Manufacturer;
 import org.helianto.partner.domain.nature.Supplier;
 import org.helianto.partner.domain.nature.TransportPartner;
-import org.helianto.partner.filter.ContactGroupFormFilterAdapter;
-import org.helianto.partner.filter.PartnerCategoryFormFilterAdapter;
-import org.helianto.partner.filter.PartnerFormFilterAdapter;
-import org.helianto.partner.filter.PartnerKeyFilterAdapter;
-import org.helianto.partner.filter.PartnerPhoneFormFilterAdapter;
-import org.helianto.partner.filter.PrivateAddressFormFilterAdapter;
-import org.helianto.partner.filter.PrivateEntityFormFilterAdapter;
-import org.helianto.partner.filter.PrivateEntityKeyFormFilterAdapter;
-import org.helianto.partner.filter.PrivateSegmentFilterAdapter;
-import org.helianto.partner.form.ContactGroupForm;
-import org.helianto.partner.form.PartnerCategoryForm;
-import org.helianto.partner.form.PartnerForm;
-import org.helianto.partner.form.PartnerKeyForm;
-import org.helianto.partner.form.PartnerPhoneForm;
-import org.helianto.partner.form.PrivateAddressForm;
-import org.helianto.partner.form.PrivateEntityForm;
-import org.helianto.partner.form.PrivateEntityKeyForm;
-import org.helianto.partner.form.PrivateSegmentForm;
 import org.helianto.partner.repository.ContactGroupRepository;
 import org.helianto.partner.repository.PartnerCategoryRepository;
 import org.helianto.partner.repository.PartnerKeyRepository;
@@ -77,7 +58,6 @@ import org.helianto.partner.repository.PrivateAddressRepository;
 import org.helianto.partner.repository.PrivateEntityKeyRepository;
 import org.helianto.partner.repository.PrivateEntityRepository;
 import org.helianto.partner.repository.PrivateSegmentRepository;
-import org.helianto.user.domain.UserGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
@@ -91,16 +71,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service("partnerMgr")
 public class PartnerMgrImpl implements PartnerMgr {
-
-	@Transactional(readOnly=true)
-	public List<PrivateEntity> findPrivateEntities(PrivateEntityForm form) {
-		PrivateEntityFormFilterAdapter filter = new PrivateEntityFormFilterAdapter(form);
-		List<PrivateEntity> privateEntityList = (List<PrivateEntity>) privateEntityRepository.find(filter);
-    	if (logger.isDebugEnabled() && privateEntityList!=null) {
-    		logger.debug("Found private entity list of size {}", privateEntityList.size());
-    	}
-		return privateEntityList;
-	}
 
 	@Transactional
 	public PrivateEntity storePrivateEntity(PrivateEntity privateEntity) {
@@ -188,33 +158,10 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return privateSegmentRepository.findByEntity(entity, new Sort(Sort.Direction.ASC, "segmentAlias"));
 	}
 
-	public List<PrivateSegment> findPrivateSegments(PrivateSegmentForm form) {
-		return (List<PrivateSegment>) privateSegmentRepository.find(new PrivateSegmentFilterAdapter(form));
-	}
-
 	public PrivateSegment storePrivateSegment(PrivateSegment privateSegment) {
 		return privateSegmentRepository.saveAndFlush(privateSegment);
 	}
 
-	@Transactional(readOnly=true)
-	public List<? extends Partner> findPartners(PartnerForm form) {
-		PartnerFormFilterAdapter filter = new PartnerFormFilterAdapter(form);
-		List<Partner> partnerList = (List<Partner>) partnerRepository.find(filter);
-    	if (logger.isDebugEnabled() && partnerList!=null) {
-    		logger.debug("Found partner list of size {}", partnerList.size());
-    	}
-		return partnerList;
-	}
-	
-	@Transactional(readOnly=true)
-	public List<? extends Partner> findPartners(Filter partnerFilter) {
-		List<Partner> partnerList = (List<Partner>) partnerRepository.find(partnerFilter);
-    	if (logger.isDebugEnabled() && partnerList!=null) {
-    		logger.debug("Found partner list of size {}", partnerList.size());
-    	}
-		return partnerList;
-	}
-	
 	@Transactional
 	public Partner storePartner(Partner partner) {
 		return partnerRepository.saveAndFlush(partner);
@@ -243,16 +190,6 @@ public class PartnerMgrImpl implements PartnerMgr {
 		return partnerKeyMap;
 	}
 
-	@Transactional(readOnly=true)
-	public List<PartnerKey> findPartnerKeys(PartnerKeyForm form) {
-		PartnerKeyFilterAdapter filter = new PartnerKeyFilterAdapter(form);
-		List<PartnerKey> partnerKeyList = (List<PartnerKey>) partnerKeyRepository.find(filter);
-    	if (logger.isDebugEnabled() && partnerKeyList!=null) {
-    		logger.debug("Found partner key list of size {}", partnerKeyList.size());
-    	}
-		return partnerKeyList;
-	}
-
 	@Transactional
 	public PartnerKey storePartnerKey(PartnerKey partnerKey) {
 		return partnerKeyRepository.saveAndFlush(partnerKey);
@@ -263,16 +200,6 @@ public class PartnerMgrImpl implements PartnerMgr {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 	
-	@Transactional(readOnly=true)
-	public List<PartnerPhone> findPartnerPhones(PartnerPhoneForm form) {
-		PartnerPhoneFormFilterAdapter filter = new PartnerPhoneFormFilterAdapter(form);
-		List<PartnerPhone> partnerPhoneList = (List<PartnerPhone>) partnerPhoneRepository.find(filter);
-    	if (logger.isDebugEnabled() && partnerPhoneList!=null) {
-    		logger.debug("Found partner phone list of size {}", partnerPhoneList.size());
-    	}
-		return partnerPhoneList;
-	}
-
 	@Transactional
 	public PartnerPhone storePartnerPhone(PartnerPhone phone) {
 		return partnerPhoneRepository.saveAndFlush(phone);
@@ -377,16 +304,6 @@ public class PartnerMgrImpl implements PartnerMgr {
 		partnerKeyRepository.flush();
 	}
 	
-	@Transactional(readOnly=true)
-	public List<PrivateAddress> findPrivateAddresses(PrivateAddressForm form) {
-		Filter filter = new PrivateAddressFormFilterAdapter(form);
-		List<PrivateAddress> privateAddressList = (List<PrivateAddress>) privateAddressRepository.find(filter);
-    	if (logger.isDebugEnabled() && privateAddressList!=null) {
-    		logger.debug("Found private address list of size {}", privateAddressList.size());
-    	}
-		return privateAddressList;
-	}
-	
 	@Transactional
 	public PrivateAddress storePrivateAddress(PrivateAddress address) {
 		return privateAddressRepository.saveAndFlush(address);
@@ -397,46 +314,16 @@ public class PartnerMgrImpl implements PartnerMgr {
 		throw new IllegalArgumentException("Not yet implemented");
 	}
 	
-	@Transactional(readOnly=true)
-	public List<PrivateEntityKey> findPrivateEntityKeys(PrivateEntityKeyForm form) {
-		Filter filter = new PrivateEntityKeyFormFilterAdapter(form);
-		List<PrivateEntityKey> privateEntityKeyList = (List<PrivateEntityKey>) privateEntityKeyRepository.find(filter);
-    	if (logger.isDebugEnabled() && privateEntityKeyList!=null) {
-    		logger.debug("Found private entity key list of size {}", privateEntityKeyList.size());
-    	}
-		return privateEntityKeyList;
-	}
-	
 	@Transactional
 	public PrivateEntityKey storePrivateEntityKey(PrivateEntityKey privateEntityKey) {
 		return privateEntityKeyRepository.saveAndFlush(privateEntityKey);
 	}
 	
-	@Transactional(readOnly=true)
-	public List<PartnerCategory> findPartnerCategories(PartnerCategoryForm form) {
-		PartnerCategoryFormFilterAdapter filter = new PartnerCategoryFormFilterAdapter(form);
-		List<PartnerCategory> partnerCategoryList = (List<PartnerCategory>) partnerCategoryRepository.find(filter);
-    	if (logger.isDebugEnabled() && partnerCategoryList!=null) {
-    		logger.debug("Found partner category list of size {}", partnerCategoryList.size());
-    	}
-		return partnerCategoryList;
-	}
-
 	@Transactional
 	public PartnerCategory storePartnerCategory(PartnerCategory partnerCategory) {
 		return partnerCategoryRepository.saveAndFlush(partnerCategory);
 	}
 
-	@Transactional(readOnly=true)
-	public List<? extends UserGroup> findContactGroups(ContactGroupForm form) {
-		Filter filter = new ContactGroupFormFilterAdapter(form);
-		List<? extends UserGroup> contactGroupList = (List<? extends UserGroup>) contactGroupRepository.find(filter);
-    	if (logger.isDebugEnabled() && contactGroupList!=null) {
-    		logger.debug("Found contact group list of size {}", contactGroupList.size());
-    	}
-		return contactGroupList;
-	}
-	
     //- collaborators
     
     private PrivateEntityRepository privateEntityRepository;

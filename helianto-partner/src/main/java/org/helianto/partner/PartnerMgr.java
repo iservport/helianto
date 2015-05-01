@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.helianto.core.domain.Entity;
-import org.helianto.core.filter.Filter;
 import org.helianto.core.internal.AbstractAddress;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PartnerCategory;
@@ -31,16 +30,6 @@ import org.helianto.partner.domain.PrivateEntityKey;
 import org.helianto.partner.domain.PrivateSegment;
 import org.helianto.partner.domain.nature.Customer;
 import org.helianto.partner.domain.nature.Division;
-import org.helianto.partner.form.ContactGroupForm;
-import org.helianto.partner.form.PartnerCategoryForm;
-import org.helianto.partner.form.PartnerForm;
-import org.helianto.partner.form.PartnerKeyForm;
-import org.helianto.partner.form.PartnerPhoneForm;
-import org.helianto.partner.form.PrivateAddressForm;
-import org.helianto.partner.form.PrivateEntityForm;
-import org.helianto.partner.form.PrivateEntityKeyForm;
-import org.helianto.partner.form.PrivateSegmentForm;
-import org.helianto.user.domain.UserGroup;
 
 /**
  * Partner service interface.
@@ -49,13 +38,6 @@ import org.helianto.user.domain.UserGroup;
  */
 public interface PartnerMgr {
 
-	/**
-     * Find <code>PrivateEntity</code>.
-     * 
-     * @param form
-     */
-	List<? extends PrivateEntity> findPrivateEntities(PrivateEntityForm form);
-	
     /**
      * Write <code>PrivateEntity</code> to the datastore.
      * 
@@ -84,13 +66,6 @@ public interface PartnerMgr {
      */
 	List<PrivateSegment> findPrivateSegments(Entity entity);
 	
-	/**
-     * Find <code>PrivateSegment</code>.
-     * 
-     * @param form
-     */
-	List<PrivateSegment> findPrivateSegments(PrivateSegmentForm form);
-	
     /**
      * Write <code>PrivateSegment</code> to the datastore.
      * 
@@ -98,21 +73,6 @@ public interface PartnerMgr {
      */
 	PrivateSegment storePrivateSegment(PrivateSegment privateSegment);
 
-    /**
-     * Find <code>Partner</code>.
-     * 
-     * @param form
-     */
-	List<? extends Partner> findPartners(PartnerForm form);
-	
-    /**
-     * Find <code>Partner</code>.
-     * 
-     * @param partnerFilter
-     * @deprecated
-     */
-	List<? extends Partner> findPartners(Filter partnerFilter);
-	
     /**
      * Write <code>Partner</code> to the datastore.
      * 
@@ -148,13 +108,6 @@ public interface PartnerMgr {
 	Map<String, PartnerKey> loadPartnerKeyMap(Partner partner);
 	
     /**
-     * Find <code>PartnerKey</code>.
-     * 
-     * @param form
-     */
-	List<PartnerKey> findPartnerKeys(PartnerKeyForm form);
-	
-    /**
      * Write <code>PartnerKey</code> to the datastore.
      * 
      * @param partnerKey
@@ -168,13 +121,6 @@ public interface PartnerMgr {
      */
 	PrivateEntity removePartnerKey(PartnerKey partnerKey);
 	
-    /**
-     * Find <code>PartnerPhone</code>.
-     * 
-     * @param partnerFilter
-     */
-	List<PartnerPhone> findPartnerPhones(PartnerPhoneForm form);
-
     /**
      * Write <code>PartnerPhone</code> to the datastore.
      * 
@@ -210,13 +156,6 @@ public interface PartnerMgr {
      */
 	void installPartnerKeys(String[] keyValues, Partner partner);
 	
-	/**
-     * Find <code>PrivateAddress</code>.
-     * 
-     * @param form
-     */
-	List<PrivateAddress> findPrivateAddresses(PrivateAddressForm form);
-	
     /**
      * Write <code>Address</code> to the datastore.
      * 
@@ -231,13 +170,6 @@ public interface PartnerMgr {
      */
 	PrivateEntity removePrivateAddress(PrivateAddress address);
 	
-	/**
-     * Find <code>PrivateEntityKey</code>.
-     * 
-     * @param form
-     */
-	List<PrivateEntityKey> findPrivateEntityKeys(PrivateEntityKeyForm form);
-	
     /**
      * Write <code>PrivateEntityKey</code> to the datastore.
      * 
@@ -245,20 +177,6 @@ public interface PartnerMgr {
      */
 	PrivateEntityKey storePrivateEntityKey(PrivateEntityKey privateEntityKey);
 	
-	/**
-     * Find <code>ContactGroup</code>.
-     * 
-     * @param form
-     */
-	List<? extends UserGroup> findContactGroups(ContactGroupForm form);
-	
-    /**
-     * Find <code>PartnerCategory</code>.
-     * 
-     * @param partnerFilter
-     */
-	List<PartnerCategory> findPartnerCategories(PartnerCategoryForm form);
-
     /**
      * Write <code>PartnerCategory</code> to the datastore.
      * 

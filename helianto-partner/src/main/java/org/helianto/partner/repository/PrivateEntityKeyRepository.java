@@ -2,17 +2,17 @@ package org.helianto.partner.repository;
 
 import java.io.Serializable;
 
-import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.KeyType;
 import org.helianto.partner.domain.PrivateEntity;
 import org.helianto.partner.domain.PrivateEntityKey;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Private entity key repository.
  * 
  * @author mauriciofernandesdecastro
  */
-public interface PrivateEntityKeyRepository extends FilterRepository<PrivateEntityKey, Serializable> {
+public interface PrivateEntityKeyRepository extends JpaRepository<PrivateEntityKey, Serializable> {
 	
 	/**
 	 * Find by natural key.

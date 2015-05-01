@@ -3,9 +3,9 @@ package org.helianto.partner.repository;
 import java.io.Serializable;
 import java.util.List;
 
-import org.helianto.core.data.FilterRepository;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PrivateEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 /**
@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.Query;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface PartnerRepository extends FilterRepository<Partner, Serializable> {
+public interface PartnerRepository extends JpaRepository<Partner, Serializable> {
 	
 	/**
 	 * Find by natural key.

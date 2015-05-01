@@ -15,10 +15,7 @@
 
 package org.helianto.partner;
 
-import java.util.List;
-
 import org.helianto.partner.domain.Account;
-import org.helianto.partner.form.AccountForm;
 
 /**
  * Account service interface.
@@ -27,13 +24,6 @@ import org.helianto.partner.form.AccountForm;
  */
 public interface AccountMgr {
 
-    /**
-     * Find <code>Account</code>.
-     * 
-     * @param form
-     */
-	public List<Account> findAccounts(AccountForm form);
-	
     /**
      * Write <code>Account</code> to the datastore.
      * 
