@@ -41,6 +41,8 @@ public class CategoryReadAdapter
 	
 	private String scriptItems;
 	
+	private String customProperties;
+	
 	/**
 	 * Default constructor.
 	 */
@@ -103,6 +105,7 @@ public class CategoryReadAdapter
 	 * @param categoryName
 	 * @param categoryIcon
 	 * @param scriptItems
+	 * @param customProperties
 	 */
 	public CategoryReadAdapter(Integer id
 			, Integer entityId
@@ -111,12 +114,14 @@ public class CategoryReadAdapter
 			, String categoryName
 			, String categoryIcon
 			, String scriptItems
+			, String customProperties
 			) {
 		this(id, categoryCode, categoryName);
 		this.entityId = entityId;
 		this.categoryGroup = categoryGroup;
 		setCategoryIcon(categoryIcon);
 		this.scriptItems = scriptItems;
+		this.customProperties = customProperties;
 	}
 	
 	/**
@@ -128,6 +133,7 @@ public class CategoryReadAdapter
 		this.categoryCode = adaptee.getCategoryCode();
 		this.categoryName = adaptee.getCategoryName();
 		this.categoryIcon = adaptee.getCategoryIcon();
+		this.customProperties = adaptee.getCustomProperties();
 		return this;
 	}
 
@@ -140,6 +146,7 @@ public class CategoryReadAdapter
 		adaptee.setCategoryCode(categoryCode);
 		adaptee.setCategoryName(categoryName);
 		adaptee.setCategoryIcon(categoryIcon);
+		adaptee.setCustomProperties(customProperties);
 		return adaptee;
 	}
 
@@ -222,9 +229,15 @@ public class CategoryReadAdapter
 	public String getScriptItems() {
 		return scriptItems;
 	}
-	
     public String[] getScriptItemsAsArray() {
     	return StringListUtils.stringToArray(getScriptItems());
+	}
+    
+    public String getCustomProperties() {
+		return customProperties;
+	}
+    public void setCustomProperties(String customProperties) {
+		this.customProperties = customProperties;
 	}
 	
 	@Override
