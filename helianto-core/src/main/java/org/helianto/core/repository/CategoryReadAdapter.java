@@ -7,6 +7,7 @@ import org.helianto.core.internal.KeyNameAdapter;
 import org.helianto.core.utils.StringListUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * Category adapter.
@@ -42,6 +43,8 @@ public class CategoryReadAdapter
 	private String scriptItems;
 	
 	private String customProperties;
+	
+	private byte[] content;
 	
 	/**
 	 * Default constructor.
@@ -106,6 +109,7 @@ public class CategoryReadAdapter
 	 * @param categoryIcon
 	 * @param scriptItems
 	 * @param customProperties
+	 * @param content
 	 */
 	public CategoryReadAdapter(Integer id
 			, Integer entityId
@@ -115,6 +119,7 @@ public class CategoryReadAdapter
 			, String categoryIcon
 			, String scriptItems
 			, String customProperties
+			, byte[] content
 			) {
 		this(id, categoryCode, categoryName);
 		this.entityId = entityId;
@@ -122,6 +127,7 @@ public class CategoryReadAdapter
 		setCategoryIcon(categoryIcon);
 		this.scriptItems = scriptItems;
 		this.customProperties = customProperties;
+		this.content = content;
 	}
 	
 	/**
@@ -134,6 +140,7 @@ public class CategoryReadAdapter
 		this.categoryName = adaptee.getCategoryName();
 		this.categoryIcon = adaptee.getCategoryIcon();
 		this.customProperties = adaptee.getCustomProperties();
+		this.content = adaptee.getContent();
 		return this;
 	}
 
@@ -147,6 +154,7 @@ public class CategoryReadAdapter
 		adaptee.setCategoryName(categoryName);
 		adaptee.setCategoryIcon(categoryIcon);
 		adaptee.setCustomProperties(customProperties);
+		adaptee.setContent(content);
 		return adaptee;
 	}
 
@@ -238,6 +246,27 @@ public class CategoryReadAdapter
 	}
     public void setCustomProperties(String customProperties) {
 		this.customProperties = customProperties;
+	}
+    
+    @JsonIgnore
+    public byte[] getContent() {
+		return content;
+	}
+    public void setContent(byte[] content) {
+		this.content = content;
+	}
+    
+    @JsonSerialize
+    public String getContentAsString() {
+    	if (getContent()!=null) {
+    		return new String(getContent());
+    	}
+    	return "";
+	}
+    public void setContentAsString(String contentAsString) {
+    	if (contentAsString!=null) {
+    		setContent(contentAsString.getBytes());
+    	}
 	}
 	
 	@Override
