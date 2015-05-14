@@ -51,6 +51,7 @@ import org.helianto.core.domain.type.FolderEntity;
 import org.helianto.core.internal.AbstractCounter;
 import org.helianto.core.internal.KeyNameAdapter;
 import org.helianto.core.utils.StringListUtils;
+import org.helianto.user.def.UserType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -310,8 +311,21 @@ public class UserGroup
      public Character getUserType() {
 		return userType;
 	}
-    public void setUserType(Character userType) {
-		this.userType = userType;
+     public void setUserType(Character userType) {
+ 		this.userType = userType;
+ 	}
+	public void setUserTypeAsEnum(UserType userType) {
+		if (userType != null) {
+			this.userType = userType.getValue();
+		}
+		this.userType = UserType.INTERNAL.getValue();
+	}
+	
+	/**
+	 * True if user group is system.
+	 */
+	public boolean isSystemGroup() {
+		return this.userType==UserType.SYSTEM.getValue();
 	}
 
     /**

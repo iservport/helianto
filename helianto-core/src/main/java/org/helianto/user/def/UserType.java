@@ -13,21 +13,21 @@
  * limitations under the License.
  */
 
-package org.helianto.core.def;
+package org.helianto.user.def;
 
 /**
  * User types. 
  * 
  * @author Mauricio Fernandes de Castro
- * @deprecated
  */
 public enum UserType {
     
-	
-    ADMINISTRATOR('A'),
-    EXTERNAL('E'),
-    INTERNAL('I'),
-    MODERATOR('M');
+    SYSTEM('S'),
+    ALL('A'),
+    FUNCTION('F'),
+    JOB('J'),
+    THIRD_PARTY('Y'),
+    INTERNAL('I');
     
     private char value;
     private UserType(char type) {
@@ -35,6 +35,20 @@ public enum UserType {
     }
     public char getValue() {
         return value;
+    }
+    
+    /**
+     * Selector.
+     * 
+     * @param value
+     */
+    public static UserType valueOf(char value) {
+    	for (UserType userType: values()) {
+    		if (userType.getValue()==value) {
+    			return userType;
+    		}
+    	}
+    	return UserType.INTERNAL;
     }
 
 }

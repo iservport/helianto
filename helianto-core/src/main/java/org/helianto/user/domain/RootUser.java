@@ -18,10 +18,10 @@ package org.helianto.user.domain;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Transient;
 
-import org.helianto.core.def.UserType;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
+import org.helianto.user.def.UserType;
 /**
  * The root user account.
  * 
@@ -49,7 +49,7 @@ public class RootUser
 	 */
     public RootUser() {
     	super();
-    	setUserType(UserType.ADMINISTRATOR.getValue());
+    	setUserType(UserType.SYSTEM.getValue());
     }
 
 	/** 
