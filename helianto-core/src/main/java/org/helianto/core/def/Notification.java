@@ -42,4 +42,18 @@ public enum Notification {
         return value;
     }
 
+    /**
+     * Selector.
+     * 
+     * @param value
+     */
+    public static Notification valueOf(char value) {
+    	for (Notification notification: values()) {
+    		if (notification.getValue()==value) {
+    			return notification;
+    		} 
+    	}
+    	return Notification.AUTOMATIC;
+    }
+    
 }

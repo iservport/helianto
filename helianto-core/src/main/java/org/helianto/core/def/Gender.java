@@ -35,5 +35,21 @@ public enum Gender {
     public char getValue() {
         return value;
     }
+    
+    /**
+     * Selector.
+     * 
+     * @param value
+     */
+    public static Gender valueOf(char value) {
+    	for (Gender gender: values()) {
+    		if (gender.getValue()==value) {
+    			return gender;
+    		} 
+    	}
+    	return Gender.NOT_SUPPLIED;
+    }
+
+
 
 }

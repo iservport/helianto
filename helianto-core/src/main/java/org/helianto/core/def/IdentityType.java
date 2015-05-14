@@ -88,5 +88,19 @@ public enum IdentityType {
     	}
     	return false;
     }
+    
+    /**
+     * Selector.
+     * 
+     * @param value
+     */
+    public static IdentityType valueOf(char value) {
+    	for (IdentityType identityType: values()) {
+    		if (identityType.getValue()==value) {
+    			return identityType;
+    		} 
+    	}
+    	return IdentityType.NOT_ADDRESSABLE;
+    }
 
 }

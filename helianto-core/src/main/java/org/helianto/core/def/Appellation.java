@@ -37,4 +37,18 @@ public enum Appellation {
         return value;
     }
 
+    /**
+     * Selector.
+     * 
+     * @param value
+     */
+    public static Appellation valueOf(char value) {
+    	for (Appellation appellation: values()) {
+    		if (appellation.getValue()==value) {
+    			return appellation;
+    		} 
+    	}
+    	return Appellation.NOT_SUPPLIED;
+    }
+
 }
