@@ -81,8 +81,17 @@ public abstract class AbstractJpaRepositoryIntegrationTest<T, R extends JpaRepos
 		assertNotNull(getTargetId(target));
 		T other = findByKey();
 		assertEquals(target, other);
+		assertTrue(isFoundAsExpected(other));
+	}
+	
+	/**
+	 * Override if you do not expect findByKey to produce a persistent instance.
+	 * 
+	 * @param other
+	 */
+	protected boolean isFoundAsExpected(T other) {
 		Iterable<T> resultList = getRepository().findAll();
-		assertTrue(((List<T>) resultList).contains(other));
+		return ((List<T>) resultList).contains(other);
 	}
 	
 	@Before

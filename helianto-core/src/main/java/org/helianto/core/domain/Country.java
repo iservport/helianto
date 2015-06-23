@@ -55,7 +55,7 @@ public class Country
     @Column(length=7)
     private String countryCode = "";
     
-    @Column(length=32)
+    @Column(length=64)
     private String countryName = "";
 
     /** 

@@ -39,10 +39,10 @@ public class PersonalData implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    @Column(length=32)
+    @Column(length=64)
     private String firstName = "";
     
-    @Column(length=32)
+    @Column(length=64)
     private String lastName = "";
     
     private char gender = Gender.NOT_SUPPLIED.getValue();
