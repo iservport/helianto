@@ -48,6 +48,10 @@ public class UserReadAdapter
     
 	private Character userType;
 
+	private Integer jobId;
+
+	private String jobTitle;
+
 	private Boolean accountNonExpired = true;
 	
 	private User adaptee;
@@ -107,6 +111,8 @@ public class UserReadAdapter
      * @param userName
      * @param userState
      * @param userType
+     * @param jobId
+     * @param jobTitle
      * @param accountNonExpired
      */
 	public UserReadAdapter(int userId
@@ -123,6 +129,8 @@ public class UserReadAdapter
 			, String userName
 			, Character userState
 			, Character userType
+			, Integer jobId
+			, String jobTitle
 			, Boolean accountNonExpired
 			) {
 		this();
@@ -140,6 +148,8 @@ public class UserReadAdapter
 		this.userName = userName;
 		this.userState = userState;
 		this.userType = userType;
+		this.jobId = jobId;
+		this.jobTitle = jobTitle;
 		this.accountNonExpired = accountNonExpired;
 	}
 	
@@ -160,6 +170,8 @@ public class UserReadAdapter
      * @param userName
      * @param userState
      * @param userType
+     * @param jobId
+     * @param jobTitle
      * @param accountNonExpired
      */
 	public UserReadAdapter(int userId
@@ -176,6 +188,8 @@ public class UserReadAdapter
 			, String userName
 			, String userState
 			, String userType
+			, Integer jobId
+			, String jobTitle
 			, Integer accountNonExpired
 			) {
 		this(userId
@@ -192,6 +206,8 @@ public class UserReadAdapter
 		, userName
 		, userState!=null  && userState.length()>0 ? userState.charAt(0) : 'I'
 		, userType!=null  && userType.length()>0 ? userType.charAt(0) : 'I'
+		, jobId
+		, jobTitle
 		, accountNonExpired!=null && accountNonExpired.equals(1)
 		);
 	}
@@ -259,6 +275,10 @@ public class UserReadAdapter
 		this.userName = adaptee.getUserName();
 		this.userState = adaptee.getUserState();
 		this.userType = adaptee.getUserType();
+		if (adaptee.getUserJob()!=null) {
+			this.jobId = adaptee.getUserJob().getJobId();
+			this.jobTitle = adaptee.getUserJob().getJobTitle();
+		}
 		this.accountNonExpired = adaptee.isAccountNonExpired();
 		return this;
 	}
@@ -272,6 +292,10 @@ public class UserReadAdapter
 		adaptee.setUserName(getUserName());
 		adaptee.setUserState(getUserState());
 		adaptee.setUserType(getUserType());
+		if (adaptee.getUserJob()!=null) {
+			adaptee.getUserJob().setJobId(getJobId());
+			adaptee.getUserJob().setJobTitle(getJobTitle());
+		}
 		adaptee.setAccountNonExpired(isAccountNonExpired());
 		return adaptee; 
 	}
@@ -346,6 +370,14 @@ public class UserReadAdapter
     
     public Character getUserType() {
 		return userType;
+	}
+    
+    public Integer getJobId() {
+		return jobId;
+	}
+    
+    public String getJobTitle() {
+		return jobTitle;
 	}
     
 	public boolean isAccountNonExpired() {

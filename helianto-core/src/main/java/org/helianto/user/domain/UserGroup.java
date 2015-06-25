@@ -48,7 +48,6 @@ import org.helianto.core.domain.Category;
 import org.helianto.core.domain.ContextGroup;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
-import org.helianto.core.domain.PersonalData;
 import org.helianto.core.domain.type.FolderEntity;
 import org.helianto.core.internal.AbstractCounter;
 import org.helianto.core.internal.KeyNameAdapter;
