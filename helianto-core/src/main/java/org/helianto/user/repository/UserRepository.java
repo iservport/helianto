@@ -1,6 +1,7 @@
 package org.helianto.user.repository;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import org.helianto.core.domain.Entity;
@@ -161,6 +162,66 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 			+ "where user_.userKey = ?1 "
 			)
 	Page<UserReadAdapter> pageByUserKey(String userKey, Pageable page);
+
+	/**
+	 * Page by entity id and user type.
+	 * 
+	 * @param entityId
+	 * @param userTypes
+	 * @param page
+	 */
+	@Query("select new "
+			+ "org.helianto.user.repository.UserReadAdapter"
+			+ "(user_.id"
+			+ ", user_.entity.operator.id"
+			+ ", user_.entity.id"
+			+ ", user_.entity.alias"
+			+ ", user_.identity.id"
+			+ ", user_.identity.personalData.firstName"
+			+ ", user_.identity.personalData.lastName"
+			+ ", user_.identity.displayName"
+			+ ", user_.identity.personalData.gender"
+			+ ", user_.identity.personalData.imageUrl"
+			+ ", user_.userKey"
+			+ ", user_.userName"
+			+ ", user_.userState"
+			+ ", user_.userType"
+			+ ", user_.accountNonExpired"
+			+ ") "
+			+ "from User user_ "
+			+ "where user_.entity.id = ?1 "
+			+ "and user_.userType in ?2 "
+			)
+	Page<UserReadAdapter> pageByEntityIdAndUserTypes(int entityId, Collection<Character> userTypes, Pageable page);
+
+	/**
+	 * Page by jobId.
+	 * 
+	 * @param jobId
+	 * @param page
+	 */
+	@Query("select new "
+			+ "org.helianto.user.repository.UserReadAdapter"
+			+ "(user_.id"
+			+ ", user_.entity.operator.id"
+			+ ", user_.entity.id"
+			+ ", user_.entity.alias"
+			+ ", user_.identity.id"
+			+ ", user_.identity.personalData.firstName"
+			+ ", user_.identity.personalData.lastName"
+			+ ", user_.identity.displayName"
+			+ ", user_.identity.personalData.gender"
+			+ ", user_.identity.personalData.imageUrl"
+			+ ", user_.userKey"
+			+ ", user_.userName"
+			+ ", user_.userState"
+			+ ", user_.userType"
+			+ ", user_.accountNonExpired"
+			+ ") "
+			+ "from User user_ "
+			+ "where user_.userJob.jobId = ?1 "
+			)
+	Page<UserReadAdapter> pageByJobId(int jobId, Pageable page);
 
 	/**
 	 * Find by user key.

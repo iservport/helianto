@@ -29,6 +29,7 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.Embedded;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
@@ -47,6 +48,7 @@ import org.helianto.core.domain.Category;
 import org.helianto.core.domain.ContextGroup;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.PersonalData;
 import org.helianto.core.domain.type.FolderEntity;
 import org.helianto.core.internal.AbstractCounter;
 import org.helianto.core.internal.KeyNameAdapter;
@@ -123,6 +125,9 @@ public class UserGroup
     
     @Column(length=128)
     private String nature = "";
+    
+    @Embedded
+    private UserJob userJob;
     
     private int minimalEducationRequirement;
     
@@ -390,6 +395,24 @@ public class UserGroup
 	}
 	public void setUserDesc(String userDesc) {
 		this.userDesc = userDesc;
+	}
+	
+	/**
+	 * Optional embedded class to allow user groups to be handled as jobs.
+	 * 
+	 * This field was included to create a flexible relationship between groups and
+	 * users. The preferred way is to associate groups via UserAssociation. 
+	 * However, in some cases, the use of inner joins as a consequence of connecting
+	 * many to one fields by dots in query expressions may hide instances. 
+	 * The redundant job title provided by this class will provide an alternative solution
+	 * if the service layer can assure both fields of this class to be equal in the
+	 * group and in the user.
+	 */
+	public UserJob getUserJob() {
+		return userJob;
+	}
+	public void setUserJob(UserJob userJob) {
+		this.userJob = userJob;
 	}
 	
 	/**
