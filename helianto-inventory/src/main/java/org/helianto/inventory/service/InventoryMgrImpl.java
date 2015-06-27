@@ -16,27 +16,16 @@
 
 package org.helianto.inventory.service;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.helianto.core.SequenceMgr;
-import org.helianto.core.filter.Filter;
 import org.helianto.inventory.InventoryMgr;
 import org.helianto.inventory.domain.ProcessAgreement;
 import org.helianto.inventory.domain.ProcessRequirement;
 import org.helianto.inventory.domain.Tax;
-import org.helianto.inventory.filter.ProcessAgreementFilterAdapter;
-import org.helianto.inventory.filter.ProcessRequirementFilterAdapter;
-import org.helianto.inventory.filter.TaxFilterAdapter;
-import org.helianto.inventory.form.ProcessAgreementForm;
-import org.helianto.inventory.form.ProcessRequirementForm;
-import org.helianto.inventory.form.TaxForm;
 import org.helianto.inventory.repository.ProcessAgreementRepository;
 import org.helianto.inventory.repository.ProcessRequirementRepository;
 import org.helianto.inventory.repository.TaxRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,46 +39,16 @@ public class InventoryMgrImpl
 	implements InventoryMgr 
 {
 
-	@Transactional(readOnly=true)
-	public List<ProcessRequirement> findProcessRequirements(ProcessRequirementForm form) {
-		Filter filter = new ProcessRequirementFilterAdapter(form);
-    	List<ProcessRequirement> requirementList = (List<ProcessRequirement>) processRequirementRepository.find(filter);
-    	if (logger.isDebugEnabled() && requirementList!=null) {
-    		logger.debug("Found requirement list of size {}", requirementList.size());
-    	}
-    	return requirementList;
-	}
-	
 	@Transactional
 	public ProcessRequirement storeProcessRequirement(ProcessRequirement requirement) {
 		sequenceMgr.validateInternalNumber(requirement);
 		return processRequirementRepository.saveAndFlush(requirement);
 	}
 
-	@Transactional(readOnly=true)
-	public List<ProcessAgreement> findProcessAgreement(ProcessAgreementForm form) {
-		Filter filter = new ProcessAgreementFilterAdapter(form);
-    	List<ProcessAgreement> agreementList = (List<ProcessAgreement>) processAgreementRepository.find(filter);
-    	if (logger.isDebugEnabled() && agreementList!=null) {
-    		logger.debug("Found agreement list of size {}", agreementList.size());
-    	}
-    	return agreementList;
-	}
-	
 	@Transactional
 	public ProcessAgreement storeProcessAgreement(ProcessAgreement agreement) {
 		sequenceMgr.validateInternalNumber(agreement);
 		return processAgreementRepository.saveAndFlush(agreement);
-	}
-	
-	@Transactional(readOnly=true)
-	public List<Tax> findTaxes(TaxForm form) {
-		Filter filter = new TaxFilterAdapter(form);
-    	List<Tax> taxList = (List<Tax>) taxRepository.find(filter);
-    	if (logger.isDebugEnabled() && taxList!=null) {
-    		logger.debug("Found tax list of size {}", taxList.size());
-    	}
-    	return taxList;
 	}
 	
 	@Transactional
@@ -125,7 +84,5 @@ public class InventoryMgrImpl
 	public void setSequenceMgr(SequenceMgr sequenceMgr) {
 		this.sequenceMgr = sequenceMgr;
 	}
-
-	private static final Logger logger = LoggerFactory.getLogger(InventoryMgrImpl.class);
 
 }

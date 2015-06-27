@@ -2,9 +2,9 @@ package org.helianto.inventory.repository;
 
 import java.io.Serializable;
 
-import org.helianto.core.data.FilterRepository;
 import org.helianto.inventory.domain.Card;
 import org.helianto.inventory.domain.CardSet;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Card repository interface.
@@ -12,7 +12,7 @@ import org.helianto.inventory.domain.CardSet;
  * @author mauriciofernandesdecastro
  */
 public interface CardRepository 
-	extends FilterRepository<Card, Serializable> {
+	extends JpaRepository<Card, Serializable> {
 	
 	/**
 	 * Find by natural key.

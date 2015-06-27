@@ -32,25 +32,11 @@ import org.helianto.inventory.form.TaxForm;
 public interface InventoryMgr {
 
 	/**
-	 * Find process requirement.
-	 * 
-	 * @param form
-	 */
-	List<ProcessRequirement> findProcessRequirements(ProcessRequirementForm form);
-
-	/**
 	 * Store agreement.
 	 * 
 	 * @param requirement
 	 */
 	ProcessRequirement storeProcessRequirement(ProcessRequirement requirement);
-
-	/**
-	 * Find process agreement.
-	 * 
-	 * @param form
-	 */
-	List<ProcessAgreement> findProcessAgreement(ProcessAgreementForm form);
 
 	/**
 	 * Store process agreement.
@@ -59,13 +45,6 @@ public interface InventoryMgr {
 	 */
 	ProcessAgreement storeProcessAgreement(ProcessAgreement agreement);
 	
-	/**
-	 * Find taxes.
-	 * 
-	 * @param form
-	 */
-	List<Tax> findTaxes(TaxForm form);
-
 	/**
 	 * Store tax.
 	 * 

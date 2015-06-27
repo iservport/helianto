@@ -2,9 +2,9 @@ package org.helianto.inventory.repository;
 
 import java.io.Serializable;
 
-import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.Entity;
 import org.helianto.inventory.domain.Inventory;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Cost centre repository interface.
@@ -12,7 +12,7 @@ import org.helianto.inventory.domain.Inventory;
  * @author mauriciofernandesdecastro
  */
 public interface InventoryRepository 
-	extends FilterRepository<Inventory, Serializable> {
+	extends JpaRepository<Inventory, Serializable> {
 	
 	/**
 	 * Find by natural key.

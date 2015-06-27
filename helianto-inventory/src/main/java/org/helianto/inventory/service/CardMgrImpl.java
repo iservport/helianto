@@ -16,21 +16,14 @@
 
 package org.helianto.inventory.service;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.helianto.core.SequenceMgr;
 import org.helianto.core.domain.Entity;
-import org.helianto.core.filter.Filter;
 import org.helianto.inventory.CardMgr;
 import org.helianto.inventory.InvalidCardException;
 import org.helianto.inventory.domain.Card;
 import org.helianto.inventory.domain.CardSet;
-import org.helianto.inventory.filter.CardFilterAdapter;
-import org.helianto.inventory.filter.CardSetFilterAdapter;
-import org.helianto.inventory.form.CardForm;
-import org.helianto.inventory.form.CardSetForm;
 import org.helianto.inventory.repository.CardRepository;
 import org.helianto.inventory.repository.CardSetRepository;
 import org.slf4j.Logger;
@@ -49,30 +42,10 @@ public class CardMgrImpl
 	implements CardMgr 
 {
 
-	@Transactional(readOnly=true)
-	public List<CardSet> findCardSets(CardSetForm form) {
-		Filter filter = new CardSetFilterAdapter(form);
-    	List<CardSet> cardSetList = (List<CardSet>) cardSetRepository.find(filter);
-    	if (logger.isDebugEnabled() && cardSetList!=null) {
-    		logger.debug("Found card set list of size {}", cardSetList.size());
-    	}
-    	return cardSetList;
-	}
-
 	@Transactional
 	public CardSet storeCardSet(CardSet cardSet) {
 		sequenceMgr.validateInternalNumber(cardSet);
 		return cardSetRepository.saveAndFlush(cardSet);
-	}
-
-	@Transactional(readOnly=true)
-	public List<Card> findCards(CardForm form) {
-		Filter filter = new CardFilterAdapter(form);
-    	List<Card> cardList = (List<Card>) cardRepository.find(filter);
-    	if (logger.isDebugEnabled() && cardList!=null) {
-    		logger.debug("Found card list of size {}", cardList.size());
-    	}
-    	return cardList;
 	}
 
 	@Transactional(readOnly=true)

@@ -2,10 +2,10 @@ package org.helianto.inventory.repository;
 
 import java.io.Serializable;
 
-import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.KeyType;
 import org.helianto.inventory.domain.ProcessAgreement;
 import org.helianto.inventory.domain.Tax;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Tax repository interface.
@@ -13,7 +13,7 @@ import org.helianto.inventory.domain.Tax;
  * @author mauriciofernandesdecastro
  */
 public interface TaxRepository 
-	extends FilterRepository<Tax, Serializable> {
+	extends JpaRepository<Tax, Serializable> {
 	
 	/**
 	 * Find by natural key.

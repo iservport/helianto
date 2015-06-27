@@ -2,9 +2,9 @@ package org.helianto.inventory.repository;
 
 import java.io.Serializable;
 
-import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.Entity;
 import org.helianto.inventory.domain.ProcessRequirement;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Process requirement repository interface.
@@ -12,7 +12,7 @@ import org.helianto.inventory.domain.ProcessRequirement;
  * @author mauriciofernandesdecastro
  */
 public interface ProcessRequirementRepository 
-	extends FilterRepository<ProcessRequirement, Serializable> {
+	extends JpaRepository<ProcessRequirement, Serializable> {
 	
 	/**
 	 * Find by natural key.

@@ -2,10 +2,10 @@ package org.helianto.inventory.repository;
 
 import java.io.Serializable;
 
-import org.helianto.core.data.FilterRepository;
 import org.helianto.inventory.domain.Inventory;
 import org.helianto.inventory.domain.InventoryTransaction;
 import org.helianto.inventory.domain.Movement;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Cost centre repository interface.
@@ -13,7 +13,7 @@ import org.helianto.inventory.domain.Movement;
  * @author mauriciofernandesdecastro
  */
 public interface MovementRepository 
-	extends FilterRepository<Movement, Serializable> {
+	extends JpaRepository<Movement, Serializable> {
 	
 	/**
 	 * Find by natural key.

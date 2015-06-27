@@ -2,9 +2,9 @@ package org.helianto.inventory.repository;
 
 import java.io.Serializable;
 
-import org.helianto.core.data.FilterRepository;
 import org.helianto.core.domain.Entity;
 import org.helianto.inventory.domain.ProcessAgreement;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Process agreement repository interface.
@@ -12,7 +12,7 @@ import org.helianto.inventory.domain.ProcessAgreement;
  * @author mauriciofernandesdecastro
  */
 public interface ProcessAgreementRepository 
-	extends FilterRepository<ProcessAgreement, Serializable> {
+	extends JpaRepository<ProcessAgreement, Serializable> {
 	
 	/**
 	 * Find by natural key.
