@@ -67,7 +67,6 @@ public class AbstractContent
     /**
      * Helper method to get text content as String.
      */
-//    @Transient
     public String getContentAsString() {
     	if (getContent()!=null) {
     		return new String(getContent());
@@ -78,7 +77,6 @@ public class AbstractContent
 		setContent(contentAsString);
 	}
     
-//    @Transient
     public int getContentSize() {
     	if (getContent()!=null) {
     		return getContent().length;
@@ -99,7 +97,6 @@ public class AbstractContent
 	/**
 	 * <<Transient>> Convenience method to read uploaded data.
 	 */
-//	@Transient
 	public void processFile() throws IOException {
 		setContent(file.getBytes());
 		setMultipartFileContentType(file.getContentType());

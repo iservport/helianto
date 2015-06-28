@@ -16,11 +16,13 @@
 package org.helianto.document.internal;
 
 import java.text.DecimalFormat;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
@@ -43,7 +45,25 @@ public abstract class AbstractCustomDocument
 	@JoinColumn(name="serializerId")
 	private DocumentFolder series;
 	
-	private long internalNumber;
+	@Transient
+	private Integer folderId;
+	
+	@Transient
+	private String folderCode;
+	
+	@Transient
+	private String folderName;
+	
+	@Transient
+	private String patternPrefix = "F";
+	
+	@Transient
+	private Integer numberOfDigits = 3;
+	
+	@Transient
+    private char contentType = ' ';
+    
+	private Long internalNumber;
 	
 	@Column(length=48)
 	private String internalNumberKey;
@@ -51,6 +71,9 @@ public abstract class AbstractCustomDocument
     @ManyToOne
     @JoinColumn(name="categoryId", nullable=true)
     private Category category;
+	
+	@Transient
+	private Integer categoryId;
 	
 	/**
 	 * Default constructor.
@@ -69,6 +92,94 @@ public abstract class AbstractCustomDocument
     	super(entity, docCode);
     }
 	
+    /** 
+     * Read constructor.
+     * 
+     * @param id
+     * @param ownerId
+     * @param issueDate
+     * @param resolution
+     * @param docCode
+     * @param docName
+     * @param docFile
+     * @param docAbstract
+     * @param priority
+     * @param encoding
+     * @param multipartFileContentType
+     * @param referenceList
+     * @param folderId
+     * @param internalNumber
+     * @param categoryId
+     */
+    public AbstractCustomDocument(Integer id, Integer ownerId, Date issueDate, Character resolution
+    	    , String docCode, String docName, String docFile, String docAbstract, Character priority
+    	    , String encoding, String multipartFileContentType, String referenceList, Integer folderId
+    	    , Long internalNumber, Integer categoryId) {
+    	super(id, ownerId, issueDate, resolution, docCode, docName, docFile, docAbstract, priority
+    			, encoding, multipartFileContentType, referenceList);
+    	initCustomDocument(folderId, internalNumber, categoryId);
+    }
+    
+    /** 
+     * Read composite constructor.
+     * 
+     * @param id
+     * @param ownerId
+     * @param ownerDisplayName
+     * @param ownerFirstName
+     * @param ownerLastName
+     * @param ownerGender
+     * @param ownerImageUrl
+     * @param issueDate
+     * @param resolution
+     * @param docCode
+     * @param docName
+     * @param docFile
+     * @param docAbstract
+     * @param priority
+     * @param encoding
+     * @param multipartFileContentType
+     * @param referenceList
+     * @param folderId
+     * @param folderCode
+     * @param folderName
+     * @param patternPrefix
+     * @param numberOfDigits
+     * @param contentType
+     * @param internalNumber
+     * @param categoryId
+     */
+    public AbstractCustomDocument(Integer id, Integer ownerId, String ownerDisplayName
+    		, String ownerFirstName, String ownerLastName, Character ownerGender
+    		, String ownerImageUrl, Date issueDate, Character resolution
+    	    , String docCode, String docName, String docFile, String docAbstract, Character priority
+    	    , String encoding, String multipartFileContentType, String referenceList, Integer folderId
+    	    , String folderCode, String folderName, String patternPrefix, Integer numberOfDigits
+    	    , char contentType, Long internalNumber, Integer categoryId) {
+    	super(id, ownerId, ownerDisplayName, ownerFirstName, ownerLastName
+    			, ownerGender, ownerImageUrl, issueDate, resolution, docCode, docName, docFile
+    			, docAbstract, priority, encoding, multipartFileContentType, referenceList);
+    	initCustomDocument(folderId, internalNumber, categoryId);
+    	setFolderCode(folderCode);
+    	setFolderName(folderName);
+    	setPatternPrefix(patternPrefix);
+    	setNumberOfDigits(numberOfDigits);
+    	setContentType(contentType);
+    }
+    
+    /**
+     * Convenience to set fields.
+     * 
+     * @param folderId
+     * @param internalNumber
+     * @param categoryId
+     */
+    protected final void initCustomDocument(Integer folderId, Long internalNumber, Integer categoryId) {
+    	setFolderId(folderId);
+    	setInternalNumber(internalNumber);
+    	setCategoryId(categoryId);
+	}
+    
 	/**
 	 * The document series.
 	 */
@@ -97,8 +208,69 @@ public abstract class AbstractCustomDocument
 		setSeries(folder);
 	}
     
+    /**
+     * <<Transient>> folder id.
+     */
+    public Integer getFolderId() {
+		return getFolder()!=null ? getFolder().getId() : folderId;
+	}
+    public void setFolderId(Integer folderId) {
+		this.folderId = folderId;
+	}
+    
+    /**
+     * <<Transient>> folder code.
+     */
+    public String getFolderCode() {
+		return getFolder()!=null ? getFolder().getFolderCode() : folderCode;
+	}
+    public void setFolderCode(String folderCode) {
+		this.folderCode = folderCode;
+	}
+    
+    /**
+     * <<Transient>> folder name.
+     */
+    public String getFolderName() {
+		return getFolder()!=null ? getFolder().getFolderName() : folderName;
+	}
+    public void setFolderName(String folderName) {
+		this.folderName = folderName;
+	}
+    
+    /**
+     * <<Transient>> folder pattern prefix.
+     */
+    public String getPatternPrefix() {
+		return getFolder()!=null ? getFolder().getPatternPrefix() : patternPrefix;
+	}
+    public void setPatternPrefix(String patternPrefix) {
+		this.patternPrefix = patternPrefix;
+	}
+    
+    /**
+     * <<Transient>> folder number of digits.
+     */
+    public Integer getNumberOfDigits() {
+		return getFolder()!=null ? getFolder().getNumberOfDigits() : numberOfDigits;
+	}
+    public void setNumberOfDigits(Integer numberOfDigits) {
+		this.numberOfDigits = numberOfDigits;
+	}
+    
+    /**
+     * <<Transient>> folder content type.
+     */
+    public char getContentType() {
+		return getFolder()!=null ? getFolder().getContentType() : contentType;
+	}
+    public void setContentType(char contentType) {
+		this.contentType = contentType;
+	}
+    
 	/**
 	 * Subclasses may override this method to change how the prefix is created.
+	 * @deprecated
 	 */
 	public StringBuilder getPrefix() {
 		if (getSeries()!=null) {
@@ -115,6 +287,7 @@ public abstract class AbstractCustomDocument
 	 * </p>
 	 * 
 	 * @param internalNumberKey
+	 * @deprecated
 	 */
 	protected String validateInternalNumberKey(String internalNumberKey) {
     	if (getPrefix()!=null) {
@@ -130,15 +303,16 @@ public abstract class AbstractCustomDocument
 	/**
 	 * Required by {@link Sequenceable}.
 	 */
-	public long getInternalNumber() {
+	public Long getInternalNumber() {
 		return this.internalNumber;
 	}
-	public void setInternalNumber(long internalNumber) {
+	public void setInternalNumber(Long internalNumber) {
 		this.internalNumber = internalNumber;
 	}
 	
 	/**
 	 * The number pattern, if available, or null.
+	 * @deprecated
 	 */
 	protected String getNumberPattern() {
 		if (getFolder()!=null) {
@@ -165,6 +339,16 @@ public abstract class AbstractCustomDocument
 		this.category = category;
 	}
     
+    /**
+     * <<Transient>> category id.
+     */
+    public Integer getCategoryId() {
+		return getCategory()!=null ? getCategory().getId() : categoryId;
+	}
+    public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
+	}
+    
 	/**
 	 * <<Transient>> Optionally delegate to subclasses a method to replace the private field.
 	 * 
@@ -172,7 +356,6 @@ public abstract class AbstractCustomDocument
 	 * Default implementation does not replace the private field.
 	 * </p>
 	 */
-//	@Transient
 	protected Category getInternalCategory(Category category) {
 		return category;
 	}

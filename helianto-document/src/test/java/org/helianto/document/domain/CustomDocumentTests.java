@@ -18,7 +18,7 @@ public class CustomDocumentTests {
 		folder.setPatternPrefix("ABC");
 		folder.setNumberOfDigits(2);
 		customDocument.setFolder(folder);
-		customDocument.setInternalNumber(12);
+		customDocument.setInternalNumber(12L);
 		customDocument.applyNumberPattern();
 		assertEquals("ABC12", customDocument.getDocCode());
 	}

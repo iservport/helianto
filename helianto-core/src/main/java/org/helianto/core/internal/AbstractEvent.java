@@ -28,7 +28,6 @@ import org.helianto.core.def.PrivacyLevel;
 import org.helianto.core.def.Resolution;
 import org.helianto.core.def.ResolutionExtended;
 import org.helianto.core.domain.Identity;
-import org.helianto.core.domain.type.ResolvableEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -47,7 +46,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @javax.persistence.MappedSuperclass
 public abstract class AbstractEvent 
 	extends AbstractTrunkEntity
-	implements ResolvableEntity
 {
 
     private static final long serialVersionUID = 1L;
@@ -56,76 +54,165 @@ public abstract class AbstractEvent
     @JoinColumn(name="ownerId", nullable=true)
     private Identity owner;
     
+    @Transient
+    private Integer ownerId;
+    
+    @Transient
+    private String ownerDisplayName = "";
+    
+    @Transient
+    private String ownerFirstName = "";
+    
+    @Transient
+    private String ownerLastName = "";
+    
+    @Transient
+    private Character ownerGender = 'N';
+    
+    @Transient
+    private String ownerImageUrl = "";
+    
     @DateTimeFormat(style="SS")
     @Temporal(TemporalType.TIMESTAMP)
     private Date issueDate;
     
-    private char resolution = Resolution.PRELIMINARY.getValue();
+    private Character resolution = Resolution.PRELIMINARY.getValue();
     
-    private char privacyLevel = PrivacyLevel.PUBLIC.getValue();
+    private Character privacyLevel = PrivacyLevel.PUBLIC.getValue();
     
     @Transient
     private int interval;
 
     /** 
-     * Empty constructor
+     * Empty constructor.
 	 */
     public AbstractEvent() {
         super();
         setIssueDate(new Date());
     }
     
+    /** 
+     * Read constructor.
+     * 
+     * @param id
+     * @param ownerId
+     * @param issueDate
+     * @param resolution
+     */
+    protected AbstractEvent(Integer id, Integer ownerId, Date issueDate, Character resolution) {
+    	setId(id);
+    	setOwnerId(ownerId);
+    	setIssueDate(issueDate);
+    	setResolution(resolution);
+    }
+    
+    /** 
+     * Read composite constructor.
+     * 
+     * @param id
+     * @param ownerId
+     * @param ownerDisplayName
+     * @param ownerFirstName
+     * @param ownerLastName
+     * @param ownerGender
+     * @param ownerImageUrl
+     * @param issueDate
+     * @param resolution
+     */
+    protected AbstractEvent(Integer id, Integer ownerId, String ownerDisplayName
+    		, String ownerFirstName, String ownerLastName, Character ownerGender
+    		, String ownerImageUrl, Date issueDate, Character resolution) {
+    	this(id, ownerId, issueDate, resolution);
+    	setOwnerDisplayName(ownerDisplayName);
+    	setOwnerFirstName(ownerFirstName);
+    	setOwnerLastName(ownerLastName);
+    	setOwnerGender(ownerGender);
+    	setOwnerImageUrl(ownerImageUrl);
+    }
+    
     /**
      * Locale.
      */
-//    @Transient
     public Locale getLocale() {
     	return Locale.getDefault();
     }
 
     /**
-     * Record owner.
-     * @see {@link Identity}
+     * Owner.
      */
 	public Identity getOwner() {
 		return owner;
 	}
-    
-	@Transient
-	public int getOwnerId() {
-		if (getOwner()!=null) {
-			return getOwner().getId();
-		}
-		return 0;
-	}
-
-    /**
-     * Safe presentation record owner alias.
-     * @deprecated
-     */
-//    @Transient
-	public String getOwnerOptionalAlias() {
-        return getOwner()==null ? "" : owner.getDisplayName();
-	}
-    
-    /**
-     * Safe presentation record owner display name.
-     */
-    @Transient
-	public String getOwnerDisplayName() {
-        return getOwner()==null ? "" : owner.getDisplayName();
-	}
-    
-    /**
-     * Safe presentation record owner name.
-     */
-//    @Transient
-	public String getOwnerName() {
-        return getOwner()==null ? "" : owner.getIdentityName();
-	}
 	public void setOwner(Identity owner) {
 		this.owner = owner;
 	}   
+    
+	/**
+	 * <<Transient>> owner id.
+	 */
+	public int getOwnerId() {
+		return getOwner()!=null ? getOwner().getId() : ownerId;
+	}
+	public void setOwnerId(Integer ownerId) {
+		this.ownerId = ownerId;
+	}
+
+    /**
+     * <<Transient>> owner display name.
+     */
+	public String getOwnerDisplayName() {
+        return getOwner()!=null ? owner.getDisplayName() : ownerDisplayName;
+	}
+	public void setOwnerDisplayName(String ownerDisplayName) {
+		this.ownerDisplayName = ownerDisplayName;
+	}
+    
+    /**
+     * <<Transient>> owner first name.
+     */
+	public String getOwnerFirstName() {
+        return getOwner()!=null ? owner.getIdentityFirstName() : ownerFirstName;
+	}
+	public void setOwnerFirstName(String ownerFirstName) {
+		this.ownerFirstName = ownerFirstName;
+	}
+    
+    /**
+     * <<Transient>> owner last name.
+     */
+	public String getOwnerLastName() {
+        return getOwner()!=null ? owner.getIdentityLastName() : ownerLastName;
+	}
+	public void setOwnerLastName(String ownerLastName) {
+		this.ownerLastName = ownerLastName;
+	}
+    
+    /**
+     * Safe presentation of owner name.
+     */
+	public String getOwnerName() {
+        return getOwner()!=null ? owner.getIdentityName() : ownerFirstName.trim()+" "+ownerLastName;
+	}
+	
+    /**
+     * <<Transient>> owner gender.
+     */
+	public Character getOwnerGender() {
+        return getOwner()!=null ? owner.getGender() : ownerGender;
+	}
+	public void setOwnerGender(Character ownerGender) {
+		this.ownerGender = ownerGender;
+	}
+	
+    /**
+     * <<Transient>> owner image URL.
+     */
+	public String getOwnerImageUrl() {
+        return getOwner()!=null ? owner.getImageUrl() : ownerImageUrl;
+	}
+	public void setOwnerImageUrl(String ownerImageUrl) {
+		this.ownerImageUrl = ownerImageUrl;
+	}
 
     /**
      * Issue date.
@@ -137,10 +224,10 @@ public abstract class AbstractEvent
         this.issueDate = issueDate;
     }
 
-    public char getResolution() {
+    public Character getResolution() {
         return validateResolution(this.resolution);
     }
-    public void setResolution(char resolution) {
+    public void setResolution(Character resolution) {
         this.resolution = resolution;
     }
     @JsonIgnore
@@ -161,10 +248,10 @@ public abstract class AbstractEvent
     /**
      * Privacy level.
      */
-    public char getPrivacyLevel() {
+    public Character getPrivacyLevel() {
         return this.privacyLevel;
     }
-    public void setPrivacyLevel(char privacyLevel) {
+    public void setPrivacyLevel(Character privacyLevel) {
         this.privacyLevel = privacyLevel;
     }
     public void setPrivacyLevelAsEnum(PrivacyLevel privacyLevel) {

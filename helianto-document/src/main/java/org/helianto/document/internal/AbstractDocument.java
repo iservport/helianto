@@ -15,6 +15,8 @@
 
 package org.helianto.document.internal;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
@@ -45,7 +47,7 @@ public abstract class AbstractDocument
     @Column(length=2048)
     private String docAbstract = "";
     
-    private char priority = '0';
+    private Character priority = '0';
     
 	@Column(length=32)
     private String encoding = "ISO8859_1";
@@ -73,6 +75,79 @@ public abstract class AbstractDocument
     	init(docCode);
     	setEntity(entity);
     }
+    
+    /** 
+     * Read constructor.
+     * 
+     * @param id
+     * @param ownerId
+     * @param issueDate
+     * @param resolution
+     * @param docCode
+     * @param docName
+     * @param docFile
+     * @param docAbstract
+     * @param priority
+     * @param encoding
+     * @param multipartFileContentType
+     * @param referenceList
+     */
+    protected AbstractDocument(Integer id, Integer ownerId, Date issueDate, Character resolution
+    	    , String docCode, String docName, String docFile, String docAbstract, Character priority
+    	    , String encoding, String multipartFileContentType, String referenceList) {
+    	super(id, ownerId, issueDate, resolution);
+    	initDocument(docCode, docName, docFile, docAbstract, priority, encoding, multipartFileContentType, referenceList);
+    }
+    
+    /** 
+     * Read composite constructor.
+     * 
+     * @param id
+     * @param ownerId
+     * @param issueDate
+     * @param resolution
+     * @param docCode
+     * @param docName
+     * @param docFile
+     * @param docAbstract
+     * @param priority
+     * @param encoding
+     * @param multipartFileContentType
+     * @param referenceList
+     */
+    protected AbstractDocument(Integer id, Integer ownerId, String ownerDisplayName
+    		, String ownerFirstName, String ownerLastName, Character ownerGender
+    		, String ownerImageUrl, Date issueDate, Character resolution
+    	    , String docCode, String docName, String docFile, String docAbstract, Character priority
+    	    , String encoding, String multipartFileContentType, String referenceList) {
+    	super(id, ownerId, ownerDisplayName, ownerFirstName, ownerLastName
+    			, ownerGender, ownerImageUrl, issueDate, resolution);
+    	initDocument(docCode, docName, docFile, docAbstract, priority, encoding, multipartFileContentType, referenceList);
+    }
+    
+    /**
+     * Convenience to set fields.
+     * 
+     * @param docCode
+     * @param docName
+     * @param docFile
+     * @param docAbstract
+     * @param priority
+     * @param encoding
+     * @param multipartFileContentType
+     * @param referenceList
+     */
+    protected final void initDocument(String docCode, String docName, String docFile, String docAbstract, Character priority
+    	    , String encoding, String multipartFileContentType, String referenceList) {
+    	setDocCode(docCode);
+    	setDocName(docName);
+    	setDocFile(docFile);
+    	setDocAbstract(docAbstract);
+    	setPriority(priority);
+    	setEncoding(encoding);
+    	setMultipartFileContentType(multipartFileContentType);
+    	setReferenceList(referenceList);
+	}
     
     /**
      * Document initialization.
@@ -126,10 +201,10 @@ public abstract class AbstractDocument
     /**
      * Priority.
      */
-    public char getPriority() {
+    public Character getPriority() {
         return this.priority;
     }
-    public void setPriority(char priority) {
+    public void setPriority(Character priority) {
         this.priority = priority;
     }
     
@@ -150,7 +225,6 @@ public abstract class AbstractDocument
     /**
      * Allow subclasses to override how multipartFileContentType is determined.
      */
-//    @Transient
     protected String internalMultipartFileContentType(String multipartFileContentType) {
     	return multipartFileContentType;
     }
@@ -158,7 +232,6 @@ public abstract class AbstractDocument
     /**
      * True if {@link #afterInternalNumberSet(long)} starts with "text".
      */
-//    @Transient
     public boolean isText() {
     	if (getMultipartFileContentType().startsWith("text")) {
     		return true;
@@ -169,7 +242,6 @@ public abstract class AbstractDocument
     /**
      * True if {@link #afterInternalNumberSet(long)} starts with "text/html".
      */
-//    @Transient
     public boolean isHtml() {
     	if (getMultipartFileContentType().startsWith("text/html")) {
     		return true;
@@ -180,7 +252,6 @@ public abstract class AbstractDocument
     /**
      * True if {@link #afterInternalNumberSet(long)} starts with "image".
      */
-//    @Transient
     public boolean isImage() {
     	if (getMultipartFileContentType().startsWith("image")) {
     		return true;
@@ -191,7 +262,6 @@ public abstract class AbstractDocument
     /**
      * By default, a document can be changed.
      */
-//    @Transient
     public boolean isLocked() {
     	return false;
     }
@@ -199,7 +269,6 @@ public abstract class AbstractDocument
     /**
      * True if docCode is empty.
      */
-//    @Transient
     public boolean isKeyEmpty() {
     	if (this.getDocCode()!=null) {
     		return getDocCode().length()==0;
@@ -220,7 +289,6 @@ public abstract class AbstractDocument
     /**
      * References as array.
      */
-//    @Transient
     public String[] getReferencesAsArray() {
     	return StringListUtils.stringToArray(getReferenceList());
     }

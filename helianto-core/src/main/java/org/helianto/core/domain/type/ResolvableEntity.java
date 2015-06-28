@@ -7,6 +7,7 @@ import org.helianto.core.form.EventForm;
  * 
  * @author mauriciofernandesdecastro
  * @see EventForm
+ * @deprecated
  */
 public interface ResolvableEntity {
 
