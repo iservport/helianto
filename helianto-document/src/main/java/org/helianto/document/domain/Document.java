@@ -15,6 +15,8 @@
 
 package org.helianto.document.domain;
 
+import java.util.Date;
+
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
@@ -64,6 +66,78 @@ public class Document
     public Document(Entity entity, String docCode) {
     	super(entity, docCode);
     }
+
+    /**
+     * Read constructor.
+     * 
+     * @param id
+     * @param ownerId
+     * @param issueDate
+     * @param resolution
+     * @param docCode
+     * @param docName
+     * @param docFile
+     * @param docAbstract
+     * @param priority
+     * @param encoding
+     * @param multipartFileContentType
+     * @param referenceList
+     * @param folderId
+     * @param internalNumber
+     * @param categoryId
+     */
+    public Document(Integer id, Integer ownerId, Date issueDate, Character resolution
+    	    , String docCode, String docName, String docFile, String docAbstract, Character priority
+    	    , String encoding, String multipartFileContentType, String referenceList, Integer folderId
+    	    , Long internalNumber, Integer categoryId) {
+    	super(id, ownerId, issueDate, resolution, docCode, docName, docFile, docAbstract, priority, 
+    			encoding, multipartFileContentType, referenceList, folderId, internalNumber, categoryId);
+    }
+    
+    /**
+     * Read composite constructor.
+     * 
+     * @param id
+     * @param ownerId
+     * @param ownerDisplayName
+     * @param ownerFirstName
+     * @param ownerLastName
+     * @param ownerGender
+     * @param ownerImageUrl
+     * @param issueDate
+     * @param resolution
+     * @param docCode
+     * @param docName
+     * @param docFile
+     * @param docAbstract
+     * @param priority
+     * @param encoding
+     * @param multipartFileContentType
+     * @param referenceList
+     * @param folderId
+     * @param folderCode
+     * @param folderName
+     * @param patternPrefix
+     * @param numberOfDigits
+     * @param contentType
+     * @param internalNumber
+     * @param categoryId
+     */
+	public Document(Integer id, Integer ownerId, String ownerDisplayName,
+			String ownerFirstName, String ownerLastName, Character ownerGender,
+			String ownerImageUrl, Date issueDate, Character resolution,
+			String docCode, String docName, String docFile, String docAbstract,
+			Character priority, String encoding,
+			String multipartFileContentType, String referenceList,
+			Integer folderId, String folderCode, String folderName,
+			String patternPrefix, Integer numberOfDigits, char contentType,
+			Long internalNumber, Integer categoryId) {
+		super(id, ownerId, ownerDisplayName, ownerFirstName, ownerLastName,
+				ownerGender, ownerImageUrl, issueDate, resolution, docCode, docName,
+				docFile, docAbstract, priority, encoding, multipartFileContentType,
+				referenceList, folderId, folderCode, folderName, patternPrefix,
+				numberOfDigits, contentType, internalNumber, categoryId);
+	}
 
 	/**
 	 * Sort by docCode.
