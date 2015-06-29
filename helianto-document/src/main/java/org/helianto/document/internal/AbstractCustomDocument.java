@@ -55,12 +55,6 @@ public abstract class AbstractCustomDocument
 	private String folderName;
 	
 	@Transient
-	private String patternPrefix = "F";
-	
-	@Transient
-	private Integer numberOfDigits = 3;
-	
-	@Transient
     private char contentType = ' ';
     
 	private Long internalNumber;
@@ -104,19 +98,14 @@ public abstract class AbstractCustomDocument
      * @param docFile
      * @param docAbstract
      * @param priority
-     * @param encoding
-     * @param multipartFileContentType
-     * @param referenceList
      * @param folderId
      * @param internalNumber
      * @param categoryId
      */
     public AbstractCustomDocument(Integer id, Integer ownerId, Date issueDate, Character resolution
     	    , String docCode, String docName, String docFile, String docAbstract, Character priority
-    	    , String encoding, String multipartFileContentType, String referenceList, Integer folderId
-    	    , Long internalNumber, Integer categoryId) {
-    	super(id, ownerId, issueDate, resolution, docCode, docName, docFile, docAbstract, priority
-    			, encoding, multipartFileContentType, referenceList);
+    	    , Integer folderId, Long internalNumber, Integer categoryId) {
+    	super(id, ownerId, issueDate, resolution, docCode, docName, docFile, docAbstract, priority);
     	initCustomDocument(folderId, internalNumber, categoryId);
     }
     
@@ -137,14 +126,9 @@ public abstract class AbstractCustomDocument
      * @param docFile
      * @param docAbstract
      * @param priority
-     * @param encoding
-     * @param multipartFileContentType
-     * @param referenceList
      * @param folderId
      * @param folderCode
      * @param folderName
-     * @param patternPrefix
-     * @param numberOfDigits
      * @param contentType
      * @param internalNumber
      * @param categoryId
@@ -153,17 +137,14 @@ public abstract class AbstractCustomDocument
     		, String ownerFirstName, String ownerLastName, Character ownerGender
     		, String ownerImageUrl, Date issueDate, Character resolution
     	    , String docCode, String docName, String docFile, String docAbstract, Character priority
-    	    , String encoding, String multipartFileContentType, String referenceList, Integer folderId
-    	    , String folderCode, String folderName, String patternPrefix, Integer numberOfDigits
+    	    , Integer folderId, String folderCode, String folderName
     	    , char contentType, Long internalNumber, Integer categoryId) {
     	super(id, ownerId, ownerDisplayName, ownerFirstName, ownerLastName
     			, ownerGender, ownerImageUrl, issueDate, resolution, docCode, docName, docFile
-    			, docAbstract, priority, encoding, multipartFileContentType, referenceList);
+    			, docAbstract, priority);
     	initCustomDocument(folderId, internalNumber, categoryId);
     	setFolderCode(folderCode);
     	setFolderName(folderName);
-    	setPatternPrefix(patternPrefix);
-    	setNumberOfDigits(numberOfDigits);
     	setContentType(contentType);
     }
     
@@ -236,26 +217,6 @@ public abstract class AbstractCustomDocument
 	}
     public void setFolderName(String folderName) {
 		this.folderName = folderName;
-	}
-    
-    /**
-     * <<Transient>> folder pattern prefix.
-     */
-    public String getPatternPrefix() {
-		return getFolder()!=null ? getFolder().getPatternPrefix() : patternPrefix;
-	}
-    public void setPatternPrefix(String patternPrefix) {
-		this.patternPrefix = patternPrefix;
-	}
-    
-    /**
-     * <<Transient>> folder number of digits.
-     */
-    public Integer getNumberOfDigits() {
-		return getFolder()!=null ? getFolder().getNumberOfDigits() : numberOfDigits;
-	}
-    public void setNumberOfDigits(Integer numberOfDigits) {
-		this.numberOfDigits = numberOfDigits;
 	}
     
     /**

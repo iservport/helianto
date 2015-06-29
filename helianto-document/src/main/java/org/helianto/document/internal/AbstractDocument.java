@@ -88,15 +88,11 @@ public abstract class AbstractDocument
      * @param docFile
      * @param docAbstract
      * @param priority
-     * @param encoding
-     * @param multipartFileContentType
-     * @param referenceList
      */
     protected AbstractDocument(Integer id, Integer ownerId, Date issueDate, Character resolution
-    	    , String docCode, String docName, String docFile, String docAbstract, Character priority
-    	    , String encoding, String multipartFileContentType, String referenceList) {
+    	    , String docCode, String docName, String docFile, String docAbstract, Character priority) {
     	super(id, ownerId, issueDate, resolution);
-    	initDocument(docCode, docName, docFile, docAbstract, priority, encoding, multipartFileContentType, referenceList);
+    	initDocument(docCode, docName, docFile, docAbstract, priority);
     }
     
     /** 
@@ -111,18 +107,14 @@ public abstract class AbstractDocument
      * @param docFile
      * @param docAbstract
      * @param priority
-     * @param encoding
-     * @param multipartFileContentType
-     * @param referenceList
      */
     protected AbstractDocument(Integer id, Integer ownerId, String ownerDisplayName
     		, String ownerFirstName, String ownerLastName, Character ownerGender
     		, String ownerImageUrl, Date issueDate, Character resolution
-    	    , String docCode, String docName, String docFile, String docAbstract, Character priority
-    	    , String encoding, String multipartFileContentType, String referenceList) {
+    	    , String docCode, String docName, String docFile, String docAbstract, Character priority) {
     	super(id, ownerId, ownerDisplayName, ownerFirstName, ownerLastName
     			, ownerGender, ownerImageUrl, issueDate, resolution);
-    	initDocument(docCode, docName, docFile, docAbstract, priority, encoding, multipartFileContentType, referenceList);
+    	initDocument(docCode, docName, docFile, docAbstract, priority);
     }
     
     /**
@@ -133,20 +125,14 @@ public abstract class AbstractDocument
      * @param docFile
      * @param docAbstract
      * @param priority
-     * @param encoding
-     * @param multipartFileContentType
-     * @param referenceList
      */
-    protected final void initDocument(String docCode, String docName, String docFile, String docAbstract, Character priority
-    	    , String encoding, String multipartFileContentType, String referenceList) {
+    protected final void initDocument(String docCode, String docName, String docFile, String docAbstract
+    		, Character priority) {
     	setDocCode(docCode);
     	setDocName(docName);
     	setDocFile(docFile);
     	setDocAbstract(docAbstract);
     	setPriority(priority);
-    	setEncoding(encoding);
-    	setMultipartFileContentType(multipartFileContentType);
-    	setReferenceList(referenceList);
 	}
     
     /**

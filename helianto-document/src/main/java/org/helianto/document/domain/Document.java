@@ -79,19 +79,15 @@ public class Document
      * @param docFile
      * @param docAbstract
      * @param priority
-     * @param encoding
-     * @param multipartFileContentType
-     * @param referenceList
      * @param folderId
      * @param internalNumber
      * @param categoryId
      */
     public Document(Integer id, Integer ownerId, Date issueDate, Character resolution
     	    , String docCode, String docName, String docFile, String docAbstract, Character priority
-    	    , String encoding, String multipartFileContentType, String referenceList, Integer folderId
-    	    , Long internalNumber, Integer categoryId) {
+    	    , Integer folderId, Long internalNumber, Integer categoryId) {
     	super(id, ownerId, issueDate, resolution, docCode, docName, docFile, docAbstract, priority, 
-    			encoding, multipartFileContentType, referenceList, folderId, internalNumber, categoryId);
+    			folderId, internalNumber, categoryId);
     }
     
     /**
@@ -111,14 +107,9 @@ public class Document
      * @param docFile
      * @param docAbstract
      * @param priority
-     * @param encoding
-     * @param multipartFileContentType
-     * @param referenceList
      * @param folderId
      * @param folderCode
      * @param folderName
-     * @param patternPrefix
-     * @param numberOfDigits
      * @param contentType
      * @param internalNumber
      * @param categoryId
@@ -127,16 +118,12 @@ public class Document
 			String ownerFirstName, String ownerLastName, Character ownerGender,
 			String ownerImageUrl, Date issueDate, Character resolution,
 			String docCode, String docName, String docFile, String docAbstract,
-			Character priority, String encoding,
-			String multipartFileContentType, String referenceList,
-			Integer folderId, String folderCode, String folderName,
-			String patternPrefix, Integer numberOfDigits, char contentType,
-			Long internalNumber, Integer categoryId) {
+			Character priority, Integer folderId, String folderCode, String folderName,
+			char contentType, Long internalNumber, Integer categoryId) {
 		super(id, ownerId, ownerDisplayName, ownerFirstName, ownerLastName,
 				ownerGender, ownerImageUrl, issueDate, resolution, docCode, docName,
-				docFile, docAbstract, priority, encoding, multipartFileContentType,
-				referenceList, folderId, folderCode, folderName, patternPrefix,
-				numberOfDigits, contentType, internalNumber, categoryId);
+				docFile, docAbstract, priority, folderId, folderCode, folderName, 
+				contentType, internalNumber, categoryId);
 	}
 
 	/**
