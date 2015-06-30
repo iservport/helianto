@@ -43,10 +43,19 @@ public class Feature
 	@Column(length=128)
 	private String featureName;
 
+	@Column(length=1024)
+	private String featureDesc;
+
 	private Character featureType = 'S';
-	
+
+	/**
+	 * @deprecated
+	 */
 	@Column(length=32)
 	private int osConstraints;
+	
+	@Column(length=128)
+	private String constraints;
 	
 	/**
 	 * Constructor.
@@ -126,6 +135,13 @@ public class Feature
 	public void setFeatureName(String featureName) {
 		this.featureName = featureName;
 	}
+	
+	public String getFeatureDesc() {
+		return featureDesc;
+	}
+	public void setFeatureDesc(String featureDesc) {
+		this.featureDesc = featureDesc;
+	}
 
 	public Character getFeatureType() {
 		return featureType;
@@ -139,6 +155,13 @@ public class Feature
 	}
 	public void setOsConstraints(int osConstraints) {
 		this.osConstraints = osConstraints;
+	}
+	
+	public String getConstraints() {
+		return constraints;
+	}
+	public void setConstraints(String constraints) {
+		this.constraints = constraints;
 	}
 
 	@Override
