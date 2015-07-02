@@ -57,6 +57,9 @@ public class Feature
 	@Column(length=128)
 	private String constraints;
 	
+	@Column(length=512)
+	private String policies;
+	
 	/**
 	 * Constructor.
 	 */
@@ -162,6 +165,13 @@ public class Feature
 	}
 	public void setConstraints(String constraints) {
 		this.constraints = constraints;
+	}
+	
+	public String getPolicies() {
+		return policies;
+	}
+	public void setPolicies(String policies) {
+		this.policies = policies;
 	}
 
 	@Override
