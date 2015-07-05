@@ -18,7 +18,6 @@ package org.helianto.core.service;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
@@ -27,17 +26,11 @@ import static org.junit.Assert.assertSame;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.easymock.EasyMock;
-import org.easymock.EasyMockSupport;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.KeyType;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Province;
 import org.helianto.core.domain.Service;
-import org.helianto.core.filter.Filter;
-import org.helianto.core.filter.ServiceFormFilterAdapter;
-import org.helianto.core.form.ProvinceForm;
-import org.helianto.core.form.ServiceForm;
 import org.helianto.core.repository.EntityRepository;
 import org.helianto.core.repository.KeyTypeRepository;
 import org.helianto.core.repository.OperatorRepository;

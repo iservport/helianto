@@ -24,9 +24,6 @@ import javax.persistence.TemporalType;
 import org.helianto.core.def.ControlState;
 import org.helianto.core.def.Resolution;
 import org.helianto.core.def.ResolutionExtended;
-import org.helianto.core.form.ControlForm;
-import org.helianto.core.form.ProgressForm;
-import org.helianto.core.number.Internal;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -37,9 +34,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 @javax.persistence.MappedSuperclass
 public abstract class AbstractEventControl 
 	extends AbstractEvent
-	implements Internal
-	, ControlForm
-	, ProgressForm
 {
 
     private static final long serialVersionUID = 1L;

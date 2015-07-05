@@ -15,16 +15,12 @@
 
 package org.helianto.core.service;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.helianto.core.CategoryMgr;
 import org.helianto.core.def.CategoryGroup;
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
-import org.helianto.core.filter.CategoryFormFilterAdapter;
-import org.helianto.core.form.CategoryForm;
 import org.helianto.core.repository.CategoryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,14 +39,6 @@ public class CategoryMgrImpl implements CategoryMgr {
 		return categoryRepository.countByEntity_IdAndCategoryGroupAndCategoryCode(entity.getId(), categoryGroup, searchString);
 	}
     
-//	@Transactional(readOnly=true)
-//	public List<Category> findCategories(CategoryForm form) {
-//		CategoryFormFilterAdapter filter = new CategoryFormFilterAdapter(form);
-//    	List<Category> categoryList = (List<Category>) categoryRepository.find(filter);
-//    	logger.debug("Found category list of size {}", categoryList.size());
-//    	return categoryList;
-//	}
-//
 	@Transactional
 	public Category storeCategory(Category category) {
     	return categoryRepository.saveAndFlush(category);

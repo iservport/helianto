@@ -1,6 +1,5 @@
 package org.helianto.core.config;
 
-import org.helianto.core.filter.FilterNamingConventionStrategy;
 import org.helianto.core.naming.internal.DefaultNamingConventionStrategy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,11 +27,6 @@ public class HeliantoConfig {
 	@Bean
 	public DefaultNamingConventionStrategy defaultNamingConventionStrategy() {
 		return new DefaultNamingConventionStrategy();
-	}
-	
-	@Bean
-	public FilterNamingConventionStrategy filterNamingConventionStrategy() {
-		return new FilterNamingConventionStrategy();
 	}
 	
 	@Bean

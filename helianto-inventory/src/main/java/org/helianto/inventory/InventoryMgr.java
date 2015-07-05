@@ -15,14 +15,9 @@
 
 package org.helianto.inventory;
 
-import java.util.List;
-
 import org.helianto.inventory.domain.ProcessAgreement;
 import org.helianto.inventory.domain.ProcessRequirement;
 import org.helianto.inventory.domain.Tax;
-import org.helianto.inventory.form.ProcessAgreementForm;
-import org.helianto.inventory.form.ProcessRequirementForm;
-import org.helianto.inventory.form.TaxForm;
 
 /**
  * Inventory service interface.
