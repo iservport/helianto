@@ -106,7 +106,7 @@ public class UserGroup
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastEvent = new Date();
     
-    private char userState = UserState.ACTIVE.getValue();
+    private Character userState = UserState.ACTIVE.getValue();
     
     private Character userType = ' ';
     
@@ -193,6 +193,27 @@ public class UserGroup
     	setUserType(contextGroup.getUserType());
     }
 
+	/**
+	 * Read constructor.
+	 * 
+	 * @param id
+	 * @param userKey
+	 * @param userName
+	 * @param minimalEducationRequirement
+	 * @param minimalExperienceRequirement
+	 */
+	public UserGroup(int id, String userKey, String userName
+			, int minimalEducationRequirement, int minimalExperienceRequirement
+			, char userType) {
+		this();
+		setId(id);
+    	setUserKey(userKey);
+    	setUserName(userName);
+    	setMinimalEducationRequirement(minimalEducationRequirement);
+    	setMinimalExperienceRequirement(minimalExperienceRequirement);
+    	setUserType(userType);
+	}
+	
     /**
      * <<Transient>> Convenience to return Operator.
      */
@@ -299,10 +320,10 @@ public class UserGroup
     /**
      * Users or groups may be deactivated using this field.
      */
-    public char getUserState() {
+    public Character getUserState() {
         return this.userState;
     }
-    public void setUserState(char userState) {
+    public void setUserState(Character userState) {
         this.userState = userState;
     }
     public void setUserStateAsEnum(UserState userState) {
@@ -412,6 +433,33 @@ public class UserGroup
 	}
 	public void setUserJob(UserJob userJob) {
 		this.userJob = userJob;
+	}
+	
+	protected UserJob safeUserJob() {
+		if (getUserJob()==null) {
+			setUserJob(new UserJob(0, ""));
+		}
+		return getUserJob();
+	}
+	
+	/**
+	 * Job id helper method.
+	 */
+	public Integer getJobId() {
+		return safeUserJob().getJobId();
+	}
+	public void setJobId(Integer jobId) {
+		safeUserJob().setJobId(jobId);
+	}
+	
+	/**
+	 * Job title helper method.
+	 */
+	public String getJobTitle() {
+		return safeUserJob().getJobTitle();
+	}
+	public void setJobTitle(String jobTitle) {
+		safeUserJob().setJobTitle(jobTitle);
 	}
 	
 	/**
