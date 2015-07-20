@@ -44,8 +44,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.def.Appellation;
-import org.helianto.core.def.Gender;
 import org.helianto.core.def.IdentityType;
 import org.helianto.core.def.Notification;
 import org.joda.time.DateMidnight;
@@ -157,6 +155,31 @@ public class Identity implements java.io.Serializable {
         setPersonalData(personalData);
     }
 
+	/**
+	 * Read constructor.
+	 * 
+	 * @param id
+	 * @param userGroupId
+	 * @param identityType
+	 * @param principal
+	 * @param displayName
+	 * @param appellation
+	 * @param firstName
+	 * @param lastName
+	 * @param gender
+	 * @param notification
+	 * @param birthDate
+	 * @param imageUrl
+	 */
+	public Identity(Integer id, char identityType, String principal, String displayName,
+			char appellation, String firstName, String lastName,
+			char gender, char notification, Date birthDate, String imageUrl) {
+		this(principal, displayName, new PersonalData(firstName, lastName, gender, appellation, birthDate, imageUrl));
+		this.id = id;
+		this.identityType = identityType;
+		this.notification = notification;
+	}
+	
     /**
      * Primary key.
      */
@@ -263,24 +286,34 @@ public class Identity implements java.io.Serializable {
     }
     
     /**
-     * <<Transient>> Safe identity first name getter.
+     * Safe personal data getter.
      */
-    public String getIdentityFirstName() {
-    	if (getPersonalData()!=null) {
-    		return getPersonalData().getFirstName();
+    protected final PersonalData safePersonalData() {
+    	if (getPersonalData()==null) {
+    		return new PersonalData();
     	}
-    	return "";
+    	return getPersonalData();
     }
     
     /**
-     * <<Transient>> Safe identity last name getter.
+     * <<Transient>> identity first name.
+     */
+    public String getIdentityFirstName() {
+		return safePersonalData().getFirstName();
+    }
+    public void setIdentityFirstName(String firstName) {
+    	safePersonalData().setFirstName(firstName);
+	}
+    
+    /**
+     * <<Transient>> identity last name.
      */
     public String getIdentityLastName() {
-    	if (getPersonalData()!=null) {
-    		return getPersonalData().getLastName();
-    	}
-    	return "";
+    	return safePersonalData().getLastName();
     }
+    public void setIdentityLastName(String lastName) {
+    	safePersonalData().setLastName(lastName);
+	}
     
     /**
      * <<Transient>> Safe identity name getter.
@@ -295,33 +328,33 @@ public class Identity implements java.io.Serializable {
     }
     
     /**
-     * <<Transient>> Safe gender getter.
+     * <<Transient>> gender.
      */
     public char getGender() {
-    	if (getPersonalData()==null) {
-    		return Gender.NOT_SUPPLIED.getValue();
-    	}
-		return getPersonalData().getGender();
+    	return safePersonalData().getGender();
+    }
+    public void setGender(char gender) {
+    	safePersonalData().setGender(gender);
 	}
     
     /**
-     * <<Transient>> Safe appellation getter.
+     * <<Transient>> appellation.
      */
     public char getAppellation() {
-    	if (getPersonalData()==null) {
-    		return Appellation.NOT_SUPPLIED.getValue();
-    	}
-		return getPersonalData().getAppellation();
+    	return safePersonalData().getAppellation();
+    }
+    public void setAppellation(char appellation) {
+    	safePersonalData().setAppellation(appellation);
 	}
     
     /**
-     * <<Transient>> Safe birth date getter.
+     * <<Transient>> birth date.
      */
     public Date getBirthDate() {
-    	if (getPersonalData()==null) {
-    		return new Date(1000l);
-    	}
-		return getPersonalData().getBirthDate();
+    	return safePersonalData().getBirthDate();
+    }
+    public void setBirthDate(Date birthDate) {
+    	safePersonalData().setBirthDate(birthDate);
 	}
     
     /**
@@ -356,13 +389,16 @@ public class Identity implements java.io.Serializable {
 	}
     
     /**
-     * <<Transient>> Safe image url getter.
+     * <<Transient>> image URL.
      */
     public String getImageUrl() {
     	if (isImageAvailable()) {
-    		return getPersonalData().getImageUrl();
+        	return safePersonalData().getImageUrl();
     	}
 		return "";
+    }
+    public void setImageUrl(String imageUrl) {
+    	safePersonalData().setImageUrl(imageUrl);
 	}
     
     /**

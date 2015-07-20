@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * Identity read adapter.
  *
  * @author Eldevan Nery Junior
+ * @deprecated
  */
 public class IdentityReadAdapter
 	implements Serializable
