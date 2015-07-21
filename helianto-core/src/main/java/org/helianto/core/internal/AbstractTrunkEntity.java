@@ -68,6 +68,10 @@ public abstract class AbstractTrunkEntity
     }
     public void setEntity(Entity entity) {
         this.entity = entity;
+		if (entity!=null) {
+			this.contextId = entity.getContextId();
+			this.entityId = entity.getId();
+		}
     }
     
     /**

@@ -278,6 +278,14 @@ public class User
     public void setIdentity(Identity identity) {
         this.identity = identity;
     	setUserKey(getInternalUserKey());
+		if (identity!=null) {
+			this.identityId = identity.getId();
+			this.firstName = identity.getIdentityFirstName();
+			this.lastName = identity.getIdentityLastName();
+			this.displayName = identity.getDisplayName();
+			this.userGender = identity.getGender();
+			this.userImageUrl = identity.getImageUrl();
+		}
     }
     
     /**

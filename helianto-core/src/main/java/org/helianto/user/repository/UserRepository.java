@@ -44,6 +44,12 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 			+ ") "
 			+ "from User user_ ";
 
+	@Query("select user_.id "
+			+ "from User user_ "
+			+ "where user_.entity.id = ?1 "
+			+ "AND user_.userKey = ?2")
+	Integer findIdByEntity_IdAndUserKey(Integer entityId, String userKey);
+	
 	/**
 	 * Find by user id.
 	 * 
