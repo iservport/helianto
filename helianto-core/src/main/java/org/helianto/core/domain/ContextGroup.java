@@ -50,7 +50,9 @@ public class ContextGroup
 	@Enumerated(EnumType.STRING)
 	private ContextGroupType contextGroupType;
 	
-    private Character userType = ' ';
+    private Character groupType = ' ';
+    
+    private Integer priority = 0;
 	
 	/**
 	 * Constructor.
@@ -125,11 +127,28 @@ public class ContextGroup
 		this.contextGroupType = contextGroupType;
 	}
 	
-	public Character getUserType() {
-		return userType;
+	public Character getGroupType() {
+		return groupType;
 	}
-	public void setUserType(Character userType) {
-		this.userType = userType;
+	public void setGroupType(Character groupType) {
+		this.groupType = groupType;
+	}
+	
+	/**
+	 * @deprecated see groupType
+	 */
+	public Character getUserType() {
+		return groupType;
+	}
+	public void setUserType(Character groupType) {
+		this.groupType =groupType;
+	}
+	
+	public Integer getPriority() {
+		return priority;
+	}
+	public void setPriority(Integer priority) {
+		this.priority = priority;
 	}
 	
 	public boolean isAutoCreate() {

@@ -12,6 +12,10 @@ public enum ContextGroupType {
 	 */
 	SYS(true),
 	/**
+	 * Feature context groups.
+	 */
+	FEAT(false),
+	/**
 	 * Service context groups.
 	 */
 	SRV(false);

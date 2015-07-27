@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
@@ -45,6 +46,13 @@ public class Feature
 
 	@Column(length=1024)
 	private String featureDesc;
+	
+	@ManyToOne
+	@JoinColumn(name="contextGroupId")
+	private ContextGroup contextGroup;
+	
+	@Transient
+	private Integer contextGroupId;
 
 	private Character featureType = 'S';
 
@@ -145,7 +153,31 @@ public class Feature
 	public void setFeatureDesc(String featureDesc) {
 		this.featureDesc = featureDesc;
 	}
+	
+	public ContextGroup getContextGroup() {
+		return contextGroup;
+	}
+	public void setContextGroup(ContextGroup contextGroup) {
+		this.contextGroup = contextGroup;
+	}
+	
+	/**
+	 * <<Transient>> context group id.
+	 * @return
+	 */
+	public Integer getContextGroupId() {
+		if (getContextGroup()!=null) {
+			return getContextGroup().getId();
+		}
+		return contextGroupId;
+	}
+	public void setContextGroupId(Integer contextGroupId) {
+		this.contextGroupId = contextGroupId;
+	}
 
+	/**
+	 * @deprecated use groupType in ContextGroup
+	 */
 	public Character getFeatureType() {
 		return featureType;
 	}
