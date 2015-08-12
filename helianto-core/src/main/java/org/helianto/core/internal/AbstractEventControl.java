@@ -40,7 +40,6 @@ public abstract class AbstractEventControl
     
     private long internalNumber;
     
-    @DateTimeFormat(style="SS")
     @Temporal(TemporalType.TIMESTAMP)
     private Date nextCheckDate;
     
@@ -98,7 +97,6 @@ public abstract class AbstractEventControl
     /**
      * Evaluate the control state.
      */
-//    @Transient
     public char getControlState() {
     	Date now = new Date();
     	if (getResolution()==ResolutionExtended.DONE.getValue()) {
@@ -121,7 +119,6 @@ public abstract class AbstractEventControl
     public int getFrequency() {
     	return getInternalFrequency();
     }
-//    @Transient
     protected int getInternalFrequency() {
     	return this.frequency;
     }

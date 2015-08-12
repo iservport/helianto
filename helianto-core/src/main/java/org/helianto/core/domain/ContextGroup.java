@@ -11,10 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.helianto.core.def.ContextGroupType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Master groups to be replicated across entities.
@@ -41,11 +44,17 @@ public class ContextGroup
 	@JoinColumn(name="contextId")
 	private Operator context;
 	
+	@Transient
+	private Integer contextId;
+	
 	@Column(length=32)
 	private String contextGroupCode;
 
 	@Column(length=128)
 	private String contextGroupName;
+	
+	@Column(length=2048)
+	private String contextGroupDesc;
 	
 	@Enumerated(EnumType.STRING)
 	private ContextGroupType contextGroupType;
@@ -53,7 +62,7 @@ public class ContextGroup
     private Character groupType = ' ';
     
     private Integer priority = 0;
-	
+
 	/**
 	 * Constructor.
 	 */
@@ -99,11 +108,19 @@ public class ContextGroup
 		this.version = version;
 	}
 
+	@JsonIgnore
 	public Operator getContext() {
 		return context;
 	}
 	public void setContext(Operator context) {
 		this.context = context;
+	}
+
+	public Integer getContextId() {
+		return contextId;
+	}
+	public void setContextId(Integer contextId) {
+		this.contextId = contextId;
 	}
 
 	public String getContextGroupCode() {
@@ -118,6 +135,13 @@ public class ContextGroup
 	}
 	public void setContextGroupName(String contextGroupName) {
 		this.contextGroupName = contextGroupName;
+	}
+	
+	public String getContextGroupDesc() {
+		return contextGroupDesc;
+	}
+	public void setContextGroupDesc(String contextGroupDesc) {
+		this.contextGroupDesc = contextGroupDesc;
 	}
 	
 	public ContextGroupType getContextGroupType() {

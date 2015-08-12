@@ -11,6 +11,8 @@ import javax.persistence.Version;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.type.TrunkEntity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Base class to persistent domain classes isolated by an {@link Entity}.
  * 
@@ -28,6 +30,7 @@ public abstract class AbstractTrunkEntity
     @Version
     private Integer version;
     
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="entityId", nullable=true)
     private Entity entity;

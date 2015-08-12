@@ -13,6 +13,8 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Features suggest information to be shared among entities.
  * 
@@ -38,6 +40,9 @@ public class Feature
 	@JoinColumn(name="contextId")
 	private Operator context;
 	
+	@Transient
+	private Integer contextId;
+
 	@Column(length=32)
 	private String featureCode;
 
@@ -126,11 +131,19 @@ public class Feature
 		this.version = version;
 	}
 
+	@JsonIgnore
 	public Operator getContext() {
 		return context;
 	}
 	public void setContext(Operator context) {
 		this.context = context;
+	}
+	
+	public Integer getContextId() {
+		return contextId;
+	}
+	public void setContextId(Integer contextId) {
+		this.contextId = contextId;
 	}
 
 	public String getFeatureCode() {
@@ -154,6 +167,7 @@ public class Feature
 		this.featureDesc = featureDesc;
 	}
 	
+	@JsonIgnore
 	public ContextGroup getContextGroup() {
 		return contextGroup;
 	}

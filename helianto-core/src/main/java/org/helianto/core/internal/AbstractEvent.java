@@ -28,7 +28,6 @@ import org.helianto.core.def.PrivacyLevel;
 import org.helianto.core.def.Resolution;
 import org.helianto.core.def.ResolutionExtended;
 import org.helianto.core.domain.Identity;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -50,12 +49,13 @@ public abstract class AbstractEvent
 
     private static final long serialVersionUID = 1L;
     
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="ownerId", nullable=true)
     private Identity owner;
     
     @Transient
-    private Integer ownerId;
+    private Integer ownerId = 0;
     
     @Transient
     private String ownerDisplayName = "";
@@ -72,7 +72,6 @@ public abstract class AbstractEvent
     @Transient
     private String ownerImageUrl = "";
     
-    @DateTimeFormat(style="SS")
     @Temporal(TemporalType.TIMESTAMP)
     private Date issueDate;
     
@@ -100,6 +99,7 @@ public abstract class AbstractEvent
      * @param resolution
      */
     protected AbstractEvent(Integer id, Integer ownerId, Date issueDate, Character resolution) {
+    	this();
     	setId(id);
     	setOwnerId(ownerId);
     	setIssueDate(issueDate);
@@ -150,7 +150,7 @@ public abstract class AbstractEvent
 	/**
 	 * <<Transient>> owner id.
 	 */
-	public int getOwnerId() {
+	public Integer getOwnerId() {
 		return getOwner()!=null ? getOwner().getId() : ownerId;
 	}
 	public void setOwnerId(Integer ownerId) {
