@@ -60,6 +60,15 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 	User findAdapter(int userId);
 
 	/**
+	 * Find by identity principal.
+	 * 
+	 * @param principal
+	 */
+	@Query(QUERY
+			+ "where user_.identity.principal = ?1 ")
+	List<User> findByIdentityPrincipal(String principal);
+
+	/**
 	 * Page by entity.
 	 * 
 	 * @param entityId
