@@ -44,6 +44,9 @@ public class Lead implements Serializable {
     @Column(length=36)
     private String token;
     
+    @Column(length=39)
+    private String ipAddress;
+    
 	/**
 	 * Default constructor.
 	 */
@@ -132,6 +135,16 @@ public class Lead implements Serializable {
 	}
     public void setToken(String token) {
 		this.token = token;
+	}
+    
+    /**
+     * Ip address.
+     */
+    public String getIpAddress() {
+		return ipAddress;
+	}
+    public void setIpAddress(String ipAddress) {
+		this.ipAddress = ipAddress;
 	}
 
 	@Override

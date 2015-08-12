@@ -36,4 +36,12 @@ public interface LeadRepository
 			+ ")")
 	Lead findLastByPrincipal(String principal);
 	
+	/**
+	 * Find by token.
+	 * 
+	 * @param token
+	 */
+	@Query("select lead from Lead lead where lead.token = ?1")
+	Lead findByToken(String token);
+
 }
