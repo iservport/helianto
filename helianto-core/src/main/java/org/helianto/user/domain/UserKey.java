@@ -34,7 +34,7 @@ public class UserKey extends AbstractKeyStringValue {
     
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="publicEntityId", nullable=true)
+    @JoinColumn(name="userGroupId", nullable=true)
     private UserGroup userGroup;
     
     @Transient
@@ -57,6 +57,18 @@ public class UserKey extends AbstractKeyStringValue {
 		this();
 		setUserGroup(userGroup);
 		setKeyType(keyType);
+	}
+
+    /**
+     * Value constructor.
+     * 
+     * @param userGroup
+     * @param keyType
+     * @param keyValue
+     */
+    public UserKey(UserGroup userGroup, KeyType keyType, String keyValue) {
+		this(userGroup, keyType);
+		setKeyValue(keyValue);
 	}
 
 	public UserGroup getUserGroup() {
