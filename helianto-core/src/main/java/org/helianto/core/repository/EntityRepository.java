@@ -106,4 +106,16 @@ public interface EntityRepository extends JpaRepository<Entity, Serializable> {
 	@Query("select entity from Entity entity where entity.operator.operatorName = ?1 and entity.alias = ?2 ")
 	Entity findByContextNameAndAlias(String contextName, String alias);
 	
+	/**
+	 * Find operator using the entity.
+	 * 
+	 * @param entityId
+	 */
+	@Query("select entity.operator "
+			+ "from Entity entity "
+			+ "where entity.id = ?1 ")
+	Operator findOperatorByEntity(int entityId);
+	
+
+	
 }

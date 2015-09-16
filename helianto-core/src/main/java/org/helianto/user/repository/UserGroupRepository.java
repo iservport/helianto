@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.user.domain.UserGroup;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -39,8 +40,6 @@ public interface UserGroupRepository extends JpaRepository<UserGroup, Serializab
 	 * @param userKey
 	 */
 	List<UserGroup> findByUserKey(String userKey);
-	
-//	select user from User user where user.userKey = ? order by lastEvent DESC
 	
 	/**
 	 * Find by user key order by lastEvent DESC.
@@ -116,5 +115,98 @@ public interface UserGroupRepository extends JpaRepository<UserGroup, Serializab
 			+ "and user.class = 'U' "
 			+ "order by user.lastEvent DESC ")
 	List<UserReadAdapter> findByIdentityIdOrderByLastEventDesc(int identityId);
+
+	/**
+	 * Find a parent given a child id.
+	 * 
+	 * @param userId
+	 * @deprecated
+	 */
+	@Query("select parents.parent "
+			+ "from User child "
+			+ "join child.parentAssociations parents "
+			+ "where parents.parent.userKey = 'USER' "
+			+ "and child.id = ?1 ")
+	UserGroup findAllUserGroup(int userId);
+	
+	/**
+	 * Query to read from UserGroup.
+	 */
+	public final static String QUERY_GROUP = "select new "
+			+ "org.helianto.user.domain.UserGroup"
+			+ "( userGroup.id"
+			+ ", userGroup.userKey"
+			+ ", userGroup.userName"
+			+ ", userGroup.minimalEducationRequirement"
+			+ ", userGroup.minimalExperienceRequirement"
+			+ ", userGroup.userType"
+			+ ") "
+			+ "from UserGroup userGroup ";
+
+	/**
+	 * Read user pages from entity and type.
+	 * 
+	 * @param entityId
+	 */
+	@Query(QUERY_GROUP
+			+ "where userGroup.entity.id = ?1 "
+			+ "and userGroup.userType = ?2 "
+			+ "and userGroup.userState = 'A' ")
+	Page<UserGroup> findActiveUserGroupsByUserType(int entityId, char userType, Pageable page);
+	
+	/**
+	 * Read by id.
+	 * 
+	 * @param groupId
+	 */
+	@Query(QUERY_GROUP
+			+ "where userGroup.id = ?1 ")
+	UserGroup findById(Integer groupId);
+
+	/**
+	 * Read groups by entity.
+	 * 
+	 * @param entityId
+	 * @param page
+	 * @deprecated
+	 */
+	@Query(QUERY_GROUP
+			+ "where userGroup.entity.id = ?1 "
+			+ "and userGroup.class = 'G' "
+			+ "and userGroup.userType not in ('A', 'G')")
+	List<UserGroup> findByEntity_Id(Integer entityId, Pageable page);
+	
+	/**
+	 * Query to read from parent UserGroup.
+	 */
+	public final static String QUERY_PARENT = "select new "
+			+ "org.helianto.user.domain.UserGroup"
+			+ "( association.parent.id"
+			+ ", association.parent.userKey"
+			+ ", association.parent.userName"
+			+ ", association.parent.minimalEducationRequirement"
+			+ ", association.parent.minimalExperienceRequirement"
+			+ ", association.parent.userType"
+			+ ") "
+			+ "from UserAssociation association ";
+
+	/**
+	 * List groups related to a child user.
+	 * 
+	 * @param child
+	 * @deprecated
+	 */
+	@Query(QUERY_PARENT
+			+ "where association.child.id = ?1 ")
+	List<UserGroup> findParentsByChildId(int childId, Pageable page);
+	
+	/**
+	 * Page groups related to a child user.
+	 * 
+	 * @param child
+	 */
+	@Query(QUERY_PARENT
+			+ "where association.child.id = ?1 ")
+	Page<UserGroup> find2ParentsByChildId(int childId, Pageable page);
 
 }

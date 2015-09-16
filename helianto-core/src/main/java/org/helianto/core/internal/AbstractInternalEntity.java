@@ -1,7 +1,6 @@
 package org.helianto.core.internal;
 
 import org.helianto.core.domain.Entity;
-import org.helianto.core.number.Internal;
 
 /**
  * Base class to persitent domain classes unique by {@link Entity} and int.
@@ -10,8 +9,7 @@ import org.helianto.core.number.Internal;
  */
 @javax.persistence.MappedSuperclass
 public abstract class AbstractInternalEntity 
-	extends AbstractTrunkEntity
-	implements Internal {
+	extends AbstractTrunkEntity{
 
     private static final long serialVersionUID = 1L;
     

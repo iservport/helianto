@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 /**
  * An individual who has provided contact information and, in doing so, pointed toward a 
@@ -18,7 +19,9 @@ import javax.persistence.TemporalType;
  * @author Eldevan Nery Junior
  */
 @javax.persistence.Entity
-@Table(name="core_lead")
+@Table(name="core_lead",
+	uniqueConstraints = {@UniqueConstraint(columnNames={"token"})}
+)
 public class Lead implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -37,6 +40,12 @@ public class Lead implements Serializable {
     
     @Column(length=64)
     private String lastName = "";
+    
+    @Column(length=36)
+    private String token;
+    
+    @Column(length=39)
+    private String ipAddress;
     
 	/**
 	 * Default constructor.
@@ -117,15 +126,32 @@ public class Lead implements Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+    
+    /**
+     * Token.
+     */
+    public String getToken() {
+		return token;
+	}
+    public void setToken(String token) {
+		this.token = token;
+	}
+    
+    /**
+     * Ip address.
+     */
+    public String getIpAddress() {
+		return ipAddress;
+	}
+    public void setIpAddress(String ipAddress) {
+		this.ipAddress = ipAddress;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((issueDate == null) ? 0 : issueDate.hashCode());
-		result = prime * result
-				+ ((principal == null) ? 0 : principal.hashCode());
+		result = prime * result + ((token == null) ? 0 : token.hashCode());
 		return result;
 	}
 
@@ -138,23 +164,19 @@ public class Lead implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Lead other = (Lead) obj;
-		if (issueDate == null) {
-			if (other.issueDate != null)
+		if (token == null) {
+			if (other.token != null)
 				return false;
-		} else if (!issueDate.equals(other.issueDate))
-			return false;
-		if (principal == null) {
-			if (other.principal != null)
-				return false;
-		} else if (!principal.equals(other.principal))
+		} else if (!token.equals(other.token))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "IdentityTemp [id=" + id + ", principal=" + principal
-				+ ", issueDate=" + issueDate + "]";
+		return "Lead [id=" + id + ", principal=" + principal + ", issueDate="
+				+ issueDate + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", token=" + token + "]";
 	}
 	
 }

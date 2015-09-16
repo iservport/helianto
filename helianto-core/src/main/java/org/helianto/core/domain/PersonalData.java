@@ -88,8 +88,27 @@ public class PersonalData implements Serializable {
         setFirstName(firstName);
         setLastName(lastName);
     }
-
+    
     /**
+     * Convenience constructor.
+     * 
+     * @param firstName
+     * @param lastName
+     * @param gender
+     * @param appellation
+     * @param birthDate
+     * @param imageUrl
+     */
+    public PersonalData(String firstName, String lastName, char gender,
+			char appellation, Date birthDate, String imageUrl) {
+		this(firstName, lastName);
+		this.gender = gender;
+		this.appellation = appellation;
+		this.birthDate = birthDate;
+		this.imageUrl = imageUrl;
+	}
+
+	/**
      * First name.
      */
     public String getFirstName() {

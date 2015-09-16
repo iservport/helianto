@@ -20,7 +20,6 @@ import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.helianto.core.form.PriorityForm;
 import org.helianto.core.internal.AbstractEventControl;
 import org.helianto.document.Journal;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,7 +33,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @javax.persistence.MappedSuperclass
 public abstract class AbstractJournal 
 	extends AbstractEventControl 
-	implements Journal, PriorityForm {
+	implements Journal {
 
     private static final long serialVersionUID = 1L;
     

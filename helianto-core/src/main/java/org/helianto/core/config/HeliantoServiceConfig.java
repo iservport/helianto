@@ -3,7 +3,6 @@ package org.helianto.core.config;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
-import org.helianto.core.data.FilterRepositoryFactoryBean;
 import org.hibernate.ejb.HibernatePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,8 +28,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 		basePackages = {"org.helianto.*.repository", "org.helianto.*.service"})
 @EnableTransactionManagement
 @EnableJpaRepositories(
-		basePackages="org.helianto.*.repository"
-		, repositoryFactoryBeanClass=FilterRepositoryFactoryBean.class)
+		basePackages="org.helianto.*.repository")
 @Import(HeliantoConfig.class)
 public class HeliantoServiceConfig {
 

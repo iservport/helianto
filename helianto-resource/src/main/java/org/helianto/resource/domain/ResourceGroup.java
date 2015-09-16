@@ -25,7 +25,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.Controllable;
 import org.helianto.core.Navigable;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.type.FolderEntity;
@@ -72,9 +71,6 @@ public class ResourceGroup
     
     private char resourceType = ResourceType.EQUIPMENT.getValue();
 
-    @Transient
-    private Controllable controlReference;
-    
     /** 
      * Default constructor.
      */
@@ -180,16 +176,6 @@ public class ResourceGroup
         this.resourceType = resourceType.getValue();
     }
     
-    /**
-     * <<Transient>> Control reference.
-     */
-    public Controllable getControlReference() {
-		return controlReference;
-	}
-	public void setControlReference(Controllable controlReference) {
-		this.controlReference = controlReference;
-	}
-
     public int compareTo(ResourceGroup other) {
     	if (getResourceCode()!=null && other.getResourceCode()!=null) {
     		return getResourceCode().compareTo(other.getResourceCode());

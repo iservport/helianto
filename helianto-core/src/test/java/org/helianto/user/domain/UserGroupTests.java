@@ -32,7 +32,7 @@ public class UserGroupTests {
 		assertEquals('G', userGroup.getDiscriminator());
 		assertEquals("", userGroup.getUserKey());
 		assertTrue(userGroup.getLastEvent() instanceof Date);
-    	assertEquals(UserState.ACTIVE.getValue(), userGroup.getUserState());
+    	assertEquals(UserState.ACTIVE.getValue(), userGroup.getUserState().charValue());
     	assertTrue(userGroup.isAccountNonExpired());
     	assertEquals(CreateIdentity.REJECT.getValue(), userGroup.getCreateIdentity());
 	}

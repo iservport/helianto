@@ -11,6 +11,8 @@ import javax.persistence.Version;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.type.TrunkEntity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Base class to persistent domain classes isolated by an {@link Entity}.
  * 
@@ -28,9 +30,13 @@ public abstract class AbstractTrunkEntity
     @Version
     private Integer version;
     
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="entityId", nullable=true)
     private Entity entity;
+    
+    @Transient
+    private Integer contextId;
     
     @Transient
     private Integer entityId;
@@ -65,6 +71,10 @@ public abstract class AbstractTrunkEntity
     }
     public void setEntity(Entity entity) {
         this.entity = entity;
+		if (entity!=null) {
+			this.contextId = entity.getContextId();
+			this.entityId = entity.getId();
+		}
     }
     
     /**
@@ -75,6 +85,16 @@ public abstract class AbstractTrunkEntity
     }
     public void setEntityId(Integer entityId) {
 		this.entityId = entityId;
+	}
+    
+    /**
+     * <<Transient>> context id.
+     */
+    public Integer getContextId() {
+		return contextId;
+	}
+    public void setContextId(Integer contextId) {
+		this.contextId = contextId;
 	}
     
 }

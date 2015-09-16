@@ -7,7 +7,6 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.helianto.core.def.AddressType;
-import org.helianto.core.form.PersonalForm;
 import org.helianto.core.internal.AbstractAddress;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -22,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name = "core_address"
 	,uniqueConstraints = { @UniqueConstraint(columnNames = {"identityId", "addressType" })
 })
-public class PersonalAddress extends AbstractAddress implements PersonalForm {
+public class PersonalAddress extends AbstractAddress {
 
 	private static final long serialVersionUID = 1L;
 	

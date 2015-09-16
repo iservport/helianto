@@ -24,6 +24,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.helianto.core.PersonalEntity;
 import org.helianto.core.def.Appellation;
@@ -51,23 +52,48 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  */
 @javax.persistence.Entity
 @DiscriminatorValue("U")
-public class User extends UserGroup implements PersonalEntity {
+public class User 
+	extends UserGroup implements PersonalEntity 
+{
 
 	/**
 	 * <<Transient>> Exposes the discriminator.
 	 */
-//	@Transient
 	public char getDiscriminator() {
 		return 'U';
 	}
 
     private static final long serialVersionUID = 1L;
     
+    @Transient
+	private String entityAlias;
+
+    @Transient
+    private Integer userGroupId;
+    
     @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="identityId", nullable=true)
     private Identity identity;
     
+    @Transient
+    private Integer identityId;
+    
+	@Transient
+	private String displayName;
+
+	@Transient
+	private String firstName;
+
+	@Transient
+	private String lastName;
+
+	@Transient
+	private char userGender = Gender.NOT_SUPPLIED.getValue();
+
+	@Transient
+	private String userImageUrl;
+
     @Column(length=4)
     private String initials;
     
@@ -123,6 +149,88 @@ public class User extends UserGroup implements PersonalEntity {
     	parent.getChildAssociations().add(new UserAssociation(parent, childCredential));
     }
 
+	/**
+	 * Read constructor.
+	 * 
+	 * @param userId
+	 * @param entityId
+	 * @param userGroupId
+	 * @param userKey
+	 * @param userName
+	 * @param userState
+	 * @param userGender
+	 */
+	public User(int userId
+			, int entityId
+			, int userGroupId
+			, String userKey
+			, String userName
+			, Character userState
+			, Character userGender
+			) {
+		this();
+		setId(userId);
+		setEntityId(entityId);
+		setUserGroupId(userGroupId);
+		setUserKey(userKey);
+		setUserName(userName);
+		setUserState(userState);
+		setUserGender(userGender);
+	}
+	
+    /**
+     * Read constructor.
+     * 
+     * @param userId
+     * @param contextId
+     * @param entityId
+     * @param entityAlias
+     * @param identityId
+     * @param firstName
+     * @param lastName
+     * @param displayName
+     * @param userGender
+     * @param userImageUrl
+     * @param userKey
+     * @param userName
+     * @param userState
+     * @param userType
+     * @param jobId
+     * @param jobTitle
+     * @param accountNonExpired
+     */
+	public User(int userId
+			, int contextId
+			, int entityId
+			, String entityAlias
+			, int identityId
+			, String firstName
+			, String lastName
+			, String displayName
+			, Character userGender
+			, String userImageUrl
+			, String userKey
+			, String userName
+			, Character userState
+			, Character userType
+			, Integer jobId
+			, String jobTitle
+			, Boolean accountNonExpired
+			) {
+		this(userId, entityId, 0, userKey, userName, userState, userGender);
+		setContextId(contextId);
+		setEntityAlias(entityAlias);
+		setIdentityId(identityId);
+		setFirstName(firstName);
+		setLastName(lastName);
+		setDisplayName(displayName);
+		setUserImageUrl(userImageUrl);
+		setUserType(userType);
+		setJobId(jobId);
+		setJobTitle(jobTitle);
+		setAccountNonExpired(accountNonExpired);
+	}
+	
     /**
      * Overridden to obtain the user key from the identity principal.
      */
@@ -136,11 +244,32 @@ public class User extends UserGroup implements PersonalEntity {
     }
     
     /**
+     * <<Transient>> entityAlias.
+     */
+    public String getEntityAlias() {
+		return entityAlias;
+	}
+    public void setEntityAlias(String entityAlias) {
+		this.entityAlias = entityAlias;
+	}
+    
+    /**
+     * <<Transient>> user group id.
+     */
+    public Integer getUserGroupId() {
+		return userGroupId;
+	}
+    public void setUserGroupId(Integer userGroupId) {
+		this.userGroupId = userGroupId;
+	}
+    
+    /**
      * Identity.
      */
     public Identity getIdentity() {
         return this.identity;
     }
+    
     /**
      * Setting the identity also sets the user key.
      * 
@@ -149,7 +278,25 @@ public class User extends UserGroup implements PersonalEntity {
     public void setIdentity(Identity identity) {
         this.identity = identity;
     	setUserKey(getInternalUserKey());
+		if (identity!=null) {
+			this.identityId = identity.getId();
+			this.firstName = identity.getIdentityFirstName();
+			this.lastName = identity.getIdentityLastName();
+			this.displayName = identity.getDisplayName();
+			this.userGender = identity.getGender();
+			this.userImageUrl = identity.getImageUrl();
+		}
     }
+    
+    /**
+     * <<Transient>> identity id.
+     */
+    public Integer getIdentityId() {
+		return identityId;
+	}
+    public void setIdentityId(Integer identityId) {
+		this.identityId = identityId;
+	}
     
     /**
      * <<Transient>> Safe user principal.
@@ -207,52 +354,102 @@ public class User extends UserGroup implements PersonalEntity {
     
     /**
      * <<Transient>> Safe user display name.
+     * @deprecated
      */
-//    @Transient
     public String getUserDisplayName() {
     	if (getIdentity()!=null) {
     		return getIdentity().getDisplayName();
     	}
-        return "";
+        return displayName;
     }
     
     /**
-     * <<Transient>> Safe user first name.
+     * <<Transient>> user display name.
      */
-//    @Transient
+    public String getDisplayName() {
+    	if (getIdentity()!=null) {
+    		return getIdentity().getDisplayName();
+    	}
+        return displayName;
+    }
+    public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+    
+    /**
+     * <<Transient>> Safe user first name.
+     * @deprecated
+     */
     public String getUserFirstName() {
     	if (getIdentity()!=null) {
     		return getIdentity().getIdentityFirstName();
     	}
-        return "";
+        return firstName;
     }
     
     /**
-     * <<Transient>> Safe user last name.
+     * <<Transient>> user first name.
      */
-//    @Transient
+    public String getFirstName() {
+    	if (getIdentity()!=null) {
+    		return getIdentity().getIdentityFirstName();
+    	}
+        return firstName;
+    }
+    public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+    
+    /**
+     * <<Transient>> Safe user last name.
+     * @deprecated
+     */
     public String getUserLastName() {
     	if (getIdentity()!=null) {
     		return getIdentity().getIdentityLastName();
     	}
-        return "";
+        return lastName;
     }
     
     /**
-     * <<Transient>> Safe user gender.
+     * <<Transient>> user last name.
      */
-//    @Transient
+    public String getLastName() {
+    	if (getIdentity()!=null) {
+    		return getIdentity().getIdentityLastName();
+    	}
+        return lastName;
+    }
+    public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+    
+    /**
+     * <<Transient>> user gender.
+     */
     public char getUserGender() {
     	if (getIdentity()!=null) {
     		return getIdentity().getGender();
     	}
-        return Gender.NOT_SUPPLIED.getValue();
+        return userGender ;
     }
+    public void setUserGender(char userGender) {
+		this.userGender = userGender;
+	}
+    
+    /**
+     * <<Transient>> user image URL.
+     */
+    public String getUserImageUrl() {
+		return userImageUrl;
+	}
+    public void setUserImageUrl(String userImageUrl) {
+		this.userImageUrl = userImageUrl;
+	}
     
     /**
      * <<Transient>> Safe user appellation.
      */
-//    @Transient
     public char getUserAppelation() {
     	if (getIdentity()!=null) {
     		return getIdentity().getAppellation();

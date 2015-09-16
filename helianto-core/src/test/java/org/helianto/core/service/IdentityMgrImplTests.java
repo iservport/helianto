@@ -115,7 +115,7 @@ public class IdentityMgrImplTests {
     public void userState() {
         User user = new User(new Entity(), new Identity());
         Credential credential = new Credential(user.getIdentity());
-        assertEquals(ActivityState.ACTIVE.getValue(), user.getUserState());
+        assertEquals(ActivityState.ACTIVE.getValue(), user.getUserState().charValue());
         assertEquals(ActivityState.ACTIVE.getValue(), credential.getCredentialState());
     }
     

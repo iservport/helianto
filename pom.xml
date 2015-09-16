@@ -9,7 +9,7 @@
 	<artifactId>helianto</artifactId>
 	<packaging>pom</packaging>
 	<name>The Helianto Project ${project.version}</name>
-	<version>0.4.3-RELEASE</version>
+	<version>0.4.4-SNAPSHOT</version>
 	<description>
 		Helianto project creates infrastructure, repository, domain and
 		service objects to promote a basic level of standardization 
@@ -56,8 +56,8 @@
 	<properties>
 	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.test.failure.ignore>false</maven.test.failure.ignore>
-		<helianto-query.version>0.0.2-SNAPSHOT</helianto-query.version>
-		<spring.framework.version>4.0.4.RELEASE</spring.framework.version>
+		<spring.data.version>1.8.1.RELEASE</spring.data.version>
+		<spring.framework.version>4.1.7.RELEASE</spring.framework.version>
 		<org.aspectj.version>1.6.11</org.aspectj.version>
 		<spring-social.version>1.0.3.RELEASE</spring-social.version>
 		<org.slf4j.version>1.7.10</org.slf4j.version>
@@ -65,17 +65,13 @@
 	
 	<dependencies>
 		<!-- Helianto bundles -->
-		<dependency>
-			<groupId>org.helianto</groupId>
-			<artifactId>helianto-query</artifactId>
-			<version>${helianto-query.version}</version>
-		</dependency>
 		<!-- spring bundles -->
-        <dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
+			<artifactId>spring-context-support</artifactId>
 			<version>${spring.framework.version}</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
@@ -88,6 +84,11 @@
 					<artifactId>commons-logging</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>${spring.data.version}</version>
 		</dependency>
 		
 		<!-- AspectJ -->

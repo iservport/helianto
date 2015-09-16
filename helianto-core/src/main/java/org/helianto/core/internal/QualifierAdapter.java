@@ -108,6 +108,7 @@ public class QualifierAdapter {
 		this.countItems = countItems;
 	}
 
+	@JsonIgnore
 	public QualifierAdapter setCountItems(List<SimpleCounter> counterList) {
 		for (SimpleCounter counter: counterList) {
 			if (match(counter)) {
@@ -178,6 +179,7 @@ public class QualifierAdapter {
 		this.countAlerts = countAlerts;
 	}
 
+	@JsonIgnore
 	public QualifierAdapter setCountAlerts(List<SimpleCounter> counterList) {
 		for (SimpleCounter counter: counterList) {
 			if (match(counter)) {
@@ -195,6 +197,8 @@ public class QualifierAdapter {
 	public void setCountWarnings(int countWarnings) {
 		this.countWarnings = countWarnings;
 	}
+	
+	@JsonIgnore
 	public QualifierAdapter setCountWarnings(List<SimpleCounter> counterList) {
 		for (SimpleCounter counter: counterList) {
 			if (match(counter)) {
@@ -212,6 +216,8 @@ public class QualifierAdapter {
 	public void setCountOthers(int countOthers) {
 		this.countOthers = countOthers;
 	}
+	
+	@JsonIgnore
 	public QualifierAdapter setCountOthers(List<SimpleCounter> counterList) {
 		for (SimpleCounter counter: counterList) {
 			if (counter.getBaseClass()==getQualifierValue()) {
