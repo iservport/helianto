@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Identity;
 import org.helianto.user.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -404,5 +405,25 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
     			"and lower(child.identity.principal) like lower(?2) " +
     			"and parents.parent.entity.entityType = ?3 ")
 	List<User> findByParentAndPrincipalAndEntityType(String parentKey, String principal, char entityType, Sort sort);
+	
+	/**
+	 * Find entity in user.
+	 * 
+	 * @param userId
+	 */
+	@Query(value="select user.entity "
+			+ "from User user "
+			+ "where user.id = ?1 ")
+	Entity findEntityByUserId(int userId);
+	
+	/**
+	 * Find identity in user.
+	 * 
+	 * @param userId
+	 */
+	@Query(value="select user.identity "
+			+ "from User user "
+			+ "where user.id = ?1 ")
+	Identity findIdentityByUserId(int userId);
 	
 }

@@ -51,6 +51,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Years;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
@@ -99,17 +100,19 @@ public class Identity implements java.io.Serializable {
 	@Column(length=32)
     private String multipartFileContentType;
     
+	@JsonIgnore
     @ElementCollection
     @CollectionTable(name = "core_identityPhone", joinColumns = @JoinColumn(name = "identityId"))
     @OrderColumn(name="sequence")
     private List<Phone> phones = new ArrayList<Phone>();
     
+	@JsonIgnore
     @ElementCollection
     @CollectionTable(name = "core_identityContact", joinColumns = @JoinColumn(name = "identityId"))
     @OrderColumn(name="sequence")
     private List<ContactInfo> contactInfos = new ArrayList<ContactInfo>();
     
-    @JsonManagedReference 
+	@JsonIgnore
     @OneToMany(mappedBy="identity")
     private Set<IdentitySecurity> connections = new HashSet<IdentitySecurity>();
 

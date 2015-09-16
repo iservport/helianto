@@ -289,7 +289,7 @@ public class UserReadAdapter
 	public User merge(){
 		adaptee.setId(getUserId());
 		adaptee.setUserKey(getUserKey());
-		adaptee.setUserName(getUserName());
+		adaptee.setUserName(getFirstName()+" "+getLastName());
 		adaptee.setUserState(getUserState());
 		adaptee.setUserType(getUserType());
 		if (adaptee.getUserJob()!=null) {
