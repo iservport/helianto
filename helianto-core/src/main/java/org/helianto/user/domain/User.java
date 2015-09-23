@@ -202,6 +202,7 @@ public class User
 	public User(int userId
 			, int contextId
 			, int entityId
+			, int parentId
 			, String entityAlias
 			, int identityId
 			, String firstName
@@ -217,7 +218,7 @@ public class User
 			, String jobTitle
 			, Boolean accountNonExpired
 			) {
-		this(userId, entityId, 0, userKey, userName, userState, userGender);
+		this(userId, entityId, parentId, userKey, userName, userState, userGender);
 		setContextId(contextId);
 		setEntityAlias(entityAlias);
 		setIdentityId(identityId);

@@ -28,6 +28,7 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 			+ "( user_.id"
 			+ ", user_.entity.operator.id"
 			+ ", user_.entity.id"
+			+ ", 0"
 			+ ", user_.entity.alias"
 			+ ", user_.identity.id"
 			+ ", user_.identity.personalData.firstName"
@@ -160,20 +161,31 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 	List<User> findByEntity_IdAndSearchStringAndUserState(int entityId, String searchString, char userState, Pageable pageable);
 	
 	/**
-	 * Query (short) to read from user.
+	 * Query (join) to read from user and parent.
 	 */
-	public static final String QUERY_SHORT = "select new "
+	public static final String QUERY_JOIN = "select new "
 			+ "org.helianto.user.domain.User"
-			+ "( child.id"
-			+ ", child.entity.id"
-			+ ", parents.parent.id"
-			+ ", child.userKey"
-			+ ", child.userName"
-			+ ", child.userState"
-			+ ", child.identity.personalData.gender"
+			+ "( user_.id"
+			+ ", user_.entity.operator.id"
+			+ ", user_.entity.id"
+			+ ", parent_.parent.id"
+			+ ", user_.entity.alias"
+			+ ", user_.identity.id"
+			+ ", user_.identity.personalData.firstName"
+			+ ", user_.identity.personalData.lastName"
+			+ ", user_.identity.displayName"
+			+ ", user_.identity.personalData.gender"
+			+ ", user_.identity.personalData.imageUrl"
+			+ ", user_.userKey"
+			+ ", user_.userName"
+			+ ", user_.userState"
+			+ ", user_.userType"
+			+ ", user_.userJob.jobId"
+			+ ", user_.userJob.jobTitle"
+			+ ", user_.accountNonExpired"
 			+ ") "
-			+ "from User child "
-			+ "join child.parentAssociations parents ";
+			+ "from User user_ "
+			+ "join user_.parentAssociations parent_ ";
 
 	/**
 	 * Find by parent id and state, pageable.
@@ -182,9 +194,9 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 	 * @param userState
 	 * @param page
 	 */
-	@Query(value=QUERY_SHORT
-			+ "where parents.parent.id = ?1 "
-			+ "and child.userState in ?2")
+	@Query(value=QUERY_JOIN
+			+ "where parent_.parent.id = ?1 "
+			+ "and user_.userState in ?2")
 	Page<User> findByParent(int parentGroupId, char[] userState, Pageable page);
 	
 	/**
@@ -196,12 +208,12 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 	 * @param userState
 	 * @param page
 	 */
-	@Query(value=QUERY_SHORT
-			+ "where parents.parent.entity.id = ?1 "
-			+ "and parents.parent.userKey = ?2 "
-			+ "and child.id not in ?3 "
-			+ "and child.userState in ?4 "
-			+ "order by child.userName, child.userKey")
+	@Query(value=QUERY_JOIN
+			+ "where parent_.parent.entity.id = ?1 "
+			+ "and parent_.parent.userKey = ?2 "
+			+ "and user_.id not in ?3 "
+			+ "and user_.userState in ?4 "
+			+ "order by user_.userName, user_.userKey")
 	Page<User> findByParentUserKey(int entityId, String userKey, Integer[] exclusions, char[] userState, Pageable page);
 	
 	/**
@@ -213,12 +225,12 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 	 * @param userState
 	 * @param page
 	 */
-	@Query(value=QUERY_SHORT
-			+ "where parents.parent.entity.id = ?1 "
-			+ "and child.id not in ?2 "
-			+ "and (lower(child.userKey) like ?3 or lower(child.userName) like ?3 ) "
-			+ "and parents.parent.userType = ?4 "
-			+ "and child.userState in ?5 "
+	@Query(value=QUERY_JOIN
+			+ "where parent_.parent.entity.id = ?1 "
+			+ "and user_.id not in ?2 "
+			+ "and (lower(user_.userKey) like ?3 or lower(user_.userName) like ?3 ) "
+			+ "and parent_.parent.userType = ?4 "
+			+ "and user_.userState in ?5 "
 			)
 	Page<User> searchByParentUserType(int entityId, Collection<Integer> exclusions, String searchString, Character userType, char[] userStates, Pageable page);
 	
@@ -230,10 +242,10 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 	 * @param userState
 	 * @param page
 	 */
-	@Query(value=QUERY_SHORT
-			+ "where parents.parent.entity.id = ?1 "
-			+ "and parents.parent.userType = ?2 "
-			+ "and child.userState in ?3 ")
+	@Query(value=QUERY_JOIN
+			+ "where parent_.parent.entity.id = ?1 "
+			+ "and parent_.parent.userType = ?2 "
+			+ "and user_.userState in ?3 ")
 	Page<User> findByParentUserType(int entityId, Character userType, char[] userState, Pageable page);
 	
 	/**
@@ -244,9 +256,9 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 	 * @param page
 	 * @return
 	 */
-	@Query(value=QUERY_SHORT
-			+ "where lower(parents.parent.userKey) = 'user' "
-			+ "and child.id in ("
+	@Query(value=QUERY_JOIN
+			+ "where lower(parent_.parent.userKey) = 'user' "
+			+ "and user_.id in ("
 			+ "  select u.id from User u "
 			+ "  where u.entity.id = ?1 "
 			+ "  and ( lower(u.userKey) like ?2 or lower(u.userName) like ?2 ))")
