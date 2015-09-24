@@ -33,7 +33,7 @@ public abstract class AbstractFolder
 	private static final long serialVersionUID = 1L;
 	
     // TODO rename in table
-    @Column(length=24, name="builderCode")
+    @Column(length=36, name="builderCode")
 	private String folderCode = "";
 	
     // TODO rename in table
