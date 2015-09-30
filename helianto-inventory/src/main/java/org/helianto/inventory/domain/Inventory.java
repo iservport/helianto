@@ -31,7 +31,7 @@ import org.helianto.document.domain.ProcessDocument;
 import org.helianto.inventory.RequirementState;
 import org.helianto.inventory.internal.AbstractRequirement;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -62,16 +62,14 @@ public class Inventory extends AbstractRequirement {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@JsonManagedReference("inventory")
+	@JsonIgnore
 	@OneToMany(mappedBy="inventory")
 	private Set<Movement> movements;
 	
-//	@Transient
 	public String getInternalNumberKey() {
 		return "INVENT";
 	}
 
-//    @Transient
     public int getStartNumber() {
     	return 1;
     }

@@ -32,7 +32,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -65,7 +65,7 @@ public class InventoryTransaction implements Serializable {
     @Version
     private Integer version;
     
-	@JsonManagedReference("inventoryTransaction")
+	@JsonIgnore
 	@OneToMany(mappedBy="inventoryTransaction")
 	private Set<Movement> movements = new HashSet<Movement>();
 	

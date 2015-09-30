@@ -49,6 +49,7 @@ public class DocumentFolder
 
 	private static final long serialVersionUID = 1L;
 	
+	
     @ManyToOne
     @JoinColumn(name="categoryId", nullable=true)
     private Category category;

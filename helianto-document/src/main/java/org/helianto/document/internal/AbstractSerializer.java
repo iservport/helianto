@@ -24,6 +24,8 @@ import javax.persistence.OneToMany;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.internal.AbstractFolder;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Base class to wrap a number pattern to be used to generate a sequence of documents.
  * 
@@ -42,6 +44,7 @@ public abstract class AbstractSerializer<D>
 	
     private char contentType = ' ';
     
+    @JsonIgnore
 	@OneToMany(mappedBy="series")
     private Set<D> documents = new HashSet<D>();
     

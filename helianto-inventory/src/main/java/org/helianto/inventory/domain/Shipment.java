@@ -20,7 +20,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -40,7 +40,7 @@ public class Shipment extends Movement implements Comparable<Shipment> {
 
 	private static final long serialVersionUID = 1L;
 	
-	@JsonBackReference 
+	@JsonIgnore 
 	@ManyToOne
 	@JoinColumn(name="processAgreementId")
 	private ProcessAgreement processAgreement;

@@ -36,6 +36,7 @@ public class Feature
 	@Version
 	private int version;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="contextId")
 	private Operator context;
@@ -115,6 +116,24 @@ public class Feature
 	public Feature(Operator context, String featureCode, Character featureType, String featureName) {
 		this(context, featureCode, featureType);
 		setFeatureName(featureName);
+	}
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param id
+	 * @param contextId
+	 * @param featureCode
+	 * @param featureName
+	 * @param featureType
+	 */
+	public Feature(int id, int contextId, String featureCode, String featureName, Character featureType) {
+		this();
+		setId(id);
+		setContextId(contextId);
+		setFeatureCode(featureCode);
+		setFeatureName(featureName);
+		setFeatureType(featureType);
 	}
 
 	public int getId() {

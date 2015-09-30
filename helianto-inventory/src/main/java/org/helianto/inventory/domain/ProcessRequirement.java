@@ -47,12 +47,10 @@ public class ProcessRequirement
 
 	private static final long serialVersionUID = 1L;
 
-//	@Transient
 	public String getInternalNumberKey() {
 		return "PROCREQ";
 	}
 	
-//    @Transient
     public int getStartNumber() {
     	return 1;
     }

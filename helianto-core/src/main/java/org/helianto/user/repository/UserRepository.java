@@ -228,7 +228,7 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 	@Query(value=QUERY_JOIN
 			+ "where parent_.parent.entity.id = ?1 "
 			+ "and user_.id not in ?2 "
-			+ "and (lower(user_.userKey) like ?3 or lower(user_.userName) like ?3 ) "
+			+ "and (lower(user_.userKey) like %?3% or lower(user_.userName) like %?3% ) "
 			+ "and parent_.parent.userType = ?4 "
 			+ "and user_.userState in ?5 "
 			)

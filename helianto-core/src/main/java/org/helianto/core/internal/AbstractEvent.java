@@ -230,10 +230,6 @@ public abstract class AbstractEvent
     public void setResolution(Character resolution) {
         this.resolution = resolution;
     }
-    @JsonIgnore
-    public void setResolution(String resolution) {
-        this.resolution = resolution.charAt(0);
-    }
     public void setResolutionAsEnum(ResolutionExtended resolution) {
         this.resolution = resolution.getValue();
     }

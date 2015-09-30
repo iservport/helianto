@@ -39,7 +39,7 @@ import org.helianto.inventory.ProcurementOption;
 import org.helianto.inventory.internal.AbstractRequirement;
 import org.helianto.partner.domain.Partner;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -67,6 +67,7 @@ public class ProcessAgreement
 
 	private static final long serialVersionUID = 1L;
 	
+	@JsonIgnore
     @ManyToOne
     @JoinColumn(name="partnerId", nullable=true)
 	private Partner partner;
@@ -83,7 +84,7 @@ public class ProcessAgreement
 	
 	private Character procurementOption = ProcurementOption.UNRESOLVED.getValue();
 	
-	@JsonManagedReference 
+	@JsonIgnore 
 	@OneToMany(mappedBy="processAgreement")
 	@MapKey(name="taxCode")
 	private Map<String, Tax> taxes = new HashMap<String, Tax>(); 
@@ -117,12 +118,10 @@ public class ProcessAgreement
     	setPartner(partner);
     }
 
-//    @Transient
 	public String getInternalNumberKey() {
 		return "AGREEM";
 	}
 
-//    @Transient
     public int getStartNumber() {
     	return 1;
     }
@@ -140,7 +139,6 @@ public class ProcessAgreement
     /**
      * <<Transient>> Customer or supplier alias.
      */
-//    @Transient
     public String getPartnerAlias() {
     	if (partner==null) return "";
         return this.partner.getEntityAlias();
@@ -168,13 +166,12 @@ public class ProcessAgreement
         super.setResolution(agreementState);
     }
 
-    public void setResolution(AgreementState agreementState) {
+    public void setResolutionAsEnum(AgreementState agreementState) {
         setResolution(agreementState.getValue());
     }
     /**
      * True if approved.
      */
-//    @Transient
     public boolean isApproved() {
     	if (getResolution()==AgreementState.APPROVED.getValue()) {
     		return true;

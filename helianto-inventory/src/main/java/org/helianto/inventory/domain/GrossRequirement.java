@@ -55,12 +55,10 @@ public class GrossRequirement extends AbstractRequirement {
 		setRequirementSignAsEnum(RequirementSign.INCREMENT);
 	}
 
-//	@Transient
 	public String getInternalNumberKey() {
 		return "GROSSREQ";
 	}
 
-//    @Transient
     public int getStartNumber() {
     	return 1;
     }

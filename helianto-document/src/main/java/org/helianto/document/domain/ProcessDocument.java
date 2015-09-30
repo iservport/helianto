@@ -29,7 +29,7 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Unit;
 import org.helianto.document.def.InheritanceType;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Base class to a document hierarchy to be used in engineering structures.
@@ -44,11 +44,12 @@ public class ProcessDocument
 
     private static final long serialVersionUID = 1L;
     
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="unitId")
     private Unit unit;
     
-    @JsonManagedReference 
+    @JsonIgnore
     @OneToMany(mappedBy="processDocument")
     private Set<ProcessDocumentKey> processDocumentKeys = new HashSet<ProcessDocumentKey>(0);
     

@@ -32,7 +32,7 @@ import javax.persistence.Version;
 
 import org.helianto.inventory.MovementDirection;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -59,12 +59,12 @@ public class Movement implements Serializable {
     @Version
 	private int version;
 	
-    @JsonBackReference("inventoryTransaction")
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="inventoryTransactionId")
 	private InventoryTransaction inventoryTransaction;
 	
-    @JsonBackReference("inventory")
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="inventoryId")
 	private Inventory inventory;

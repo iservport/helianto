@@ -37,7 +37,7 @@ import org.helianto.inventory.RequirementSign;
 import org.helianto.inventory.RequirementState;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -54,7 +54,7 @@ public abstract class AbstractRequirement
 
     private static final long serialVersionUID = 1L;
     
-    @JsonBackReference 
+    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="documentId", nullable=true)
     protected ProcessDocument document;
@@ -103,25 +103,25 @@ public abstract class AbstractRequirement
     	}
         return this.document;
     }
-//    @Transient
+
     protected ProcessDocument resolveExternalProcessDocument() {
     	return null;
     }
-//    @Transient
+
     public String getDocCode() {
     	if (getProcessDocument()!=null) {
     		return getProcessDocument().getDocCode();
     	}
         return "";
     }
-//    @Transient
+
     public String getDocName() {
     	if (getProcessDocument()!=null) {
     		return getProcessDocument().getDocName();
     	}
         return "";
     }
-//    @Transient
+
     public String[] getColorChain() {
     	if (getProcessDocument()!=null && getProcessDocument() instanceof ProcessDocument) {
     		return ((ProcessDocument) getProcessDocument()).getProcessColorChain();
@@ -138,15 +138,15 @@ public abstract class AbstractRequirement
     public Date getRequirementDate() {
         return this.requirementDate;
     }
-//    @Transient
+
     public String getRequirementDateTimeAsString() {
     	return SimpleDateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, getLocale()).format(getRequirementDate());
     }
-//    @Transient
+
     public String getRequirementDateAsString() {
     	return SimpleDateFormat.getDateInstance(DateFormat.SHORT, getLocale()).format(getRequirementDate());
     }
-//    @Transient
+
     public String getRequirementTimeAsString() {
     	return SimpleDateFormat.getTimeInstance(DateFormat.SHORT, getLocale()).format(getRequirementDate());
     }
@@ -167,7 +167,6 @@ public abstract class AbstractRequirement
     /**
      * <<Transient>> Unit.
      */
-//    @Transient
     public Unit getUnit() {
 		return getProcessDocument().getUnit();
 	}
@@ -178,7 +177,7 @@ public abstract class AbstractRequirement
     public void setResolution(char resolution) {
     	super.setResolution(validateResolutionChange(resolution));
     }
-    public void setResolution(RequirementState resolution) {
+    public void setResolutionAsEnum(RequirementState resolution) {
         setResolution(resolution.getValue());
     }
     public char validateResolutionChange(char newResolution) {

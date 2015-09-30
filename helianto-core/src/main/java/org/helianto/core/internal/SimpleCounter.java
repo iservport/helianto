@@ -12,6 +12,7 @@ import org.helianto.core.repository.ItemCounter;
  */
 public class SimpleCounter 
 	extends ItemCounter<Serializable> 
+	implements Comparable<SimpleCounter>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -55,6 +56,11 @@ public class SimpleCounter
 	 */
 	public Date getFirstCheckDate() {
 		return firstCheckDate;
+	}
+	
+	@Override
+	public int compareTo(SimpleCounter o) {
+		return this.firstCheckDate.compareTo(o.firstCheckDate);
 	}
 
 }
