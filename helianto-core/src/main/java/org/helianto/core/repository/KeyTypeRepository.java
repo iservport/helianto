@@ -19,10 +19,18 @@ public interface KeyTypeRepository extends JpaRepository<KeyType, Serializable> 
 	/**
 	 * Find by natural key.
 	 * 
-	 * @param operator
+	 * @param context
 	 * @param keyCode
 	 */
-	KeyType findByOperatorAndKeyCode(Operator operator, String keyCode);
+	KeyType findByOperatorAndKeyCode(Operator context, String keyCode);
+	
+	/**
+	 * Find by natural key.
+	 * 
+	 * @param operatorName
+	 * @param keyCode
+	 */
+	KeyType findByOperator_operatorNameAndKeyCode(String operatorName, String keyCode);
 	
 	/**
 	 * Find by operator.
