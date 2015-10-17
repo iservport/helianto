@@ -43,26 +43,26 @@ public interface CategoryRepository extends JpaRepository<Category, Serializable
 	 */
 	List<Category> findByEntity_Id(int entityId);
 	
+	public static final String QUERY = "select new Category"
+			+ "(category.id"
+			+ ", category.categoryGroupType"
+			+ ", category.categoryCode"
+			+ ", category.categoryName"
+			+ ", category.categoryIcon"
+			+ ", category.scriptItems"
+			+ ", category.customProperties"
+			+ ", category.content"
+			+ ") "
+			+ "from Category category ";
+	
 	/**
 	 * Find adapter by Id.
 	 * 
 	 * @param id
 	 */
-	@Query("select new "
-			+ "org.helianto.core.repository.CategoryReadAdapter"
-			+ "(category.id"
-			+ ", category.entity.id"
-			+ ", category.categoryGroup"
-			+ ", category.categoryCode"
-			+ ", category.categoryName"
-			+ ", category.categoryIcon"
-			+ ", category.scriptItems"
-			+ ", category.customProperties"
-			+ ", category.content"
-			+ ") "
-			+ "from Category category "
+	@Query(QUERY
 			+ "where category.id = ?1 ")
-	CategoryReadAdapter findAdapter(int id);
+	Category findAdapter(int id);
 
 	/**
 	 * Category adapter list.
@@ -71,22 +71,10 @@ public interface CategoryRepository extends JpaRepository<Category, Serializable
 	 * @param categoryGroup
 	 * @param sort
 	 */
-	@Query("select new "
-			+ "org.helianto.core.repository.CategoryReadAdapter"
-			+ "(category.id"
-			+ ", category.entity.id"
-			+ ", category.categoryGroup"
-			+ ", category.categoryCode"
-			+ ", category.categoryName"
-			+ ", category.categoryIcon"
-			+ ", category.scriptItems"
-			+ ", category.customProperties"
-			+ ", category.content"
-			+ ") "
-			+ "from Category category "
+	@Query(QUERY
 			+ "where category.entity.id = ?1 "
 			+ "and category.categoryGroup = ?2 ")
-	List<CategoryReadAdapter> findByEntity_IdAndCategoryGroup(int entityId, char categoryGroup, Sort sort);
+	List<Category> findByEntity_IdAndCategoryGroup(int entityId, char categoryGroup, Sort sort);
 
 	/**
 	 * Category adapter list.
@@ -95,22 +83,10 @@ public interface CategoryRepository extends JpaRepository<Category, Serializable
 	 * @param categoryGroup
 	 * @param sort
 	 */
-	@Query("select new "
-			+ "org.helianto.core.repository.CategoryReadAdapter"
-			+ "(category.id"
-			+ ", category.entity.id"
-			+ ", category.categoryGroup"
-			+ ", category.categoryCode"
-			+ ", category.categoryName"
-			+ ", category.categoryIcon"
-			+ ", category.scriptItems"
-			+ ", category.customProperties"
-			+ ", category.content"
-			+ ") "
-			+ "from Category category "
+	@Query(QUERY
 			+ "where category.entity.id = ?1 "
 			+ "and category.categoryCode like %?2% ")
-	Page<CategoryReadAdapter> findByEntity_IdAndCategoryCodeLike(int entityId, String categoryCode, Pageable sort);
+	Page<Category> findByEntity_IdAndCategoryCodeLike(int entityId, String categoryCode, Pageable sort);
 
 	/**
 	 * Category adapter page.
@@ -119,22 +95,10 @@ public interface CategoryRepository extends JpaRepository<Category, Serializable
 	 * @param categoryGroup
 	 * @param pageable
 	 */
-	@Query("select new "
-			+ "org.helianto.core.repository.CategoryReadAdapter"
-			+ "(category.id"
-			+ ", category.entity.id"
-			+ ", category.categoryGroup"
-			+ ", category.categoryCode"
-			+ ", category.categoryName"
-			+ ", category.categoryIcon"
-			+ ", category.scriptItems"
-			+ ", category.customProperties"
-			+ ", category.content"
-			+ ") "
-			+ "from Category category "
+	@Query(QUERY
 			+ "where category.entity.id = ?1 "
 			+ "and category.categoryGroup = ?2 ")
-	Page<CategoryReadAdapter> findByEntity_IdAndCategoryGroup(int entityId, char categoryGroup, Pageable page);
+	Page<Category> findByEntity_IdAndCategoryGroup(int entityId, char categoryGroup, Pageable page);
 
 	/**
 	 * Category counter.

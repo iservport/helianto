@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  * Category adapter.
  * 
  * @author mauriciofernandesdecastro
+ * @deprecated
  */
 public class CategoryReadAdapter 
 	implements KeyNameAdapter

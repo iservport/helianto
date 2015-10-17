@@ -199,6 +199,38 @@ public class Category
     	setCategoryName(categoryName);
     }
 
+	/**
+	 * Form constructor.
+	 * 
+	 * @param id
+	 * @param categoryGroupType
+	 * @param categoryCode
+	 * @param categoryName
+	 * @param categoryIcon
+	 * @param scriptItems
+	 * @param customProperties
+	 * @param content
+	 */
+	public Category(Integer id
+			, CategoryGroup categoryGroupType
+			, String categoryCode
+			, String categoryName
+			, String categoryIcon
+			, String scriptItems
+			, String customProperties
+			, byte[] content
+			) {
+		this.id = id;
+		setId(id);
+		setCategoryGroupType(categoryGroupType);
+		setCategoryCode(categoryCode);
+		setCategoryName(categoryName);
+		setCategoryIcon(categoryIcon);
+		setScriptItems(scriptItems);
+		setCustomProperties(customProperties);
+		setContent(content);
+	}
+	
     public int getId() {
         return this.id;
     }
@@ -370,7 +402,6 @@ public class Category
     /**
      * <<Transient>> List of workflow roles converted to array.
      */
-//    @Transient
     public String[] getCustomWorkflowRolesAsArray() {
     	return StringListUtils.stringToArray(getCustomWorkflowRoles());
 	}
@@ -378,7 +409,6 @@ public class Category
     /**
      * <<Transient>> True if there is at least one workflow role defined.
      */
-//    @Transient
     public boolean isWorkflowEnabled() {
     	return getCustomWorkflowRolesAsArray().length >0;
 	}
@@ -386,7 +416,6 @@ public class Category
     /**
      * <<Transient>> Last workflow index, i.e., last index from workflow roles array.
      */
-//    @Transient
     public int getLastWorkflowIndex() {
     	return getCustomWorkflowRolesAsArray().length - 1;
 	}
@@ -399,7 +428,6 @@ public class Category
      * to be prepended.
      * </p>
      */
-//    @Transient
     public Map<String, String> getCustomWorkflowRolesAsMap() {
 		Map<String, String> workflowRolesMap = new HashMap<String, String>();
     	if (isWorkflowEnabled()) {
@@ -420,7 +448,6 @@ public class Category
 		this.customProperties = customProperties;
 	}
 	
-//    @Transient
 	public Map<String, Object> getCustomPropertiesAsMap() {
 		return StringListUtils.propertiesToMap(getCustomProperties());
 	}
@@ -489,7 +516,6 @@ public class Category
     /**
      * <<Transient>> Partner (if any) filter pattern converted to array.
      */
-//    @Transient
     public String[] getPartnerFilterPatternAsArray() {
 		return StringListUtils.stringToArray(getPartnerFilterPattern());
 	}
@@ -507,7 +533,6 @@ public class Category
     /**
      * <<Transient>> Key-value pair list of scripts converted to array.
      */
-//    @Transient
     public String[] getScriptItemsAsArray() {
     	return StringListUtils.stringToArray(getScriptItems());
 	}
@@ -555,6 +580,34 @@ public class Category
 		this.countAlerts = countAlerts;
 	}
     
+    /**
+     * Merger.
+     * 
+     * @param command
+     */
+	public Category merge(Category command) {
+		super.merge(command);
+		setCategoryGroupType(command.getCategoryGroupType());
+		setCategoryCode(command.getCategoryCode());
+		setCategoryLabel(command.getCategoryLabel());
+		setCategoryName(command.getCategoryName());
+		setCategoryIcon(command.getCategoryIcon());
+		setPriority(command.getPriority());
+		setReferenceList(command.getReferenceList());
+		setCustomStyle(command.getCustomStyle());
+		setCustomWorkflowRoles(command.getCustomWorkflowRoles());
+		setCustomProperties(command.getCustomProperties());
+		setCustomNumberPattern(command.getCustomNumberPattern());
+		setPatternPrefix(command.getPatternPrefix());
+		setPatternSuffix(command.getPatternSuffix());
+		setNumberOfDigits(command.getNumberOfDigits());
+		setPartnerFilterPattern(command.getPartnerFilterPattern());
+		setScriptItems(command.getScriptItems());
+		setActivityCode(command.getActivityCode());
+		setScriptList(command.getScriptList());
+		return command;
+	}
+
     /**
      * toString
      * @return String

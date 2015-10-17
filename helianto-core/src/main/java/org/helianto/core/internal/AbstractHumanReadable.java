@@ -79,7 +79,6 @@ public class AbstractHumanReadable implements HumanReadable {
 		this.multipartFileContentType = multipartFileContentType;
 	}
 	
-//    @Transient
     public boolean isText() {
     	if (getMultipartFileContentType()!=null && getMultipartFileContentType().startsWith("text")) {
     		return true;
@@ -87,12 +86,22 @@ public class AbstractHumanReadable implements HumanReadable {
     	return false;
     }
 
-//    @Transient
     public boolean isHtml() {
     	if (getMultipartFileContentType()!=null && getMultipartFileContentType().startsWith("text/html")) {
     		return true;
     	}
     	return false;
+    }
+    
+    /**
+     * Merger.
+     * 
+     * @param command
+     */
+    protected void merge(AbstractHumanReadable command) {
+    	setContent(command.getContent());
+    	setEncoding(command.getEncoding());
+    	setMultipartFileContentType(command.getMultipartFileContentType());
     }
 
 }
