@@ -25,6 +25,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
@@ -64,10 +65,13 @@ public class City
     @Column(length=64)
     private String cityName = "";
     
-    @JsonBackReference 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="stateId", nullable=true)
     private State state;
+    
+    @Transient
+    public Integer stateId;
     
     private boolean capital;
     
@@ -194,6 +198,19 @@ public class City
 	}
 	public void setPriority(char priority) {
 		this.priority = priority;
+	}
+	
+	/**
+	 * Merger.
+	 * 
+	 * @param command
+	 */
+	public City merge(City command) {
+		setCityCode(command.getCityCode());
+		setCityName(command.getCityName());
+		setCapital(command.isCapital());
+		setPriority(command.getPriority());
+		return this;
 	}
 
 	public int compareTo(City next) {

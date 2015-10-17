@@ -264,6 +264,17 @@ public abstract class AbstractEvent
 		this.interval = interval;
 	}
     
+    /**
+     * Merger.
+     * 
+     * @param command
+     */
+    public void merge(AbstractEvent command) {
+		setIssueDate(command.getIssueDate());
+		setResolution(command.getResolution());
+		setPrivacyLevel(command.getPrivacyLevel());
+    }
+    
 }
 
 

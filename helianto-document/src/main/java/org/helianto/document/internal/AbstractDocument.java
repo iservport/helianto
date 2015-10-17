@@ -23,6 +23,7 @@ import javax.persistence.MappedSuperclass;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.internal.AbstractEvent;
 import org.helianto.core.utils.StringListUtils;
+
 /**
  * Base class to represent a <code>Document</code>.
  * 
@@ -280,6 +281,19 @@ public abstract class AbstractDocument
     }
     public void setReferencesAsArray(String[] referenceListAsArray) {
     	setReferenceList(StringListUtils.arrayToString(referenceListAsArray));
+    }
+    
+    /**
+     * Merger.
+     * 
+     * @param command
+     */
+    public void merge(AbstractDocument command) {
+		super.merge(command);
+		setDocCode(command.getDocCode());
+		setDocName(command.getDocName());
+		setDocFile(command.getDocFile());
+		setDocAbstract(command.getDocAbstract());
     }
     
     /**
