@@ -69,7 +69,6 @@ public interface CityRepository extends JpaRepository<City, Serializable> {
 	 * 
 	 * @param stateId
 	 */
-	List<City> findByStateId(int stateId);
-	
+	List<City> findByState_Id(int stateId);
 	
 }
