@@ -38,6 +38,23 @@ public class AbstractHumanReadable implements HumanReadable {
 	}
     
     /**
+     * Constructor.
+     * 
+     * @param content
+     * @param encoding
+     * @param multipartFileContentType
+     */
+    public AbstractHumanReadable(byte[] content
+    		, String encoding
+    		, String multipartFileContentType) {
+		super();
+		this.content = content;
+		this.encoding = encoding;
+		this.multipartFileContentType = multipartFileContentType;
+	}
+
+
+	/**
      * Content.
      */
     public byte[] getContent() {
@@ -54,7 +71,6 @@ public class AbstractHumanReadable implements HumanReadable {
     /**
      * Helper method to get text content as String.
      */
-//    @Transient
     public String getContentAsString() {
     	if (getContent()!=null && isText()) {
     		return new String(getContent());

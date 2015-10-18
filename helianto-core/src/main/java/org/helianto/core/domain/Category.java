@@ -72,7 +72,7 @@ public class Category
     private int id;
     
     @JsonIgnore
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="entityId")
     private Entity entity;
     
@@ -205,33 +205,66 @@ public class Category
 	 * @param id
 	 * @param categoryGroupType
 	 * @param categoryCode
+	 * @param categoryLabel
 	 * @param categoryName
 	 * @param categoryIcon
-	 * @param scriptItems
+	 * @param priority
+	 * @param referenceList
+	 * @param customStyle
+	 * @param customWorkflowRoles
 	 * @param customProperties
-	 * @param content
+	 * @param customNumberPattern
+	 * @param patternPrefix
+	 * @param patternSuffix
+	 * @param numberOfDigits
+	 * @param partnerFilterPattern
+	 * @param scriptItems
+	 * @param activityCode
 	 */
-	public Category(Integer id
-			, CategoryGroup categoryGroupType
-			, String categoryCode
-			, String categoryName
+    public Category(int id
+    		, byte[] content
+    		, String encoding
+    		, String multipartFileContentType
+    		, CategoryGroup categoryGroupType
+    		, String categoryCode
+    		, String categoryLabel
+    		, String categoryName
 			, String categoryIcon
-			, String scriptItems
+			, char priority
+			, String referenceList
+			, String customStyle
+			, String customWorkflowRoles
 			, String customProperties
-			, byte[] content
+			, String customNumberPattern
+			, String patternPrefix
+			, String patternSuffix
+			, int numberOfDigits
+			, String partnerFilterPattern
+			, String scriptItems
+			, Character activityCode
 			) {
+		super(content, encoding, multipartFileContentType);
 		this.id = id;
-		setId(id);
-		setCategoryGroupType(categoryGroupType);
-		setCategoryCode(categoryCode);
-		setCategoryName(categoryName);
-		setCategoryIcon(categoryIcon);
-		setScriptItems(scriptItems);
-		setCustomProperties(customProperties);
-		setContent(content);
+		this.categoryGroupType = categoryGroupType;
+		this.categoryCode = categoryCode;
+		this.categoryLabel = categoryLabel;
+		this.categoryName = categoryName;
+		this.categoryIcon = categoryIcon;
+		this.priority = priority;
+		this.referenceList = referenceList;
+		this.customStyle = customStyle;
+		this.customWorkflowRoles = customWorkflowRoles;
+		this.customProperties = customProperties;
+		this.customNumberPattern = customNumberPattern;
+		this.patternPrefix = patternPrefix;
+		this.patternSuffix = patternSuffix;
+		this.numberOfDigits = numberOfDigits;
+		this.partnerFilterPattern = partnerFilterPattern;
+		this.scriptItems = scriptItems;
+		this.activityCode = activityCode;
 	}
-	
-    public int getId() {
+
+	public int getId() {
         return this.id;
     }
     public void setId(int id) {
@@ -363,7 +396,6 @@ public class Category
     /**
      * References as array.
      */
-//    @Transient
     public String[] getReferencesAsArray() {
     	return StringListUtils.stringToArray(getReferenceList());
     }
@@ -605,7 +637,7 @@ public class Category
 		setScriptItems(command.getScriptItems());
 		setActivityCode(command.getActivityCode());
 		setScriptList(command.getScriptList());
-		return command;
+		return this;
 	}
 
     /**
