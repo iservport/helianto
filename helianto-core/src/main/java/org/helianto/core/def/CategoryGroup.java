@@ -1,11 +1,15 @@
 package org.helianto.core.def;
 
+import java.io.Serializable;
+
+import org.helianto.core.internal.KeyNameAdapter;
+
 /**
  * Category groups.
  * 
  * @author Mauricio Fernandes de Castro
  */
-public enum CategoryGroup {
+public enum CategoryGroup implements KeyNameAdapter {
 	
 	/**
 	 * Not defined.
@@ -77,5 +81,27 @@ public enum CategoryGroup {
 	public char getValue() {
 		return value;
 	}
-
+	
+	public Serializable getKey() {
+		return value;
+	}
+	
+	@Override
+	public String getCode() {
+		return value+"";
+	}
+	
+	@Override
+	public String getName() {
+		return name();
+	}
+	
+	public static char[] valuesAsArray(){
+		CategoryGroup.values();
+		String values = "";
+		for (CategoryGroup categoryGroup : CategoryGroup.values()) {
+			values+=categoryGroup.getCode();
+		}
+		return values.toCharArray();
+	}
 }

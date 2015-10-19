@@ -177,4 +177,17 @@ public interface CategoryRepository extends JpaRepository<Category, Serializable
 			+ "and category_.categoryCode = ?3 ")
 	Integer findByEntity_IdAndCategoryGroupAndCategoryCode(int entityId, char categoryGroup, String categoryCode);
 
+	/**
+	 * Count categories by group.
+	 * 
+	 * @param entityId
+	 */
+	@Query("select new " +
+			"org.helianto.core.internal.SimpleCounter" +
+			"(category_.categoryGroup, count(category_)) " +
+			"from Category category_ " +
+			"where category_.entity.id = ?1 " +
+			"group by category_.categoryGroup")
+	List<SimpleCounter> countCategoriesByEntityIdGroupByGroup(int entityId);
+	
 }
