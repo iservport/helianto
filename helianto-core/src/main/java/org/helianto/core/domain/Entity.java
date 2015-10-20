@@ -152,6 +152,9 @@ public class Entity
     @JoinColumn(name="cityId")
     private City city;
     
+    @Transient
+    private int cityId;
+    
     @JsonIgnore
     @OneToMany(mappedBy="entity")
     private Set<UserGroup> users = new HashSet<UserGroup>(0);
@@ -461,6 +464,16 @@ public class Entity
 	}
     public void setCity(City city) {
 		this.city = city;
+	}
+    
+    /**
+     * <<Transient>> city id.
+     */
+    public int getCityId() {
+		return cityId;
+	}
+    public void setCityId(int cityId) {
+		this.cityId = cityId;
 	}
 
     /**
