@@ -59,6 +59,9 @@ public class Signup
 	@Column(length=128)
 	private String lastName = "";
 	
+	@Column(length=32)
+	private String alias = "";
+	
 	@Column(length=128)
 	private String domain = "";
 	
@@ -173,6 +176,16 @@ public class Signup
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	
+	/**
+	 * Entity alias.
+	 */
+	public String getAlias() {
+		return alias;
+	}
+	public void setAlias(String alias) {
+		this.alias = alias;
 	}
 
 	public String getDomain() {
