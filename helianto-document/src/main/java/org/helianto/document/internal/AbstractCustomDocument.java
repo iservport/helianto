@@ -321,6 +321,16 @@ public abstract class AbstractCustomDocument
 		return category;
 	}
 	
+    /**
+     * Merger.
+     * 
+     * @param command
+     */
+    public void merge(AbstractCustomDocument command) {
+		super.merge(command);
+		setInternalNumber(command.getInternalNumber());
+    }
+    
 	@Override
     public boolean equals(Object other) {
 		 if ( !(other instanceof AbstractCustomDocument) ) return false;

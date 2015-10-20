@@ -158,5 +158,15 @@ public class Document
     public void setViews(long views) {
 		this.views = views;
 	}
+    
+    /**
+     * Merger.
+     * 
+     * @param command
+     */
+    public Document merge(Document command) {
+    	super.merge(command);
+    	return this;
+    }
 
 }

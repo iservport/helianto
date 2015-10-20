@@ -176,5 +176,16 @@ public class AbstractContent
     public AbstractContent clone() throws CloneNotSupportedException {
     	return (AbstractContent) super.clone();
     }
+    
+    /**
+     * Merger.
+     * 
+     * @param command
+     */
+    public AbstractContent merge(AbstractContent command) {
+    	super.merge(command);
+    	setContent(command.getContent());
+    	return this;
+    }
 
 }
