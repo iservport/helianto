@@ -115,6 +115,34 @@ public class Signup
 		setLastName(lastName);
 	}
 	
+	/**
+	 * Entity constructor.
+	 * 
+	 * @param entity
+	 */
+	public Signup(Entity entity) {
+		setDomain(entity.getEntityDomain());
+		setAlias(entity.getAlias());
+		setCityId(entity.getCityId());
+		setSummary(entity.getSummary());
+		setExternalLogoUrl(entity.getExternalLogoUrl());
+		setEntityType(entity.getEntityType());
+	}
+	
+	/**
+	 * Identity constructor.
+	 * 
+	 * @param identity
+	 */
+	public Signup(Identity identity) {
+		setDomain(identity.getOptionalSourceAlias());
+		setPrincipal(identity.getPrincipal());
+		setAlias(identity.getAlias());
+		setExternalLogoUrl(identity.getImageUrl());
+		setFirstName(identity.getIdentityFirstName());
+		setLastName(identity.getIdentityLastName());
+	}
+	
 	public int getId() {
 		return id;
 	}
