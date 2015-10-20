@@ -62,6 +62,15 @@ public class Signup
 	@Column(length=128)
 	private String domain = "";
 	
+	@Column(length=1024)
+	private String summary = "";
+	
+	@Column
+	private Character entityType = 'C';
+	
+	@Column(length=128)
+	private String externalLogoUrl = "";
+	
 	@Column(length=128)
 	private String entityAliasSource = "";
 	
@@ -192,6 +201,36 @@ public class Signup
 	}
 	public void setCityId(Integer cityId) {
 		this.cityId = cityId;
+	}
+	
+	/**
+	 * Summary.
+	 */
+	public String getSummary() {
+		return summary;
+	}
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+	
+	/**
+	 * External logo URL.
+	 */
+	public String getExternalLogoUrl() {
+		return externalLogoUrl;
+	}
+	public void setExternalLogoUrl(String externalLogoUrl) {
+		this.externalLogoUrl = externalLogoUrl;
+	}
+	
+	/**
+	 * Entity type.
+	 */
+	public Character getEntityType() {
+		return entityType;
+	}
+	public void setEntityType(Character entityType) {
+		this.entityType = entityType;
 	}
 	
 	/**
