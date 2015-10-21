@@ -86,6 +86,16 @@ public class DocumentFolder
 		this.category = category;
 	}
     
+    /**
+     * <<Transient>> category id.
+     */
+    public Integer getCategoryId() {
+		return categoryId;
+	}
+    public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
+	}
+    
 	/**
 	 * <<Transient>> Optionally delegate to subclasses a method to replace the private field.
 	 * 
