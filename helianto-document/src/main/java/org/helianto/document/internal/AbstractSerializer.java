@@ -110,6 +110,19 @@ public abstract class AbstractSerializer<D>
 	}
 	
     /**
+     * Merger.
+     * 
+     * @param command
+     */
+    @SuppressWarnings("rawtypes")
+	protected void merge(AbstractSerializer command) {
+    	super.merge(command);
+    	setPatternPrefix(command.getPatternPrefix());
+    	setNumberOfDigits(command.getNumberOfDigits());
+    	setContentType(command.getContentType());
+    }
+
+    /**
      * toString
      * @return String
      */

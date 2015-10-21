@@ -23,6 +23,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.Category;
@@ -53,6 +54,9 @@ public class DocumentFolder
     @ManyToOne
     @JoinColumn(name="categoryId", nullable=true)
     private Category category;
+
+    @Transient
+    private Integer categoryId = 0;
 
     /** 
      * Default constructor.
@@ -100,6 +104,16 @@ public class DocumentFolder
 		return getCategory()!=null;
 	}
 	
+    /**
+     * Merger.
+     * 
+     * @param command
+     */
+	public DocumentFolder merge(DocumentFolder command) {
+    	super.merge(command);
+    	return this;
+    }
+    
    /**
     * equals
     */

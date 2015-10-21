@@ -127,6 +127,17 @@ public abstract class AbstractFolder
       
         return buffer.toString();
     }
+    
+    /**
+     * Merger.
+     * 
+     * @param command
+     */
+    protected void merge(AbstractFolder command) {
+    	setFolderCode(command.getFolderCode());
+    	setFolderName(command.getFolderName());
+    	setFolderDecorationUrl(command.getFolderDecorationUrl());
+    }
 
    /**
     * equals
