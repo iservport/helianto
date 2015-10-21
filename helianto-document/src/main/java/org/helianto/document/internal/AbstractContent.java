@@ -41,8 +41,9 @@ public class AbstractContent
     private static final long serialVersionUID = 1L;
     
     @Lob
-    private byte[] content;
+    private byte[] content = "".getBytes();
     
+    @JsonIgnore
 	@Transient
     private transient MultipartFile file;
     
@@ -119,10 +120,6 @@ public class AbstractContent
     public void setContent(byte[] content) {
         this.content = content;
     }
-    @JsonIgnore
-    public void setContent(String content) {
-    	this.content = content.getBytes();
-    }
     
     /**
      * Helper method to get text content as String.
@@ -134,7 +131,9 @@ public class AbstractContent
     	return "";
     }
     public void setContentAsString(String contentAsString) {
-		setContent(contentAsString);
+    	if (getContent()!=null) {
+    		setContent(contentAsString.getBytes());
+    	}
 	}
     
     public int getContentSize() {

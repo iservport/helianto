@@ -29,6 +29,8 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.number.Sequenceable;
 import org.helianto.document.domain.DocumentFolder;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Extends <code>AbstractDocument</code> to control how docCode
  * is created.
@@ -41,33 +43,35 @@ public abstract class AbstractCustomDocument
 
 	private static final long serialVersionUID = 1L;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="serializerId")
 	private DocumentFolder series;
 	
 	@Transient
-	private Integer folderId;
+	private Integer folderId = 0;
 	
 	@Transient
-	private String folderCode;
+	private String folderCode = "";
 	
 	@Transient
-	private String folderName;
+	private String folderName = "";
 	
 	@Transient
     private char contentType = ' ';
     
-	private Long internalNumber;
+	private Long internalNumber = 0L;
 	
 	@Column(length=48)
-	private String internalNumberKey;
+	private String internalNumberKey = "";
 	
+	@JsonIgnore
     @ManyToOne
     @JoinColumn(name="categoryId", nullable=true)
     private Category category;
 	
 	@Transient
-	private Integer categoryId;
+	private Integer categoryId = 0;
 	
 	/**
 	 * Default constructor.

@@ -36,10 +36,10 @@ public abstract class AbstractTrunkEntity
     private Entity entity;
     
     @Transient
-    private Integer contextId;
+    private Integer contextId = 0;
     
     @Transient
-    private Integer entityId;
+    private Integer entityId = 0;
     
     /**
      * Primary key.
