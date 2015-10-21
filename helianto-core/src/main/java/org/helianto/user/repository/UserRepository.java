@@ -235,6 +235,24 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 	Page<User> searchByParentUserType(int entityId, Collection<Integer> exclusions, String searchString, Character userType, char[] userStates, Pageable page);
 	
 	/**
+	 * Find by parent key and state, pageable.
+	 * 
+	 * @param entityId
+	 * @param userKey
+	 * @param exclusions
+	 * @param userState
+	 * @param page
+	 */
+	@Query(value=QUERY_JOIN
+			+ "where parent_.parent.entity.id = ?1 "
+			+ "and user_.identity.id not in ?2 "
+			+ "and (lower(user_.userKey) like %?3% or lower(user_.userName) like %?3% ) "
+			+ "and parent_.parent.userType = ?4 "
+			+ "and user_.userState in ?5 "
+			)
+	List<User> searchByParentUserType2(int entityId, Collection<Integer> exclusions, String searchString, Character userType, char[] userStates, Sort sort);
+	
+	/**
 	 * Find by user parent type.
 	 * 
 	 * @param entityId
