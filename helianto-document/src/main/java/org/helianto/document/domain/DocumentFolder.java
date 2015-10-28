@@ -30,6 +30,8 @@ import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
 import org.helianto.document.internal.AbstractSerializer;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Wraps a number pattern to be used to generate a sequence of documents.
  * 
@@ -50,7 +52,7 @@ public class DocumentFolder
 
 	private static final long serialVersionUID = 1L;
 	
-	
+	@JsonIgnore
     @ManyToOne
     @JoinColumn(name="categoryId", nullable=true)
     private Category category;

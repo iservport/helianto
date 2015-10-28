@@ -40,6 +40,7 @@ public class AbstractContent
 
     private static final long serialVersionUID = 1L;
     
+    @JsonIgnore
     @Lob
     private byte[] content = "".getBytes();
     

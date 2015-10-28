@@ -186,6 +186,7 @@ public abstract class AbstractCustomDocument
     /**
      * <<Transient>> Convenience to rename field series to folder.
      */
+	@JsonIgnore
     public DocumentFolder getFolder() {
 		return getSeries();
 	}
