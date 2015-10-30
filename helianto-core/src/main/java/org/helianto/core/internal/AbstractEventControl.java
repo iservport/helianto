@@ -153,6 +153,20 @@ public abstract class AbstractEventControl
     }
     
     /**
+     * Merger.
+     * 
+     * @param command
+     */
+    public void merge(AbstractEventControl command) {
+    	super.merge(command);
+		setInternalNumber(command.getInternalNumber());
+		setNextCheckDate(command.getNextCheckDate());
+		setFrequency(command.getFrequency());
+		setFrequencyType(command.getFrequencyType());
+		setComplete(command.getComplete());
+    }
+    
+    /**
      * toString
      * @return String
      */
