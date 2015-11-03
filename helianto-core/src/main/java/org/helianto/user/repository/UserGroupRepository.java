@@ -137,9 +137,16 @@ public interface UserGroupRepository extends JpaRepository<UserGroup, Serializab
 			+ "( userGroup.id"
 			+ ", userGroup.userKey"
 			+ ", userGroup.userName"
+			+ ", userGroup.locale"
+			+ ", userGroup.lastEvent"
+			+ ", userGroup.userState"
+			+ ", userGroup.userType"
+			+ ", userGroup.accountNonExpired"
+			+ ", userGroup.userDesc"
+			+ ", userGroup.nature"
 			+ ", userGroup.minimalEducationRequirement"
 			+ ", userGroup.minimalExperienceRequirement"
-			+ ", userGroup.userType"
+			+ ", userGroup.scriptItems"
 			+ ") "
 			+ "from UserGroup userGroup ";
 
@@ -161,7 +168,7 @@ public interface UserGroupRepository extends JpaRepository<UserGroup, Serializab
 	 */
 	@Query(QUERY_GROUP
 			+ "where userGroup.id = ?1 ")
-	UserGroup findById(Integer groupId);
+	UserGroup findById(int groupId);
 
 	/**
 	 * Read groups by entity.
@@ -184,9 +191,16 @@ public interface UserGroupRepository extends JpaRepository<UserGroup, Serializab
 			+ "( association.parent.id"
 			+ ", association.parent.userKey"
 			+ ", association.parent.userName"
+			+ ", association.parent.locale"
+			+ ", association.parent.lastEvent"
+			+ ", association.parent.userState"
+			+ ", association.parent.userType"
+			+ ", association.parent.accountNonExpired"
+			+ ", association.parent.userDesc"
+			+ ", association.parent.nature"
 			+ ", association.parent.minimalEducationRequirement"
 			+ ", association.parent.minimalExperienceRequirement"
-			+ ", association.parent.userType"
+			+ ", association.parent.scriptItems"
 			+ ") "
 			+ "from UserAssociation association ";
 

@@ -34,7 +34,7 @@ import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 /**
  * <p>
@@ -71,7 +71,7 @@ public class User
     @Transient
     private Integer userGroupId;
     
-    @JsonBackReference 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="identityId", nullable=true)
     private Identity identity;
@@ -99,7 +99,7 @@ public class User
     
     private char privacyLevel = PrivacyLevel.PUBLIC.getValue();
     
-	@JsonManagedReference 
+	@JsonIgnore
 	@OneToMany(mappedBy="user")
 	private Set<UserLog> userLogs = new HashSet<UserLog>(0);
 
@@ -461,7 +461,6 @@ public class User
     /**
      * <<Transient>> Safe user birth date.
      */
-//    @Transient
     public Date getUserBirthDate() {
     	if (getIdentity()!=null) {
     		return getIdentity().getBirthDate();
@@ -500,6 +499,18 @@ public class User
 	}
 	public void setUserLogs(Set<UserLog> userLogs) {
 		this.userLogs = userLogs;
+	}
+	
+	/**
+	 * Merger.
+	 * 
+	 * @param command
+	 */
+	public User user(User command) {
+		super.merge(command);
+		setInitials(command.getInitials());
+		setPrivacyLevel(command.getPrivacyLevel());
+		return this;
 	}
 	
 }

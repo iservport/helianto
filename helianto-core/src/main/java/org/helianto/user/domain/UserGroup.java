@@ -56,7 +56,6 @@ import org.helianto.core.utils.StringListUtils;
 import org.helianto.user.def.UserType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 /**
  * 			
  * An user account (or group) represents a set of roles within an <code>Entity</code>. 
@@ -83,7 +82,6 @@ public class UserGroup
 	, Comparable<UserGroup>
 	, Programmable
 	, KeyNameAdapter
-
 {
 	
 	/**
@@ -113,9 +111,13 @@ public class UserGroup
     
     private boolean accountNonExpired = true;
     
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="categoryId", nullable=true)
     private Category category;
+    
+    @Transient
+    private Integer categoryId = 0;
     
     @Transient
     private char createIdentity = CreateIdentity.REJECT.getValue();
@@ -136,17 +138,18 @@ public class UserGroup
     @Column(length=255)
     private String scriptItems = "";
 
-    @JsonManagedReference("child")
+    @JsonIgnore
     @OneToMany(mappedBy="child")
     private Set<UserAssociation> parentAssociations = new HashSet<UserAssociation>();
     
-    @JsonManagedReference("parent")
+    @JsonIgnore
     @OneToMany(mappedBy="parent")
     private Set<UserAssociation> childAssociations = new HashSet<UserAssociation>();
     
     @Transient
     private List<UserAssociation> childAssociationList = new ArrayList<UserAssociation>();
     
+    @JsonIgnore
     @OneToMany(mappedBy="userGroup")
 	private Set<UserRole> roles = new HashSet<UserRole>();
 	
@@ -200,21 +203,48 @@ public class UserGroup
 	 * @param id
 	 * @param userKey
 	 * @param userName
+	 * @param locale
+	 * @param lastEvent
+	 * @param userState
+	 * @param userType
+	 * @param accountNonExpired
+	 * @param userDesc
+	 * @param nature
 	 * @param minimalEducationRequirement
 	 * @param minimalExperienceRequirement
+	 * @param scriptItems
 	 */
-	public UserGroup(int id, String userKey, String userName
-			, int minimalEducationRequirement, int minimalExperienceRequirement
-			, char userType) {
+	public UserGroup(int id
+			, String userKey
+			, String userName
+			, Locale locale
+			, Date lastEvent
+			, char userState
+			, char userType
+			, Boolean accountNonExpired
+			, String userDesc
+			, String nature
+			, int minimalEducationRequirement
+			, int minimalExperienceRequirement
+			, String scriptItems
+			) {
 		this();
 		setId(id);
     	setUserKey(userKey);
     	setUserName(userName);
+    	setLocale(locale);
+    	setLastEvent(lastEvent);
+    	setUserState(userState);
+    	setUserType(userType);
+    	setAccountNonExpired(accountNonExpired);
+    	setUserDesc(userDesc);
+    	setNature(nature);
     	setMinimalEducationRequirement(minimalEducationRequirement);
     	setMinimalExperienceRequirement(minimalExperienceRequirement);
-    	setUserType(userType);
+    	setScriptItems(scriptItems);
 	}
-	
+
+
     /**
      * <<Transient>> Convenience to return Operator.
      */
@@ -511,6 +541,16 @@ public class UserGroup
 		this.category = category;
 	}
 	
+	/**
+	 * <<Transient>> category id.
+	 */
+    public Integer getCategoryId() {
+		return categoryId;
+	}
+    public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
+	}
+    
     /**
      * Key-value pair list of scripts, separated by comma.
      */
@@ -631,7 +671,32 @@ public class UserGroup
 	public void setRoleList(List<UserRole> roleList) {
 		this.roleList = roleList;
 	}
+	
+	/**
+	 * Merger.
+	 * 
+	 * @param command
+	 */
+	public UserGroup merge(UserGroup command) {
+		setUserName(command.getUserName());
+		setLocale(command.getLocale());
+		setLastEvent(command.getLastEvent());
+		setUserState(command.getUserState());
+		setUserType(command.getUserType());
+		setAccountNonExpired(command.isAccountNonExpired());
+		setUserDesc(command.getUserDesc());
+		setNature(command.getNature());
+		setMinimalEducationRequirement(command.getMinimalEducationRequirement());
+		setMinimalExperienceRequirement(command.getMinimalExperienceRequirement());
+		setScriptItems(command.getScriptItems());
+		return this;
+	}
 
+	/**
+	 * Comparator.
+	 * 
+	 * @param other
+	 */
 	public int compareTo(UserGroup other) {
 		if (getUserKey()!=null && other!=null && other.getUserKey()!=null) {
 			return getUserKey().compareTo(other.getUserKey());
@@ -641,6 +706,7 @@ public class UserGroup
 
     /**
      * toString
+     * 
      * @return String
      */
     @Override
@@ -677,6 +743,5 @@ public class UserGroup
          result = 37 * result + ( getUserKey() == null ? 0 : this.getUserKey().hashCode() );
          return result;
    }
-
 
 }
