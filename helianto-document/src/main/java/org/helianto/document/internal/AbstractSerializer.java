@@ -57,8 +57,35 @@ public abstract class AbstractSerializer<D>
     public AbstractSerializer(Entity entity, String folderCode) {
     	super(entity, folderCode);
     }
-
+    
     /**
+     * Form constructor.
+     * 
+     * @param id
+     * @param folderCode
+     * @param folderName
+     * @param folderDecorationUrl
+     * @param patternPrefix
+     * @param numberOfDigits
+     * @param contentType
+     */
+    protected AbstractSerializer(int id
+    		, String folderCode
+    		, String folderName
+    		, String folderDecorationUrl
+    		, String patternPrefix
+    		, Integer numberOfDigits
+    		, char contentType
+    		) {
+		super(id, folderCode, folderName, folderDecorationUrl);
+		this.patternPrefix = patternPrefix;
+		this.numberOfDigits = numberOfDigits;
+		this.contentType = contentType;
+	}
+
+
+
+	/**
      * Pattern to generate new docCode.
      */
 	public String getNumberPattern() {

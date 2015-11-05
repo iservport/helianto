@@ -64,8 +64,24 @@ public abstract class AbstractFolder
     	setEntity(entity);
     	setFolderCode(folderCode);
     }
+    
+    /**
+     * Form constructor.
+     * 
+     * @param id
+     * @param folderCode
+     * @param folderName
+     * @param folderDecorationUrl
+     */
+    protected AbstractFolder(int id, String folderCode, String folderName, String folderDecorationUrl) {
+		super();
+		setId(id);
+		this.folderCode = folderCode;
+		this.folderName = folderName;
+		this.folderDecorationUrl = folderDecorationUrl;
+	}
 
-    public String getFolderCode() {
+	public String getFolderCode() {
         return getInternalBuilderCode();
     }
     public void setFolderCode(String builderCode) {
