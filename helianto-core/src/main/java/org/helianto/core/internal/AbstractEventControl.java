@@ -159,7 +159,6 @@ public abstract class AbstractEventControl
      */
     public void merge(AbstractEventControl command) {
     	super.merge(command);
-		setInternalNumber(command.getInternalNumber());
 		setNextCheckDate(command.getNextCheckDate());
 		setFrequency(command.getFrequency());
 		setFrequencyType(command.getFrequencyType());
