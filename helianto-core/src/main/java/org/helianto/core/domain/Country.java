@@ -77,6 +77,18 @@ public class Country
         setCountryCode(countryCode);
     }
 
+    /** 
+     * Name constructor.
+     * 
+     * @param operator
+     * @param countryCode
+     * @param countryName
+     */
+    public Country(Operator operator, String countryCode, String countryName) {
+    	this(operator, countryCode);
+    	setCountryName(countryName);
+    }
+
     /**
      * Primary key.
      */
@@ -97,7 +109,6 @@ public class Country
         this.operator = operator;
     }
     
-//    @Transient
     public int getContextId() {
     	if (getOperator()!=null) {
     		return getOperator().getId();
