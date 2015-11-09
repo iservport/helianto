@@ -19,5 +19,12 @@ public interface SignupRepository extends JpaRepository<Signup, Serializable> {
 	 * @param principal
 	 */
 	Signup findByContextIdAndPrincipal(int contextId, String principal);
+	
+	/**
+	 * Find by token.
+	 * 
+	 * @param token
+	 */
+	Signup findByToken(String token);
 
 }
