@@ -150,7 +150,6 @@ public abstract class AbstractFolder
      * @param command
      */
     protected void merge(AbstractFolder command) {
-    	setFolderCode(command.getFolderCode());
     	setFolderName(command.getFolderName());
     	setFolderDecorationUrl(command.getFolderDecorationUrl());
     }
