@@ -80,7 +80,7 @@ public abstract class AbstractCounter
      * @param counterList
      */
     @JsonIgnore
-	public AbstractCounter setCountItems(List<SimpleCounter> counterList) {
+	public AbstractCounter setCountItemsAsList(List<SimpleCounter> counterList) {
 		for (SimpleCounter counter: counterList) {
 			if (match(counter)) {
 				setCountItems((int) counter.getItemCount());
@@ -106,7 +106,7 @@ public abstract class AbstractCounter
      * @param counterList
      */
     @JsonIgnore
-	public AbstractCounter setCountAlerts(List<SimpleCounter> counterList) {
+	public AbstractCounter setCountAlertsAsList(List<SimpleCounter> counterList) {
 		for (SimpleCounter counter: counterList) {
 			if (match(counter)) {
 				setCountAlerts((int) counter.getItemCount());
@@ -132,7 +132,7 @@ public abstract class AbstractCounter
      * @param counterList
      */
     @JsonIgnore
-	public AbstractCounter setCountWarnings(List<SimpleCounter> counterList) {
+	public AbstractCounter setCountWarningsAsList(List<SimpleCounter> counterList) {
 		for (SimpleCounter counter: counterList) {
 			if (match(counter)) {
 				setCountWarnings((int) counter.getItemCount());
@@ -158,7 +158,7 @@ public abstract class AbstractCounter
      * @param counterList
      */
     @JsonIgnore
-	public AbstractCounter setCountOthers(List<SimpleCounter> counterList) {
+	public AbstractCounter setCountOthersAsList(List<SimpleCounter> counterList) {
 		for (SimpleCounter counter: counterList) {
 			if (match(counter)) {
 				setCountOthers((int) counter.getItemCount());
