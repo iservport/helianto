@@ -119,6 +119,12 @@ public class Identity implements java.io.Serializable {
 	@Transient
     private transient MultipartFile file;
 	
+	@Transient
+    private String passwordToChange;
+	
+	@Transient
+    private String passwordConfirmation;
+	
     /** 
      * Default constructor.
      */
@@ -511,6 +517,38 @@ public class Identity implements java.io.Serializable {
     public void setConnections(Set<IdentitySecurity> connections) {
 		this.connections = connections;
 	}
+    
+    /**
+     * <<Transient>> Password to change.
+     */
+    public String getPasswordToChange() {
+		return passwordToChange;
+	}
+    public void setPasswordToChange(String passwordToChange) {
+		this.passwordToChange = passwordToChange;
+	}
+    
+    /**
+     * <<Transient>> Password confirmation.
+     */
+    public String getPasswordConfirmation() {
+		return passwordConfirmation;
+	}
+    public void setPasswordConfirmation(String passwordConfirmation) {
+		this.passwordConfirmation = passwordConfirmation;
+	}
+    
+    /**
+     * True only if password to change is not empty and matches password confirmation.
+     */
+    public boolean isPasswordChanging() {
+    	if (getPasswordToChange()!=null 
+    			&& !getPasswordToChange().isEmpty() 
+    			&& getPasswordToChange().equals(getPasswordConfirmation())) {
+    		return true;
+    	}
+    	return false;
+    }
     
     /**
      * List of phones.
