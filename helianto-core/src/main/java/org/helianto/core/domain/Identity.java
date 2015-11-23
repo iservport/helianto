@@ -439,6 +439,18 @@ public class Identity implements java.io.Serializable {
     public void setIdentityType(char identityType) {
         this.identityType = identityType;
     }
+    
+    /**
+     * Identity type as enum.
+     */
+    public IdentityType getIdentityTypeAsEnum() {
+    	for (IdentityType t: IdentityType.values()) {
+    		if (t.getValue()==this.identityType) {
+    			return t;
+    		}
+    	}
+    	return null;
+    }
     public void setIdentityTypeAsEnum(IdentityType identityType) {
         this.identityType = identityType.getValue();
     }
