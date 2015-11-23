@@ -44,6 +44,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.core.def.Gender;
 import org.helianto.core.def.IdentityType;
 import org.helianto.core.def.Notification;
 import org.joda.time.DateMidnight;
@@ -52,7 +53,6 @@ import org.joda.time.Years;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * An uniquely identified actor.
@@ -345,6 +345,21 @@ public class Identity implements java.io.Serializable {
     public void setGender(char gender) {
     	safePersonalData().setGender(gender);
 	}
+    
+    /**
+     * Gender as enum.
+     */
+    public Gender getGenderAsEnum() {
+    	for (Gender g: Gender.values()) {
+    		if (g.getValue()==safePersonalData().getGender()) {
+    			return g;
+    		}
+    	}
+    	return null;
+    }
+    public void setGenderAsEnum(Gender gender) {
+    	safePersonalData().setGender(gender.getValue());
+    }
     
     /**
      * <<Transient>> appellation.
