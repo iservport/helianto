@@ -129,7 +129,7 @@ public class Identity implements java.io.Serializable {
      * Default constructor.
      */
     public Identity() {
-        this("");
+        super();
     }
 
     /** 
