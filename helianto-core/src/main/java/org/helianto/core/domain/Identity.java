@@ -262,17 +262,17 @@ public class Identity implements java.io.Serializable {
 		this.optionalSourceAlias = optionalSourceAlias;
 	}
     
-    /**
-     * Optional alias.
-     * @deprecated
-     * @see #getDisplayName()
-     */
-    public String getOptionalAlias() {
-        return getDisplayName();
-    }
-    public void setOptionalAlias(String displayName) {
-        setDisplayName(displayName);
-    }
+//    /**
+//     * Optional alias.
+//     * @deprecated
+//     * @see #getDisplayName()
+//     */
+//    public String getOptionalAlias() {
+//        return getDisplayName();
+//    }
+//    public void setOptionalAlias(String displayName) {
+//        setDisplayName(displayName);
+//    }
 
     /**
      * Display name.
