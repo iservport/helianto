@@ -339,6 +339,7 @@ public class Identity implements java.io.Serializable {
     /**
      * <<Transient>> gender.
      */
+    @JsonIgnore
     public char getGender() {
     	return safePersonalData().getGender();
     }
@@ -448,6 +449,7 @@ public class Identity implements java.io.Serializable {
     /**
      * IdentityType getter.
      */
+    @JsonIgnore
     public char getIdentityType() {
         return this.identityType;
     }
