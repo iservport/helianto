@@ -124,6 +124,7 @@ public class Identity implements java.io.Serializable {
      */
     public Identity() {
         super();
+        this.personalData = new PersonalData();
     }
 
     /** 
