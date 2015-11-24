@@ -44,6 +44,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.helianto.core.def.Appellation;
 import org.helianto.core.def.Gender;
 import org.helianto.core.def.IdentityType;
 import org.helianto.core.def.Notification;
@@ -356,20 +357,36 @@ public class Identity implements java.io.Serializable {
     			return g;
     		}
     	}
-    	return null;
+    	return Gender.NOT_SUPPLIED;
     }
     public void setGenderAsEnum(Gender gender) {
     	safePersonalData().setGender(gender.getValue());
     }
     
     /**
-     * <<Transient>> appellation.
+     * Appellation.
      */
+    @JsonIgnore
     public char getAppellation() {
     	return safePersonalData().getAppellation();
     }
     public void setAppellation(char appellation) {
     	safePersonalData().setAppellation(appellation);
+	}
+    
+    /**
+     * <<Transient>> appellation.
+     */
+    public Appellation getAppellationAsEnum() {
+    	for (Appellation a: Appellation.values()) {
+    		if (a.getValue()==safePersonalData().getAppellation()) {
+    			return a;
+    		}
+    	}
+    	return Appellation.NOT_SUPPLIED;
+    }
+    public void setAppellationAsEnum(Appellation appellation) {
+    	safePersonalData().setAppellation(appellation.getValue());
 	}
     
     /**
@@ -466,7 +483,7 @@ public class Identity implements java.io.Serializable {
     			return t;
     		}
     	}
-    	return null;
+    	return IdentityType.PERSONAL_EMAIL;
     }
     public void setIdentityTypeAsEnum(IdentityType identityType) {
         this.identityType = identityType.getValue();
