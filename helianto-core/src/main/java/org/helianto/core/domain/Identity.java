@@ -18,9 +18,7 @@ package org.helianto.core.domain;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.CollectionTable;
@@ -33,7 +31,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
@@ -48,7 +45,6 @@ import org.helianto.core.def.Appellation;
 import org.helianto.core.def.Gender;
 import org.helianto.core.def.IdentityType;
 import org.helianto.core.def.Notification;
-import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Years;
 import org.springframework.web.multipart.MultipartFile;
@@ -113,10 +109,6 @@ public class Identity implements java.io.Serializable {
     @OrderColumn(name="sequence")
     private List<ContactInfo> contactInfos = new ArrayList<ContactInfo>();
     
-	@JsonIgnore
-    @OneToMany(mappedBy="identity")
-    private Set<IdentitySecurity> connections = new HashSet<IdentitySecurity>();
-
 	@Transient
     private transient MultipartFile file;
 	
@@ -413,7 +405,7 @@ public class Identity implements java.io.Serializable {
      */
     protected int getAge(Date date) {
     	if (getPersonalData()!=null && getPersonalData().getBirthDate()!=null) {
-    		DateMidnight birthdate = new DateMidnight(getPersonalData().getBirthDate());
+    		DateTime birthdate = new DateTime(getPersonalData().getBirthDate()).withTimeAtStartOfDay();
     		return Years.yearsBetween(birthdate, new DateTime(date)).getYears();
     	}
 		return -1;
@@ -554,16 +546,6 @@ public class Identity implements java.io.Serializable {
 		setMultipartFileContentType(file.getContentType());
 	}
 	
-    /**
-     * A set of connection data.
-     */
-    public Set<IdentitySecurity> getConnections() {
-		return connections;
-	}
-    public void setConnections(Set<IdentitySecurity> connections) {
-		this.connections = connections;
-	}
-    
     /**
      * <<Transient>> Password to change.
      */
