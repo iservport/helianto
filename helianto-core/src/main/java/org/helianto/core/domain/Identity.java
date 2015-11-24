@@ -50,6 +50,7 @@ import org.joda.time.Years;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * An uniquely identified actor.
@@ -351,6 +352,7 @@ public class Identity implements java.io.Serializable {
     	}
     	return Gender.NOT_SUPPLIED;
     }
+    @JsonSerialize
     public void setGenderAsEnum(Gender gender) {
     	safePersonalData().setGender(gender.getValue());
     }
@@ -377,6 +379,7 @@ public class Identity implements java.io.Serializable {
     	}
     	return Appellation.NOT_SUPPLIED;
     }
+    @JsonSerialize
     public void setAppellationAsEnum(Appellation appellation) {
     	safePersonalData().setAppellation(appellation.getValue());
 	}
@@ -477,6 +480,7 @@ public class Identity implements java.io.Serializable {
     	}
     	return IdentityType.PERSONAL_EMAIL;
     }
+    @JsonSerialize
     public void setIdentityTypeAsEnum(IdentityType identityType) {
         this.identityType = identityType.getValue();
     }

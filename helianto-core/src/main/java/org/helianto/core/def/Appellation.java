@@ -12,7 +12,7 @@ public enum Appellation {
     /**
      * Not supplied.
      */
-    NOT_SUPPLIED('0'),
+    NOT_SUPPLIED('_'),
     /**
      * Miss.
      */
@@ -25,7 +25,11 @@ public enum Appellation {
     /**
      * Miss or Mistress
      */
-    MS('3');
+    MS('3'),
+    /**
+     * Not supplied.
+     */
+    UNDEFINED('0');
     
     private char value;
     
