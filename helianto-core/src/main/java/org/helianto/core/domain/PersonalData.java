@@ -75,7 +75,7 @@ public class PersonalData implements Serializable {
      * Default constructor.
      */
     public PersonalData() {
-    	this("", "");
+    	super();
     }
     
     /**
@@ -149,9 +149,6 @@ public class PersonalData implements Serializable {
     }
     public void setAppellation(char appellation) {
         this.appellation = appellation;
-    }
-    public void setAppellationAsEnum(Appellation appellation) {
-        this.appellation = appellation.getValue();
     }
     
     /**
