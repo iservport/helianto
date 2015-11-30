@@ -84,7 +84,7 @@ public class Category
     @Column(length=20)
     private String categoryCode = "";
     
-    @Column(length=32)
+    @Column(length=36)
     private String categoryLabel = "";
     
     @Column(length=64)
@@ -104,7 +104,7 @@ public class Category
     @Column(length=255)
     private String customWorkflowRoles = "";
 
-	@Column(length=512)
+	@Column(length=2048)
     private String customProperties = "";
 	
 	@Column(length=12)
