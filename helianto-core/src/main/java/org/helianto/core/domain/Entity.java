@@ -146,6 +146,9 @@ public class Entity
     private char activityState = 'A';
     
     @Column(length=128)
+    private String entityName = "";
+    
+    @Column(length=128)
     private String entityDomain = "";
     
     @ManyToOne
@@ -454,6 +457,16 @@ public class Entity
 	}
     public void setEntityDomain(String entityDomain) {
 		this.entityDomain = entityDomain;
+	}
+    
+    /**
+     * Entity name.
+     */
+    public String getEntityName() {
+		return entityName;
+	}
+    public void setEntityName(String entityName) {
+		this.entityName = entityName;
 	}
     
     /**
