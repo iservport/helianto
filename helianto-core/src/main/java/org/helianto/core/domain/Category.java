@@ -81,7 +81,7 @@ public class Category
     @Enumerated(EnumType.STRING)
     private CategoryGroup categoryGroupType;
     
-    @Column(length=20)
+    @Column(length=36)
     private String categoryCode = "";
     
     @Column(length=36)
