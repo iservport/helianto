@@ -604,6 +604,26 @@ public class Identity implements java.io.Serializable {
 	}
     
     /**
+     * Merger.
+     * 
+     * @param command
+     */
+    public Identity merge(Identity command) {
+    	setId(command.getId());
+    	setIdentityType(command.getIdentityType());
+    	setPrincipal(command.getPrincipal());
+    	setDisplayName(command.getDisplayName());
+    	getPersonalData().setAppellation(command.getAppellation());
+    	getPersonalData().setFirstName(command.getIdentityFirstName());
+    	getPersonalData().setLastName(command.getIdentityLastName());
+    	getPersonalData().setGender(command.getGender());
+    	setNotification(command.getNotification());
+    	getPersonalData().setBirthDate(command.getBirthDate());
+    	getPersonalData().setImageUrl(command.getImageUrl());
+    	return this;
+    }
+    
+    /**
      * toString
      * @return String
      */
