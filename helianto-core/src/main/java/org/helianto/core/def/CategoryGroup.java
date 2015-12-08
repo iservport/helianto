@@ -14,7 +14,11 @@ public enum CategoryGroup implements KeyNameAdapter {
 	/**
 	 * Not defined.
 	 */
-	NOT_DEFINED('N'),
+	NOT_DEFINED('_'),
+	/**
+	 * Entity.
+	 */
+	ENTITY('N'),
 	/**
 	 * Document.
 	 */
