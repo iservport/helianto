@@ -72,6 +72,18 @@ public enum CategoryGroup implements KeyNameAdapter {
 	 */
 	USER('Z'),
 	/**
+	 * Labor.
+	 */
+	LABOR('L'),
+	/**
+	 * Action.
+	 */
+	KNOWLEDGE('K'),
+	/**
+	 * Action.
+	 */
+	ACTION('A'),
+	/**
 	 * Competence.
 	 */
 	COMPETENCE('C');
