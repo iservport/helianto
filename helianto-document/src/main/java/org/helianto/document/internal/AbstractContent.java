@@ -184,7 +184,7 @@ public class AbstractContent
      */
     public AbstractContent merge(AbstractContent command) {
     	super.merge(command);
-    	setContent(command.getContent());
+		setContent(command.getContentAsString().getBytes());
     	return this;
     }
 

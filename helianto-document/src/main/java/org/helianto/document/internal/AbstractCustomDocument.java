@@ -73,6 +73,8 @@ public abstract class AbstractCustomDocument
 	@Transient
 	private Integer categoryId = 0;
 	
+	private Integer frequency = 0;
+	
 	/**
 	 * Default constructor.
 	 */
@@ -315,6 +317,19 @@ public abstract class AbstractCustomDocument
 		this.categoryId = categoryId;
 	}
     
+    /**
+     * Frequency for eventually updating documents.
+     */
+    public Integer getFrequency() {
+    	if (frequency==null) {
+    		return 0;
+    	}
+		return frequency;
+	}
+    public void setFrequency(Integer frequency) {
+		this.frequency = frequency;
+	}
+    
 	/**
 	 * <<Transient>> Optionally delegate to subclasses a method to replace the private field.
 	 * 
@@ -334,6 +349,7 @@ public abstract class AbstractCustomDocument
     public void merge(AbstractCustomDocument command) {
 		super.merge(command);
 		setInternalNumber(command.getInternalNumber());
+		setFrequency(command.getFrequency());
     }
     
 	@Override

@@ -294,6 +294,10 @@ public abstract class AbstractDocument
 		setDocName(command.getDocName());
 		setDocFile(command.getDocFile());
 		setDocAbstract(command.getDocAbstract());
+		setPriority(command.getPriority());
+		setEncoding(command.getEncoding());
+		setMultipartFileContentType(command.getMultipartFileContentType());
+		setReferenceList(command.getReferenceList());
     }
     
     /**
