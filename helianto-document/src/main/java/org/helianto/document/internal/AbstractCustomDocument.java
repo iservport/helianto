@@ -27,6 +27,7 @@ import javax.persistence.Transient;
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.number.Sequenceable;
+import org.helianto.document.def.ReviewFrequency;
 import org.helianto.document.domain.DocumentFolder;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -320,6 +321,7 @@ public abstract class AbstractCustomDocument
     /**
      * Frequency for eventually updating documents.
      */
+    @JsonIgnore
     public Integer getFrequency() {
     	if (frequency==null) {
     		return 0;
@@ -328,6 +330,23 @@ public abstract class AbstractCustomDocument
 	}
     public void setFrequency(Integer frequency) {
 		this.frequency = frequency;
+	}
+    
+    /**
+     * Frequency (as enum) for eventually updating documents.
+     */
+    public ReviewFrequency getFrequencyAsEnum() {
+    	for (ReviewFrequency r: ReviewFrequency.values()) {
+    		if (r.getValue()==getFrequency()) {
+    			return r;
+    		}
+    	}
+		return ReviewFrequency.NOT_REQUIRED;
+	}
+    public void setFrequencyAsEnum(ReviewFrequency frequency) {
+    	if (frequency!=null) {
+    		setFrequency(frequency.getValue());
+    	}
 	}
     
 	/**
