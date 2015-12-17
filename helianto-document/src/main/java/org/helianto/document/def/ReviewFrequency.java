@@ -15,11 +15,14 @@
 
 package org.helianto.document.def;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * Review frequency.
  * 
  * @author Mauricio Fernandes de Castro
  */
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ReviewFrequency {
     
     /**
@@ -65,13 +68,12 @@ public enum ReviewFrequency {
         this.value = value;
     }
     
+    public String getName() {
+    	return name();
+    }
+    
     public int getValue() {
         return value;
     }
     
-    public boolean isStatisticalControlRequired() {
-        if (value > 1) return true;
-        return false;
-    }
-
 }
