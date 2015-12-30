@@ -321,7 +321,6 @@ public abstract class AbstractCustomDocument
     /**
      * Frequency for eventually updating documents.
      */
-    @JsonIgnore
     public Integer getFrequency() {
     	if (frequency==null) {
     		return 0;
@@ -335,6 +334,7 @@ public abstract class AbstractCustomDocument
     /**
      * Frequency (as enum) for eventually updating documents.
      */
+    @JsonIgnore
     public ReviewFrequency getFrequencyAsEnum() {
     	for (ReviewFrequency r: ReviewFrequency.values()) {
     		if (r.getValue()==getFrequency()) {
