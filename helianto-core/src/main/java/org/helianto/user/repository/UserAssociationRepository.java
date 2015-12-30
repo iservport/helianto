@@ -26,6 +26,14 @@ public interface UserAssociationRepository
 	UserAssociation findByParentAndChild(UserGroup parent, UserGroup child);
 	
 	/**
+	 * Find by natural key id.
+	 * 
+	 * @param parentId
+	 * @param id
+	 */
+	UserAssociation findByParentIdAndChildId(int parentId, int id);
+
+	/**
 	 * Find by parent.
 	 * 
 	 * @param parent

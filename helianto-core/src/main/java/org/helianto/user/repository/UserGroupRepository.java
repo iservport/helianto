@@ -162,6 +162,17 @@ public interface UserGroupRepository extends JpaRepository<UserGroup, Serializab
 	Page<UserGroup> findActiveUserGroupsByUserType(int entityId, char userType, Pageable page);
 	
 	/**
+	 * Read user pages from entity and types.
+	 * 
+	 * @param entityId
+	 */
+	@Query(QUERY_GROUP
+			+ "where userGroup.entity.id = ?1 "
+			+ "and userGroup.userType in ?2 "
+			+ "and userGroup.userState = 'A' ")
+	Page<UserGroup> findActiveUserGroupsByUserTypes(int entityId, char[] userTypes, Pageable page);
+	
+	/**
 	 * Read by id.
 	 * 
 	 * @param groupId
