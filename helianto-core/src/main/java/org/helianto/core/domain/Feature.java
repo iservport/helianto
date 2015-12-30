@@ -53,6 +53,7 @@ public class Feature
 	@Column(length=1024)
 	private String featureDesc;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="contextGroupId")
 	private ContextGroup contextGroup;
@@ -159,6 +160,9 @@ public class Feature
 	}
 	
 	public Integer getContextId() {
+		if (getContext()!=null) {
+			return getContext().getId();
+		}
 		return contextId;
 	}
 	public void setContextId(Integer contextId) {
@@ -237,6 +241,20 @@ public class Feature
 	}
 	public void setPolicies(String policies) {
 		this.policies = policies;
+	}
+	
+	/**
+	 * Merger.
+	 * 
+	 * @param command
+	 */
+	public Feature merge(Feature command) {
+		setFeatureDesc(command.getFeatureDesc());
+		setFeatureName(command.getFeatureName());
+		setFeatureType(command.getFeatureType());
+		setConstraints(command.getConstraints());
+		setPolicies(command.getPolicies());
+		return this;
 	}
 
 	@Override
