@@ -108,7 +108,6 @@ public class ResourceGroup
     /**
      * <<Transient>> Make discriminator value available.
      */
-//    @Transient
     public char getDiscriminatorValue() {
     	return 'G';
     }
@@ -123,7 +122,6 @@ public class ResourceGroup
         this.resourceName = resourceName;
     }
     
-//	@Transient
 	public String getFolderName() {
 		return getResourceName();
 	}
@@ -150,12 +148,10 @@ public class ResourceGroup
      * 
      * @param parentPath
      */
-//    @Transient
     protected String getInternalParentPath(String parentPath) {
     	return "/";
     }
     
-//    @Transient
     public String getCurrentPath() {
     	if (getParentPath()!=null) {
     		return new StringBuilder(getParentPath()).append(getResourceCode()).append("/").toString();
@@ -174,6 +170,20 @@ public class ResourceGroup
     }
     public void setResourceTypeAsEnum(ResourceType resourceType) {
         this.resourceType = resourceType.getValue();
+    }
+    
+    /**
+     * Merger.
+     * 
+     * @param command
+     */
+    public ResourceGroup merge(ResourceGroup command) {
+    	setResourceCode(command.getResourceCode());
+    	setResourceName(command.getResourceName());
+    	setFolderDecorationUrl(command.getFolderDecorationUrl());
+    	setParentPath(command.getParentPath());
+    	setResourceType(command.getResourceType());
+    	return this;
     }
     
     public int compareTo(ResourceGroup other) {
