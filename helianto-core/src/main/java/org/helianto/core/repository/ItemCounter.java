@@ -53,5 +53,12 @@ public class ItemCounter<B>
 	public void setItemCount(long itemCount) {
 		this.itemCount = itemCount;
 	}
+	
+	/**
+	 * True if item count is non zero positive.
+	 */
+	public boolean isCountPositive() {
+		return getItemCount()>0;
+	}
 
 }
