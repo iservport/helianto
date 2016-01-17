@@ -36,20 +36,6 @@ public interface IdentityMgr {
     public Identity findIdentityByPrincipal(String principal);
     
     /**
-     * Load <core>Identity</core> by id.
-     * 
-     * @param id
-     */
-    public Identity loadIdentity(int id);
-    
-    /**
-     * Load the <core>Identity</core> photo.
-     * 
-     * @param identity
-     */
-    public byte[] loadIdentityPhoto(Identity identity);
-    
-    /**
      * Store the given <code>Identity</code>.
      * 
      * @param identity

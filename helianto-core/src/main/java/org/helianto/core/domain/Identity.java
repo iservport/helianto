@@ -15,26 +15,19 @@
 
 package org.helianto.core.domain;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Basic;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.OrderColumn;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.SecondaryTable;
-import javax.persistence.SecondaryTables;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -61,9 +54,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @Table(name="core_identity",
     uniqueConstraints = {@UniqueConstraint(columnNames={"principal"})}
 )
-@SecondaryTables({@SecondaryTable(name="core_identitydata", 
-	pkJoinColumns={@PrimaryKeyJoinColumn(name="id", referencedColumnName="id")})
-})
 public class Identity implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -80,6 +70,7 @@ public class Identity implements java.io.Serializable {
     @Column(length=40)
     private String principal = "";
     
+    @JsonIgnore
     @Embedded
     private PersonalData personalData;
     
@@ -89,14 +80,6 @@ public class Identity implements java.io.Serializable {
     private char identityType = IdentityType.PERSONAL_EMAIL.getValue();
     
     private char notification = Notification.AUTOMATIC.getValue();
-    
-    @Basic(fetch=FetchType.LAZY)
-    @Lob
-    @Column(table="core_identitydata")
-	private byte[] photo = new byte[0];
-	
-	@Column(length=32)
-    private String multipartFileContentType;
     
 	@JsonIgnore
     @ElementCollection
@@ -496,43 +479,30 @@ public class Identity implements java.io.Serializable {
     /**
      * Notification getter.
      */
+    @JsonIgnore
     public char getNotification() {
         return this.notification;
     }
     public void setNotification(char notification) {
         this.notification = notification;
     }
+    
+    /**
+     * Notification as enum.
+     */
+    public Notification getNotificationAsEnum() {
+    	for (Notification t: Notification.values()) {
+    		if (t.getValue()==this.notification) {
+    			return t;
+    		}
+    	}
+    	return Notification.AUTOMATIC;
+    }
+    @JsonSerialize
     public void setNotificationAsEnum(Notification notification) {
         this.notification = notification.getValue();
     }
     
-    /**
-     * Identity photo.
-     */
-    public byte[] getPhoto() {
-		return photo;
-	}
-    public void setPhoto(byte[] photo) {
-		this.photo = photo;
-	}
-    
-    /**
-     * Content type, like img/jpg, etc.
-     */
-    public String getMultipartFileContentType() {
-		return multipartFileContentType;
-	}
-    public void setMultipartFileContentType(String multipartFileContentType) {
-		this.multipartFileContentType = multipartFileContentType;
-	}
-    
-    /**
-     * Ture if the phot has the image type.
-     */
-    public boolean isPhotoLoaded() {
-    	return getMultipartFileContentType()!=null && getMultipartFileContentType().startsWith("image");
-    }
-
 	/**
 	 * <<Transient>> Required to allow for file upload.
 	 */
@@ -543,14 +513,6 @@ public class Identity implements java.io.Serializable {
 		this.file = file;
 	}
     
-	/**
-	 * <<Transient>> Convenience method to read uploaded data.
-	 */
-	public void processFile() throws IOException {
-		setPhoto(getFile().getBytes());
-		setMultipartFileContentType(file.getContentType());
-	}
-	
     /**
      * <<Transient>> Password to change.
      */
@@ -613,13 +575,13 @@ public class Identity implements java.io.Serializable {
     	setIdentityType(command.getIdentityType());
     	setPrincipal(command.getPrincipal());
     	setDisplayName(command.getDisplayName());
-    	getPersonalData().setAppellation(command.getAppellation());
-    	getPersonalData().setFirstName(command.getIdentityFirstName());
-    	getPersonalData().setLastName(command.getIdentityLastName());
-    	getPersonalData().setGender(command.getGender());
-    	setNotification(command.getNotification());
-    	getPersonalData().setBirthDate(command.getBirthDate());
-    	getPersonalData().setImageUrl(command.getImageUrl());
+    	setAppellationAsEnum(command.getAppellationAsEnum());
+    	setIdentityFirstName(command.getIdentityFirstName());
+    	setIdentityLastName(command.getIdentityLastName());
+    	setGenderAsEnum(command.getGenderAsEnum());
+    	setNotificationAsEnum(command.getNotificationAsEnum());
+    	setBirthDate(command.getBirthDate());
+    	setImageUrl(command.getImageUrl());
     	return this;
     }
     
@@ -656,6 +618,38 @@ public class Identity implements java.io.Serializable {
          int result = 17;
          result = 37 * result + ( getPrincipal() == null ? 0 : this.getPrincipal().hashCode() );
          return result;
-   }   
+   } 
+   
+   /*
+    * Deprecated fields
+    */
+   
+   @JsonIgnore
+   @Column(name="PIT_1") 
+   private char personalIdentityType_1 = 'N';
+   
+   /**
+    * @deprecated
+    */
+   public char getPersonalIdentityType_1() {
+	return personalIdentityType_1;
+   }
+   public void setPersonalIdentityType_1(char personalIdentityType_1) {
+	this.personalIdentityType_1 = personalIdentityType_1;
+   }
+   
+   @JsonIgnore
+   @Column(name="PIT_2") 
+   private char personalIdentityType_2 = 'N';
 
+   /**
+    * @deprecated
+    */
+   public char getPersonalIdentityType_2() {
+	return personalIdentityType_2;
+   }
+   public void setPersonalIdentityType_2(char personalIdentityType_2) {
+	this.personalIdentityType_2 = personalIdentityType_2;
+   }
+   
 }

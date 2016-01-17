@@ -25,7 +25,6 @@ import javax.persistence.TemporalType;
 
 import org.helianto.core.def.Appellation;
 import org.helianto.core.def.Gender;
-import org.helianto.core.def.PersonalIdentityType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
@@ -54,23 +53,8 @@ public class PersonalData implements Serializable {
     private Date birthDate = new Date(0l);
     
     @Column(length=128)
-	private String profileUrl = "";
-	
-    @Column(length=128)
 	private String imageUrl = "";
 	
-    @Column(length=20, name="PIN_1") 
-    private String personalIdentityNumber_1 = "";
-    
-    @Column(name="PIT_1") 
-    private char personalIdentityType_1 = PersonalIdentityType.NOT_REQUIRED.getValue();
-    
-    @Column(length=20, name="PIN_2") 
-    private String personalIdentityNumber_2 = "";
-    
-    @Column(name="PIT_2") 
-    private char personalIdentityType_2 = PersonalIdentityType.NOT_REQUIRED.getValue();
-
     /** 
      * Default constructor.
      */
@@ -161,13 +145,9 @@ public class PersonalData implements Serializable {
 		this.birthDate = birthDate;
 	}
     
-    public String getProfileUrl() {
-		return profileUrl;
-	}
-    public void setProfileUrl(String profileUrl) {
-		this.profileUrl = profileUrl;
-	}
-    
+    /**
+     * Image url.
+     */
     public String getImageUrl() {
 		return imageUrl;
 	}
@@ -175,50 +155,4 @@ public class PersonalData implements Serializable {
 		this.imageUrl = imageUrl;
 	}
     
-    /**
-     * First personal identity number.
-     */
-    public String getPersonalIdentityNumber_1() {
-		return personalIdentityNumber_1;
-	}
-    public void setPersonalIdentityNumber_1(String personalIdentityNumber_1) {
-		this.personalIdentityNumber_1 = personalIdentityNumber_1;
-	}
-    
-    /**
-     * First personal identity type.
-     */
-    public char getPersonalIdentityType_1() {
-		return personalIdentityType_1;
-	}
-    public void setPersonalIdentityType_1(char personalIdentityType_1) {
-		this.personalIdentityType_1 = personalIdentityType_1;
-	}
-    public void setPersonalIdentityType_1AsEnum(PersonalIdentityType personalIdentityType) {
-		this.personalIdentityType_1 = personalIdentityType.getValue();
-	}
-
-    /**
-     * Second personal identity number.
-     */
-    public String getPersonalIdentityNumber_2() {
-		return personalIdentityNumber_2;
-	}
-    public void setPersonalIdentityNumber_2(String personalIdentityNumber_2) {
-		this.personalIdentityNumber_2 = personalIdentityNumber_2;
-	}
-    
-    /**
-     * Personal document type.
-     */
-    public char getPersonalIdentityType_2() {
-		return personalIdentityType_2;
-	}
-    public void setPersonalIdentityType_2(char personalIdentityType_2) {
-		this.personalIdentityType_2 = personalIdentityType_2;
-	}
-    public void setPersonalIdentityType_2AsEnum(PersonalIdentityType personalIdentityType) {
-		this.personalIdentityType_2 = personalIdentityType.getValue();
-	}
-
 }

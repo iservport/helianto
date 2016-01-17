@@ -47,25 +47,6 @@ public class IdentityMgrImpl implements IdentityMgr {
         return (Identity) identityRepository.findByPrincipal(principal);
     }
     
-	@Transactional(readOnly=true)
-    public Identity loadIdentity(int id) {
-    	Identity identity = identityRepository.findOne(id);
-    	if (identity!=null && identity.getPhoto()!=null) {
-    		logger.debug("Identity {} photo size is {}.", identity, identity.getPhoto().length);
-    	}
-    	return identity;
-    }
-    
-	@Transactional(readOnly=true)
-    public byte[] loadIdentityPhoto(Identity identity) {
-    	if (identity!=null && identity.getPhoto()!=null) {
-    		logger.debug("Identity {} photo size is {}.", identity, identity.getPhoto().length);
-    		return identity.getPhoto();
-    	}
-    	logger.debug("Identity {} photo not available.", identity);
-    	return null;
-    }
-
     /**
      * Store the given <code>Identity</code>.
      * 
