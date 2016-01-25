@@ -518,6 +518,26 @@ public class Entity
 	public void setUserList(List<UserGroup> userList) {
 		this.userList = userList;
 	}
+	
+	/**
+	 * Merger.
+	 * 
+	 * @param command
+	 */
+	public Entity merge(Entity command) {
+		setInstallDate(command.getInstallDate());
+		setEntityType(command.getEntityType());
+		setNature(command.getNature());
+		setCustomColors(command.getCustomColors());
+		setCustomStyle(command.getCustomStyle());
+		setCustomProperties(command.getCustomProperties());
+		setSummary(command.getSummary());
+		setManager(command.getManager());
+		setExternalLogoUrl(command.getExternalLogoUrl());
+		setActivityState(command.getActivityState());
+		setEntityName(command.getEntityName());
+		return this;
+	}
 
 	/**
      * toString
