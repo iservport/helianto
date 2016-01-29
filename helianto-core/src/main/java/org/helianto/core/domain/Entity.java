@@ -47,9 +47,7 @@ import org.helianto.core.domain.type.RootEntity;
 import org.helianto.core.utils.StringListUtils;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserGroup;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -108,15 +106,13 @@ public class Entity
     private int version;
     
     @JsonIgnore
-    @JsonBackReference 
     @ManyToOne
     @JoinColumn(name="operatorId", nullable=true)
     private Operator operator;
     
-    @Column(length=32)
+    @Column(length=64)
     private String alias = "";
     
-    @DateTimeFormat(style="S-")
     @Temporal(TemporalType.TIMESTAMP)
     private Date installDate = new Date();
     
@@ -151,6 +147,7 @@ public class Entity
     @Column(length=128)
     private String entityDomain = "";
     
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="cityId")
     private City city;
@@ -536,6 +533,7 @@ public class Entity
 		setExternalLogoUrl(command.getExternalLogoUrl());
 		setActivityState(command.getActivityState());
 		setEntityName(command.getEntityName());
+		setEntityDomain(command.getEntityDomain());
 		return this;
 	}
 
