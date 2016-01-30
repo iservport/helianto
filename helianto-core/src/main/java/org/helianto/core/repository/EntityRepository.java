@@ -30,10 +30,18 @@ public interface EntityRepository extends JpaRepository<Entity, Serializable> {
 	/**
 	 * Find by natural key.
 	 * 
-	 * @param operatorId
+	 * @param contextId
 	 * @param alias
 	 */
 	Entity findByOperator_IdAndAlias(int contextId, String alias);
+	
+	/**
+	 * Count by natural key.
+	 * 
+	 * @param contextId
+	 * @param alias
+	 */
+	Long countByOperator_IdAndAliasIgnoreCase(int contextId, String alias);
 	
 	/**
 	 * Find adapter.
