@@ -572,7 +572,7 @@ public class Identity implements java.io.Serializable {
      */
     public Identity merge(Identity command) {
     	setId(command.getId());
-    	setIdentityType(command.getIdentityType());
+    	setIdentityTypeAsEnum(command.getIdentityTypeAsEnum());
     	setPrincipal(command.getPrincipal());
     	setDisplayName(command.getDisplayName());
     	setAppellationAsEnum(command.getAppellationAsEnum());
