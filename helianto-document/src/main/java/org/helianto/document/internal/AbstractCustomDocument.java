@@ -293,8 +293,9 @@ public abstract class AbstractCustomDocument
     /**
      * Apply a number pattern to build a docCode.
      */
-	public void applyNumberPattern() {
+	public AbstractCustomDocument applyNumberPattern() {
 		setDocCode(new DecimalFormat(getNumberPattern()).format(internalNumber));
+		return this;
 	}
 
     /**
@@ -367,7 +368,6 @@ public abstract class AbstractCustomDocument
      */
     public void merge(AbstractCustomDocument command) {
 		super.merge(command);
-		setInternalNumber(command.getInternalNumber());
 		setFrequency(command.getFrequency());
     }
     

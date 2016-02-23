@@ -40,8 +40,8 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 			+ ", user_.userName"
 			+ ", user_.userState"
 			+ ", user_.userType"
-			+ ", user_.userJob.jobId"
-			+ ", user_.userJob.jobTitle"
+			+ ", user_.job.id"
+			+ ", user_.job.userName"
 			+ ", user_.accountNonExpired"
 			+ ") "
 			+ "from User user_ ";
@@ -123,7 +123,7 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 	 * @param page
 	 */
 	@Query(QUERY
-			+ "where user_.userJob.jobId = ?1 "
+			+ "where user_.job.id = ?1 "
 			)
 	Page<User> pageByJobId(int jobId, Pageable page);
 
@@ -180,8 +180,8 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 			+ ", user_.userName"
 			+ ", user_.userState"
 			+ ", user_.userType"
-			+ ", user_.userJob.jobId"
-			+ ", user_.userJob.jobTitle"
+			+ ", user_.job.id"
+			+ ", user_.job.userName"
 			+ ", user_.accountNonExpired"
 			+ ") "
 			+ "from User user_ "

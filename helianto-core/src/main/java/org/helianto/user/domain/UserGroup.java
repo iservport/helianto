@@ -128,8 +128,16 @@ public class UserGroup
     @Column(length=128)
     private String nature = "";
     
-    @Embedded
-    private UserJob userJob;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="jobId", nullable=true)
+    private UserGroup job;
+    
+    @Transient
+    private int jobId;
+    
+    @Transient
+    private String jobTitle;
     
     private int minimalEducationRequirement;
     
@@ -459,48 +467,39 @@ public class UserGroup
 	}
 	
 	/**
-	 * Optional embedded class to allow user groups to be handled as jobs.
-	 * 
-	 * This field was included to create a flexible relationship between groups and
-	 * users. The preferred way is to associate groups via UserAssociation. 
-	 * However, in some cases, the use of inner joins as a consequence of connecting
-	 * many to one fields by dots in query expressions may hide instances. 
-	 * The redundant job title provided by this class will provide an alternative solution
-	 * if the service layer can assure both fields of this class to be equal in the
-	 * group and in the user.
+	 * User group representing a job
 	 */
-	public UserJob getUserJob() {
-		return userJob;
+	public UserGroup getJob() {
+		return job;
 	}
-	public void setUserJob(UserJob userJob) {
-		this.userJob = userJob;
-	}
-	
-	protected UserJob safeUserJob() {
-		if (getUserJob()==null) {
-			setUserJob(new UserJob(0, ""));
-		}
-		return getUserJob();
+	public void setJob(UserGroup job) {
+		this.job = job;
 	}
 	
 	/**
-	 * Job id helper method.
+	 * <<Transient>> job id.
 	 */
 	public Integer getJobId() {
-		return safeUserJob().getJobId();
+		if (getJob()!=null) {
+			return getJob().getId();
+		}
+		return jobId;
 	}
-	public void setJobId(Integer jobId) {
-		safeUserJob().setJobId(jobId);
+	public void setJobId(int jobId) {
+		this.jobId = jobId;
 	}
 	
 	/**
 	 * Job title helper method.
 	 */
 	public String getJobTitle() {
-		return safeUserJob().getJobTitle();
+		if (getJob()!=null) {
+			return getJob().getUserName();
+		}
+		return jobTitle;
 	}
 	public void setJobTitle(String jobTitle) {
-		safeUserJob().setJobTitle(jobTitle);
+		this.jobTitle = jobTitle;
 	}
 	
 	/**

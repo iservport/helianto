@@ -228,7 +228,7 @@ public class User
 		setUserImageUrl(userImageUrl);
 		setUserType(userType);
 		setJobId(jobId);
-		setJobTitle(jobTitle);
+//		setJobTitle(jobTitle);
 		setAccountNonExpired(accountNonExpired);
 	}
 	

@@ -36,7 +36,7 @@ public abstract class AbstractDocument
 
     private static final long serialVersionUID = 1L;
     
-    @Column(length=24)
+    @Column(length=40)
     private String docCode = "";
     
     @Column(length=128)
@@ -290,7 +290,6 @@ public abstract class AbstractDocument
      */
     public void merge(AbstractDocument command) {
 		super.merge(command);
-		setDocCode(command.getDocCode());
 		setDocName(command.getDocName());
 		setDocFile(command.getDocFile());
 		setDocAbstract(command.getDocAbstract());

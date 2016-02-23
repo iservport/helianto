@@ -11,6 +11,7 @@ import javax.persistence.Embeddable;
  * See the UserGroup.userJob field documentation for a typical use case.
  * 
  * @author mauriciofernandesdecastro
+ * @deprecated was not effective, replaced by field job of type UserGroup
  */
 @Embeddable
 public class UserJob implements Serializable {

@@ -275,10 +275,10 @@ public class UserReadAdapter
 		this.userName = adaptee.getUserName();
 		this.userState = adaptee.getUserState();
 		this.userType = adaptee.getUserType();
-		if (adaptee.getUserJob()!=null) {
-			this.jobId = adaptee.getUserJob().getJobId();
-			this.jobTitle = adaptee.getUserJob().getJobTitle();
-		}
+//		if (adaptee.getUserJob()!=null) {
+//			this.jobId = adaptee.getUserJob().getJobId();
+//			this.jobTitle = adaptee.getUserJob().getJobTitle();
+//		}
 		this.accountNonExpired = adaptee.isAccountNonExpired();
 		return this;
 	}
@@ -292,10 +292,10 @@ public class UserReadAdapter
 		adaptee.setUserName(getFirstName()+" "+getLastName());
 		adaptee.setUserState(getUserState());
 		adaptee.setUserType(getUserType());
-		if (adaptee.getUserJob()!=null) {
-			adaptee.getUserJob().setJobId(getJobId());
-			adaptee.getUserJob().setJobTitle(getJobTitle());
-		}
+//		if (adaptee.getUserJob()!=null) {
+//			adaptee.getUserJob().setJobId(getJobId());
+//			adaptee.getUserJob().setJobTitle(getJobTitle());
+//		}
 		adaptee.setAccountNonExpired(isAccountNonExpired());
 		return adaptee; 
 	}

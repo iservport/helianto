@@ -76,7 +76,6 @@ public class City
     private boolean capital;
     
     private char priority;
-    
 
 	/**
 	 * Default constructor.
@@ -158,6 +157,16 @@ public class City
 	}
     public void setState(State state) {
 		this.state = state;
+	}
+    
+    public Integer getStateId() {
+    	if (getState()!=null) {
+    		return getState().getId();
+    	}
+    	return stateId;
+    }
+    public void setStateId(Integer stateId) {
+		this.stateId = stateId;
 	}
     
     /**
