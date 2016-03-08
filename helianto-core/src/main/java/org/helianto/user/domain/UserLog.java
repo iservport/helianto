@@ -21,15 +21,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.def.EventType;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  * Represent the memory of main user actions, as
  * login, logout, and so forth.
@@ -47,15 +49,21 @@ public class UserLog implements java.io.Serializable {
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     
-    @JsonBackReference 
+    @JsonIgnore 
     @ManyToOne
     @JoinColumn(name="userId", nullable=true)
     private User user;
+    
+    @Transient
+    private Integer userId = 0;
     
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastEvent;
     
     private int eventType;
+    
+    @Lob
+    private String contentAsString = "";
 
     /** 
      * Default constructor.
@@ -107,6 +115,16 @@ public class UserLog implements java.io.Serializable {
     public void setUser(User user) {
         this.user = user;
     }
+    
+    /**
+     * <<Transient>> user id.
+     */
+    public Integer getUserId() {
+		return userId;
+	}
+    public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
     /**
      * Last event.
@@ -129,6 +147,27 @@ public class UserLog implements java.io.Serializable {
     }
     public void setEventTypeAsEnum(EventType eventType) {
         this.eventType = eventType.getValue();
+    }
+    
+    /**
+     * Content as string.
+     */
+    public String getContentAsString() {
+		return contentAsString;
+	}
+    public void setContentAsString(String contentAsString) {
+		this.contentAsString = contentAsString;
+	}
+    
+    /**
+     * Merger.
+     * 
+     * @param command
+     */
+    public UserLog merge(UserLog command) {
+    	setEventType(command.getEventType());
+    	setContentAsString(command.getContentAsString());
+    	return this;
     }
 
     /**

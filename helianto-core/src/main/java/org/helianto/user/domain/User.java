@@ -195,7 +195,6 @@ public class User
      * @param userName
      * @param userState
      * @param userType
-     * @param jobId
      * @param jobTitle
      * @param accountNonExpired
      */
@@ -214,8 +213,6 @@ public class User
 			, String userName
 			, Character userState
 			, Character userType
-			, Integer jobId
-			, String jobTitle
 			, Boolean accountNonExpired
 			) {
 		this(userId, entityId, parentId, userKey, userName, userState, userGender);
@@ -227,8 +224,6 @@ public class User
 		setDisplayName(displayName);
 		setUserImageUrl(userImageUrl);
 		setUserType(userType);
-		setJobId(jobId);
-//		setJobTitle(jobTitle);
 		setAccountNonExpired(accountNonExpired);
 	}
 	

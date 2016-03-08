@@ -52,6 +52,10 @@ public enum CategoryGroup implements KeyNameAdapter {
 	 */
 	PROCESS('O', "DO"),
 	/**
+	 * Commerce.
+	 */
+	E_COMMERCE('T', "DO"),
+	/**
 	 * Order.
 	 */
 	ORDER('Y', "DO"),
@@ -75,6 +79,10 @@ public enum CategoryGroup implements KeyNameAdapter {
 	 * User.
 	 */
 	USER('Z', "CONTROL"),
+	/**
+	 * Volume.
+	 */
+	VOLUME('V', "CONTROL"),
 	/**
 	 * Planning.
 	 */

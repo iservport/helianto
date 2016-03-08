@@ -173,6 +173,16 @@ public class Category
     }
 
     /** 
+     * Type constructor
+     * 
+     * @param categoryGroupType
+     */
+    public  Category(CategoryGroup categoryGroupType) {
+    	this();
+        setCategoryGroupType(categoryGroupType);
+    }
+
+    /** 
      * Name constructor
      * 
      * @param entity
