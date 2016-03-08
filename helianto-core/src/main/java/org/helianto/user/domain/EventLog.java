@@ -16,7 +16,9 @@
 package org.helianto.user.domain;
 
 import java.util.Date;
+import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,28 +29,25 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
-
-import org.helianto.core.def.EventType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
- * Represent the memory of main user actions, as
+ * Log of main actions, including user actions, as
  * login, logout, and so forth.
  *
  * @author Mauricio Fernandes de Castro
- * @deprecated see EventLog
  */
 @javax.persistence.Entity
-@Table(name="core_userlog",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"userId", "lastEvent"})}
-)
-public class UserLog implements java.io.Serializable {
+@Table(name="core_log")
+public class EventLog implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
+    @Column(length=36)
+    private String logId;
     
     @JsonIgnore 
     @ManyToOne
@@ -61,7 +60,8 @@ public class UserLog implements java.io.Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastEvent;
     
-    private int eventType;
+    @Column(length=20)
+    private String eventType;
     
     @Lob
     private String contentAsString = "";
@@ -69,8 +69,9 @@ public class UserLog implements java.io.Serializable {
     /** 
      * Default constructor.
      */
-    public UserLog() {
+    public EventLog() {
     	super();
+    	setLogId(UUID.randomUUID().toString());
     }
 
     /**
@@ -79,8 +80,8 @@ public class UserLog implements java.io.Serializable {
      * @param user
      * @param lastEvent
      */
-    public UserLog(User user, Date lastEvent) {
-    	this(user, lastEvent, EventType.LOGIN);
+    public EventLog(User user, Date lastEvent) {
+    	this(user, lastEvent, "LOGIN");
     }
 
     /**
@@ -90,11 +91,11 @@ public class UserLog implements java.io.Serializable {
      * @param lastEvent
      * @param eventType
      */
-    public UserLog(User user, Date lastEvent, EventType eventType) {
+    public EventLog(User user, Date lastEvent, String eventType) {
     	user.setLastEvent(lastEvent);
         setUser(user);
         setLastEvent(lastEvent);
-        setEventTypeAsEnum(eventType);
+        setEventType(eventType);
     }
 
     /**
@@ -107,6 +108,16 @@ public class UserLog implements java.io.Serializable {
         this.id = id;
     }
 
+    /**
+     * Log UUID.
+     */
+    public String getLogId() {
+		return logId;
+	}
+    public void setLogId(String logId) {
+		this.logId = logId;
+	}
+    
     /**
      * User.
      */
@@ -140,14 +151,11 @@ public class UserLog implements java.io.Serializable {
     /**
      * Event type.
      */
-    public int getEventType() {
+    public String getEventType() {
         return this.eventType;
     }
-    public void setEventType(int eventType) {
+    public void setEventType(String eventType) {
         this.eventType = eventType;
-    }
-    public void setEventTypeAsEnum(EventType eventType) {
-        this.eventType = eventType.getValue();
     }
     
     /**
@@ -165,7 +173,7 @@ public class UserLog implements java.io.Serializable {
      * 
      * @param command
      */
-    public UserLog merge(UserLog command) {
+    public EventLog merge(EventLog command) {
     	setEventType(command.getEventType());
     	setContentAsString(command.getContentAsString());
     	return this;
@@ -192,8 +200,8 @@ public class UserLog implements java.io.Serializable {
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
          if ( (other == null ) ) return false;
-         if ( !(other instanceof UserLog) ) return false;
-         UserLog castOther = (UserLog) other; 
+         if ( !(other instanceof EventLog) ) return false;
+         EventLog castOther = (EventLog) other; 
          
          return ((this.getUser()==castOther.getUser()) || ( this.getUser()!=null && castOther.getUser()!=null && this.getUser().equals(castOther.getUser()) ))
              && ((this.getLastEvent()==castOther.getLastEvent()) || ( this.getLastEvent()!=null && castOther.getLastEvent()!=null && this.getLastEvent().equals(castOther.getLastEvent()) ));
