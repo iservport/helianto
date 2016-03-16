@@ -139,6 +139,17 @@ public class UserGroup
     @Transient
     private String jobTitle;
     
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="areaId", nullable=true)
+    private UserGroup area;
+    
+    @Transient
+    private int areaId;
+    
+    @Transient
+    private String areaName;
+    
     private int minimalEducationRequirement;
     
     private int minimalExperienceRequirement;
@@ -163,6 +174,8 @@ public class UserGroup
 	
     @Transient
     private List<UserRole> roleList = new ArrayList<UserRole>();
+    
+    private Integer notificationDay = 0;
     
 	/** 
 	 * Empty constructor.
@@ -503,6 +516,39 @@ public class UserGroup
 	}
 	
 	/**
+	 * User group representing an area
+	 */
+	public UserGroup getArea() {
+		return area;
+	}
+	public void setArea(UserGroup area) {
+		this.area = area;
+	}
+	
+	/**
+	 * <<Transient>> User group area id
+	 */
+	public int getAreaId() {
+		if (getArea()!=null) {
+			return getArea().getId();
+		}
+		return areaId;
+	}
+	public void setAreaId(int areaId) {
+		this.areaId = areaId;
+	}
+	
+	public String getAreaName() {
+		if (getArea()!=null) {
+			return getArea().getAreaName();
+		}
+		return areaName;
+	}
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
+	}
+	
+	/**
 	 * Education minimal requirement.
 	 * 
 	 * <p>
@@ -671,6 +717,13 @@ public class UserGroup
 		this.roleList = roleList;
 	}
 	
+	public Integer getNotificationDay() {
+		return notificationDay;
+	}
+	public void setNotificationDay(Integer notificationDay) {
+		this.notificationDay = notificationDay;
+	}
+	
 	/**
 	 * Merger.
 	 * 
@@ -688,6 +741,7 @@ public class UserGroup
 		setMinimalEducationRequirement(command.getMinimalEducationRequirement());
 		setMinimalExperienceRequirement(command.getMinimalExperienceRequirement());
 		setScriptItems(command.getScriptItems());
+		setNotificationDay(command.getNotificationDay());
 		return this;
 	}
 
