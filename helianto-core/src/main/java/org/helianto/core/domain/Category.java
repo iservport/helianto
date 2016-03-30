@@ -78,6 +78,17 @@ public class Category
     
     private char categoryGroup;
     
+    /**
+     * Service will substitute categoryGroup and categoryGroupType
+     */
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="serviceId")
+    private Service service;
+    
+    @Transient
+    private Integer serviceId;
+    
     @Enumerated(EnumType.STRING)
     private CategoryGroup categoryGroupType;
     
@@ -328,6 +339,23 @@ public class Category
 	public void setCategoryGroupType(CategoryGroup categoryGroupType) {
 		this.categoryGroupType = categoryGroupType;
 		setCategoryGroup(categoryGroupType.getValue());
+	}
+	
+	public Service getService() {
+		return service;
+	}
+	public void setService(Service service) {
+		this.service = service;
+	}
+	
+	public Integer getServiceId() {
+		if (getService()!=null) {
+			return getService().getId();
+		}
+		return serviceId;
+	}
+	public void setServiceId(Integer serviceId) {
+		this.serviceId = serviceId;
 	}
 
     /**

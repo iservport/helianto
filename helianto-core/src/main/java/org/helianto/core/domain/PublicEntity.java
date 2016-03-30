@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
@@ -60,6 +61,9 @@ public class PublicEntity
 	@ManyToOne
 	@JoinColumn(name = "entityId")
 	private Entity entity;
+    
+    @Transient
+    private Integer entityId;
 	
 	@Column(length=32)
 	private String entityAlias = "";
@@ -132,6 +136,16 @@ public class PublicEntity
 	}
 	public void setEntity(Entity entity) {
 		this.entity = entity;
+	}
+	
+	public Integer getEntityId() {
+		if (getEntity()!=null)  {
+			return getEntity().getId();
+		}
+		return entityId;
+	}
+	public void setEntityId(Integer entityId) {
+		this.entityId = entityId;
 	}
 	
 	/**
@@ -216,32 +230,6 @@ public class PublicEntity
 		setNature(Arrays.deepToString(natureArray).replace("[", "").replace("]", "").replace(" ", ""));
 	}
     
-//	/**
-//	 * Type of public entity.
-//	 */
-//	public char getPublicEntityType() {
-//		return publicEntityType;
-//	}
-//	public void setPublicEntityType(char publicEntityType) {
-//		this.publicEntityType = publicEntityType;
-//	}
-//	public void setPublicEntityTypeEnum(PublicEntityType publicEntityType) {
-//		this.publicEntityType = publicEntityType.getValue();
-//	}
-//	
-//	/**
-//	 * Visibility of public entity.
-//	 */
-//	public char getPublicEntityVisibility() {
-//		return publicEntityVisibility;
-//	}
-//	public void setPublicEntityVisibility(char publicEntityVisibility) {
-//		this.publicEntityVisibility = publicEntityVisibility;
-//	}
-//	public void setPublicEntityVisibility(PublicEntityVisibility publicEntityVisibility) {
-//		this.publicEntityVisibility = publicEntityVisibility.getValue();
-//	}
-//	
     /**
      * Main phone.
      */
@@ -352,6 +340,19 @@ public class PublicEntity
 			setPostalCode(publicAddress.getPostalCode());
 			setCity(publicAddress.getCity());
 		}
+	}
+	
+	/**
+	 * Merger.
+	 * 
+	 * @param command
+	 */
+	public PublicEntity merge(PublicEntity command) {
+		super.merge(command);
+		setEntityName(command.getEntityName());
+		setMainEmail(command.getMainEmail());
+		setNature(command.getNature());
+		return this;
 	}
 	
 	/**

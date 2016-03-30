@@ -23,12 +23,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import org.helianto.core.Address;
 import org.helianto.core.domain.City;
 import org.helianto.core.domain.State;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Base class to instances having an Address.
@@ -55,15 +56,21 @@ public abstract class AbstractAddress
     @Column(length=10)
     private String postalCode = "";
     
-    @JsonBackReference("state")
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="stateId")
     private State state;
     
-    @JsonBackReference("city")
+    @Transient
+    private Integer stateId;
+    
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="cityId")
     private City city;
+    
+    @Transient
+    private Integer cityId;
     
     @Column(length=64)
     private String cityName = "";
@@ -204,10 +211,19 @@ public abstract class AbstractAddress
 		this.state = state;
 	}
     
+    public Integer getStateId() {
+    	if (getState()!=null) {
+    		return getState().getId();
+    	}
+		return stateId;
+	}
+    public void setStateId(Integer stateId) {
+		this.stateId = stateId;
+	}
+    
     /**
      * <<Transient>> Convenience method to expose the state code.
      */
-//    @Transient
     public String getStateCode() {
     	if (getState()!=null) {
     		return getState().getStateCode();
@@ -218,7 +234,6 @@ public abstract class AbstractAddress
     /**
      * <<Transient>> Convenience method to expose the state name.
      */
-//    @Transient
     public String getStateName() {
     	if (getState()!=null) {
     		return getState().getStateName();
@@ -236,10 +251,19 @@ public abstract class AbstractAddress
 		this.city = city;
 	}
     
+    public Integer getCityId() {
+    	if (getCity()!=null) {
+    		return getCity().getId();
+    	}
+		return cityId;
+	}
+    public void setCityId(Integer cityId) {
+		this.cityId = cityId;
+	}
+    
     /**
      * <<Transient>> Convenience method to expose the city code.
      */
-//    @Transient
     public String getCityCode() {
     	if (getCity()!=null) {
     		return getCity().getCityCode();
@@ -288,7 +312,6 @@ public abstract class AbstractAddress
         this.postOfficeBox = postOfficeBox;
     }
     
-//    @Transient
     public String getShortAddress() {
     	StringBuilder sb = new StringBuilder(getAddress1())
     		.append(getAddressNumber());
@@ -302,6 +325,18 @@ public abstract class AbstractAddress
     		sb.append(" - ").append(getAddress2());
     	}
     	return sb.toString();
+    }
+    
+    public AbstractAddress merge(AbstractAddress command) {
+    	setAddress1(command.getAddress1());
+    	setAddress2(command.getAddress2());
+    	setAddress3(command.getAddress3());
+    	setAddressClassifier(command.getAddressClassifier());
+    	setAddressDetail(command.getAddressDetail());
+    	setAddressNumber(command.getAddressNumber());
+    	setPostalCode(command.getPostalCode());
+    	setPostOfficeBox(command.getPostOfficeBox());
+    	return this;
     }
 
 }
