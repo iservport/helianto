@@ -80,7 +80,7 @@ public class PublicEntity
     @Column(length=40)
     private String mainEmail = "";
     
-	@JsonManagedReference 
+	@JsonIgnore 
 	@OneToMany(mappedBy="publicEntity")
 	private Set<PublicEntityKey> publicEntityKeys = new HashSet<PublicEntityKey>();
 
@@ -114,6 +114,7 @@ public class PublicEntity
 	/**
 	 * Operator.
 	 */
+	@JsonIgnore
 	public Operator getOperator() {
 		if (getEntity()!=null) {
 			return getEntity().getOperator();

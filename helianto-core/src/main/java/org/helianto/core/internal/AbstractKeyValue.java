@@ -24,7 +24,7 @@ import javax.persistence.MappedSuperclass;
 
 import org.helianto.core.domain.KeyType;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  * Subclasses overriding this may hold the content of a key to 
  * be associated to an owner.
@@ -41,7 +41,7 @@ public abstract class AbstractKeyValue
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     
-    @JsonBackReference("keyType")
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="keyTypeId", nullable=true)
     private KeyType keyType;
@@ -69,7 +69,6 @@ public abstract class AbstractKeyValue
      * For example, key owner may be a partner or a document.
      * </p>
      */
-//    @Transient
     protected abstract Object getKeyOwner();
 
     /**

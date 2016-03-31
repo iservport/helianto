@@ -22,7 +22,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.internal.AbstractKeyStringValue;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  * The content of a key associated to the public entity.
  * 
@@ -37,7 +37,6 @@ public class PublicEntityKey extends AbstractKeyStringValue {
 	/**
 	 * <<Transient>> Delegate to the actual key owner.
 	 */
-//	@Transient
 	@Override
 	protected Object getKeyOwner() {
 		return getPublicEntity();
@@ -45,7 +44,7 @@ public class PublicEntityKey extends AbstractKeyStringValue {
 
     private static final long serialVersionUID = 1L;
     
-    @JsonBackReference
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="publicEntityId", nullable=true)
     private PublicEntity publicEntity;
