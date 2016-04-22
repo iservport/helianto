@@ -21,6 +21,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
 import org.helianto.core.domain.KeyType;
 
@@ -45,6 +46,9 @@ public abstract class AbstractKeyValue
     @ManyToOne
     @JoinColumn(name="keyTypeId", nullable=true)
     private KeyType keyType;
+
+    @Transient
+    private Integer keyTypeId;
 
     /** 
      * Default constructor
@@ -81,6 +85,16 @@ public abstract class AbstractKeyValue
         this.keyType = keyType;
         return this;
     }
+    
+    public Integer getKeyTypeId() {
+    	if (getKeyType()!=null) {
+    		return getKeyType().getId();
+    	}
+		return keyTypeId;
+	}
+    public void setKeyTypeId(Integer keyTypeId) {
+		this.keyTypeId = keyTypeId;
+	}
 
     /**
      * toString

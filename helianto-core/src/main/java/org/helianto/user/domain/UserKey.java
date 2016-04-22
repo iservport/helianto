@@ -79,11 +79,18 @@ public class UserKey extends AbstractKeyStringValue {
 	}
 
 	public Integer getUserGroupId() {
+		if (getUserGroup()!=null) {
+			return getUserGroup().getId();
+		}
 		return userGroupId;
 	}
 	public void setUserGroupId(Integer userGroupId) {
 		this.userGroupId = userGroupId;
 	}
 
+	public UserKey merge(UserKey command) {
+		super.merge(command);
+		return this;
+	}
     
 }

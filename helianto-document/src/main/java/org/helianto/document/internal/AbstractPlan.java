@@ -80,6 +80,18 @@ public abstract class AbstractPlan
         this.scheduledDuration = scheduledDuration;
     }
     
+    /**
+     * Merger.
+     * 
+     * @param command
+     */
+    public void merge(AbstractPlan command) {
+    	super.merge(command);
+    	setScheduledStartDate(command.getScheduledStartDate());
+    	setScheduledEndDate(command.getScheduledEndDate());
+    	setScheduledDuration(command.getScheduledDuration());
+    }
+    
 }
 
 

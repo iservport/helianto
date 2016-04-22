@@ -50,6 +50,10 @@ public abstract class AbstractKeyStringValue
         return this;
     }
 
+    public void merge(AbstractKeyStringValue command) {
+		setKeyValue(command.getKeyValue());
+	}
+    
    /**
     * equals
     */

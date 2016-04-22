@@ -62,7 +62,7 @@ public abstract class AbstractAddress
     private State state;
     
     @Transient
-    private Integer stateId;
+    private Integer stateId = 0;
     
     @JsonIgnore
     @ManyToOne
@@ -70,7 +70,7 @@ public abstract class AbstractAddress
     private City city;
     
     @Transient
-    private Integer cityId;
+    private Integer cityId = 0;
     
     @Column(length=64)
     private String cityName = "";

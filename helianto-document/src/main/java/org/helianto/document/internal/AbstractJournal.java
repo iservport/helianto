@@ -58,7 +58,6 @@ public abstract class AbstractJournal
     /**
      * Summary.
      */
-//    @Transient
     public abstract String getSummary();
     
     /**
@@ -75,7 +74,6 @@ public abstract class AbstractJournal
      * Convenience to allow subclasses to change how actual start 
      * date is handled.
      */
-//    @Transient
     protected Date internalActualStartDate() {
     	return this.actualStartDate;
     }
@@ -94,7 +92,6 @@ public abstract class AbstractJournal
      * Convenience to allow subclasses to change how actual end 
      * date is handled.
      */
-//    @Transient
     protected Date internalActualEndDate() {
     	return this.actualEndDate;
     }
@@ -102,7 +99,6 @@ public abstract class AbstractJournal
     /**
      * <<Transient>> Actual duration in milliseconds.
      */
-//    @Transient
     public long getActualDuration() {
     	if (getActualStartDate()!=null && getActualEndDate()!=null) {
     		return getActualEndDate().getTime() - getActualStartDate().getTime();
@@ -118,6 +114,18 @@ public abstract class AbstractJournal
     }
     public void setPriority(char priority) {
         this.priority = priority;
+    }
+    
+    /**
+     * Merger.
+     * 
+     * @param command
+     */
+    public void merge(AbstractJournal command) {
+    	super.merge(command);
+    	setActualStartDate(command.getActualStartDate());
+    	setActualEndDate(command.getActualEndDate());
+    	setPriority(command.getPriority());
     }
     
     @Override
