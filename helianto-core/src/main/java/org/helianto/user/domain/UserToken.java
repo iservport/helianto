@@ -50,6 +50,9 @@ public class UserToken
 	@Column(length=64)
 	private String principal;
 	
+	@Column(length=64)
+	private String salutation;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date issueDate;
 	
@@ -127,6 +130,17 @@ public class UserToken
 		this.principal = principal;
 	}
 	
+	public String getSalutation() {
+		return salutation;
+	}
+	public void setSalutation(String salutation) {
+		this.salutation = salutation;
+	}
+	public UserToken appendSalutation(String salutation) {
+		this.salutation = salutation;
+		return this;
+	}
+	
 	public Date getIssueDate() {
 		return issueDate;
 	}
@@ -134,7 +148,7 @@ public class UserToken
 		this.issueDate = issueDate;
 	}
 	
-	static enum TokenSources {
+	public static enum TokenSources {
 		SIGNUP,
 		PASSWORD_RECOVERY
 	}
