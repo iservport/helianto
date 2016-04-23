@@ -9,6 +9,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.helianto</groupId>
 	<artifactId>helianto-resource</artifactId>
+	
 	<name>Resource</name>
 	
 	<description>Helianto project resource module.</description>
