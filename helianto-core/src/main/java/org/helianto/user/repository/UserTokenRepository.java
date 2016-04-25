@@ -20,4 +20,11 @@ public interface UserTokenRepository extends JpaRepository<UserToken, Serializab
 	 */
 	UserToken findByTokenSourceAndPrincipal(String tokenSource, String principal);
 
+	/**
+	 * Find by token.
+	 * 
+	 * @param token
+	 */
+	UserToken findByToken(String token);
+
 }

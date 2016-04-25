@@ -23,7 +23,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 @javax.persistence.Entity
 @Table(name="core_token",
-	uniqueConstraints = {@UniqueConstraint(columnNames={"tokenSource","principal"})}
+	uniqueConstraints = {@UniqueConstraint(columnNames={"tokenSource","principal"}),@UniqueConstraint(columnNames={"token"})}
 )
 public class UserToken 
 	implements Serializable
