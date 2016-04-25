@@ -53,6 +53,9 @@ public class UserToken
 	@Column(length=64)
 	private String salutation;
 	
+	@Column(length=64)
+	private String remoteAddress;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date issueDate;
 	
@@ -139,6 +142,13 @@ public class UserToken
 	public UserToken appendSalutation(String salutation) {
 		this.salutation = salutation;
 		return this;
+	}
+	
+	public String getRemoteAddress() {
+		return remoteAddress;
+	}
+	public void setRemoteAddress(String remoteAddress) {
+		this.remoteAddress = remoteAddress;
 	}
 	
 	public Date getIssueDate() {

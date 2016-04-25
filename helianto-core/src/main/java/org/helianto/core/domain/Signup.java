@@ -43,6 +43,9 @@ public class Signup
 	
 	private Integer identityId = 0;
 	
+	/**
+	 * @deprecated see UserToken
+	 */
     @Column(length=36)
     private String token;
     
