@@ -22,6 +22,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * Simple signup registration.
  * 
  * @author mauriciofernandesdecastro
+ * @deprecated see UserToken
  */
 @javax.persistence.Entity
 @Table(name="core_signup",

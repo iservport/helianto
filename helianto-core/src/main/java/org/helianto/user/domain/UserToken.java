@@ -50,8 +50,11 @@ public class UserToken
 	@Column(length=64)
 	private String principal;
 	
-	@Column(length=64)
-	private String salutation;
+	@Column(length=128)
+	private String firstName = "";
+	
+	@Column(length=128)
+	private String lastName = "";
 	
 	@Column(length=64)
 	private String remoteAddress;
@@ -61,6 +64,8 @@ public class UserToken
 	
 	public UserToken() {
 		super();
+		setIssueDate(new Date());
+		setToken(UUID.randomUUID().toString());
 	}
 	
 	/**
@@ -71,8 +76,6 @@ public class UserToken
 	 */
 	public UserToken(String tokenSource, String principal) {
 		this();
-		setIssueDate(new Date());
-		setToken(UUID.randomUUID().toString());
 		setTokenSource(tokenSource);
 		setPrincipal(principal);
 	}
@@ -84,11 +87,7 @@ public class UserToken
 	 * @param principal
 	 */
 	public UserToken(TokenSources tokenSource, String principal) {
-		this();
-		setIssueDate(new Date());
-		setToken(UUID.randomUUID().toString());
-		setTokenSource(tokenSource.name());
-		setPrincipal(principal);
+		this(tokenSource.name(), principal);
 	}
 	
 	public int getId() {
@@ -133,14 +132,22 @@ public class UserToken
 		this.principal = principal;
 	}
 	
-	public String getSalutation() {
-		return salutation;
+	public String getFirstName() {
+		return firstName;
 	}
-	public void setSalutation(String salutation) {
-		this.salutation = salutation;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
-	public UserToken appendSalutation(String salutation) {
-		this.salutation = salutation;
+
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	
+	public UserToken appendFirstName(String firstName) {
+		this.firstName = firstName;
 		return this;
 	}
 	
@@ -149,6 +156,11 @@ public class UserToken
 	}
 	public void setRemoteAddress(String remoteAddress) {
 		this.remoteAddress = remoteAddress;
+	}
+	
+	public UserToken appendLastName(String lastName) {
+		this.lastName = lastName;
+		return this;
 	}
 	
 	public Date getIssueDate() {
