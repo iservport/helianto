@@ -33,9 +33,6 @@ public class UserConnection
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
-	@Version
-	private int version;
-	
 	private String userId;
 	
 	@Column(nullable=false)
@@ -75,13 +72,6 @@ public class UserConnection
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	
-	public int getVersion() {
-		return version;
-	}
-	public void setVersion(int version) {
-		this.version = version;
 	}
 	
 	public String getUserId() {
