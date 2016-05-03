@@ -60,6 +60,27 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 	User findAdapter(int userId);
 
 	/**
+	 * Find by user id.
+	 * 
+	 * @param identityId
+	 * @return
+	 */
+	@Query("select new "
+			+ "org.helianto.user.repository.UserReadAdapter"
+			+ "(user.id"
+			+ ", user.entity.operator.id"
+			+ ", user.entity.id"
+			+ ", user.entity.alias"
+			+ ", user.identity.id"
+			+ ", user.userKey"
+			+ ", user.userName"
+			+ ", user.userState"
+			+ ") "
+			+ "from User user "
+			+ "where user.id = ?1 ")
+	UserReadAdapter findByUserId(int userId);
+
+	/**
 	 * Find by identity principal.
 	 * 
 	 * @param principal
