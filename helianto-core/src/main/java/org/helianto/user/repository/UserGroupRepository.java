@@ -113,6 +113,7 @@ public interface UserGroupRepository extends JpaRepository<UserGroup, Serializab
 			+ "from User user "
 			+ "where user.identity.id = ?1 "
 			+ "and user.class = 'U' "
+			+ "and user.userState = 'A' "
 			+ "order by user.lastEvent DESC ")
 	List<UserReadAdapter> findByIdentityIdOrderByLastEventDesc(int identityId);
 
