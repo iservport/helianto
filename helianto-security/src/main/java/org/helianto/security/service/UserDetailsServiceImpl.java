@@ -52,7 +52,10 @@ public class UserDetailsServiceImpl
 			// grant the roles
 			return authorizationChecker.updateAuthorities(userDetails);
 		}
-		throw new IllegalArgumentException("Unable to extract valid user from a list.");
+		else {
+			logger.info("User list has no valid users.");
+		}
+		throw new UsernameNotFoundException("Unable to extract valid user from a list.");
 	}
 	
 }

@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public class AbstractDetailsService {
 
-    private static Logger logger = LoggerFactory.getLogger(AbstractDetailsService.class);
+    protected static Logger logger = LoggerFactory.getLogger(AbstractDetailsService.class);
     
 	@Inject
     protected IdentitySecretRepository identitySecretRepository;
