@@ -9,11 +9,11 @@ import org.helianto.user.repository.UserReadAdapter;
 import org.helianto.user.repository.UserRepository;
 
 /**
- * Required to sign in users after social providers.
+ * Required to sign in users given the user id.
  *  
  * @author mauriciofernandesdecastro
  */
-public class UserSocialSignInService {
+public class UserSignInService {
 	
 	@Inject
 	private UserRepository userRepository;
@@ -23,6 +23,7 @@ public class UserSocialSignInService {
 	
 	public void signin(Integer userId){
 		UserReadAdapter user = userRepository.findByUserId(userId);
+		userRepository.save(userRepository.findOne(userId).updateLastEvent());
 		UserDetailsAdapter userDetails = new UserDetailsAdapter(user);
 		SignInUtils.signin(authorizationChecker.updateAuthorities(userDetails));
 	}

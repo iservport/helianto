@@ -29,7 +29,6 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.Embedded;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
@@ -368,7 +367,7 @@ public class UserGroup
 	public void setLastEvent(Date lastEvent) {
 		this.lastEvent = lastEvent;
 	}
-
+	
     /**
      * Users or groups may be deactivated using this field.
      */

@@ -25,18 +25,18 @@ public class SimpleSignInAdapter implements SignInAdapter {
 	
 	private final RequestCache requestCache; 
 	
-	private final UserSocialSignInService userSocialSignInService;
+	private final UserSignInService userSocialSignInService;
 	
 	/**
 	 * Constructor.
 	 * 
 	 * @param requestCache
-	 * @param userSocialSignInService
+	 * @param userSignInService
      */
 	@Inject
-	public SimpleSignInAdapter(RequestCache requestCache, UserSocialSignInService userSocialSignInService) {
+	public SimpleSignInAdapter(RequestCache requestCache, UserSignInService userSignInService) {
 		this.requestCache = requestCache;
-		this.userSocialSignInService = userSocialSignInService;
+		this.userSocialSignInService = userSignInService;
 	}
 
 	/**

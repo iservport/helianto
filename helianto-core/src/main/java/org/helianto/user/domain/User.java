@@ -35,7 +35,6 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 /**
  * <p>
  * The user account.
@@ -227,6 +226,14 @@ public class User
 		setAccountNonExpired(accountNonExpired);
 	}
 	
+	/**
+	 * Helper method to chain last event setter.
+	 */
+	public User updateLastEvent() {
+		setLastEvent(new Date());
+		return this;
+	}
+
     /**
      * Overridden to obtain the user key from the identity principal.
      */
