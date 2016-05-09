@@ -76,6 +76,9 @@ public class Category
     @JoinColumn(name="entityId")
     private Entity entity;
     
+    @Transient
+    private Integer entityId;
+    
     private char categoryGroup;
     
     /**
@@ -306,6 +309,19 @@ public class Category
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
+    
+    /**
+     * <<Transient>> entity id.
+     */
+    public Integer getEntityId() {
+    	if (getEntity()!=null) {
+    		return getEntity().getId();
+    	}
+		return entityId;
+	}
+    public void setEntityId(Integer entityId) {
+		this.entityId = entityId;
+	}
 
     /**
      * Group of categories.
