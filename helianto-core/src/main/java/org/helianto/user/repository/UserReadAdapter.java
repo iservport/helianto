@@ -71,8 +71,6 @@ public class UserReadAdapter
      * @param userKey
      * @param userName
      * @param userState
-     * 
-     * @deprecated
      */
 	public UserReadAdapter(int userId
 			, int contextId
