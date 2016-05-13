@@ -480,6 +480,9 @@ public class Entity
      * <<Transient>> city id.
      */
     public int getCityId() {
+    	if (getCity()!=null) {
+    		return getCity().getId();
+    	}
 		return cityId;
 	}
     public void setCityId(int cityId) {
