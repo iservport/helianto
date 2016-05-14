@@ -70,6 +70,9 @@ public class Identity implements java.io.Serializable {
     @Column(length=40)
     private String principal = "";
     
+    @Column(length=40)
+    private String email = "";
+    
     @JsonIgnore
     @Embedded
     private PersonalData personalData;
@@ -227,6 +230,16 @@ public class Identity implements java.io.Serializable {
     }
     
     /**
+     * Actual e-mail, if the principal is used only to identify the person.
+     */
+    public String getEmail() {
+		return email;
+	}
+    public void setEmail(String email) {
+		this.email = email;
+	}
+    
+    /**
      * Optional source alias.
      * 
      * <p>
@@ -240,18 +253,6 @@ public class Identity implements java.io.Serializable {
 		this.optionalSourceAlias = optionalSourceAlias;
 	}
     
-//    /**
-//     * Optional alias.
-//     * @deprecated
-//     * @see #getDisplayName()
-//     */
-//    public String getOptionalAlias() {
-//        return getDisplayName();
-//    }
-//    public void setOptionalAlias(String displayName) {
-//        setDisplayName(displayName);
-//    }
-
     /**
      * Display name.
      */
