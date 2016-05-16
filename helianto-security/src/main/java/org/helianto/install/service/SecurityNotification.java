@@ -1,7 +1,5 @@
 package org.helianto.install.service;
 
-import org.helianto.core.domain.Entity;
-import org.helianto.core.domain.Identity;
 import org.helianto.user.domain.UserToken;
 
 /**
@@ -29,13 +27,5 @@ public interface SecurityNotification {
      * @param userToken
      */
     Boolean sendRecovery(UserToken userToken);
-
-    /**
-     * Sent to the entity admin if an user requires access.
-     *
-     * @param entity
-     * @param identity
-     */
-    Boolean sendAdminNotify(Entity entity, Identity identity);
 
 }
