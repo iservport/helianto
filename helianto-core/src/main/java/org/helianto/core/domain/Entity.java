@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -177,6 +178,7 @@ public class Entity
      * Operator constructor.
      * 
      * @param operator
+     * @deprecated
      */
     public Entity(Operator operator) {
     	this();
@@ -188,6 +190,7 @@ public class Entity
      * 
      * @param operator
      * @param alias
+     * @deprecated
      */
     public Entity(Operator operator, String alias) {
     	this(operator);
@@ -198,6 +201,7 @@ public class Entity
      * User constructor.
      * 
      * @param user
+     * @deprecated
      */
     public Entity(User user) {
     	this(user.getOperator());
@@ -205,10 +209,24 @@ public class Entity
     }
     
     /**
+     * City constructor.
+     * 
+     * @param city
+     * @param alias
+     */
+    public Entity(City city, String alias) {
+    	this();
+    	setCity(Objects.requireNonNull(city, "A city is required"));
+    	setOperator(city.getContext());
+    	setAlias(alias);
+    }
+    
+    /**
      * Prototype constructor.
      * 
      * @param operator
      * @param prototype
+     * @deprecated
      */
     public Entity(Operator context, Entity prototype) {
 		this(context, prototype.getAlias());
