@@ -72,6 +72,7 @@ public class EventLog implements java.io.Serializable {
     public EventLog() {
     	super();
     	setLogId(UUID.randomUUID().toString());
+    	setLastEvent(new Date());
     }
 
     /**
@@ -82,6 +83,27 @@ public class EventLog implements java.io.Serializable {
      */
     public EventLog(User user, Date lastEvent) {
     	this(user, lastEvent, "LOGIN");
+    }
+
+    /**
+     * Event type constructor.
+     * 
+     * @param eventType
+     */
+    public EventLog(String eventType) {
+    	this();
+    	setEventType(eventType);
+    }
+
+    /**
+     * User constructor.
+     * 
+     * @param user
+     * @param eventType
+     */
+    public EventLog(User user, String eventType) {
+    	this(eventType);
+    	setUser(user);
     }
 
     /**
