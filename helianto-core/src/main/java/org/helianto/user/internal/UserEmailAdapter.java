@@ -1,6 +1,9 @@
 package org.helianto.user.internal;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,12 +25,34 @@ public class UserEmailAdapter {
     
     private String body;
     
-    private String[] params;
+    private List<String> params;
     
     public UserEmailAdapter() {
 		super();
+		this.params = new ArrayList<>();
 	}
     
+    /**
+     * Partial constructor.
+     * 
+     * @param confirmationUri
+     * @param senderEmail
+     * @param senderName
+     * @param recipientEmail
+     * @param recipientFirstName
+     * @param params
+     */
+	public UserEmailAdapter(String confirmationUri, String senderEmail, String senderName, String recipientEmail,
+			String recipientFirstName, String[] params) {
+		this();
+		this.confirmationUri = confirmationUri;
+		this.senderEmail = senderEmail;
+		this.senderName = senderName;
+		this.recipientEmail = recipientEmail;
+		this.recipientFirstName = recipientFirstName;
+		this.params = Arrays.asList(params);
+	}
+	
     /**
      * Full constructor.
      * 
@@ -48,7 +73,7 @@ public class UserEmailAdapter {
 		this.recipientEmail = recipientEmail;
 		this.recipientFirstName = recipientFirstName;
 		this.body = body;
-		this.params = params;
+		this.params = Arrays.asList(params);
 	}
 	
 	/**
@@ -115,10 +140,25 @@ public class UserEmailAdapter {
 	 * Parameters to be rendered inside the e-mail body.
 	 */
 	public String[] getParams() {
-		return params;
+		return params.toArray(new String[params.size()]);
 	}
 	public void setParams(String[] params) {
-		this.params = params;
+		this.params = Arrays.asList(params);
+	}
+	
+	/**
+	 * Adds a pair of parameters.
+	 * 
+	 * @param key
+	 * @param value
+	 */
+	public UserEmailAdapter addPair(String key, String value) {
+		if (getParams()==null) {
+			this.params = new ArrayList<>();
+		}
+		this.params.add(key);
+		this.params.add(value);
+		return this;
 	}
     
 	/**
