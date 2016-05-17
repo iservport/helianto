@@ -102,16 +102,16 @@ public class UserAssociation
     	setChild(child);
     }
 
-    /** 
-     * Credential constructor.
-     * 
-     * @param parent
-     * @param childCredential
-     */
-    public UserAssociation(UserGroup parent, Credential childCredential) {
-    	this(parent, new User(parent.getEntity(), childCredential));
-    }
-    
+//    /** 
+//     * Credential constructor.
+//     * 
+//     * @param parent
+//     * @param childCredential
+//     */
+//    public UserAssociation(UserGroup parent, Credential childCredential) {
+//    	this(parent, new User(parent.getEntity(), childCredential));
+//    }
+//    
 	@Override
     protected int compareChild(AbstractAssociation<UserGroup, UserGroup> other) {
     	if (this.getChild()!=null && other.getChild()!=null) {

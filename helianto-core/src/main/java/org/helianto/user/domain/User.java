@@ -30,7 +30,6 @@ import org.helianto.core.PersonalEntity;
 import org.helianto.core.def.Appellation;
 import org.helianto.core.def.Gender;
 import org.helianto.core.def.PrivacyLevel;
-import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
 
@@ -107,7 +106,6 @@ public class User
 	 */
     public User() {
     	super();
-        setAccountNonExpired(false);
     }
 
 	/** 
@@ -122,31 +120,31 @@ public class User
     	setIdentity(identity);
     }
 
-	/** 
-	 * Credential constructor.
-	 * 
-	 * <p>
-	 * The credential is not used after its principal is read,
-	 * although is here to force previous creation.
-	 * </p>
-	 * 
-	 * @param entity
-	 * @param credential
-	 */
-    public User(Entity entity, Credential credential) {
-    	this(entity, credential.getIdentity());
-    }
-
-	/** 
-	 * Parent constructor.
-	 * 
-	 * @param parent
-	 * @param childCredential
-	 */
-    public User(UserGroup parent, Credential childCredential) {
-    	this(parent.getEntity(), childCredential);
-    	parent.getChildAssociations().add(new UserAssociation(parent, childCredential));
-    }
+//	/** 
+//	 * Credential constructor.
+//	 * 
+//	 * <p>
+//	 * The credential is not used after its principal is read,
+//	 * although is here to force previous creation.
+//	 * </p>
+//	 * 
+//	 * @param entity
+//	 * @param credential
+//	 */
+//    public User(Entity entity, Credential credential) {
+//    	this(entity, credential.getIdentity());
+//    }
+//
+//	/** 
+//	 * Parent constructor.
+//	 * 
+//	 * @param parent
+//	 * @param childCredential
+//	 */
+//    public User(UserGroup parent, Credential childCredential) {
+//    	this(parent.getEntity(), childCredential);
+//    	parent.getChildAssociations().add(new UserAssociation(parent, childCredential));
+//    }
 
 	/**
 	 * Read constructor.

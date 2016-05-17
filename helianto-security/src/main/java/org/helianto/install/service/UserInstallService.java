@@ -109,15 +109,30 @@ public class UserInstallService {
 	 * 
 	 * If user is the first one in the entity, she receives ADMIN privileges.
 	 * 
-	 * @param identity
+	 * @param entity
+	 * @param principal
+	 * @deprecated
 	 */
 	public User installUser(Entity entity, String principal) {
+		return installUser(entity, principal, 'A');
+	}
+	
+	/**
+	 * Install users.
+	 * 
+	 * If user is the first one in the entity, she receives ADMIN privileges.
+	 * 
+	 * @param entity
+	 * @param identity
+	 * @param userState
+	 */
+	public User installUser(Entity entity, String principal, Character userState) {
 		Identity identity = identityInstallService.installIdentity(principal).getIdentity();
 		List<UserGroup> userGroups = installUserGroups(entity);
 		User user = null;
 		for (UserGroup userGroup: userGroups ) {
 			if (user==null) {
-				user = installUser(userGroup.getEntity(), identity);
+				user = installUser(userGroup.getEntity(), identity, userState);
 			}
 			logger.info("will find userAssociation to {} and {}.", user, userGroup);
 			UserAssociation association = userAssociationRepository.findByParentAndChild(userGroup, user);
@@ -152,14 +167,27 @@ public class UserInstallService {
 	 * 
 	 * @param entity
 	 * @param identity
+	 * @deprecated
 	 */
 	protected User installUser(Entity entity, Identity identity) {
+		return installUser(entity, identity, 'A');
+	}
+	
+	/**
+	 * Install one user.
+	 * 
+	 * @param entity
+	 * @param identity
+	 * @param userState
+	 */
+	protected User installUser(Entity entity, Identity identity, Character userState) {
 		User user = userRepository.findByEntity_IdAndIdentity_Id(entity.getId(), identity.getId());
 		if (user==null) {
 			logger.info("Will install user for entity {} and principal {}.", entity.getAlias(), identity.getPrincipal());
 			user = new User(entity, identity);
 			user.setUserType('I');
 			user.setUserName(identity.getIdentityFirstName()+ " " + identity.getIdentityLastName());
+			user.setUserState(userState);
 			user = userRepository.saveAndFlush(user);
 			logger.info("installed user for entity {} and principal {}.", entity.getAlias(), identity.getPrincipal());
 		}

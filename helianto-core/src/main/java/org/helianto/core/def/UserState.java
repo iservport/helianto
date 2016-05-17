@@ -27,6 +27,10 @@ public enum UserState {
 	 */
     ACTIVE('A'),
     /**
+     * Pending.
+     */
+    PENDING('P'),
+    /**
      * Inactive.
      */
     INACTIVE('I');

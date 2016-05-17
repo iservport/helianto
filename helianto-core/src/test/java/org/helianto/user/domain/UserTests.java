@@ -2,6 +2,7 @@ package org.helianto.user.domain;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
@@ -18,12 +19,15 @@ import org.junit.Test;
 public class UserTests {
     
 	@Test
-	public void contructor() {
+	public void initialState() {
 		User user = new User();
 		assertTrue(user instanceof UserGroup);
 		assertEquals('U', user.getDiscriminator());
-    	assertFalse(user.isAccountNonExpired());
-    	assertEquals('0', user.getPrivacyLevel());
+		assertEquals('0', user.getPrivacyLevel());
+		assertNotNull(user.getUserState());
+		assertTrue(user.getUserState().equals('A'));
+		assertTrue(user.isAccountNonExpired());
+		assertTrue(user.isAccountNonLocked());
 	}
     
 	@Test

@@ -234,7 +234,7 @@ public class UserMgrImpl
 		logger.debug("Check user installation with 'principal={}' as member of {}.", credential.getPrincipal(), parent);
 		User user = (User) userRepository.findByEntityAndUserKey(parent.getEntity(), credential.getPrincipal());
 		if (user==null) {
-			user = (User) userRepository.save(new User(parent.getEntity(), credential));
+			user = (User) userRepository.save(new User(parent.getEntity(),credential.getIdentity()));
 			logger.debug("New user created asf {}.", user);
 		}
 		

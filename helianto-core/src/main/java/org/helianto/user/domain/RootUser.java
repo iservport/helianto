@@ -26,7 +26,7 @@ import org.helianto.user.def.UserType;
  * The root user account.
  * 
  * @author Mauricio Fernandes de Castro
- * 			
+ * @deprecated	
  */
 @javax.persistence.Entity
 @DiscriminatorValue("R")
@@ -79,15 +79,15 @@ public class RootUser
     	this(entity, credential.getIdentity());
     }
 
-	/** 
-	 * Parent constructor.
-	 * 
-	 * @param parent
-	 * @param childCredential
-	 */
-    public RootUser(UserGroup parent, Credential childCredential) {
-    	this(parent.getEntity(), childCredential);
-    	parent.getChildAssociations().add(new UserAssociation(parent, childCredential));
-    }
+//	/** 
+//	 * Parent constructor.
+//	 * 
+//	 * @param parent
+//	 * @param childCredential
+//	 */
+//    public RootUser(UserGroup parent, Credential childCredential) {
+//    	this(parent.getEntity(), childCredential);
+//    	parent.getChildAssociations().add(new UserAssociation(parent, childCredential));
+//    }
 
 }

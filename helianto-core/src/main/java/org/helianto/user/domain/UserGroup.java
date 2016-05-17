@@ -418,6 +418,12 @@ public class UserGroup
      * AccountNonExpired getter.
      */
     public boolean isAccountNonExpired() {
+//    	if (getUserState()!=null 
+//    			&& (getUserState().equals(UserState.INACTIVE.getValue()) 
+//    					|| getUserState().equals(UserState.PENDING.getValue()))) {
+//    		System.out.println(getUserState().equals(UserState.INACTIVE.getValue())+" - "+getUserState().equals(UserState.PENDING.getValue()));
+//    		return false;
+//    	}
         return this.accountNonExpired;
     }
     public void setAccountNonExpired(boolean accountNonExpired) {
