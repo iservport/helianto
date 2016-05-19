@@ -11,7 +11,9 @@ import org.helianto.core.config.HeliantoServiceConfig;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.repository.EntityRepository;
+import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.repository.OperatorRepository;
+import org.helianto.user.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,6 +39,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public abstract class AbstractJpaRepositoryIntegrationTest<T, R extends JpaRepository<T, Serializable>> {
 
+	@Autowired
+    protected IdentityRepository identityRepository;
+    
+	@Autowired
+    protected UserRepository userRepository;
+    
 	@Autowired
     protected EntityRepository entityRepository;
     

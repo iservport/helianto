@@ -24,7 +24,7 @@ import javax.persistence.UniqueConstraint;
 import org.helianto.core.domain.KeyType;
 import org.helianto.core.internal.AbstractKeyStringValue;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  * The content of a key associated to the process document.
  * 
@@ -48,7 +48,7 @@ public class ProcessDocumentKey
 
     private static final long serialVersionUID = 1L;
     
-    @JsonBackReference 
+    @JsonIgnore 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="processDocumentId", nullable=true)
     private ProcessDocument processDocument;
