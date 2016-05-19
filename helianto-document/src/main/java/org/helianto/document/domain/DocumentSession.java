@@ -74,6 +74,9 @@ public class DocumentSession implements Serializable {
 		this.lastEventDate = lastEventDate;
 	}
 	
+	/**
+	 * Primary key.
+	 */
 	public int getId() {
 		return id;
 	}
@@ -88,6 +91,9 @@ public class DocumentSession implements Serializable {
 		this.version = version;
 	}
 
+	/**
+	 * User.
+	 */
 	public User getUser() {
 		return user;
 	}
@@ -108,6 +114,9 @@ public class DocumentSession implements Serializable {
 		this.userId = userId;
 	}
 
+	/**
+	 * Last event date.
+	 */
 	public Date getLastEventDate() {
 		return lastEventDate;
 	}
@@ -115,6 +124,9 @@ public class DocumentSession implements Serializable {
 		this.lastEventDate = lastEventDate;
 	}
 
+	/**
+	 * External id.
+	 */
 	public Integer getExternalId() {
 		return externalId;
 	}
@@ -122,11 +134,26 @@ public class DocumentSession implements Serializable {
 		this.externalId = externalId;
 	}
 
+	/**
+	 * Session type.
+	 */
 	public String getSessionType() {
 		return sessionType;
 	}
 	public void setSessionType(String sessionType) {
 		this.sessionType = sessionType;
+	}
+	
+	/**
+	 * Merge and update key with current date.
+	 * 
+	 * @param command
+	 */
+	public DocumentSession mergeAndUpdateKey(DocumentSession command) {
+		setLastEventDate(new Date());
+		setExternalId(command.getExternalId());
+		setSessionType(command.getSessionType());
+		return this;
 	}
 
 	@Override
