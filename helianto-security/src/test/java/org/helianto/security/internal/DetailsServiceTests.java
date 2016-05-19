@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.easymock.EasyMock;
+import org.helianto.core.domain.Identity;
 import org.helianto.security.domain.IdentitySecret;
 import org.helianto.security.repository.IdentitySecretRepository;
 import org.helianto.user.repository.UserGroupRepository;
@@ -27,10 +28,24 @@ public class DetailsServiceTests {
 	public void loadIdentitySecretByKey() {
 		IdentitySecret identitySecret = new IdentitySecret("KEY");
 		
-		EasyMock.expect(service.identitySecretRepository.findByIdentityKey("KEY")).andReturn(identitySecret);
+		EasyMock.expect(service.identitySecretRepository.findByIdentityKeyOrEmail("KEY")).andReturn(identitySecret);
 		EasyMock.replay(service.identitySecretRepository);
 		
 		assertSame(identitySecret, service.loadIdentitySecretByKey("KEY"));
+	}
+	
+	/**
+	 * Step 1a, expect identity secret.
+	 */
+	@Test
+	public void loadIdentitySecretByEmail() {
+		Identity identity = new Identity("KEY");
+		IdentitySecret identitySecret = new IdentitySecret(identity, "");
+		
+		EasyMock.expect(service.identitySecretRepository.findByIdentityKeyOrEmail(identity.getEmail())).andReturn(identitySecret);
+		EasyMock.replay(service.identitySecretRepository);
+		
+		assertSame(identitySecret, service.loadIdentitySecretByKey(identity.getEmail()));
 	}
 	
 	/**
@@ -38,7 +53,7 @@ public class DetailsServiceTests {
 	 */
 	@Test(expected=UsernameNotFoundException.class)
 	public void loadIdentitySecretByNullKey() {
-		EasyMock.expect(service.identitySecretRepository.findByIdentityKey("KEY")).andReturn(null);
+		EasyMock.expect(service.identitySecretRepository.findByIdentityKeyOrEmail("KEY")).andReturn(null);
 		EasyMock.replay(service.identitySecretRepository);
 		
 		assertSame(new IdentitySecret("KEY"), service.loadIdentitySecretByKey("KEY"));

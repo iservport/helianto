@@ -18,6 +18,7 @@ package org.helianto.core.domain;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -52,7 +53,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  */
 @javax.persistence.Entity
 @Table(name="core_identity",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"principal"})}
+    uniqueConstraints = {@UniqueConstraint(columnNames={"principal"}),
+    @UniqueConstraint(columnNames={"email"})}
 )
 public class Identity implements java.io.Serializable {
 
@@ -107,10 +109,13 @@ public class Identity implements java.io.Serializable {
 	
     /** 
      * Default constructor.
+     * 
+     * <p>Also initializes e-mail field with a random key.</p>
      */
     public Identity() {
         super();
         this.personalData = new PersonalData();
+        this.email = UUID.randomUUID().toString();
     }
 
     /** 
@@ -238,6 +243,16 @@ public class Identity implements java.io.Serializable {
     public void setEmail(String email) {
 		this.email = email;
 	}
+    
+    /**
+     * Select the notification address based on notification field.
+     */
+    public String getNotificationAddress() {
+    	if (notification==Notification.EMAIL.getValue()&& getEmail().contains("@")) {
+    		return getEmail();
+    	}
+    	return getPrincipal();
+    }
     
     /**
      * Optional source alias.

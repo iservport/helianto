@@ -41,7 +41,7 @@ public class AbstractDetailsService {
 	@Transactional
 	protected IdentitySecret loadIdentitySecretByKey(String identityKey) throws UsernameNotFoundException, DataAccessException {
 
-		IdentitySecret identitySecret = identitySecretRepository.findByIdentityKey(identityKey);
+		IdentitySecret identitySecret = identitySecretRepository.findByIdentityKeyOrEmail(identityKey);
 
 		if (identitySecret!=null) {
 			return identitySecret;

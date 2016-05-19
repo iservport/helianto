@@ -24,11 +24,20 @@ package org.helianto.core.def;
 public enum Notification {
 
     /**
+     * Notify using principal field.
+     */
+    PRINCIPAL('P'),
+    /**
+     * Notify using e-mail field.
+     */
+    EMAIL('E'),
+    /**
      * Email notification is automatic.
+     * @deprecated
      */
     AUTOMATIC('A'),
     /**
-     * Email notification must be requested.
+     * Email notification only if requested.
      */
     BY_REQUEST('R');
     

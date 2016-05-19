@@ -56,7 +56,7 @@ public class IdentitySecret implements Serializable {
     private String identityKey = "";
     
     @Column(length=60)
-    private String identitySecret = "";
+    private String identitySecret;
     
     @Column(length=20)
     @Enumerated(EnumType.STRING)
