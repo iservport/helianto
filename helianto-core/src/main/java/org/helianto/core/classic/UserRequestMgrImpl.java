@@ -1,4 +1,4 @@
-package org.helianto.core.service;
+package org.helianto.core.classic;
 
 import javax.annotation.Resource;
 
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author mauriciofernandesdecastro
  * @deprecated
  */
-@Service("userRequestMgr")
+//@Service("userRequestMgr")
 public class UserRequestMgrImpl implements UserRequestMgr {
 
 	@Transactional

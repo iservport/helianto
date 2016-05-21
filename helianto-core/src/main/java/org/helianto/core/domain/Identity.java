@@ -590,6 +590,7 @@ public class Identity implements java.io.Serializable {
     	setId(command.getId());
     	setIdentityTypeAsEnum(command.getIdentityTypeAsEnum());
     	setPrincipal(command.getPrincipal());
+    	setEmail(command.getEmail());
     	setDisplayName(command.getDisplayName());
     	setAppellationAsEnum(command.getAppellationAsEnum());
     	setIdentityFirstName(command.getIdentityFirstName());

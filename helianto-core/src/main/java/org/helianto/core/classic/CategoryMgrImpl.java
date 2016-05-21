@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.core.service;
+package org.helianto.core.classic;
 
 import javax.annotation.Resource;
 
@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 
  * @author Mauricio Fernandes de Castro
  */
-@org.springframework.stereotype.Service("categoryMgr")
+//@org.springframework.stereotype.Service("categoryMgr")
 public class CategoryMgrImpl implements CategoryMgr {
 	
 	@Transactional(readOnly=true)

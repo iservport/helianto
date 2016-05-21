@@ -3,6 +3,7 @@ package org.helianto.install.service;
 import javax.inject.Inject;
 
 import org.helianto.core.domain.Identity;
+import org.helianto.core.install.IdentityInstaller;
 import org.helianto.core.repository.IdentityRepository;
 import org.helianto.security.domain.IdentitySecret;
 import org.helianto.security.repository.IdentitySecretRepository;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
  * @author mauriciofernandesdecastro
  */
 @Service
-public class IdentityInstallService {
+public class IdentityInstallService implements IdentityInstaller {
 	
 	private static final Logger logger = LoggerFactory.getLogger(IdentityInstallService.class);
 	
@@ -41,7 +42,33 @@ public class IdentityInstallService {
 	 * 
 	 * @param principal
 	 */
-	public IdentitySecret installIdentity(String principal) {
+	public Identity installIdentity(String principal) {
+		return installIdentitySecret(principal).getIdentity();
+	}
+
+	/**
+	 * Assure the identity with the given principal is persistent.
+	 * 
+	 * @param principal
+	 */
+	public Identity installIdentity(String principal, String displayName, String firstName, String lastName) {
+		Identity identity = installIdentity(principal);
+        if(identity!=null){
+        	identity.setDisplayName(displayName);
+        	identity.getPersonalData().setFirstName(firstName);
+        	identity.getPersonalData().setLastName(lastName);
+        	identity = identityRepository.saveAndFlush(identity);
+            logger.info("Created root identity {}.", identity);
+        }
+		return identity;
+	}
+
+	/**
+	 * Assure the identity secret with the given principal is persistent.
+	 * 
+	 * @param principal
+	 */
+	public IdentitySecret installIdentitySecret(String principal) {
 		Identity identity = identityRepository.findByPrincipal(principal);
 		if (identity==null) {
 			logger.info("Will install identity for {}.", principal);

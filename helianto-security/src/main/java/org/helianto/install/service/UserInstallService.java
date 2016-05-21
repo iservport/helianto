@@ -127,7 +127,7 @@ public class UserInstallService {
 	 * @param userState
 	 */
 	public User installUser(Entity entity, String principal, Character userState) {
-		Identity identity = identityInstallService.installIdentity(principal).getIdentity();
+		Identity identity = identityInstallService.installIdentity(principal);
 		List<UserGroup> userGroups = installUserGroups(entity);
 		User user = null;
 		for (UserGroup userGroup: userGroups ) {

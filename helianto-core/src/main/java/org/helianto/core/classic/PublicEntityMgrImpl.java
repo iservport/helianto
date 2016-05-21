@@ -1,4 +1,4 @@
-package org.helianto.core.service;
+package org.helianto.core.classic;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 
  * @author mauriciofernandesdecastro
  */
-@Service("publicEntityMgr")
+//@Service("publicEntityMgr")
 public class PublicEntityMgrImpl implements PublicEntityMgr {
 
 	@Transactional

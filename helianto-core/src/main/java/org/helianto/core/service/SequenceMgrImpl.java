@@ -21,7 +21,6 @@ import javax.annotation.Resource;
 
 import org.helianto.core.Node;
 import org.helianto.core.SequenceMgr;
-import org.helianto.core.TreeBuilder;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.PrivateSequence;
@@ -160,17 +159,17 @@ public class SequenceMgrImpl implements SequenceMgr {
 		}
 	}
 	
-	public List<Node> prepareTree(Node root) {
-		treeBuilder.buildTree(root);
-		return treeBuilder.getTree();
-	}
+//	public List<Node> prepareTree(Node root) {
+//		treeBuilder.buildTree(root);
+//		return treeBuilder.getTree();
+//	}
 
     // collabs 
     
 	private PublicSequenceRepository publicSequenceRepository;
 	private PrivateSequenceRepository privateSequenceRepository;
 	private DigitGenerationStrategy digitGenerationStrategy;
-	private TreeBuilder treeBuilder;
+//	private TreeBuilder treeBuilder;
 	
     @Resource
 	public void setPublicSequenceRepository(PublicSequenceRepository publicSequenceRepository) {
@@ -187,10 +186,10 @@ public class SequenceMgrImpl implements SequenceMgr {
 		this.digitGenerationStrategy = digitGenerationStrategy;
 	}
 
-	@Resource
-	public void setTreeBuilder(TreeBuilder treeBuilder) {
-		this.treeBuilder = treeBuilder;
-	}
+//	@Resource
+//	public void setTreeBuilder(TreeBuilder treeBuilder) {
+//		this.treeBuilder = treeBuilder;
+//	}
 
 	private static final Logger logger = LoggerFactory.getLogger(SequenceMgrImpl.class);
 

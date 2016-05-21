@@ -52,6 +52,7 @@ import org.springframework.transaction.annotation.Transactional;
  * <code>ContextMgr</code> default implementation.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 @org.springframework.stereotype.Service("namespaceMgr")
 public class ContextMgrImpl 
@@ -222,6 +223,6 @@ public class ContextMgrImpl
 		this.provinceRepository = provinceRepository;
 	}
 
-    private final Logger logger = LoggerFactory.getLogger(CategoryMgrImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(ContextMgrImpl.class);
 
 }

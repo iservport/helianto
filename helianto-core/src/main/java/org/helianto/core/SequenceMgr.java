@@ -122,11 +122,11 @@ public interface SequenceMgr {
 	 */
 	void generateVerificationDigit(Verifiable verifiable);
 	
-	/**
-	 * Create a tree.
-	 * 
-	 * @param root
-	 */
-	List<Node> prepareTree(Node root);
+//	/**
+//	 * Create a tree.
+//	 * 
+//	 * @param root
+//	 */
+//	List<Node> prepareTree(Node root);
 	
 }

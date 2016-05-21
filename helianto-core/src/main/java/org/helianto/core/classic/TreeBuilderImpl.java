@@ -14,7 +14,7 @@
  */
 
 
-package org.helianto.core.service;
+package org.helianto.core.classic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +32,8 @@ import org.springframework.stereotype.Component;
  * 
  * @author Mauricio Fernandes de Castro
  */
-@Scope("prototype")
-@Component("treeBuilder")
+//@Scope("prototype")
+//@Component("treeBuilder")
 public class TreeBuilderImpl implements TreeBuilder {
 	
 	private List<Node> tree;

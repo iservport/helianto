@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.core.service;
+package org.helianto.core.classic;
 
 import java.util.Collections;
 import java.util.Date;
@@ -52,7 +52,7 @@ import org.springframework.util.Assert;
  * 
  * @author Mauricio Fernandes de Castro
  */
-@org.springframework.stereotype.Service("postInstallationMgr")
+//@org.springframework.stereotype.Service("postInstallationMgr")
 public class PostInstallationMgrImpl implements PostInstallationMgr {
 
 	@Transactional

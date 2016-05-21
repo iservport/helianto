@@ -37,6 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Default <code>IdentityMgr</code> implementation.
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 @org.springframework.stereotype.Service("identityMgr")
 public class IdentityMgrImpl implements IdentityMgr {
