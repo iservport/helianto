@@ -63,7 +63,7 @@ public class UserInstallService {
 	protected List<ContextGroup> installContextGroups(Entity entity) {
 		List<ContextGroup> contextGroups = new ArrayList<ContextGroup>();
 		for (String code : defaultGroupNames) {
-			ContextGroup contextGroup = contextGroupRepository.findByContextIdAndContextGroupCode(entity.getContextId(), code);
+			ContextGroup contextGroup = contextGroupRepository.findByEntityIdAndContextGroupCode(entity.getId(), code);
 			if (contextGroup==null) {
 				contextGroup = new ContextGroup(entity.getOperator(), code);
 				switch (code) {
