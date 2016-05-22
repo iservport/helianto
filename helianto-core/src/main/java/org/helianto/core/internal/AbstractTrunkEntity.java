@@ -36,9 +36,6 @@ public abstract class AbstractTrunkEntity
     private Entity entity;
     
     @Transient
-    private Integer contextId = 0;
-    
-    @Transient
     private Integer entityId = 0;
     
     /**
@@ -71,10 +68,6 @@ public abstract class AbstractTrunkEntity
     }
     public void setEntity(Entity entity) {
         this.entity = entity;
-		if (entity!=null) {
-			this.contextId = entity.getContextId();
-			this.entityId = entity.getId();
-		}
     }
     
     /**
@@ -85,16 +78,6 @@ public abstract class AbstractTrunkEntity
     }
     public void setEntityId(Integer entityId) {
 		this.entityId = entityId;
-	}
-    
-    /**
-     * <<Transient>> context id.
-     */
-    public Integer getContextId() {
-		return contextId;
-	}
-    public void setContextId(Integer contextId) {
-		this.contextId = contextId;
 	}
     
 }

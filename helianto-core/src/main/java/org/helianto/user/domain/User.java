@@ -213,7 +213,8 @@ public class User
 			, Boolean accountNonExpired
 			) {
 		this(userId, entityId, parentId, userKey, userName, userState, userGender);
-		setContextId(contextId);
+		// TODO replace this constructor.
+//		setContextId(contextId);
 		setEntityAlias(entityAlias);
 		setIdentityId(identityId);
 		setFirstName(firstName);

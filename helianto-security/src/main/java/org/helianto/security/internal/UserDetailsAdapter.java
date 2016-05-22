@@ -107,9 +107,6 @@ public class UserDetailsAdapter
      * Context id.
      */
     public int getContextId() {
-    	if (user!=null) {
-    		return user.getContextId();
-    	}
     	if(userReadAdapter!=null ){
     		return userReadAdapter.getContextId();
     	}
