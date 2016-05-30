@@ -35,6 +35,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Address;
 import org.helianto.core.EntityAddress;
+import org.helianto.core.domain.Category;
 import org.helianto.core.domain.City;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.KeyType;
@@ -42,8 +43,7 @@ import org.helianto.core.domain.Phone;
 import org.helianto.core.domain.type.TrunkEntity;
 import org.helianto.partner.def.PartnerState;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  * Base class to represent the relationship between the organization and other entities.
  * 
@@ -76,7 +76,6 @@ public class Partner
     /**
      * <<Transient>> Discriminator.
      */
-//    @Transient
     public char getDiscriminator() {
     	return 'P';
     }
@@ -86,18 +85,32 @@ public class Partner
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     
-//    @JsonBackReference("privateEntity")
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="partnerRegistryId", nullable=true)
     private PrivateEntity privateEntity;
     
     @Transient
+	private Integer privateEntityId;
+    
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="categoryId", nullable=true)
+	private Category category;
+
+    @Transient
+	private Integer categoryId;
+    
+    @Transient
     private String newEntityAlias = "";
     
-    @JsonBackReference("account")
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="accountId", nullable=true)
     private Account account;
+    
+    @Transient
+	private Integer accountId;
     
     private char priority = '0';
     
@@ -105,14 +118,14 @@ public class Partner
     
     private char taxClass = '3';
     
-    @JsonManagedReference 
+    @JsonIgnore 
     @OneToMany(mappedBy="partner")
     private Set<PartnerKey> partnerKeys = new HashSet<PartnerKey>(0);
     
-    @JsonManagedReference("partner") 
+    @JsonIgnore
     @OneToMany(mappedBy="partner")
     private Set<PartnerCategory> partnerCategories = new HashSet<PartnerCategory>(0);
-    
+
 	/**
 	 *  Empty constructor
 	 */
@@ -166,20 +179,23 @@ public class Partner
 
     /**
      * Private entity.
-     * 
-     * <p>
-     * Never null.
-     * </p>
      */
     public PrivateEntity getPrivateEntity() {
-    	if (this.privateEntity==null) {
-    		this.privateEntity = new PrivateEntity();
-    	}
         return this.privateEntity;
     }
     public void setPrivateEntity(PrivateEntity privateEntity) {
         this.privateEntity = privateEntity;
     }
+    
+    public Integer getPrivateEntityId() {
+    	if (getPrivateEntity()!=null) {
+    		return getPrivateEntity().getId();
+    	}
+		return privateEntityId;
+	}
+    public void setPrivateEntityId(Integer privateEntityId) {
+		this.privateEntityId = privateEntityId;
+	}
     
 	/**
 	 * <<Transient>> Should be used only to install a new PrivateEntity.
@@ -195,7 +211,6 @@ public class Partner
      * <<Transient>> Convenience to retrieve <code>Entity</code> from parent
      * <code>PrivateEntity</code>.
      */
-//    @Transient
     public Entity getEntity() {
     	return getPrivateEntity().getEntity();
     }
@@ -203,7 +218,6 @@ public class Partner
 	/**
 	 * <<Transient>> True if the owning <code>PrivateEntity</code> has alias.
 	 */
-//	@Transient
 	public boolean isPrivateEntityValid() {
 		return getEntityAlias().length()>0;
 	}
@@ -211,7 +225,6 @@ public class Partner
 	/**
 	 * <<Transient>> Should be used only to create a new <code>PrivateEntity</code>.
 	 */
-//	@Transient
 	public boolean isNewPrivateEntityRequested(Entity entity) {
 		if (!isPrivateEntityValid() && getNewEntityAlias().length()>0) {
 			getPrivateEntity().setEntity(entity);
@@ -222,86 +235,66 @@ public class Partner
 		return false;
 	}
 	
-    // Implementation of the BusinessUnit interface
-    // future implementations may choose from addresses on the owning public entity.
-
-//    @Transient
     public String getEntityAlias() {
     	return getPrivateEntity().getEntityAlias();
     }
     
-//    @Transient
     public String getEntityName() {
     	return getPrivateEntity().getEntityName();
     }
 
-//    @Transient
     public String getAddress1() {
         return this.getPrivateEntity().getAddress1();
     }
     
-//    @Transient
     public String getAddressClassifier() {
         return this.getPrivateEntity().getAddressClassifier();
     }
     
-//    @Transient
     public String getAddressNumber() {
     	return this.getPrivateEntity().getAddressNumber();
     }
     
-//    @Transient
     public String getAddressDetail() {
     	return this.getPrivateEntity().getAddressDetail();
     }
 
-//    @Transient
     public String getAddress2() {
         return this.getPrivateEntity().getAddress2();
     }
 
-//    @Transient
     public String getAddress3() {
         return this.getPrivateEntity().getAddress3();
     }
     
-//    @Transient
     public String getPostOfficeBox() {
     	return this.getPrivateEntity().getPostOfficeBox();
     }
 
-//    @Transient
     public String getPostalCode() {
         return this.getPrivateEntity().getPostalCode();
     }
 
-//    @Transient
     public City getCity() {
         return this.getPrivateEntity().getCity();
     }
     
-//    @Transient
     public String getCityName() {
     	return this.getPrivateEntity().getCityName();
     }
     
-//    @Transient
     public String getShortAddress() {
     	return this.getPrivateEntity().getShortAddress();
     }
     
-//    @Transient
     public Phone getMainPhone() {
     	return this.getPrivateEntity().getMainPhone();
     }
 
-//    @Transient
     public String getMainEmail() {
     	return this.getPrivateEntity().getMainEmail();
     }
 
-    // 
-    
     /**
      * <<Transient>> Return the current addressee.
      * 
@@ -310,7 +303,6 @@ public class Partner
      * partner registry.
      * </p>
      */
-//    @Transient
     protected Address getAddresse() {
     	return getAddressee(-1);
     }
@@ -325,12 +317,9 @@ public class Partner
      * 
      * @param index
      */
-//    @Transient
     protected Address getAddressee(int index) {
     	return getPrivateEntity();
     }
-
-    // setter methods rely on getAddresse to update its contents.
 
     /**
      * Set the current addressee address1.
@@ -418,10 +407,29 @@ public class Partner
      * 
      * @param address
      */
-//	@Transient
     public boolean addAddress(PrivateAddress address) {
     	return getPrivateEntity().getAddresses().add(address);
     }
+	
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+	
+	/**
+	 * <<Transient>> category id.
+	 */
+	public Integer getCategoryId() {
+		if (getCategory()!=null) {
+			return getCategory().getId();
+		}
+		return categoryId;
+	}
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
+	}
 	
     /**
      * Account.
@@ -432,6 +440,16 @@ public class Partner
     public void setAccount(Account account) {
         this.account = account;
     }
+    
+    public Integer getAccountId() {
+		if (getAccount()!=null) {
+			return getAccount().getId();
+		}
+		return accountId;
+	}
+    public void setAccountId(Integer accountId) {
+		this.accountId = accountId;
+	}
 
     /**
      * Priority.
@@ -493,7 +511,6 @@ public class Partner
 	 * @param keyValue
 	 * @return true if added
 	 */
-//	@Transient
 	public boolean addKeyValuePair(KeyType keyType, String keyValue) {
 		PartnerKey partnerKey = new PartnerKey(this, keyType);
 		partnerKey.setKeyValue(keyValue);
