@@ -6,7 +6,6 @@
 	<classpathentry excluding="**" kind="src" path="helianto-core/src/test/resources"/>
 	<classpathentry kind="src" path="helianto-partner/src/main/java"/>
 	<classpathentry kind="src" path="helianto-partner/src/test/java"/>
-	<classpathentry excluding="**" kind="src" path="helianto-partner/src/test/resources"/>
 	<classpathentry kind="src" path="helianto-document/src/main/java"/>
 	<classpathentry kind="src" path="helianto-document/src/test/java"/>
 	<classpathentry kind="src" path="helianto-document/src/test/resources"/>

@@ -2,6 +2,8 @@ package org.helianto.partner.repository;
 
 import java.io.Serializable;
 
+import org.helianto.core.domain.Category;
+import org.helianto.core.repository.CategoryRepository;
 import org.helianto.core.test.AbstractJpaRepositoryIntegrationTest;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PrivateEntity;
@@ -24,12 +26,19 @@ public class PartnerRepositoryTests
 
     private PrivateEntity privateEntity;
 	
+    private Category category;
+	
 	@Autowired
 	protected PrivateEntityRepository privateEntityRepository;
 
+	@Autowired
+	protected CategoryRepository categoryRepository;
+
 	@Override
 	protected Partner getNewTarget() {
-		return new Partner(privateEntity);
+		privateEntity = privateEntityRepository.save(new PrivateEntity(entity, "PARTNER"));
+		category = categoryRepository.save(new Category(entity, 'X', "CATEGORY"));
+		return new Partner(privateEntity, category);
 	}
 
 	@Override
@@ -39,12 +48,7 @@ public class PartnerRepositoryTests
 
 	@Override
 	protected Partner findByKey() {
-		return getRepository().findByPrivateEntityAndType(privateEntity, 'P');
+		return getRepository().findByPrivateEntityAndCategory(privateEntity, category);
 	}
 	
-	@Override
-	protected void setUp() {
-		privateEntity = privateEntityRepository.save(new PrivateEntity(entity, "PARTNER"));
-	}
-
 }

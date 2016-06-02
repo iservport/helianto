@@ -108,16 +108,6 @@ public class ProcessAgreement
     	setInternalNumber(internalNumber);
     }
 
-	/** 
-	 * Partner constructor.
-	 * 
-	 * @param partner
-	 */
-    public ProcessAgreement(Partner partner) {
-    	this(partner.getEntity(), 0);
-    	setPartner(partner);
-    }
-
 	public String getInternalNumberKey() {
 		return "AGREEM";
 	}

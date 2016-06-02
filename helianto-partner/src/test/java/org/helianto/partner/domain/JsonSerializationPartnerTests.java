@@ -19,8 +19,6 @@ public class JsonSerializationPartnerTests {
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(Account.class)));
-		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(Contact.class)));
-		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(ContactGroup.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(Partner.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(PartnerCategory.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(PartnerKey.class)));

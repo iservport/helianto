@@ -15,22 +15,17 @@
 
 package org.helianto.partner.domain;
 
-import java.text.DecimalFormat;
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.helianto.core.EntityAddress;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.PublicEntity;
-import org.helianto.core.number.Sequenceable;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Partner registry, a common class to represent Customers, Suppliers and other parties that relate to the owning
@@ -43,52 +38,31 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @DiscriminatorValue("R")
 public class PrivateEntity 
 	extends PublicEntity
-	implements 
-	  Sequenceable
-	, EntityAddress 
+	implements EntityAddress 
 {
 
 	/**
 	 * Exposes the discriminator.
 	 */
-//	@Transient
 	public char getDiscriminator() {
 		return 'R';
 	}
 
     private static final long serialVersionUID = 1L;
     
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="publicEntityId", nullable=true)
     private PublicEntity publicEntity;
     
-    private boolean autoNumber = false;
+    @Transient
+    private Integer publicEntityId;
     
-    private long internalNumber;
+    private boolean autoNumber = false;
     
     @Column(length=512)
     private String parsedContent;
     
-//    @JsonManagedReference("privateEntity")
-//    @OneToMany(mappedBy="privateEntity")
-//    private Set<Partner> partners = new HashSet<Partner>(0);
-    
-    @JsonManagedReference("privateEntity")
-    @OneToMany(mappedBy="privateEntity")
-    private Set<PrivateAddress> addresses = new HashSet<PrivateAddress>(0);
-    
-    @JsonManagedReference 
-    @OneToMany(mappedBy="privateEntity")
-    private Set<PrivateEntityKey> partnerRegistryKeys = new HashSet<PrivateEntityKey>(0);
-    
-    @JsonManagedReference 
-    @OneToMany(mappedBy="privateEntity")
-    private Set<PartnerPhone> phones = new HashSet<PartnerPhone>(0);
-    
-    @JsonManagedReference 
-    @OneToMany(mappedBy="privateEntity")
-    private Set<ContactGroup> contactGroups = new HashSet<ContactGroup>(0);
-
     /** 
      * Empty constructor.
      */
@@ -117,35 +91,6 @@ public class PrivateEntity
     	setEntityAlias(partnerAlias);
     }
 
-//    @Transient
-    public String getInternalNumberKey() {
-    	return "PRVTENT";
-    }
-    
-//    @Transient
-    public int getStartNumber() {
-    	return 1;
-    }
-
-    /**
-     * Subclasses may override this to customize automatic generation for the
-     * entityAlias property (default behavior expects the user to provide a code).
-     * 
-     * <p>
-     * Default implementation allows the text key property entityAlias to
-     * be replaced by a numeric sequence if the property internalNumber
-     * is set to 0 (default is -1) and the special symbol '#' is initially 
-     * supplied as entityAlias.
-     * </p>
-     */
-//    @Transient
-    protected String getInternalEntityAlias() {
-    	if (isAutoNumber()) {
-    		return new DecimalFormat("0").format(getInternalNumber());
-    	}
-    	return super.getInternalEntityAlias();
-    }
-    
     /**
      * True forces entityAlias to be generated from a sequence of numbers.
      */
@@ -166,12 +111,18 @@ public class PrivateEntity
         this.publicEntity = publicEntity;
     }
     
-    public long getInternalNumber() {
-    	return internalNumber;
-    }
-    public void setInternalNumber(long internalNumber) {
-    	this.internalNumber = internalNumber;
-    }
+    /**
+     * <<Transient>> public entity id.
+     */
+    public Integer getPublicEntityId() {
+    	if (getPublicEntity()!=null) {
+    		return getPublicEntity().getId();
+    	}
+		return publicEntityId;
+	}
+    public void setPublicEntityId(Integer publicEntityId) {
+		this.publicEntityId = publicEntityId;
+	}
     
     /**
      * Text content to be parsed on binding to a custom form.
@@ -181,66 +132,6 @@ public class PrivateEntity
 	}
     public void setParsedContent(String parsedContent) {
 		this.parsedContent = parsedContent;
-	}
-
-//    /**
-//     * Partners.
-//     */
-//    public Set<Partner> getPartners() {
-//        return this.partners;
-//    }
-//    public void setPartners(Set<Partner> partners) {
-//        this.partners = partners;
-//    }
-
-    /**
-     * Addresses.
-     */
-    public Set<PrivateAddress> getAddresses() {
-        return this.addresses;
-    }
-    public void setAddresses(Set<PrivateAddress> addresses) {
-        this.addresses = addresses;
-    }
-    
-    /**
-     * <<Transient>> Convenience to add address.
-     * 
-     * @param address
-     */
-//	@Transient
-    public boolean addAddress(PrivateAddress address) {
-    	return getAddresses().add(address);
-    }
-	
-    /**
-     * Partner registry keys.
-     */
-    public Set<PrivateEntityKey> getPartnerRegistryKeys() {
-		return partnerRegistryKeys;
-	}
-	public void setPartnerRegistryKeys(Set<PrivateEntityKey> partnerRegistryKeys) {
-		this.partnerRegistryKeys = partnerRegistryKeys;
-	}
-	
-    /**
-     * Phones.
-     */
-    public Set<PartnerPhone> getPhones() {
-        return this.phones;
-    }
-    public void setPhones(Set<PartnerPhone> phones) {
-        this.phones = phones;
-    }
-    
-    /**
-     * Contact groups.
-     */
-    public Set<ContactGroup> getContactGroups() {
-		return contactGroups;
-	}
-    public void setContactGroups(Set<ContactGroup> contactGroups) {
-		this.contactGroups = contactGroups;
 	}
 
     /**

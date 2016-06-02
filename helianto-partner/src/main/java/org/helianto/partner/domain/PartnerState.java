@@ -1,4 +1,4 @@
-package org.helianto.partner.def;
+package org.helianto.partner.domain;
 
 
 /**
