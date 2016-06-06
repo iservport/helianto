@@ -22,6 +22,8 @@ public class EntityReadAdapter
     
 	protected String entityAlias;
 	
+	protected String entityCode;
+	
 	protected Date installDate;
     
 	protected String summary;
@@ -59,6 +61,7 @@ public class EntityReadAdapter
 	 * @param contextId
 	 * @param userId
 	 * @param entityAlias
+	 * @param entityCode
 	 * @param installDate
 	 * @param summary
 	 * @param entityDomain
@@ -72,6 +75,69 @@ public class EntityReadAdapter
 	 * @param stateCode
 	 * @param stateName
 	 * @param countryId
+	 */
+	public EntityReadAdapter(int id
+			, Integer contextId
+			, Integer userId
+			, String entityAlias
+			, String entityCode
+			, Date installDate
+			, String summary
+			, String entityDomain
+			, String externalLogoUrl
+			, String customProperties
+			, Character activityState
+			, Character entityType
+			, Integer cityId
+			, String cityName
+			, Integer stateId
+			, String stateCode
+			, String stateName
+			, Integer countryId
+			) {
+		super();
+		this.id = id;
+		this.contextId = contextId;
+		this.userId = userId;
+		this.entityAlias = entityAlias;
+		this.entityCode = entityCode;
+		this.installDate = installDate;
+		this.summary = summary;
+		this.entityDomain = entityDomain;
+		this.externalLogoUrl = externalLogoUrl;
+		this.customProperties = customProperties;
+		this.activityState = activityState;
+		this.entityType = entityType;
+		this.cityId = cityId;
+		this.cityName = cityName;
+		this.stateId = stateId;
+		this.stateCode = stateCode;
+		this.stateName = stateName;
+		this.countryId = countryId;
+	}
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param id
+	 * @param contextId
+	 * @param userId
+	 * @param entityAlias
+	 * @param installDate
+	 * @param summary
+	 * @param entityDomain
+	 * @param externalLogoUrl
+	 * @param customProperties
+	 * @param activityState
+	 * @param entityType
+	 * @param cityId
+	 * @param cityName
+	 * @param stateId
+	 * @param stateCode
+	 * @param stateName
+	 * @param countryId
+	 * 
+	 * @deprecated
 	 */
 	public EntityReadAdapter(int id
 			, Integer contextId
@@ -118,6 +184,7 @@ public class EntityReadAdapter
 	 * @param contextId
 	 * @param userId
 	 * @param entityAlias
+	 * @param entityCode
 	 * @param installDate
 	 * @param summary
 	 * @param entityDomain
@@ -131,6 +198,69 @@ public class EntityReadAdapter
 	 * @param stateCode
 	 * @param stateName
 	 * @param countryId
+	 */
+	public EntityReadAdapter(Integer id
+			, Integer contextId
+			, Integer userId
+			, String entityAlias
+			, String entityCode
+			, Date installDate
+			, String summary
+			, String entityDomain
+			, String externalLogoUrl
+			, String customProperties
+			, String activityState
+			, String entityType
+			, Integer cityId
+			, String cityName
+			, Integer stateId
+			, String stateCode
+			, String stateName
+			, Integer countryId
+			) {
+		this(id
+			, contextId
+			, userId
+			, entityAlias
+			, entityCode
+			, installDate
+			, summary
+			, entityDomain
+			, externalLogoUrl
+			, customProperties
+			, activityState!=null  && activityState.length()>0 ? activityState.charAt(0) : 'I'
+			, entityType!=null  && entityType.length()>0 ? entityType.charAt(0) : 'C'
+			, cityId
+			, cityName
+			, stateId
+			, stateCode
+			, stateName
+			, countryId
+		);
+	}
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param id
+	 * @param contextId
+	 * @param userId
+	 * @param entityAlias
+	 * @param installDate
+	 * @param summary
+	 * @param entityDomain
+	 * @param externalLogoUrl
+	 * @param customProperties
+	 * @param activityState
+	 * @param entityType
+	 * @param cityId
+	 * @param cityName
+	 * @param stateId
+	 * @param stateCode
+	 * @param stateName
+	 * @param countryId
+	 * 
+	 * @deprecated
 	 */
 	public EntityReadAdapter(Integer id
 			, Integer contextId
@@ -184,6 +314,10 @@ public class EntityReadAdapter
 
 	public String getEntityAlias() {
 		return entityAlias;
+	}
+	
+	public String getEntityCode() {
+		return entityCode;
 	}
 
 	public Date getInstallDate() {

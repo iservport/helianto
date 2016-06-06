@@ -518,6 +518,7 @@ public class Entity
 	 * @param command
 	 */
 	public Entity merge(Entity command) {
+		setEntityCode(command.getEntityCode());
 		setInstallDate(command.getInstallDate());
 		setEntityType(command.getEntityType());
 		setNature(command.getNature());
