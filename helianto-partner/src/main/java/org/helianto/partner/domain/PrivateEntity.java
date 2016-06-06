@@ -58,6 +58,9 @@ public class PrivateEntity
     @Transient
     private Integer publicEntityId;
     
+    @Column(length=36)
+    private String entityCode;
+    
     private boolean autoNumber = false;
     
     @Column(length=512)
@@ -125,6 +128,16 @@ public class PrivateEntity
 	}
     
     /**
+     * Entity code.
+     */
+    public String getEntityCode() {
+		return entityCode;
+	}
+    public void setEntityCode(String entityCode) {
+		this.entityCode = entityCode;
+	}
+    
+    /**
      * Text content to be parsed on binding to a custom form.
      */
     public String getParsedContent() {
@@ -133,6 +146,18 @@ public class PrivateEntity
     public void setParsedContent(String parsedContent) {
 		this.parsedContent = parsedContent;
 	}
+    
+    /**
+     * Merger.
+     * 
+     * @param command
+     */
+    public PrivateEntity merger(PrivateEntity command) {
+    	super.merge(command);
+    	setEntityCode(command.getEntityCode());
+    	setParsedContent(command.getParsedContent());
+    	return this;
+    }
 
     /**
      * toString
