@@ -27,6 +27,8 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -114,13 +116,16 @@ public class Entity
     @Column(length=64)
     private String alias = "";
     
+    @Column(length=36)
+    private String entityCode = "";
+    
     @Temporal(TemporalType.TIMESTAMP)
     private Date installDate = new Date();
     
     private char entityType = 'C';
     
-	@Column(length=128)
-    private String nature = "";
+	@Enumerated(EnumType.STRING) @Column(length=20)
+    private EntityNature nature = EntityNature.ORGANIZATION;
     
 	@Column(length=128)
     private String customColors = "";
@@ -291,6 +296,16 @@ public class Entity
     }
     
     /**
+     * Entity code.
+     */
+    public String getEntityCode() {
+		return entityCode;
+	}
+    public void setEntityCode(String entityCode) {
+		this.entityCode = entityCode;
+	}
+    
+    /**
      * Date of installation.
      */
     public Date getInstallDate() {
@@ -316,53 +331,13 @@ public class Entity
 	}
 	
 	/**
-	 * Entity nature.
-	 * 
-	 * <p>
-	 * A list of comma separeted literals matching to public entity discriminators. The service layer
-	 * must control the life cycle of such public entities following the literals on this string.</p>
+	 * Entity nature
 	 */
-	public String getNature() {
+	public EntityNature getNature() {
 		return nature;
 	}
-	public void setNature(String nature) {
+	public void setNature(EntityNature nature) {
 		this.nature = nature;
-	}
-	
-	/**
-	 * <<Transient>> Set nature if it does not exist.
-	 * 
-	 * @param nature
-	 */
-	public void setNatureIfDoesNotExist(char nature) {
-		if (getNature()==null) {
-			setNature(Character.toString(nature));
-		}
-		else if (getNature().indexOf(nature)==-1) {
-			if (getNatureAsArray().length>0) {
-				setNature(getNature().concat(","));
-			}
-			setNature(getNature().concat(Character.toString(nature)));
-		}
-	}
-	
-	/**
-	 * <<Transient>> True if nature already exists.
-	 * 
-	 * @param nature
-	 */
-	public boolean hasNature(char nature) {
-		return (getNature()!=null && getNature().indexOf(nature)>=0);
-	}
-	
-	/**
-	 * <<Transient>> Nature as array.
-	 */
-	public String[] getNatureAsArray() {
-		return StringListUtils.stringToArray(getNature());
-	}
-	public void setNatureAsArray(String[] natureArray) {
-		setNature(StringListUtils.arrayToString(natureArray));
 	}
 	
 	/**
