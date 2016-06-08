@@ -55,6 +55,9 @@ public class DocumentSession implements Serializable {
     @Column(length=12)
     private String sessionType;
     
+    @Column(length=36)
+    private String sessionToken;
+    
     /**
      * Constructor
      */
@@ -145,6 +148,16 @@ public class DocumentSession implements Serializable {
 	}
 	
 	/**
+	 * Session token.
+	 */
+	public String getSessionToken() {
+		return sessionToken;
+	}
+	public void setSessionToken(String sessionToken) {
+		this.sessionToken = sessionToken;
+	}
+	
+	/**
 	 * Merge and update key with current date.
 	 * 
 	 * @param command
@@ -153,6 +166,7 @@ public class DocumentSession implements Serializable {
 		setLastEventDate(new Date());
 		setExternalId(command.getExternalId());
 		setSessionType(command.getSessionType());
+		setSessionToken(command.getSessionToken());
 		return this;
 	}
 
