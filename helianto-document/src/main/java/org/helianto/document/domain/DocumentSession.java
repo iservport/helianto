@@ -77,6 +77,31 @@ public class DocumentSession implements Serializable {
 		this.lastEventDate = lastEventDate;
 	}
 	
+    /**
+     * Type constructor.
+     * 
+     * @param user
+     * @param lastEventDate
+     * @param sessionType
+     */
+	public DocumentSession(User user, Date lastEventDate, String sessionType) {
+		this(user, lastEventDate);
+		this.sessionType = sessionType;
+	}
+	
+    /**
+     * Token constructor.
+     * 
+     * @param user
+     * @param lastEventDate
+     * @param sessionType
+     * @param sessionToken
+     */
+	public DocumentSession(User user, Date lastEventDate, String sessionType, String sessionToken) {
+		this(user, lastEventDate, sessionType);
+		this.sessionToken = sessionToken;
+	}
+	
 	/**
 	 * Primary key.
 	 */
