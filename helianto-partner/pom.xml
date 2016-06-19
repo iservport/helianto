@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>helianto</artifactId>
 		<groupId>org.helianto</groupId>
-		<version>0.7.0.10-BUILD</version>
+		<version>0.7.0.11-BUILD</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.helianto</groupId>
