@@ -33,6 +33,8 @@ public class DocumentSession implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private static final int DEFAULT_TTL = 60*1000;
+
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     
@@ -57,6 +59,8 @@ public class DocumentSession implements Serializable {
     
     @Column(length=36)
     private String sessionToken;
+    
+    private Integer ttl = DEFAULT_TTL;
     
     /**
      * Constructor
@@ -146,6 +150,9 @@ public class DocumentSession implements Serializable {
 	 * Last event date.
 	 */
 	public Date getLastEventDate() {
+		if (getLastEventDate()==null) {
+			return new Date();
+		}
 		return lastEventDate;
 	}
 	public void setLastEventDate(Date lastEventDate) {
@@ -183,6 +190,43 @@ public class DocumentSession implements Serializable {
 	}
 	
 	/**
+	 * Time to live.
+	 */
+	public Integer getTtl() {
+		if (ttl==null) {
+			return DEFAULT_TTL;
+		}
+		return ttl;
+	}
+	public void setTtl(Integer ttl) {
+		this.ttl = ttl;
+	}
+	
+	/**
+	 * True if user owns this session.
+	 * 
+	 * @param sessionToken
+	 * @param userId
+	 */
+	public Boolean isSessionHolder(String sessionToken, int userId) {
+		return sessionToken == getSessionToken() && userId == getUserId();
+	}
+	
+	/**
+	 * True if session is not expired.
+	 */
+	public Boolean isAlive() {
+		return (new Date().getTime() - getLastEventDate().getTime()) < getTtl();
+	}
+	
+	/**
+	 * True if session is not expired.
+	 */
+	public Boolean isAlive(int ttl) {
+		return (new Date().getTime() - getLastEventDate().getTime()) < ttl;
+	}
+	
+	/**
 	 * Merge and update key with current date.
 	 * 
 	 * @param command
@@ -192,6 +236,7 @@ public class DocumentSession implements Serializable {
 		setExternalId(command.getExternalId());
 		setSessionType(command.getSessionType());
 		setSessionToken(command.getSessionToken());
+		setTtl(command.getTtl());
 		return this;
 	}
 
