@@ -163,7 +163,7 @@ public class DocumentSession implements Serializable {
 	 * Last event date.
 	 */
 	public Date getLastEventDate() {
-		if (getLastEventDate()==null) {
+		if (this.lastEventDate==null) {
 			return new Date();
 		}
 		return lastEventDate;
