@@ -248,7 +248,7 @@ public class DocumentSession implements Serializable {
 	 * @param userId
 	 */
 	public Boolean isLocked(String sessionToken, int userId) {
-		return !isSessionHolder(sessionToken, userId) && isAlive();
+		return isAlive() && !isSessionHolder(sessionToken, userId);
 	}
 	
 	/**
