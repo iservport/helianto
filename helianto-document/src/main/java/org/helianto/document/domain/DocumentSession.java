@@ -222,7 +222,7 @@ public class DocumentSession implements Serializable {
 	 * @param userId
 	 */
 	public Boolean isSessionHolder(String sessionToken, int userId) {
-		return sessionToken == getSessionToken() && userId == getUserId();
+		return sessionToken.equals(getSessionToken()) && userId == getUserId().intValue();
 	}
 	
 	/**
