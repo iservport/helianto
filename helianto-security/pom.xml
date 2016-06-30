@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.helianto</groupId>
 		<artifactId>helianto</artifactId>
-		<version>0.7.0.15-BUILD</version>
+		<version>0.7.0.16-BUILD</version>
 	</parent>
 	
 	<artifactId>helianto-security</artifactId>
