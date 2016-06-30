@@ -106,6 +106,19 @@ public class DocumentSession implements Serializable {
 		this.sessionToken = sessionToken;
 	}
 	
+    /**
+     * External id constructor.
+     * 
+     * @param user
+     * @param externalId
+     * @param sessionType
+     * @param sessionToken
+     */
+	public DocumentSession(User user, Integer externalId, String sessionType, String sessionToken) {
+		this(user, new Date(), sessionType, sessionToken);
+		setExternalId(externalId);
+	}
+	
 	/**
 	 * Primary key.
 	 */
@@ -221,9 +234,32 @@ public class DocumentSession implements Serializable {
 	
 	/**
 	 * True if session is not expired.
+	 * 
+	 * @param ttl
 	 */
 	public Boolean isAlive(int ttl) {
 		return (new Date().getTime() - getLastEventDate().getTime()) < ttl;
+	}
+	
+	/**
+	 * True if session is locked.
+	 * 
+	 * @param sessionToken
+	 * @param userId
+	 */
+	public Boolean isLocked(String sessionToken, int userId) {
+		return !isSessionHolder(sessionToken, userId) && isAlive();
+	}
+	
+	/**
+	 * True if session is locked.
+	 * 
+	 * @param sessionToken
+	 * @param userId
+	 * @param ttl
+	 */
+	public Boolean isLocked(String sessionToken, int userId, int ttl) {
+		return !isSessionHolder(sessionToken, userId) && isAlive(ttl);
 	}
 	
 	/**
