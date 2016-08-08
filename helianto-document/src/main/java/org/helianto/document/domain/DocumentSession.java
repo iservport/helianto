@@ -54,7 +54,7 @@ public class DocumentSession implements Serializable {
     
     private Integer externalId;
     
-    @Column(length=12)
+    @Column(length=20)
     private String sessionType;
     
     @Column(length=36)
