@@ -28,6 +28,14 @@ public interface EntityRepository extends JpaRepository<Entity, Serializable> {
 	Entity findByOperatorAndAlias(Operator operator, String alias);
 	
 	/**
+	 * Find by alias and city.
+	 * 
+	 * @param alias
+	 * @param cityId
+	 */
+	Entity findByAliasAndCity_Id(String alias, int cityId);
+	
+	/**
 	 * Find by natural key.
 	 * 
 	 * @param contextId
