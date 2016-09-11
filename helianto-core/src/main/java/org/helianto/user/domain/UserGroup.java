@@ -32,6 +32,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -121,7 +122,10 @@ public class UserGroup
     @Transient
     private char createIdentity = CreateIdentity.REJECT.getValue();
     
-	@Column(length=512)
+    @Transient
+    private Character priority = '9';
+    
+	@Lob
     private String userDesc = "";
     
     @Column(length=128)
@@ -474,6 +478,16 @@ public class UserGroup
 		return getEntity().getCustomColorsAsArray();
 	}
 	
+	public Character getPriority() {
+		if (priority==null) {
+			return '9';
+		}
+		return priority;
+	}
+	public void setPriority(Character priority) {
+		this.priority = priority;
+	}
+	
 	/**
 	 * User or group description.
 	 */
@@ -741,6 +755,7 @@ public class UserGroup
 		setUserState(command.getUserState());
 		setUserType(command.getUserType());
 		setAccountNonExpired(command.isAccountNonExpired());
+		setPriority(command.getPriority());
 		setUserDesc(command.getUserDesc());
 		setNature(command.getNature());
 		setMinimalEducationRequirement(command.getMinimalEducationRequirement());
