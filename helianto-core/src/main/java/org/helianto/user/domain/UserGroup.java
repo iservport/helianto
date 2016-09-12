@@ -122,7 +122,6 @@ public class UserGroup
     @Transient
     private char createIdentity = CreateIdentity.REJECT.getValue();
     
-    @Transient
     private Character priority = '9';
     
 	@Lob
