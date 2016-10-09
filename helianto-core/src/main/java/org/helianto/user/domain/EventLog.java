@@ -141,6 +141,18 @@ public class EventLog implements java.io.Serializable {
 	}
     
     /**
+     * Update the log.
+     * 
+     * @param logId
+     * @param content
+     */
+    public EventLog update(String logId, String content) {
+		this.logId = logId;
+		this.contentAsString = content;
+		return this;
+	}
+    
+    /**
      * User.
      */
     public User getUser() {
@@ -149,6 +161,20 @@ public class EventLog implements java.io.Serializable {
     public void setUser(User user) {
         this.user = user;
     }
+    
+    /**
+     * Update the log.
+     * 
+     * @param user
+     * @param logId
+     * @param content
+     */
+    public EventLog update(User user, String logId, String content) {
+        this.user = user;
+		this.logId = logId;
+		this.contentAsString = content;
+		return this;
+	}
     
     /**
      * <<Transient>> user id.
