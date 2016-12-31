@@ -27,6 +27,7 @@ import javax.persistence.Transient;
 
 import org.helianto.core.Address;
 import org.helianto.core.domain.City;
+import org.helianto.core.domain.Country;
 import org.helianto.core.domain.State;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -55,6 +56,14 @@ public abstract class AbstractAddress
     
     @Column(length=10)
     private String postalCode = "";
+    
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="countryId")
+    private Country country;
+    
+    @Transient
+    private Integer countryId = 0;
     
     @JsonIgnore
     @ManyToOne
@@ -198,6 +207,29 @@ public abstract class AbstractAddress
         this.postalCode = postalCode;
     }
 
+    /**
+     * Country.
+     */
+    public Country getCountry() {
+    	if (getState()!=null) {
+    		return getState().getCountry();
+    	}
+		return country;
+	}
+    public void setCountry(Country country) {
+		this.country = country;
+	}
+    
+    public Integer getCountryId() {
+    	if (getCountry()!=null) {
+    		return getCountry().getId();
+    	}
+		return countryId;
+	}
+    public void setCountryId(Integer countryId) {
+		this.countryId = countryId;
+	}
+    
     /**
      * State.
      */
