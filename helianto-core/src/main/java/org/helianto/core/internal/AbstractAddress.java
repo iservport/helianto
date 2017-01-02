@@ -211,7 +211,7 @@ public abstract class AbstractAddress
      * Country.
      */
     public Country getCountry() {
-    	if (getState()!=null) {
+    	if (getState()!=null && getState().getCountry()!=null) {
     		return getState().getCountry();
     	}
 		return country;
