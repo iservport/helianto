@@ -54,8 +54,16 @@ public class AuthorizationChecker {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (String roleName: roleNames) {
             authorities.add(new SimpleGrantedAuthority(roleName));
-            logger.info("Granted authority: {}.", roleName);
+            logger.debug("Granted authority: {}.", roleName);
         }
+        authorities.add(new SimpleGrantedAuthority("ROLE_CONTEXT_"+userDetailsAdapter.getContextId()));
+        logger.debug("Granted authority for context id");
+        authorities.add(new SimpleGrantedAuthority("ROLE_ENTITY_ID_"+userDetailsAdapter.getEntityId()));
+        logger.debug("Granted authority for entity id");
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER_ID_"+userDetailsAdapter.getUserId()));
+        logger.debug("Granted authority for user id");
+        authorities.add(new SimpleGrantedAuthority("ROLE_SELF_ID_"+userDetailsAdapter.getIdentityId()));
+        logger.debug("Granted authority for identity id");
         userDetailsAdapter.setAuthorities(authorities);
         return userDetailsAdapter;
 	}

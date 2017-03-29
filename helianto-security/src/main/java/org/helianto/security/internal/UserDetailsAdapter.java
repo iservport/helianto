@@ -191,8 +191,8 @@ public class UserDetailsAdapter
     	if (user!=null) {
     		return user.getUserKey();
     	}
-    	if(userReadAdapter!=null && userReadAdapter.getUserName()!=null){
-    		return userReadAdapter.getUserName();
+    	if(userReadAdapter!=null && userReadAdapter.getUserKey()!=null){
+    		return userReadAdapter.getUserKey();
     	}
         return "";
     }
