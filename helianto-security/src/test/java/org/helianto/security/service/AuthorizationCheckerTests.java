@@ -43,15 +43,21 @@ public class AuthorizationCheckerTests {
 	@Test
 	public void getAuthorities() {
 		List<GrantedAuthority> authorityList = new ArrayList<>();
-		authorityList.add(new SimpleGrantedAuthority("ROLE_SELF_ID_123"));
 		authorityList.add(new SimpleGrantedAuthority("ROLE_SERVICE"));
 		authorityList.add(new SimpleGrantedAuthority("ROLE_SERVICE_READ"));
+		authorityList.add(new SimpleGrantedAuthority("ROLE_CONTEXT_0"));
+		authorityList.add(new SimpleGrantedAuthority("ROLE_ENTITY_ID_345"));
+		authorityList.add(new SimpleGrantedAuthority("ROLE_USER_ID_1234"));
+		authorityList.add(new SimpleGrantedAuthority("ROLE_SELF_ID_123"));
 		
 		List<UserAuthority> adapterList = new ArrayList<>();
 		adapterList.add(new UserAuthority(1, 2, "SERVICE", "READ", "GROUP"));
 		
 		@SuppressWarnings("serial")
 		UserDetailsAdapter userReadAdapter = new UserDetailsAdapter() {
+			public int  getEntityId() {
+				return 345;
+			}
 			public int  getIdentityId() {
 				return 123;
 			}
@@ -74,16 +80,22 @@ public class AuthorizationCheckerTests {
 	@Test
 	public void getAuthoritiesMore() {
 		List<GrantedAuthority> authorityList = new ArrayList<>();
-		authorityList.add(new SimpleGrantedAuthority("ROLE_SELF_ID_123"));
 		authorityList.add(new SimpleGrantedAuthority("ROLE_SERVICE"));
 		authorityList.add(new SimpleGrantedAuthority("ROLE_SERVICE_READ"));
 		authorityList.add(new SimpleGrantedAuthority("ROLE_SERVICE_WRITE"));
+		authorityList.add(new SimpleGrantedAuthority("ROLE_CONTEXT_0"));
+		authorityList.add(new SimpleGrantedAuthority("ROLE_ENTITY_ID_345"));
+		authorityList.add(new SimpleGrantedAuthority("ROLE_USER_ID_1234"));
+		authorityList.add(new SimpleGrantedAuthority("ROLE_SELF_ID_123"));
 		
 		List<UserAuthority> adapterList = new ArrayList<>();
 		adapterList.add(new UserAuthority(1, 2, "SERVICE", "READ,WRITE", "GROUP"));
 		
 		@SuppressWarnings("serial")
 		UserDetailsAdapter userReadAdapter = new UserDetailsAdapter() {
+			public int  getEntityId() {
+				return 345;
+			}
 			public int  getIdentityId() {
 				return 123;
 			}

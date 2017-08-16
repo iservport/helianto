@@ -7,18 +7,11 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
-
-import org.helianto.user.domain.User;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Document session, required to avoid race conditions during persistence.
@@ -41,12 +34,6 @@ public class DocumentSession implements Serializable {
     @Version
     private Integer version;
     
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="userId")
-    private User user;
-    
-    @Transient
     private Integer userId;
     
     @Temporal(TemporalType.TIMESTAMP)
@@ -72,51 +59,67 @@ public class DocumentSession implements Serializable {
     /**
      * Key constructor.
      * 
-     * @param user
+     * @param userId
      * @param lastEventDate
      */
-	public DocumentSession(User user, Date lastEventDate) {
+	public DocumentSession(Integer userId, Date lastEventDate) {
 		this();
-		this.user = user;
+		this.userId = userId;
 		this.lastEventDate = lastEventDate;
 	}
 	
     /**
      * Type constructor.
      * 
-     * @param user
+     * @param userId
      * @param lastEventDate
      * @param sessionType
      */
-	public DocumentSession(User user, Date lastEventDate, String sessionType) {
-		this(user, lastEventDate);
+	public DocumentSession(Integer userId, Date lastEventDate, String sessionType) {
+		this(userId, lastEventDate);
 		this.sessionType = sessionType;
 	}
 	
     /**
      * Token constructor.
      * 
-     * @param user
+     * @param userId
      * @param lastEventDate
      * @param sessionType
      * @param sessionToken
      */
-	public DocumentSession(User user, Date lastEventDate, String sessionType, String sessionToken) {
-		this(user, lastEventDate, sessionType);
+	public DocumentSession(Integer userId, Date lastEventDate, String sessionType, String sessionToken) {
+		this(userId, lastEventDate, sessionType);
 		this.sessionToken = sessionToken;
 	}
 	
     /**
      * External id constructor.
      * 
-     * @param user
+     * @param userId
      * @param externalId
      * @param sessionType
      * @param sessionToken
      */
-	public DocumentSession(User user, Integer externalId, String sessionType, String sessionToken) {
-		this(user, new Date(), sessionType, sessionToken);
+	public DocumentSession(Integer userId, Integer externalId, String sessionType, String sessionToken) {
+		this(userId, new Date(), sessionType, sessionToken);
 		setExternalId(externalId);
+	}
+	
+    /**
+     * TTL constructor.
+     * 
+	 * @param userId
+	 * @param lastEventDate
+	 * @param externalId
+	 * @param sessionType
+	 * @param sessionToken
+	 * @param ttl
+	 */
+	public DocumentSession(Integer userId, Date lastEventDate, Integer externalId, String sessionType, String sessionToken, Integer ttl) {
+		this(userId, lastEventDate, sessionType, sessionToken);
+		setExternalId(externalId);
+		setTtl(ttl);
 	}
 	
 	/**
@@ -139,20 +142,7 @@ public class DocumentSession implements Serializable {
 	/**
 	 * User.
 	 */
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	/**
-	 * <<Transient>> user id.
-	 */
 	public Integer getUserId() {
-		if (getUser()!=null) {
-			return getUser().getId();
-		}
 		return userId;
 	}
 	public void setUserId(Integer userId) {
@@ -281,7 +271,7 @@ public class DocumentSession implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((lastEventDate == null) ? 0 : lastEventDate.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		return result;
 	}
 
@@ -299,10 +289,10 @@ public class DocumentSession implements Serializable {
 				return false;
 		} else if (!lastEventDate.equals(other.lastEventDate))
 			return false;
-		if (user == null) {
-			if (other.user != null)
+		if (userId == null) {
+			if (other.userId != null)
 				return false;
-		} else if (!user.equals(other.user))
+		} else if (!userId.equals(other.userId))
 			return false;
 		return true;
 	}

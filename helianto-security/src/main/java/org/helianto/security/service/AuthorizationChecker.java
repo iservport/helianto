@@ -49,7 +49,7 @@ public class AuthorizationChecker {
 	 */
 	public UserDetailsAdapter updateAuthorities(UserDetailsAdapter userDetailsAdapter, List<UserGroup> parentGroups) {
 		List<UserAuthority> adapterList = userAuthorityRepository.findByUserGroupIdOrderByServiceCodeAsc(parentGroups);
-        List<String> roleNames = UserAuthority.getRoleNames(adapterList, userDetailsAdapter.getIdentityId());
+        List<String> roleNames = UserAuthority.getRoleNames(adapterList);
         
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (String roleName: roleNames) {

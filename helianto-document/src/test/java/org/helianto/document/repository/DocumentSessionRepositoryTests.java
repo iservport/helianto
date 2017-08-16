@@ -3,10 +3,8 @@ package org.helianto.document.repository;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.helianto.core.domain.Identity;
 import org.helianto.core.test.AbstractJpaRepositoryIntegrationTest;
 import org.helianto.document.domain.DocumentSession;
-import org.helianto.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -24,15 +22,11 @@ public class DocumentSessionRepositoryTests
 		return repository;
 	}
 	
-	private User user;
-	
 	private Date lastEventDate;
 
 	@Override
 	protected DocumentSession getNewTarget() {
-		Identity identity = identityRepository.saveAndFlush(new Identity("principal"));
-		user = userRepository.saveAndFlush(new User(entity, identity));
-		return new DocumentSession(user, lastEventDate);
+		return new DocumentSession(10, lastEventDate);
 	}
 
 	@Override
@@ -42,7 +36,7 @@ public class DocumentSessionRepositoryTests
 
 	@Override
 	protected DocumentSession findByKey() {
-		return getRepository().findByUserAndLastEventDate(user, lastEventDate);
+		return getRepository().findByUserIdAndLastEventDate(10, lastEventDate);
 	}
 	
 }

@@ -211,32 +211,25 @@ public class UserAuthority implements Serializable {
      * @param userRole
      * @param identityId
      */
-	public static List<String> getRoleNames(List<UserAuthority> adapterList, Integer identityId) {
+	public static List<String> getRoleNames(List<UserAuthority> adapterList) {
         List<String> roleNames = new ArrayList<>();
 		for (UserAuthority userAuthorityReadAdapter: adapterList) {
 			roleNames.addAll(getUserAuthoritiesAsString(
 					userAuthorityReadAdapter.getServiceCode()
-					, userAuthorityReadAdapter.getServiceExtension()
-					, identityId));
+					, userAuthorityReadAdapter.getServiceExtension()));
 		}
 		return roleNames;
 	}
 
     /**
-     * Converts user roles to authorities, including "ROLE_SELF_ID_x", where
-     * x is the authorized user identity primary key.
+     * Converts user roles to authorities.
      * 
      * @param serviceName
      * @param serviceExtensions
-     * @param identityId
      */
-    public static Set<String> getUserAuthoritiesAsString(String serviceName, String serviceExtensions, int identityId) {
+    public static Set<String> getUserAuthoritiesAsString(String serviceName, String serviceExtensions) {
         Set<String> roleNames = new LinkedHashSet<String>();
-        if (identityId>0) {
-            roleNames.add(formatRole("SELF", new StringBuilder("ID_").append(identityId).toString()));
-        }
         roleNames.add(formatRole(serviceName, null));
-
         String[] extensions = serviceExtensions.split(",");
         for (String extension: extensions) {
         	roleNames.add(formatRole(serviceName, extension));
@@ -248,7 +241,7 @@ public class UserAuthority implements Serializable {
      * Convenient conversion for authorities.
      */
     public Set<String> getUserAuthoritiesAsString() {
-    	return getUserAuthoritiesAsString(getServiceCode(), getServiceExtension(), getSelfIdentityId());
+    	return getUserAuthoritiesAsString(getServiceCode(), getServiceExtension());
     }
     
     /**
