@@ -4,13 +4,12 @@
 	<parent>
 		<artifactId>helianto</artifactId>
 		<groupId>org.helianto</groupId>
-		<version>0.7.0.29-BUILD</version>
+		<version>0.8.0.1-BUILD</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.helianto</groupId>
+
 	<artifactId>helianto-inventory</artifactId>
 	<name>Inventory</name>
-	
 	<description>Helianto project inventory module.</description>
 	
 	<build>

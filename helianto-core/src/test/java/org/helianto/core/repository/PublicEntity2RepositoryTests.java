@@ -6,7 +6,6 @@ import java.io.Serializable;
 
 import org.helianto.core.domain.PublicEntity;
 import org.helianto.core.test.AbstractJpaRepositoryIntegrationTest;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

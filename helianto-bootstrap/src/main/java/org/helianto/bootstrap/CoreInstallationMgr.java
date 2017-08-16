@@ -1,6 +1,6 @@
 package org.helianto.bootstrap;
 
-import org.helianto.core.def.CategoryGroup;
+import org.helianto.classic.def.CategoryGroup;
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;

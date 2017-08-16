@@ -15,7 +15,7 @@
 
 package org.helianto.bootstrap;
 
-import org.helianto.core.base.AbstractAddress;
+import org.helianto.classic.base.AbstractAddress;
 import org.helianto.core.domain.Entity;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.nature.Customer;

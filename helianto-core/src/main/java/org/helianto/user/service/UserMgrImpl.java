@@ -15,37 +15,23 @@
 
 package org.helianto.user.service;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-
-import javax.annotation.Resource;
-
-import org.helianto.core.IdentityMgr;
-import org.helianto.core.def.EventType;
-import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.Service;
+import org.helianto.core.repository.IdentityRepository;
 import org.helianto.user.UserMgr;
-import org.helianto.user.domain.User;
-import org.helianto.user.domain.UserAssociation;
-import org.helianto.user.domain.UserGroup;
-import org.helianto.user.domain.UserLog;
-import org.helianto.user.domain.UserRole;
-import org.helianto.user.repository.UserAssociationRepository;
-import org.helianto.user.repository.UserGroupRepository;
-import org.helianto.user.repository.UserLogRepository;
-import org.helianto.user.repository.UserRepository;
-import org.helianto.user.repository.UserRoleRepository;
+import org.helianto.user.domain.*;
+import org.helianto.user.domain.enums.EventType;
+import org.helianto.user.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.util.*;
 
 
 /**
@@ -100,7 +86,6 @@ public class UserMgrImpl
      * to create a new identity.</p>
      * 
      * @param user
-     * @param createIdentity
      * @deprecated
      */
     protected Identity validateIdentity(User user) {
@@ -108,7 +93,7 @@ public class UserMgrImpl
     		logger.debug("Looking for a candidate identity");
     		String principal = user.getUserKey();
     		logger.debug("Using principal {}", principal);
-    		Identity identity = identityMgr.findIdentityByPrincipal(principal);
+    		Identity identity = identityRepository.findByPrincipal(principal);
 //    		if (identity!=null) {
 //    			logger.debug("Identity found: {}", identity);
 //    			user.setIdentity(identity);
@@ -225,34 +210,34 @@ public class UserMgrImpl
 		
 	}
 	
-	/**
-	 * @deprecated
-	 */
-	@Transactional
-	public UserAssociation installUser(UserGroup parent, Credential credential, boolean accountNonExpired) {
-		
-		logger.debug("Check user installation with 'principal={}' as member of {}.", credential.getPrincipal(), parent);
-		User user = (User) userRepository.findByEntityAndUserKey(parent.getEntity(), credential.getPrincipal());
-		if (user==null) {
-			user = (User) userRepository.save(new User(parent.getEntity(),credential.getIdentity()));
-			logger.debug("New user created asf {}.", user);
-		}
-		
-		user.setAccountNonExpired(true);
-		userRepository.flush();
-		logger.warn("User {} set to {} expired.", user, accountNonExpired ? "non" : "");
-
-		
-		logger.info("User AVAILABLE as {}.", user);
-		
-		UserAssociation association = userAssociationRepository.findByParentAndChild(parent, user);
-		if(association==null) {
-			logger.info("Will install user association for user group {} and {}.", parent, user);
-			association = userAssociationRepository.saveAndFlush(new UserAssociation(parent, user));
-		}
-		logger.info("User {} available as part of association {}.", user, association);
-		return association;
-	}
+//	/**
+//	 * @deprecated
+//	 */
+//	@Transactional
+//	public UserAssociation installUser(UserGroup parent, Credential credential, boolean accountNonExpired) {
+//
+//		logger.debug("Check user installation with 'principal={}' as member of {}.", credential.getPrincipal(), parent);
+//		User user = (User) userRepository.findByEntityAndUserKey(parent.getEntity(), credential.getPrincipal());
+//		if (user==null) {
+//			user = (User) userRepository.save(new User(parent.getEntity(),credential.getIdentity()));
+//			logger.debug("New user created asf {}.", user);
+//		}
+//
+//		user.setAccountNonExpired(true);
+//		userRepository.flush();
+//		logger.warn("User {} set to {} expired.", user, accountNonExpired ? "non" : "");
+//
+//
+//		logger.info("User AVAILABLE as {}.", user);
+//
+//		UserAssociation association = userAssociationRepository.findByParentAndChild(parent, user);
+//		if(association==null) {
+//			logger.info("Will install user association for user group {} and {}.", parent, user);
+//			association = userAssociationRepository.saveAndFlush(new UserAssociation(parent, user));
+//		}
+//		logger.info("User {} available as part of association {}.", user, association);
+//		return association;
+//	}
 	
 	public List<UserGroup> findUsersByRole(Entity entity, String serviceName, String extension) {
 		return userRoleRepository.findChildrenByEntityAndUserRoleServiceName(entity, serviceName, extension);
@@ -324,7 +309,7 @@ public class UserMgrImpl
     private UserAssociationRepository userAssociationRepository;
     private UserRoleRepository userRoleRepository;
     private UserLogRepository userLogRepository;
-	private IdentityMgr identityMgr;
+	private IdentityRepository identityRepository;
 	
 
     @Resource
@@ -352,11 +337,10 @@ public class UserMgrImpl
 		this.userLogRepository = userLogRepository;
 	}
     
-    @Resource
-    public void setIdentityMgr(IdentityMgr identityMgr) {
-		this.identityMgr = identityMgr;
+	@Resource
+	public void setIdentityRepository(IdentityRepository identityRepository) {
+		this.identityRepository = identityRepository;
 	}
-    
     private static final Logger logger = LoggerFactory.getLogger(UserMgrImpl.class);
 
 

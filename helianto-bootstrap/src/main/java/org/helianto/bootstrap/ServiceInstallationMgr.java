@@ -15,7 +15,7 @@
 
 package org.helianto.bootstrap;
 
-import org.helianto.core.ContextMgr;
+import org.helianto.classic.ContextMgr;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.Operator;

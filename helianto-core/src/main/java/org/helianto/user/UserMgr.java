@@ -15,18 +15,13 @@
 
 package org.helianto.user;
 
-import java.util.Date;
-import java.util.List;
-
-import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.Service;
-import org.helianto.user.domain.User;
-import org.helianto.user.domain.UserAssociation;
-import org.helianto.user.domain.UserGroup;
-import org.helianto.user.domain.UserLog;
-import org.helianto.user.domain.UserRole;
+import org.helianto.user.domain.*;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Default user service layer interface for the core package.
@@ -95,15 +90,6 @@ public interface UserMgr {
      * @param accountNonExpired
      */
     UserAssociation installUser(UserGroup parent, Identity identity, boolean accountNonExpired);
-    
-    /**
-     * <p>Create <code>UserAssociation</code> with a new credential.</p>
-     * 
-     * @param parent
-     * @param credential
-     * @param accountNonExpired
-     */
-    UserAssociation installUser(UserGroup parent, Credential credential, boolean accountNonExpired);
     
     /**
      * List users having a role defined by service and extension.

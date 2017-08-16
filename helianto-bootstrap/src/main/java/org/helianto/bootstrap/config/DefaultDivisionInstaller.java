@@ -19,11 +19,11 @@ package org.helianto.bootstrap.config;
 import java.util.List;
 
 import org.helianto.bootstrap.PartnerInstallationMgr;
-import org.helianto.core.ContextMgr;
-import org.helianto.core.base.AbstractAddress;
+import org.helianto.classic.ContextMgr;
+import org.helianto.classic.base.AbstractAddress;
 import org.helianto.core.domain.Province;
-import org.helianto.core.form.CompositeContextForm;
-import org.helianto.core.form.ProvinceForm;
+import org.helianto.classic.form.CompositeContextForm;
+import org.helianto.classic.form.ProvinceForm;
 import org.helianto.partner.domain.nature.Division;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

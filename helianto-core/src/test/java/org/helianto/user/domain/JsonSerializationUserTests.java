@@ -18,11 +18,9 @@ public class JsonSerializationUserTests {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		
-		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(RootUser.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(UserAssociation.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(UserConnection.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(UserLog.class)));
-		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(UserRequest.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(UserRole.class)));
 		
 	}

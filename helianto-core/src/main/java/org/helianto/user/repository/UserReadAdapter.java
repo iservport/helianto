@@ -2,7 +2,7 @@ package org.helianto.user.repository;
 
 import java.io.Serializable;
 
-import org.helianto.core.def.ActivityState;
+import org.helianto.core.domain.enums.ActivityState;
 import org.helianto.user.domain.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

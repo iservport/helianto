@@ -2,7 +2,6 @@ package org.helianto.core.domain;
 
 import static org.junit.Assert.*;
 
-import org.helianto.core.domain.Operator;
 import org.junit.Test;
 
 /**

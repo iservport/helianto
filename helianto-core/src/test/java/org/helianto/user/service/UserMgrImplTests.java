@@ -27,8 +27,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.helianto.core.IdentityMgr;
 import org.helianto.core.domain.Identity;
+import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.test.UserGroupTestSupport;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserAssociation;
@@ -125,7 +125,7 @@ public class UserMgrImplTests {
     private UserAssociationRepository userAssociationRepository;
     private UserLogRepository userLogRepository;
     private UserRoleRepository userRoleRepository;
-	private IdentityMgr identityMgr;
+	private IdentityRepository identityRepository;
     
 	@Before
     public void setUp() {
@@ -140,8 +140,8 @@ public class UserMgrImplTests {
         userMgr.setUserLogRepository(userLogRepository);
 		userRoleRepository = createMock(UserRoleRepository.class);
 		userMgr.setUserRoleRepository(userRoleRepository);
-		identityMgr = createMock(IdentityMgr.class);
-		userMgr.setIdentityMgr(identityMgr);
+        identityRepository = createMock(IdentityRepository.class);
+		userMgr.setIdentityRepository(identityRepository);
     }
     
     @After
@@ -151,7 +151,7 @@ public class UserMgrImplTests {
         reset(userAssociationRepository);
         reset(userLogRepository);
 		reset(userRoleRepository);
-        reset(identityMgr);
+        reset(identityRepository);
     }
     
 }

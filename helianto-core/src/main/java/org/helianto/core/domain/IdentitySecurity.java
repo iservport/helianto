@@ -35,8 +35,8 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.helianto.core.def.ActivityState;
-import org.helianto.core.def.ProviderType;
+import org.helianto.core.domain.enums.ActivityState;
+import org.helianto.core.domain.enums.ProviderType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;

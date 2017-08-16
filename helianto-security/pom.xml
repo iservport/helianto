@@ -4,16 +4,12 @@
 	<parent>
 		<groupId>org.helianto</groupId>
 		<artifactId>helianto</artifactId>
-		<version>0.7.0.29-BUILD</version>
+		<version>0.8.0.1-BUILD</version>
 	</parent>
 	
 	<artifactId>helianto-security</artifactId>
 	<name>Security</name>
-	
-	<description>
-		Helianto security project uses the Spring Security to authorize and authenticate users.
-	</description>
-	<url>http://www.helianto.org</url>
+	<description>Helianto security project uses the Spring Security to authorize and authenticate users.</description>
 
 	<build>
 		<finalName>helianto-security</finalName>

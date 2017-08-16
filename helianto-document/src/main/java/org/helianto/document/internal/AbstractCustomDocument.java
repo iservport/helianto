@@ -26,7 +26,7 @@ import javax.persistence.Transient;
 
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
-import org.helianto.core.number.Sequenceable;
+import org.helianto.classic.number.Sequenceable;
 import org.helianto.document.def.ReviewFrequency;
 import org.helianto.document.domain.DocumentFolder;
 

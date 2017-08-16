@@ -3,7 +3,7 @@ package org.helianto.core.repository;
 import java.io.Serializable;
 import java.util.List;
 
-import org.helianto.core.def.ProviderType;
+import org.helianto.core.domain.enums.ProviderType;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.IdentitySecurity;
 import org.springframework.data.jpa.repository.JpaRepository;

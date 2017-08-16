@@ -20,12 +20,11 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.helianto.core.EntityAddress;
-import org.helianto.core.def.PhoneType;
+import org.helianto.core.domain.enums.PhoneType;
 import org.helianto.core.domain.type.RootEntity;
 import org.helianto.core.internal.AbstractAddress;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * A registry for public entities.

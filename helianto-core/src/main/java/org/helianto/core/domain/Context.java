@@ -24,8 +24,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.def.OperationMode;
-
 /**
  * The <code>Context</code> domain class represents a mandatory
  * parent entity to any Helianto based installation. Every domain

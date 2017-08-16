@@ -2,7 +2,7 @@ package org.helianto.partner.repository;
 
 import java.io.Serializable;
 
-import org.helianto.core.def.CategoryGroup;
+import org.helianto.core.domain.enums.CategoryGroup;
 import org.helianto.core.domain.Category;
 import org.helianto.core.repository.CategoryRepository;
 import org.helianto.core.test.AbstractJpaRepositoryIntegrationTest;

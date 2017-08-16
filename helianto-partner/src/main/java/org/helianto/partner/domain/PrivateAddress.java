@@ -25,8 +25,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.def.AddressType;
-import org.helianto.core.def.PrivacyLevel;
+import org.helianto.core.domain.enums.AddressType;
+import org.helianto.core.domain.enums.PrivacyLevel;
 import org.helianto.core.internal.AbstractAddress;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;

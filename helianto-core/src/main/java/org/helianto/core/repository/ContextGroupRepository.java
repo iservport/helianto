@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.helianto.core.domain.ContextGroup;
-import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Operator;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

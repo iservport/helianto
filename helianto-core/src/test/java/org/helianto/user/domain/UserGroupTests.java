@@ -11,8 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.helianto.core.Programmable;
-import org.helianto.core.def.CreateIdentity;
-import org.helianto.core.def.UserState;
+import org.helianto.user.domain.enums.CreateIdentity;
+import org.helianto.user.domain.enums.UserState;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.test.DomainTestSupport;
 import org.junit.Test;

@@ -9,7 +9,7 @@
 	<artifactId>helianto</artifactId>
 	<packaging>pom</packaging>
 	<name>The Helianto Project ${project.version}</name>
-	<version>0.7.0.29-BUILD</version>
+	<version>0.8.0.1-BUILD</version>
 	<description>
 		Helianto project creates infrastructure, repository, domain and
 		service objects to promote a basic level of standardization 
@@ -27,12 +27,13 @@
 	</scm>
 	
 	<modules>
-			<module>helianto-core</module>
-			<module>helianto-partner</module>
-			<module>helianto-document</module>
-			<module>helianto-resource</module>
-			<module>helianto-inventory</module>
-			<module>helianto-security</module>
+		<module>helianto-core</module>
+		<module>helianto-classic</module>
+		<module>helianto-partner</module>
+		<module>helianto-document</module>
+		<module>helianto-resource</module>
+		<module>helianto-inventory</module>
+		<module>helianto-security</module>
 	</modules>
 	
 	<inceptionYear>2005</inceptionYear>

@@ -3,8 +3,8 @@ package org.helianto.core.repository;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.helianto.core.def.Gender;
-import org.helianto.core.def.IdentityType;
+import org.helianto.core.domain.enums.Gender;
+import org.helianto.core.domain.enums.IdentityType;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.PersonalData;
 

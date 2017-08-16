@@ -2,9 +2,9 @@ package org.helianto.bootstrap.service;
 
 import java.util.List;
 
-import org.helianto.core.def.ActivityState;
-import org.helianto.core.def.AddressType;
-import org.helianto.core.def.CategoryGroup;
+import org.helianto.classic.def.ActivityState;
+import org.helianto.classic.def.AddressType;
+import org.helianto.classic.def.CategoryGroup;
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Credential;
 import org.helianto.core.domain.Entity;
@@ -12,9 +12,9 @@ import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.PersonalAddress;
 import org.helianto.core.domain.PublicEntity;
 import org.helianto.core.domain.Unit;
-import org.helianto.core.filter.PersonalAddressFilterAdapter;
-import org.helianto.core.filter.PublicEntityFormFilterAdapter;
-import org.helianto.core.form.CompositeEntityForm;
+import org.helianto.classic.filter.PersonalAddressFilterAdapter;
+import org.helianto.classic.filter.PublicEntityFormFilterAdapter;
+import org.helianto.classic.form.CompositeEntityForm;
 import org.helianto.core.repository.CategoryRepository;
 import org.helianto.core.repository.CredentialRepository;
 import org.helianto.core.repository.EntityRepository;

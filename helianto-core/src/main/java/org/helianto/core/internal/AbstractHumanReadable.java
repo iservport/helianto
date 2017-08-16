@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;
 
-import org.helianto.core.def.HumanReadable;
+import org.helianto.core.domain.enums.HumanReadable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

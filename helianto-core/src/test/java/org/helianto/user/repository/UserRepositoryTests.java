@@ -1,11 +1,5 @@
 package org.helianto.user.repository;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Inject;
-
-import org.helianto.core.config.HeliantoServiceConfig;
 import org.helianto.core.test.TestDataSourceConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,9 +11,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={TestDataSourceConfig.class, HeliantoServiceConfig.class})
+@ContextConfiguration(classes={TestDataSourceConfig.class})
 @ActiveProfiles("standalone")
 @Transactional
 public class UserRepositoryTests {

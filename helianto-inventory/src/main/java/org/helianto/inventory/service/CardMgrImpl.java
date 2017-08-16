@@ -18,7 +18,7 @@ package org.helianto.inventory.service;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.SequenceMgr;
+import org.helianto.classic.SequenceMgr;
 import org.helianto.core.domain.Entity;
 import org.helianto.inventory.CardMgr;
 import org.helianto.inventory.InvalidCardException;

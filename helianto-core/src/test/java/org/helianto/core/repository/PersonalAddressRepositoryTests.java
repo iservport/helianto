@@ -2,7 +2,7 @@ package org.helianto.core.repository;
 
 import java.io.Serializable;
 
-import org.helianto.core.def.AddressType;
+import org.helianto.core.domain.enums.AddressType;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.PersonalAddress;
 import org.helianto.core.test.AbstractJpaRepositoryIntegrationTest;

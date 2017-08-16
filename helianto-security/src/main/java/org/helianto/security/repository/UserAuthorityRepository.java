@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.helianto.core.def.ActivityState;
+import org.helianto.core.domain.enums.ActivityState;
 import org.helianto.security.domain.UserAuthority;
 import org.helianto.user.domain.UserGroup;
 import org.springframework.data.domain.Page;

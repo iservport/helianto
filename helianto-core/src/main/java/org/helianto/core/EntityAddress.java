@@ -1,5 +1,6 @@
 package org.helianto.core;
 
+import org.helianto.core.Address;
 import org.helianto.core.domain.Phone;
 
 

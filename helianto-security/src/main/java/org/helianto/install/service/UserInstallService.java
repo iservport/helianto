@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.helianto.core.def.ContextGroupType;
+import org.helianto.core.domain.enums.ContextGroupType;
 import org.helianto.core.domain.ContextGroup;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
@@ -17,7 +17,6 @@ import org.helianto.user.domain.UserAssociation;
 import org.helianto.user.domain.UserGroup;
 import org.helianto.user.repository.UserAssociationRepository;
 import org.helianto.user.repository.UserGroupRepository;
-import org.helianto.user.repository.UserReadAdapter;
 import org.helianto.user.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -17,7 +17,7 @@ package org.helianto.core.domain;
 
 import javax.persistence.Column;
 
-import org.helianto.core.def.ContactType;
+import org.helianto.core.domain.enums.ContactType;
 
 /**
  * Contact basic info.

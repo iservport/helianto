@@ -5,10 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import org.helianto.core.domain.Entity;
-import org.helianto.core.domain.License;
-import org.helianto.core.domain.LicenseAgreement;
-import org.helianto.core.domain.Operator;
 import org.junit.Test;
 
 /**

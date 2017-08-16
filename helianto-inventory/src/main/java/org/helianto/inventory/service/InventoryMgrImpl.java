@@ -18,7 +18,7 @@ package org.helianto.inventory.service;
 
 import javax.annotation.Resource;
 
-import org.helianto.core.SequenceMgr;
+import org.helianto.classic.SequenceMgr;
 import org.helianto.inventory.InventoryMgr;
 import org.helianto.inventory.domain.ProcessAgreement;
 import org.helianto.inventory.domain.ProcessRequirement;

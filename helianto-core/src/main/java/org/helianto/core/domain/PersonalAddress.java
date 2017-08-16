@@ -6,7 +6,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.helianto.core.def.AddressType;
+import org.helianto.core.domain.enums.AddressType;
 import org.helianto.core.internal.AbstractAddress;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;

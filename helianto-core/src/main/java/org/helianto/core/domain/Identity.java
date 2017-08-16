@@ -35,10 +35,10 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.def.Appellation;
-import org.helianto.core.def.Gender;
-import org.helianto.core.def.IdentityType;
-import org.helianto.core.def.Notification;
+import org.helianto.core.domain.enums.Appellation;
+import org.helianto.core.domain.enums.Gender;
+import org.helianto.core.domain.enums.IdentityType;
+import org.helianto.core.domain.enums.Notification;
 import org.joda.time.DateTime;
 import org.joda.time.Years;
 import org.springframework.web.multipart.MultipartFile;

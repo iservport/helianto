@@ -7,7 +7,7 @@ import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.assertSame;
 
-import org.helianto.core.SequenceMgr;
+import org.helianto.classic.SequenceMgr;
 import org.helianto.inventory.domain.Card;
 import org.helianto.inventory.domain.CardSet;
 import org.helianto.inventory.repository.CardRepository;

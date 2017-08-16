@@ -28,7 +28,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.def.ActivityState;
+import org.helianto.core.domain.enums.ActivityState;
 import org.helianto.core.domain.Service;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;

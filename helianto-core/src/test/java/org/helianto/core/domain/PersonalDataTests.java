@@ -17,8 +17,8 @@ package org.helianto.core.domain;
 
 import static org.junit.Assert.assertEquals;
 
-import org.helianto.core.def.Appellation;
-import org.helianto.core.def.Gender;
+import org.helianto.core.domain.enums.Appellation;
+import org.helianto.core.domain.enums.Gender;
 import org.junit.Test;
 
 /**

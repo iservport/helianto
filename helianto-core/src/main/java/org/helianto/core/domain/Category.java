@@ -24,7 +24,6 @@ import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,12 +35,11 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Programmable;
 import org.helianto.core.PropertyMappable;
-import org.helianto.core.def.CategoryGroup;
-import org.helianto.core.def.ReferenceEnabled;
+import org.helianto.core.domain.enums.CategoryGroup;
+import org.helianto.core.domain.enums.ReferenceEnabled;
 import org.helianto.core.domain.type.TrunkEntity;
 import org.helianto.core.internal.AbstractHumanReadable;
 import org.helianto.core.internal.KeyNameAdapter;
-import org.helianto.core.number.Sequencer;
 import org.helianto.core.utils.StringListUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -59,7 +57,6 @@ public class Category
 	extends AbstractHumanReadable
 	implements 
 	  TrunkEntity
-	, Sequencer
 	, ReferenceEnabled
 	, PropertyMappable
 	, Programmable

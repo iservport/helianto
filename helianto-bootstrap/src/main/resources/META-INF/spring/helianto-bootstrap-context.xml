@@ -28,19 +28,19 @@
 	<!--
 		Scan this packages for annotated beans.
 	-->
-	<context:component-scan base-package="org.helianto.core.repository,org.helianto.core.service,org.helianto.core.validation"/>
+	<context:component-scan base-package="org.helianto.core.repository,org.helianto.classic.service,org.helianto.classic.validation"/>
 	
 	<!-- 
 		Namespace defaults holder.
 	 -->
-	 <bean id="namespace" class="org.helianto.core.standalone.NamespaceDefaults" />
+	 <bean id="namespace" class="org.helianto.classic.standalone.NamespaceDefaults" />
 	 
 	 <!--
 		Setup default operator in namespace defaults holder. A recommended practice is to use 
 		META-INF/helianto.properties to setup additional properties like requiredKeyTypeList and
 		requiredServiceList.
 	  -->
-	 <bean id="operatorInstaller" class="org.helianto.core.standalone.DefaultOperatorInstaller">
+	 <bean id="operatorInstaller" class="org.helianto.classic.standalone.DefaultOperatorInstaller">
 	 	<property name="defaultOperatorName" value="DEFAULT" />
 	 	<property name="namespace" ref="namespace" />
 	 </bean>
@@ -48,7 +48,7 @@
 	 <!--
 		Setup default entity in namespace defaults holder.
 	  -->
-	 <bean id="entityInstaller" class="org.helianto.core.standalone.DefaultEntityInstaller">
+	 <bean id="entityInstaller" class="org.helianto.classic.standalone.DefaultEntityInstaller">
 	 	<property name="defaultEntityAlias" value="DEFAULT" />
 	 	<property name="namespace" ref="namespace" />
 	 </bean>

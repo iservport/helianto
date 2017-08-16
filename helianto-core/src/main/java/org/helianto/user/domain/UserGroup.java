@@ -42,9 +42,9 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.Programmable;
-import org.helianto.core.def.ActivityState;
-import org.helianto.core.def.CreateIdentity;
-import org.helianto.core.def.UserState;
+import org.helianto.core.domain.enums.ActivityState;
+import org.helianto.user.domain.enums.CreateIdentity;
+import org.helianto.user.domain.enums.UserState;
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.ContextGroup;
 import org.helianto.core.domain.Entity;
@@ -53,7 +53,7 @@ import org.helianto.core.domain.type.FolderEntity;
 import org.helianto.core.internal.AbstractCounter;
 import org.helianto.core.internal.KeyNameAdapter;
 import org.helianto.core.utils.StringListUtils;
-import org.helianto.user.def.UserType;
+import org.helianto.user.domain.enums.UserType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 /**

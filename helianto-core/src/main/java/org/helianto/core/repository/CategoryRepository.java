@@ -4,7 +4,7 @@ package org.helianto.core.repository;
 import java.io.Serializable;
 import java.util.List;
 
-import org.helianto.core.def.CategoryGroup;
+import org.helianto.core.domain.enums.CategoryGroup;
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.internal.SimpleCounter;

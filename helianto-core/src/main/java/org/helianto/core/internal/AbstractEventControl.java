@@ -21,10 +21,9 @@ import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.helianto.core.def.ControlState;
-import org.helianto.core.def.Resolution;
-import org.helianto.core.def.ResolutionExtended;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.helianto.core.domain.enums.ControlState;
+import org.helianto.core.domain.enums.Resolution;
+import org.helianto.core.domain.enums.ResolutionExtended;
 
 /**
  * Base class to represent a record.

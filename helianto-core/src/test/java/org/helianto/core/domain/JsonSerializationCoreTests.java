@@ -21,7 +21,6 @@ public class JsonSerializationCoreTests {
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(Category.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(City.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(Country.class)));
-		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(Credential.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(Entity.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(Identity.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(IdentitySecurity.class)));
@@ -29,13 +28,11 @@ public class JsonSerializationCoreTests {
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(Operator.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(ParameterGroup.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(PersonalAddress.class)));
-		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(PrivateKey.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(PrivateSequence.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(Province.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(PublicAddress.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(PublicEntityKey.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(PublicSequence.class)));
-		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(Server.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(Service.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(State.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(Unit.class)));

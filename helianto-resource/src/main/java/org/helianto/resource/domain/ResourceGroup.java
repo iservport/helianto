@@ -25,7 +25,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.Navigable;
+import org.helianto.classic.Navigable;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.type.FolderEntity;
 import org.helianto.core.internal.AbstractCounter;

@@ -45,7 +45,7 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.helianto.core.PropertyMappable;
-import org.helianto.core.def.ActivityState;
+import org.helianto.core.domain.enums.ActivityState;
 import org.helianto.core.domain.type.RootEntity;
 import org.helianto.core.utils.StringListUtils;
 import org.helianto.user.domain.User;

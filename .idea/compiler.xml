@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="helianto-classic" />
+        <module name="helianto-core" />
+        <module name="helianto-document" />
+        <module name="helianto-inventory" />
+        <module name="helianto-partner" />
+        <module name="helianto-resource" />
+        <module name="helianto-security" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="helianto" target="1.7" />
+      <module name="helianto-classic" target="1.7" />
+      <module name="helianto-core" target="1.7" />
+      <module name="helianto-document" target="1.7" />
+      <module name="helianto-inventory" target="1.7" />
+      <module name="helianto-partner" target="1.7" />
+      <module name="helianto-resource" target="1.7" />
+      <module name="helianto-security" target="1.7" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

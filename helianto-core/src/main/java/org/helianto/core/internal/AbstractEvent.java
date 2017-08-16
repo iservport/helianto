@@ -24,9 +24,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import org.helianto.core.def.PrivacyLevel;
-import org.helianto.core.def.Resolution;
-import org.helianto.core.def.ResolutionExtended;
+import org.helianto.core.domain.enums.PrivacyLevel;
+import org.helianto.core.domain.enums.Resolution;
+import org.helianto.core.domain.enums.ResolutionExtended;
 import org.helianto.core.domain.Identity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

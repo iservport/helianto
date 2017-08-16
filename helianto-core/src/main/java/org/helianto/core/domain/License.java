@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.helianto.core.def.HumanReadable;
+import org.helianto.core.domain.enums.HumanReadable;
 
 /**
  * License agreement content.

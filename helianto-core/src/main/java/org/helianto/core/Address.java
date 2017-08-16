@@ -1,7 +1,6 @@
 package org.helianto.core;
 
 
-
 /**
  * Address interface.
  * 

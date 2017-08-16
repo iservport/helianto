@@ -28,8 +28,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.def.AssociationState;
-import org.helianto.core.domain.Credential;
+import org.helianto.user.domain.enums.AssociationState;
 import org.helianto.core.internal.AbstractAssociation;
 import org.springframework.format.annotation.DateTimeFormat;
 /**

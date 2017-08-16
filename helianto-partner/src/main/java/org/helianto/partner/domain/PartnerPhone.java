@@ -25,8 +25,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.def.PhoneType;
-import org.helianto.core.def.PrivacyLevel;
+import org.helianto.core.domain.enums.PhoneType;
+import org.helianto.core.domain.enums.PrivacyLevel;
 import org.helianto.core.domain.Phone;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;

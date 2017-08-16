@@ -26,7 +26,7 @@ import org.helianto.core.domain.Province;
 import org.helianto.core.repository.KeyTypeRepository;
 import org.helianto.core.repository.OperatorRepository;
 import org.helianto.core.repository.ProvinceRepository;
-import org.helianto.core.service.strategy.ProvinceResourceParserStrategy;
+import org.helianto.classic.service.strategy.ProvinceResourceParserStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -15,7 +15,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.helianto.core.def.ContextGroupType;
+import org.helianto.core.domain.enums.ContextGroupType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

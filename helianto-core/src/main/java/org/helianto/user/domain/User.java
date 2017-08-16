@@ -27,9 +27,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import org.helianto.core.PersonalEntity;
-import org.helianto.core.def.Appellation;
-import org.helianto.core.def.Gender;
-import org.helianto.core.def.PrivacyLevel;
+import org.helianto.core.domain.enums.Appellation;
+import org.helianto.core.domain.enums.Gender;
+import org.helianto.core.domain.enums.PrivacyLevel;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
 

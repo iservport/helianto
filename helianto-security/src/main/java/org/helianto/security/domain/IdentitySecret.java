@@ -17,7 +17,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.helianto.core.def.ActivityState;
+import org.helianto.core.domain.enums.ActivityState;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.domain.IdentityPasswordGenerator;
 

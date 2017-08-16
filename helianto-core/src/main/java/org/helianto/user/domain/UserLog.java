@@ -29,7 +29,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.def.EventType;
+import org.helianto.user.domain.enums.EventType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
