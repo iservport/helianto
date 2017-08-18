@@ -72,7 +72,19 @@ public class PersonalData implements Serializable {
         setFirstName(firstName);
         setLastName(lastName);
     }
-    
+
+    /**
+     * Name and image constructor.
+     *
+     * @param firstName
+     * @param lastName
+     * @param imageUrl
+     */
+    public PersonalData(String firstName, String lastName, String imageUrl) {
+        this(firstName, lastName);
+        this.imageUrl = imageUrl;
+    }
+
     /**
      * Convenience constructor.
      * 
