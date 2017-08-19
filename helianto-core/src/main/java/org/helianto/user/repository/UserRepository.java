@@ -26,7 +26,6 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 	public static final String QUERY = "select new "
 			+ "org.helianto.user.domain.User"
 			+ "( user_.id"
-			+ ", user_.entity.operator.id"
 			+ ", user_.entity.id"
 			+ ", 0"
 			+ ", user_.entity.alias"
@@ -62,13 +61,11 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 	/**
 	 * Find by user id.
 	 * 
-	 * @param identityId
-	 * @return
+	 * @param userId
 	 */
 	@Query("select new "
 			+ "org.helianto.user.repository.UserReadAdapter"
 			+ "(user.id"
-			+ ", user.entity.operator.id"
 			+ ", user.entity.id"
 			+ ", user.entity.alias"
 			+ ", user.identity.id"
@@ -101,9 +98,9 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 	Page<User> findByEntity_Id2(Integer entityId, Pageable page);
 
 	/**
-	 * Page by user key.
+	 * Page by identityId.
 	 * 
-	 * @param userKey
+	 * @param identityId
 	 * @param page
 	 */
 	@Query(QUERY
@@ -185,7 +182,6 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 	public static final String QUERY_JOIN = "select new "
 			+ "org.helianto.user.domain.User"
 			+ "( user_.id"
-			+ ", user_.entity.operator.id"
 			+ ", user_.entity.id"
 			+ ", parent_.parent.id"
 			+ ", user_.entity.alias"
@@ -237,9 +233,10 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 	 * Find by parent key and state, pageable.
 	 * 
 	 * @param entityId
-	 * @param userKey
 	 * @param exclusions
-	 * @param userState
+	 * @param searchString
+	 * @param userType
+	 * @param userStates
 	 * @param page
 	 */
 	@Query(value=QUERY_JOIN
@@ -255,10 +252,11 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 	 * Find by parent key and state, pageable.
 	 * 
 	 * @param entityId
-	 * @param userKey
 	 * @param exclusions
-	 * @param userState
-	 * @param page
+	 * @param searchString
+	 * @param userType
+	 * @param userStates
+	 * @param sort
 	 */
 	@Query(value=QUERY_JOIN
 			+ "where parent_.parent.entity.id = ?1 "
@@ -344,7 +342,7 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 	 */
 	@Query("select user_ "
 			+ "from User user_ "
-			+ "where user_.entity.operator.operatorName = ?1 "
+			+ "where user_.entity.contextName = ?1 "
 			+ "and user_.entity.alias = ?2 "
 			+ "and user_.identity.principal = ?3 ")
 	User findByEntityAliasAndPrincipal(String contextName, String entityAlias, String principal);
@@ -352,7 +350,6 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
 	/**
 	 * Find by user key.
 	 * 
-	 * @param entity
 	 * @param userKey
 	 * @deprecated
 	 */

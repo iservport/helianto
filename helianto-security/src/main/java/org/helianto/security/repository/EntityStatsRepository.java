@@ -20,15 +20,15 @@ public interface EntityStatsRepository
 	/**
 	 * Lista contagem de entidades ativas  por tipo.
 	 * 
-	 * @param contextId
+	 * @param contextName
 	 */
 	@Query("select new " +
 			"org.helianto.core.internal.SimpleCounter"
 			+ "(entity.entityType, count(entity)) "
 			+ "from Entity entity "
-			+ "where entity.operator.id = ?1 "
+			+ "where entity.contextName = ?1 "
 			+ "and entity.activityState = 'A' "
 			+ "group by entity.entityType ")
-	List<SimpleCounter> countActiveEntitiesGroupByType(int contextId);
+	List<SimpleCounter> countActiveEntitiesGroupByType(String contextName);
 
 }

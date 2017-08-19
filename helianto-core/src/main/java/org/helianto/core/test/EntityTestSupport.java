@@ -53,7 +53,7 @@ public class EntityTestSupport {
      * @param alias
      */
     public static Entity createEntity(Operator operator, String alias) {
-        Entity entity = new Entity(operator, alias);
+        Entity entity = new Entity("DEFAULT", alias);
         return entity;
     }
 

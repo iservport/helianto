@@ -1,23 +1,9 @@
 package org.helianto.core.domain;
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
-import javax.persistence.Version;
-
 import org.helianto.core.domain.enums.ContextGroupType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Master groups to be replicated across entities.
@@ -39,14 +25,11 @@ public class ContextGroup
 	
 	@Version
 	private int version;
-	
-	@ManyToOne
-	@JoinColumn(name="contextId")
-	private Operator context;
-	
-	@Transient
+
+	private String contextName;
+
 	private Integer contextId;
-	
+
 	@Column(length=32)
 	private String contextGroupCode;
 
@@ -73,24 +56,24 @@ public class ContextGroup
 	/**
 	 * Constructor.
 	 * 
-	 * @param context
+	 * @param contextName
 	 * @param contextGroupCode
 	 */
-	public ContextGroup(Operator context, String contextGroupCode) {
+	public ContextGroup(String contextName, String contextGroupCode) {
 		this();
-		setContext(context);
+		setContextName(contextName);
 		setContextGroupCode(contextGroupCode);
 	}
 
 	/**
 	 * Constructor.
 	 * 
-	 * @param context
+	 * @param contextName
 	 * @param contextGroupCode
 	 * @param contextGroupName
 	 */
-	public ContextGroup(Operator context, String contextGroupCode, String contextGroupName) {
-		this(context, contextGroupCode);
+	public ContextGroup(String contextName, String contextGroupCode, String contextGroupName) {
+		this(contextName, contextGroupCode);
 		setContextGroupName(contextGroupName);
 	}
 
@@ -108,12 +91,11 @@ public class ContextGroup
 		this.version = version;
 	}
 
-	@JsonIgnore
-	public Operator getContext() {
-		return context;
+	public String getContextName() {
+		return contextName;
 	}
-	public void setContext(Operator context) {
-		this.context = context;
+	public void setContextName(String contextName) {
+		this.contextName = contextName;
 	}
 
 	public Integer getContextId() {
@@ -182,38 +164,74 @@ public class ContextGroup
 		return false;
 	}
 
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof ContextGroup)) return false;
+        final ContextGroup other = (ContextGroup) o;
+        if (!other.canEqual((Object) this)) return false;
+        if (this.getId() != other.getId()) return false;
+        if (this.getVersion() != other.getVersion()) return false;
+        final Object this$contextName = this.getContextName();
+        final Object other$contextName = other.getContextName();
+        if (this$contextName == null ? other$contextName != null : !this$contextName.equals(other$contextName))
+            return false;
+        final Object this$contextId = this.getContextId();
+        final Object other$contextId = other.getContextId();
+        if (this$contextId == null ? other$contextId != null : !this$contextId.equals(other$contextId)) return false;
+        final Object this$contextGroupCode = this.getContextGroupCode();
+        final Object other$contextGroupCode = other.getContextGroupCode();
+        if (this$contextGroupCode == null ? other$contextGroupCode != null : !this$contextGroupCode.equals(other$contextGroupCode))
+            return false;
+        final Object this$contextGroupName = this.getContextGroupName();
+        final Object other$contextGroupName = other.getContextGroupName();
+        if (this$contextGroupName == null ? other$contextGroupName != null : !this$contextGroupName.equals(other$contextGroupName))
+            return false;
+        final Object this$contextGroupDesc = this.getContextGroupDesc();
+        final Object other$contextGroupDesc = other.getContextGroupDesc();
+        if (this$contextGroupDesc == null ? other$contextGroupDesc != null : !this$contextGroupDesc.equals(other$contextGroupDesc))
+            return false;
+        final Object this$contextGroupType = this.getContextGroupType();
+        final Object other$contextGroupType = other.getContextGroupType();
+        if (this$contextGroupType == null ? other$contextGroupType != null : !this$contextGroupType.equals(other$contextGroupType))
+            return false;
+        final Object this$groupType = this.getGroupType();
+        final Object other$groupType = other.getGroupType();
+        if (this$groupType == null ? other$groupType != null : !this$groupType.equals(other$groupType)) return false;
+        final Object this$priority = this.getPriority();
+        final Object other$priority = other.getPriority();
+        if (this$priority == null ? other$priority != null : !this$priority.equals(other$priority)) return false;
+        return true;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((context == null) ? 0 : context.hashCode());
-		result = prime
-				* result
-				+ ((contextGroupCode == null) ? 0 : contextGroupCode.hashCode());
-		return result;
-	}
+    public int hashCode() {
+        final int PRIME = 59;
+        int result = 1;
+        result = result * PRIME + this.getId();
+        result = result * PRIME + this.getVersion();
+        final Object $contextName = this.getContextName();
+        result = result * PRIME + ($contextName == null ? 43 : $contextName.hashCode());
+        final Object $contextId = this.getContextId();
+        result = result * PRIME + ($contextId == null ? 43 : $contextId.hashCode());
+        final Object $contextGroupCode = this.getContextGroupCode();
+        result = result * PRIME + ($contextGroupCode == null ? 43 : $contextGroupCode.hashCode());
+        final Object $contextGroupName = this.getContextGroupName();
+        result = result * PRIME + ($contextGroupName == null ? 43 : $contextGroupName.hashCode());
+        final Object $contextGroupDesc = this.getContextGroupDesc();
+        result = result * PRIME + ($contextGroupDesc == null ? 43 : $contextGroupDesc.hashCode());
+        final Object $contextGroupType = this.getContextGroupType();
+        result = result * PRIME + ($contextGroupType == null ? 43 : $contextGroupType.hashCode());
+        final Object $groupType = this.getGroupType();
+        result = result * PRIME + ($groupType == null ? 43 : $groupType.hashCode());
+        final Object $priority = this.getPriority();
+        result = result * PRIME + ($priority == null ? 43 : $priority.hashCode());
+        return result;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ContextGroup other = (ContextGroup) obj;
-		if (context == null) {
-			if (other.context != null)
-				return false;
-		} else if (!context.equals(other.context))
-			return false;
-		if (contextGroupCode == null) {
-			if (other.contextGroupCode != null)
-				return false;
-		} else if (!contextGroupCode.equals(other.contextGroupCode))
-			return false;
-		return true;
-	}
+    protected boolean canEqual(Object other) {
+        return other instanceof ContextGroup;
+    }
 
+    public String toString() {
+        return "org.helianto.core.domain.ContextGroup(id=" + this.getId() + ", version=" + this.getVersion() + ", contextName=" + this.getContextName() + ", contextId=" + this.getContextId() + ", contextGroupCode=" + this.getContextGroupCode() + ", contextGroupName=" + this.getContextGroupName() + ", contextGroupDesc=" + this.getContextGroupDesc() + ", contextGroupType=" + this.getContextGroupType() + ", groupType=" + this.getGroupType() + ", priority=" + this.getPriority() + ")";
+    }
 }

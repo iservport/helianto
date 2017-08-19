@@ -56,8 +56,6 @@ public class AuthorizationChecker {
             authorities.add(new SimpleGrantedAuthority(roleName));
             logger.debug("Granted authority: {}.", roleName);
         }
-        authorities.add(new SimpleGrantedAuthority("ROLE_CONTEXT_"+userDetailsAdapter.getContextId()));
-        logger.debug("Granted authority for context id");
         authorities.add(new SimpleGrantedAuthority("ROLE_ENTITY_ID_"+userDetailsAdapter.getEntityId()));
         logger.debug("Granted authority for entity id");
         authorities.add(new SimpleGrantedAuthority("ROLE_USER_ID_"+userDetailsAdapter.getUserId()));

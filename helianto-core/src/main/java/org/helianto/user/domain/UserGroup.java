@@ -269,14 +269,6 @@ public class UserGroup
 
 
     /**
-     * <<Transient>> Convenience to return Operator.
-     */
-    @JsonIgnore
-    public Operator getOperator() {
-		return getEntity().getOperator();
-	}
-
-    /**
      * User key.
      */
     public String getUserKey() {

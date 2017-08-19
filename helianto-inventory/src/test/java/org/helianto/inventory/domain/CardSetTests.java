@@ -38,7 +38,7 @@ public class CardSetTests {
 		CardSet other = new CardSet();
 		assertTrue(cardSet.equals(other));
 		
-		Entity entity = new Entity(new Operator("DEFAULT"), "ALIAS");
+		Entity entity = new Entity("DEFAULT", "ALIAS");
         cardSet.setEntity(entity);
         assertFalse(cardSet.equals(other));
         cardSet.setInternalNumber(Long.MAX_VALUE);
@@ -48,7 +48,7 @@ public class CardSetTests {
         other.setInternalNumber(Long.MAX_VALUE);
         assertTrue(cardSet.equals(other));
         assertEquals(cardSet.hashCode(), other.hashCode());
-        cardSet.setEntity(new Entity(new Operator("DEFAULT"), "OTHER"));
+        cardSet.setEntity(new Entity("DEFAULT", "OTHER"));
         assertFalse(cardSet.equals(other));
         cardSet.setInternalNumber(Long.MIN_VALUE);
         assertFalse(cardSet.equals(other));

@@ -38,7 +38,7 @@ public class CardTests {
 		Card other = new Card();
 		assertTrue(card.equals(other));
 		
-		Entity entity = new Entity(new Operator("DEFAULT"), "ALIAS");
+		Entity entity = new Entity("DEFAULT", "ALIAS");
 		CardSet cardSet = new CardSet(entity, 0);
         card.setCardSet(cardSet);
         assertFalse(card.equals(other));

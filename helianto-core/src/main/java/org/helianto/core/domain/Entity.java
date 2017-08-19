@@ -87,7 +87,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @javax.persistence.Entity
 @Table(name="core_entity",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "alias"})}
+    uniqueConstraints = {@UniqueConstraint(columnNames={"contextName", "alias"})}
 )
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(
@@ -95,9 +95,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
     discriminatorType=DiscriminatorType.CHAR
 )
 @DiscriminatorValue("0")
-public class Entity 
-	implements RootEntity 
-	, PropertyMappable 
+public class Entity
 {
 
     private static final long serialVersionUID = 1L;
@@ -107,15 +105,16 @@ public class Entity
     
     @Version
     private int version;
-    
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="operatorId", nullable=true)
-    private Operator operator;
-    
-    @Column(length=64)
+
+	@Column(length=20)
+	private String contextName = "DEFAULT";
+
+	@Column(length=64)
     private String alias = "";
-    
+
+    @Column(length=20)
+    private String pun = "";
+
     @Column(length=36)
     private String entityCode = "";
     
@@ -152,22 +151,11 @@ public class Entity
     
     @Column(length=128)
     private String entityDomain = "";
-    
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="cityId")
-    private City city;
-    
-    @Transient
-    private int cityId;
-    
-    @JsonIgnore
-    @OneToMany(mappedBy="entity")
-    private Set<UserGroup> users = new HashSet<UserGroup>(0);
-    
-    @JsonIgnore
-    @OneToMany(mappedBy="entity")
-    private Set<PublicEntity> publicEntities = new HashSet<PublicEntity>(0);
+
+    @Column(length=12)
+    private String stateCode = "";
+
+    private Integer cityId;
     
     @Transient
     private List<UserGroup> userList;
@@ -179,62 +167,76 @@ public class Entity
     	super();
     }
 
-    /** 
-     * Operator constructor.
-     * 
-     * @param operator
-     * @deprecated
+    /**
+     * City constructor.
+     *
+     * @param contextName the context name
+     * @param alias teh entity alias
+     * @param entityName the entity name
+     * @param cityId id of the city
+     * @param stateCode the state code
+     * @param entityType entity type
+     * @param pun public unique number, optional
      */
-    public Entity(Operator operator) {
-    	this();
-    	setOperator(operator);
+    public Entity(String contextName, String alias, String entityName, Integer cityId, String stateCode, char entityType, String pun) {
+        this();
+        setContextName(Objects.requireNonNull(contextName));
+        setAlias(Objects.requireNonNull(alias));
+        setEntityName(entityName);
+        setCityId(Objects.requireNonNull(cityId));
+        setStateCode(stateCode);
+        setEntityType(entityType);
+        setPun(pun);
     }
 
-    /** 
+    /**
      * Key constructor.
      * 
-     * @param operator
+     * @param contextName
      * @param alias
      * @deprecated
      */
-    public Entity(Operator operator, String alias) {
-    	this(operator);
+    public Entity(String contextName, String alias) {
+    	this();
+    	setContextName(contextName);
     	setAlias(alias);
    }
 
-    /** 
-     * User constructor.
-     * 
-     * @param user
-     * @deprecated
-     */
-    public Entity(User user) {
-    	this(user.getOperator());
-    	setManager(user.getIdentity());
-    }
-    
-    /**
-     * City constructor.
-     * 
-     * @param city
-     * @param alias
-     */
-    public Entity(City city, String alias) {
-    	this();
-    	setCity(Objects.requireNonNull(city, "A city is required"));
-    	setOperator(city.getContext());
-    	setAlias(alias);
-    }
+//    /**
+//     * User constructor.
+//     *
+//     * @param user
+//     * @deprecated
+//     */
+//    public Entity(User user) {
+//    	this(user.getOperator());
+//    	setManager(user.getIdentity());
+//    }
+//
+//    /**
+//     * City constructor.
+//     *
+//     * @param city
+//     * @param alias
+//     */
+//    public Entity(City city, String alias) {
+//    	this();
+//    	setCity(Objects.requireNonNull(city, "A city is required"));
+//    	setOperator(city.getContext());
+//    	setAlias(alias);
+//    }
     
     /**
      * Prototype constructor.
      * 
-     * @param operator
+     * @param contextName
      * @param prototype
      * @deprecated
      */
-    public Entity(Operator context, Entity prototype) {
-		this(context, prototype.getAlias());
+    public Entity(String contextName, Entity prototype) {
+		this();
+		this.contextName = prototype.getContextName();
+		this.alias = prototype.getAlias();
 		this.entityType = prototype.getEntityType();
 		this.nature = prototype.getNature();
 		this.customColors = prototype.getCustomColors();
@@ -243,7 +245,7 @@ public class Entity
 		this.summary = prototype.getSummary();
 		this.externalLogoUrl = prototype.getExternalLogoUrl();
 		this.entityDomain = prototype.getEntityDomain();
-		this.city = prototype.getCity();
+		this.cityId = prototype.getCityId();
 	}
 
 	public int getId() {
@@ -263,24 +265,14 @@ public class Entity
         this.version = version;
     }
 
-    /**
-     * Operator, lazy loaded.
-     */
-    public Operator getOperator() {
-        return this.operator;
-    }
-    public void setOperator(Operator operator) {
-        this.operator = operator;
-    }
-    
-    public int getContextId() {
-    	if (getOperator()!=null) {
-    		return getOperator().getId();
-    	}
-    	return 0;
-    }
-    
-    public Locale getLocale() {
+	public String getContextName() {
+		return contextName;
+	}
+	public void setContextName(String contextName) {
+		this.contextName = contextName;
+	}
+
+	public Locale getLocale() {
     	// TODO create locale field.
     	return Locale.getDefault();
     }
@@ -294,7 +286,14 @@ public class Entity
     public void setAlias(String alias) {
         this.alias = alias;
     }
-    
+
+    public String getPun() {
+        return pun;
+    }
+    public void setPun(String pun) {
+        this.pun = pun;
+    }
+
     /**
      * Entity code.
      */
@@ -460,48 +459,22 @@ public class Entity
 	}
     
     /**
-     * City.
+     * City id.
      */
-    public City getCity() {
-		return city;
-	}
-    public void setCity(City city) {
-		this.city = city;
-	}
-    
-    /**
-     * <<Transient>> city id.
-     */
-    public int getCityId() {
-    	if (getCity()!=null) {
-    		return getCity().getId();
-    	}
+    public Integer getCityId() {
 		return cityId;
 	}
-    public void setCityId(int cityId) {
+    public void setCityId(Integer cityId) {
 		this.cityId = cityId;
 	}
 
-    /**
-     * User group set.
-     */
-    public Set<UserGroup> getUsers() {
-		return users;
-	}
-	public void setUsers(Set<UserGroup> users) {
-		this.users = users;
-	}
-	
-    /**
-     * Public entity set.
-     */
-	public Set<PublicEntity> getPublicEntities() {
-		return publicEntities;
-	}
-	public void setPublicEntities(Set<PublicEntity> publicEntities) {
-		this.publicEntities = publicEntities;
-	}
-	
+    public String getStateCode() {
+        return stateCode;
+    }
+    public void setStateCode(String stateCode) {
+        this.stateCode = stateCode;
+    }
+
     /**
      * <<Transient>> User list.
      */
@@ -511,14 +484,22 @@ public class Entity
 	public void setUserList(List<UserGroup> userList) {
 		this.userList = userList;
 	}
-	
+
+    public Entity verify(String contextName) {
+        if (this.contextName!=null && this.contextName.equals(contextName)) {
+            return this;
+        }
+        throw new IllegalArgumentException("Invalid context!");
+    }
+
 	/**
 	 * Merger.
 	 * 
-	 * @param command
+	 * @param command // TODO add entityDesc and Locale
 	 */
 	public Entity merge(Entity command) {
-		setEntityCode(command.getEntityCode());
+        setPun(command.getPun());
+        setEntityCode(command.getEntityCode());
 		setInstallDate(command.getInstallDate());
 		setEntityType(command.getEntityType());
 		setNature(command.getNature());
@@ -530,44 +511,9 @@ public class Entity
 		setExternalLogoUrl(command.getExternalLogoUrl());
 		setActivityState(command.getActivityState());
 		setEntityName(command.getEntityName());
-		setEntityDomain(command.getEntityDomain());
+        setEntityDomain(command.getEntityDomain());
+        setCityId(command.getCityId());
 		return this;
 	}
-
-	/**
-     * toString
-     * @return String
-     */
-    public String toString() {
-        StringBuffer buffer = new StringBuffer();
-
-        buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("alias").append("='").append(getAlias()).append("' ");
-        buffer.append("]");
-      
-        return buffer.toString();
-    }
-
-   /**
-    * equals
-    */
-   public boolean equals(Object other) {
-         if ( (this == other ) ) return true;
-         if ( (other == null ) ) return false;
-         if ( !(other instanceof Entity) ) return false;
-         Entity castOther = (Entity) other; 
-         
-         return ((this.getOperator()==castOther.getOperator()) || ( this.getOperator()!=null && castOther.getOperator()!=null && this.getOperator().equals(castOther.getOperator()) ))
-             && ((this.getAlias()==castOther.getAlias()) || ( this.getAlias()!=null && castOther.getAlias()!=null && this.getAlias().equals(castOther.getAlias()) ));
-   }
-   
-   /**
-    * hashCode
-    */
-   public int hashCode() {
-         int result = 17;
-         result = 37 * result + ( getAlias() == null ? 0 : this.getAlias().hashCode() );
-         return result;
-   }   
 
 }

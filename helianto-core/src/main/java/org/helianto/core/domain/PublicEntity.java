@@ -1,30 +1,14 @@
 package org.helianto.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.helianto.core.EntityAddress;
+import org.helianto.core.domain.enums.PhoneType;
+import org.helianto.core.internal.AbstractAddress;
+
+import javax.persistence.*;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Embedded;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
-import javax.persistence.Version;
-
-import org.helianto.core.EntityAddress;
-import org.helianto.core.domain.enums.PhoneType;
-import org.helianto.core.domain.type.RootEntity;
-import org.helianto.core.internal.AbstractAddress;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A registry for public entities.
@@ -39,9 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @DiscriminatorValue("P")
 public class PublicEntity 
 	extends AbstractAddress 
-	implements 
-	  RootEntity
-	, EntityAddress 
+	implements EntityAddress
 {
 	
 	/**
@@ -110,24 +92,6 @@ public class PublicEntity
 		this.version = version;
 	}
 
-	/**
-	 * Operator.
-	 */
-	@JsonIgnore
-	public Operator getOperator() {
-		if (getEntity()!=null) {
-			return getEntity().getOperator();
-		}
-		return null;
-	}
-
-    public int getContextId() {
-    	if (getOperator()!=null) {
-    		return getOperator().getId();
-    	}
-    	return 0;
-    }
-    
 	/**
 	 * Entity.
 	 */

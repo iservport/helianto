@@ -45,7 +45,7 @@ public class AuthorizationCheckerTests {
 		List<GrantedAuthority> authorityList = new ArrayList<>();
 		authorityList.add(new SimpleGrantedAuthority("ROLE_SERVICE"));
 		authorityList.add(new SimpleGrantedAuthority("ROLE_SERVICE_READ"));
-		authorityList.add(new SimpleGrantedAuthority("ROLE_CONTEXT_0"));
+//		authorityList.add(new SimpleGrantedAuthority("ROLE_CONTEXT_0"));
 		authorityList.add(new SimpleGrantedAuthority("ROLE_ENTITY_ID_345"));
 		authorityList.add(new SimpleGrantedAuthority("ROLE_USER_ID_1234"));
 		authorityList.add(new SimpleGrantedAuthority("ROLE_SELF_ID_123"));
@@ -83,7 +83,7 @@ public class AuthorizationCheckerTests {
 		authorityList.add(new SimpleGrantedAuthority("ROLE_SERVICE"));
 		authorityList.add(new SimpleGrantedAuthority("ROLE_SERVICE_READ"));
 		authorityList.add(new SimpleGrantedAuthority("ROLE_SERVICE_WRITE"));
-		authorityList.add(new SimpleGrantedAuthority("ROLE_CONTEXT_0"));
+//		authorityList.add(new SimpleGrantedAuthority("ROLE_CONTEXT_0"));
 		authorityList.add(new SimpleGrantedAuthority("ROLE_ENTITY_ID_345"));
 		authorityList.add(new SimpleGrantedAuthority("ROLE_USER_ID_1234"));
 		authorityList.add(new SimpleGrantedAuthority("ROLE_SELF_ID_123"));

@@ -16,8 +16,9 @@ public class EntityRepositoryTests extends AbstractJpaRepositoryIntegrationTest<
 	}
 	
 	protected Entity getNewTarget() {
+		entity.setContextName("DEFAULT");
 		entity.setAlias("ALIAS");
-		return entity;		
+		return entity;
 	}
 	
 	protected Serializable getTargetId(Entity target) {
@@ -25,7 +26,7 @@ public class EntityRepositoryTests extends AbstractJpaRepositoryIntegrationTest<
 	}
 	
 	protected Entity findByKey() {
-		return getRepository().findByOperatorAndAlias(operator, "ALIAS");
+		return getRepository().findByContextNameAndAlias("DEFAULT", "ALIAS");
 	}
 		
 }

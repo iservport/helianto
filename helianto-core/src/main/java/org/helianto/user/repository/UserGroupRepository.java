@@ -36,7 +36,6 @@ public interface UserGroupRepository extends JpaRepository<UserGroup, Serializab
 	/**
 	 * Find by user key.
 	 * 
-	 * @param entity
 	 * @param userKey
 	 */
 	List<UserGroup> findByUserKey(String userKey);
@@ -102,7 +101,6 @@ public interface UserGroupRepository extends JpaRepository<UserGroup, Serializab
 	@Query("select new "
 			+ "org.helianto.user.repository.UserReadAdapter"
 			+ "(user.id"
-			+ ", user.entity.operator.id"
 			+ ", user.entity.id"
 			+ ", user.entity.alias"
 			+ ", user.identity.id"
@@ -219,7 +217,7 @@ public interface UserGroupRepository extends JpaRepository<UserGroup, Serializab
 	/**
 	 * List groups related to a child user.
 	 * 
-	 * @param child
+	 * @param childId
 	 * @deprecated
 	 */
 	@Query(QUERY_PARENT
@@ -229,7 +227,7 @@ public interface UserGroupRepository extends JpaRepository<UserGroup, Serializab
 	/**
 	 * Page groups related to a child user.
 	 * 
-	 * @param child
+	 * @param childId
 	 */
 	@Query(QUERY_PARENT
 			+ "where association.child.id = ?1 ")

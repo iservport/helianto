@@ -21,14 +21,14 @@ public interface ContextGroupRepository
 	/**
 	 * Find by natural key.
 	 * 
-	 * @param contextId
+	 * @param contextName
 	 * @param contextGroupCode
 	 */
 	@Query("select contextGroup "
 			+ "from ContextGroup contextGroup "
-			+ "where contextGroup.context.id = ?1 "
+			+ "where contextGroup.contextName = ?1 "
 			+ "and contextGroup.contextGroupCode = ?2 ")
-	public ContextGroup findByContextIdAndContextGroupCode(int contextId, String contextGroupCode);
+	public ContextGroup findByContextNameAndContextGroupCode(String contextName, String contextGroupCode);
 	
 	/**
 	 * Find by entity id.
@@ -38,7 +38,7 @@ public interface ContextGroupRepository
 	 */
 	@Query("select c_ "
 			+ "from ContextGroup c_, Entity e_ "
-			+ "where c_.context.id = e_.operator.id "
+			+ "where c_.contextName = e_.contextName "
 			+ "and e_.id = ?1 "
 			+ "and c_.contextGroupCode = ?2 ")
 	public ContextGroup findByEntityIdAndContextGroupCode(int entityId, String contextGroupCode);
@@ -51,36 +51,36 @@ public interface ContextGroupRepository
 	 */
 	@Query("select contextGroup_ "
 			+ "from ContextGroup contextGroup_ "
-			+ "where contextGroup_.context.operatorName = ?1 "
+			+ "where contextGroup_.contextName = ?1 "
 			+ "and contextGroup_.contextGroupCode in ?2 ")
 	public List<ContextGroup> findByContextName(String contextName, Collection<String> contextGroupCodes);
 	
 	/**
 	 * List context groups.
 	 * 
-	 * @param operator
+	 * @param contextName
 	 * @param page
 	 */
 	@Query("select new "
 			+ "org.helianto.core.repository.ContextGroupReadAdapter"
-			+ "(contextGroup.id, contextGroup.context.id, contextGroup.contextGroupCode, "
+			+ "(contextGroup.id, contextGroup.contextName, contextGroup.contextGroupCode, "
 			+ "contextGroup.contextGroupName) "
 			+ "from ContextGroup contextGroup "
-			+ "where contextGroup.context = ?1 ")
-	List<ContextGroupReadAdapter> findByContext(Operator operator, Pageable page);
+			+ "where contextGroup.contextName = ?1 ")
+	List<ContextGroupReadAdapter> findByContext(String contextName, Pageable page);
 
-	/**
-	 * List context groups.
-	 * 
-	 * @param operatorId
-	 * @param page
-	 */
-	@Query("select new "
-			+ "org.helianto.core.repository.ContextGroupReadAdapter"
-			+ "(contextGroup.id, contextGroup.context.id, contextGroup.contextGroupCode, "
-			+ "contextGroup.contextGroupName) "
-			+ "from ContextGroup contextGroup "
-			+ "where contextGroup.context.id = ?1 ")
-	List<ContextGroupReadAdapter> findByContextId(int operatorId, Pageable page);
+//	/**
+//	 * List context groups.
+//	 *
+//	 * @param operatorId
+//	 * @param page
+//	 */
+//	@Query("select new "
+//			+ "org.helianto.core.repository.ContextGroupReadAdapter"
+//			+ "(contextGroup.id, contextGroup.contextName, contextGroup.contextGroupCode, "
+//			+ "contextGroup.contextGroupName) "
+//			+ "from ContextGroup contextGroup "
+//			+ "where contextGroup.context.id = ?1 ")
+//	List<ContextGroupReadAdapter> findByContextId(int operatorId, Pageable page);
 
 }

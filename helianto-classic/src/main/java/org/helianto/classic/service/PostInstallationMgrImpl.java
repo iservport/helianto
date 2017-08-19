@@ -157,21 +157,17 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 	
 	@Transactional
 	public Entity installEntity(Entity entity, boolean reinstall) {
-		Operator operator = entity.getOperator();
-		if (entity.getOperator()==null) {
-			throw new IllegalArgumentException("An opertor is required.");
-		}
-		operator = opertatorRepository.save(operator);
+		String contextName = entity.getContextName();
 		String alias = entity.getAlias();
-		
+
 		logger.debug("Check entity {} installation with 'reinstall={}'", alias, reinstall);
 		if (!reinstall) {
-			entity = entityRepository.findByOperatorAndAlias(operator, alias);
+			entity = entityRepository.findByContextNameAndAlias(contextName, alias);
 		}
 
 		if (entity==null) {
 			logger.debug("Will install entity {} ...", alias);
-			entity = entityRepository.saveAndFlush(new Entity(operator, alias));
+			entity = entityRepository.saveAndFlush(new Entity(contextName, alias));
 		} 
 		else {
 			logger.debug("Entity AVAILABLE as {}.", entity);
@@ -184,19 +180,15 @@ public class PostInstallationMgrImpl implements PostInstallationMgr {
 	
 	@Transactional
 	public Entity installEntity(Entity entity, Identity manager) {
-		Operator operator = entity.getOperator();
-		if (entity.getOperator()==null) {
-			throw new IllegalArgumentException("An opertor is required.");
-		}
-		operator = opertatorRepository.save(operator);
-		String alias = entity.getAlias();		
+		String contextName = entity.getContextName();
+		String alias = entity.getAlias();
 		
 		logger.debug("Check if is there already a current entity {} installation'", alias);
-		Entity current = entityRepository.findByOperatorAndAlias(operator, alias);
+		Entity current = entityRepository.findByContextNameAndAlias(contextName, alias);
 
 		if (current==null) {
 			logger.debug("Will install entity {} ...", alias);
-			entity = entityRepository.saveAndFlush(new Entity(operator, alias));
+			entity = entityRepository.saveAndFlush(new Entity(contextName, alias));
 		} 
 		else {
 			logger.debug("Entity AVAILABLE as {}.", entity);

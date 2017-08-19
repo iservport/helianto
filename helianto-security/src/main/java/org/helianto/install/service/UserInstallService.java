@@ -64,7 +64,7 @@ public class UserInstallService {
 		for (String code : defaultGroupNames) {
 			ContextGroup contextGroup = contextGroupRepository.findByEntityIdAndContextGroupCode(entity.getId(), code);
 			if (contextGroup==null) {
-				contextGroup = new ContextGroup(entity.getOperator(), code);
+				contextGroup = new ContextGroup(entity.getContextName(), code);
 				switch (code) {
 				case "ADMIN":
 					contextGroup.setContextGroupName("ADMIN");
@@ -122,7 +122,7 @@ public class UserInstallService {
 	 * If user is the first one in the entity, she receives ADMIN privileges.
 	 * 
 	 * @param entity
-	 * @param identity
+	 * @param principal
 	 * @param userState
 	 */
 	public User installUser(Entity entity, String principal, Character userState) {

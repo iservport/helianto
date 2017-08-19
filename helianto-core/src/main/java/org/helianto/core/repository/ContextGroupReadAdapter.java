@@ -9,7 +9,7 @@ public class ContextGroupReadAdapter {
 
 	private int id;
 	
-	private int contextId;
+	private String contextName;
 	
 	private String contextGroupCode;
 
@@ -19,15 +19,15 @@ public class ContextGroupReadAdapter {
 	 * Constructor.
 	 * 
 	 * @param id
-	 * @param contextId
+	 * @param contextName
 	 * @param contextGroupCode
 	 * @param contextGroupName
 	 */
-	public ContextGroupReadAdapter(int id, int contextId, String contextGroupCode,
+	public ContextGroupReadAdapter(int id, String contextName, String contextGroupCode,
 			String contextGroupName) {
 		super();
 		this.id = id;
-		this.contextId = contextId;
+		this.contextName = contextName;
 		this.contextGroupCode = contextGroupCode;
 		this.contextGroupName = contextGroupName;
 	}
@@ -36,8 +36,8 @@ public class ContextGroupReadAdapter {
 		return id;
 	}
 
-	public int getContextId() {
-		return contextId;
+	public String getContextName() {
+		return contextName;
 	}
 
 	public String getContextGroupCode() {
@@ -72,7 +72,7 @@ public class ContextGroupReadAdapter {
 
 	@Override
 	public String toString() {
-		return "ContextGroupReadAdapter [id=" + id + ", contextId=" + contextId
+		return "ContextGroupReadAdapter [id=" + id + ", contextName=" + contextName
 				+ ", contextGroupCode=" + contextGroupCode
 				+ ", contextGroupName=" + contextGroupName + "]";
 	}

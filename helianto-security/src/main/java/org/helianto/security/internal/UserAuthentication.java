@@ -42,11 +42,6 @@ public interface UserAuthentication {
     int getIdentityId();
     
     /**
-     * Convenience to retrieve the context (a.k.a. operator) id from the user.
-     */
-    int getContextId();
-    
-    /**
      * Authority set convenience.
      */
     Set<String> getAuthoritySet();

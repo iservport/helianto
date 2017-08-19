@@ -104,16 +104,6 @@ public class UserDetailsAdapter
     }
     
     /**
-     * Context id.
-     */
-    public int getContextId() {
-    	if(userReadAdapter!=null ){
-    		return userReadAdapter.getContextId();
-    	}
-		return 0;
-	}
-    
-    /**
      * Entity id.
      */
     public int getEntityId() {

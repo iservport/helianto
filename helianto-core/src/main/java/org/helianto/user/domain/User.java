@@ -112,7 +112,7 @@ public class User
 	 * Key constructor.
 	 * 
 	 * @param entity
-	 * @param credential
+	 * @param identity
 	 */
     public User(Entity entity, Identity identity) {
     	this();
@@ -179,7 +179,6 @@ public class User
      * Read constructor.
      * 
      * @param userId
-     * @param contextId
      * @param entityId
      * @param entityAlias
      * @param identityId
@@ -192,11 +191,9 @@ public class User
      * @param userName
      * @param userState
      * @param userType
-     * @param jobTitle
      * @param accountNonExpired
      */
 	public User(int userId
-			, int contextId
 			, int entityId
 			, int parentId
 			, String entityAlias

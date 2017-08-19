@@ -22,8 +22,6 @@ public class UserReadAdapter
     
 	protected int userGroupId;
     
-	protected int contextId;
-    
 	protected int entityId;
     
 	protected String entityAlias;
@@ -64,7 +62,6 @@ public class UserReadAdapter
      * Constructor.
      * 
      * @param userId
-     * @param contextId
      * @param entityId
      * @param entityAlias
      * @param identityId
@@ -73,7 +70,6 @@ public class UserReadAdapter
      * @param userState
      */
 	public UserReadAdapter(int userId
-			, int contextId
 			, int entityId
 			, String entityAlias
 			, int identityId
@@ -83,7 +79,6 @@ public class UserReadAdapter
 			) {
 		this();
 		this.userId = userId;
-		this.contextId = contextId;
 		this.entityId = entityId;
 		this.entityAlias = entityAlias;
 		this.identityId = identityId;
@@ -96,7 +91,6 @@ public class UserReadAdapter
      * Constructor.
      * 
      * @param userId
-     * @param contextId
      * @param entityId
      * @param entityAlias
      * @param identityId
@@ -114,7 +108,6 @@ public class UserReadAdapter
      * @param accountNonExpired
      */
 	public UserReadAdapter(int userId
-			, int contextId
 			, int entityId
 			, String entityAlias
 			, int identityId
@@ -133,7 +126,6 @@ public class UserReadAdapter
 			) {
 		this();
 		this.userId = userId;
-		this.contextId = contextId;
 		this.entityId = entityId;
 		this.entityAlias = entityAlias;
 		this.identityId = identityId;
@@ -155,7 +147,6 @@ public class UserReadAdapter
      * Constructor.
      * 
      * @param userId
-     * @param contextId
      * @param entityId
      * @param entityAlias
      * @param identityId
@@ -173,7 +164,6 @@ public class UserReadAdapter
      * @param accountNonExpired
      */
 	public UserReadAdapter(int userId
-			, int contextId
 			, int entityId
 			, String entityAlias
 			, int identityId
@@ -191,7 +181,6 @@ public class UserReadAdapter
 			, Integer accountNonExpired
 			) {
 		this(userId
-		, contextId
 		, entityId
 		, entityAlias
 		, identityId
@@ -257,7 +246,6 @@ public class UserReadAdapter
 		}
 		this.userId = adaptee.getId();
 		if (adaptee.getEntity()!=null) {
-			this.contextId = adaptee.getEntity().getContextId();
 			this.entityId = adaptee.getEntityId();
 			this.entityAlias = adaptee.getEntity().getAlias();
 		}
@@ -313,10 +301,6 @@ public class UserReadAdapter
 	
 	public int getUserGroupId() {
 		return userGroupId;
-	}
-
-	public int getContextId() {
-		return contextId;
 	}
 
 	public int getEntityId() {

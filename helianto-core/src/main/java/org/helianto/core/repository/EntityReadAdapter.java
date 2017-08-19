@@ -16,7 +16,7 @@ public class EntityReadAdapter
 
 	protected Integer id;
     
-	protected Integer contextId;
+	protected String contextName;
     
 	protected Integer userId;
     
@@ -58,7 +58,7 @@ public class EntityReadAdapter
 	 * Constructor.
 	 * 
 	 * @param id
-	 * @param contextId
+	 * @param contextName
 	 * @param userId
 	 * @param entityAlias
 	 * @param entityCode
@@ -77,7 +77,7 @@ public class EntityReadAdapter
 	 * @param countryId
 	 */
 	public EntityReadAdapter(int id
-			, Integer contextId
+			, String contextName
 			, Integer userId
 			, String entityAlias
 			, String entityCode
@@ -97,7 +97,7 @@ public class EntityReadAdapter
 			) {
 		super();
 		this.id = id;
-		this.contextId = contextId;
+		this.contextName = contextName;
 		this.userId = userId;
 		this.entityAlias = entityAlias;
 		this.entityCode = entityCode;
@@ -120,7 +120,7 @@ public class EntityReadAdapter
 	 * Constructor.
 	 * 
 	 * @param id
-	 * @param contextId
+	 * @param contextName
 	 * @param userId
 	 * @param entityAlias
 	 * @param installDate
@@ -140,7 +140,7 @@ public class EntityReadAdapter
 	 * @deprecated
 	 */
 	public EntityReadAdapter(int id
-			, Integer contextId
+			, String contextName
 			, Integer userId
 			, String entityAlias
 			, Date installDate
@@ -159,7 +159,7 @@ public class EntityReadAdapter
 			) {
 		super();
 		this.id = id;
-		this.contextId = contextId;
+		this.contextName = contextName;
 		this.userId = userId;
 		this.entityAlias = entityAlias;
 		this.installDate = installDate;
@@ -181,7 +181,7 @@ public class EntityReadAdapter
 	 * Constructor.
 	 * 
 	 * @param id
-	 * @param contextId
+	 * @param contextName
 	 * @param userId
 	 * @param entityAlias
 	 * @param entityCode
@@ -200,7 +200,7 @@ public class EntityReadAdapter
 	 * @param countryId
 	 */
 	public EntityReadAdapter(Integer id
-			, Integer contextId
+			, String contextName
 			, Integer userId
 			, String entityAlias
 			, String entityCode
@@ -219,7 +219,7 @@ public class EntityReadAdapter
 			, Integer countryId
 			) {
 		this(id
-			, contextId
+			, contextName
 			, userId
 			, entityAlias
 			, entityCode
@@ -243,7 +243,7 @@ public class EntityReadAdapter
 	 * Constructor.
 	 * 
 	 * @param id
-	 * @param contextId
+	 * @param contextName
 	 * @param userId
 	 * @param entityAlias
 	 * @param installDate
@@ -263,7 +263,7 @@ public class EntityReadAdapter
 	 * @deprecated
 	 */
 	public EntityReadAdapter(Integer id
-			, Integer contextId
+			, String contextName
 			, Integer userId
 			, String entityAlias
 			, Date installDate
@@ -281,7 +281,7 @@ public class EntityReadAdapter
 			, Integer countryId
 			) {
 		this(id
-			, contextId
+			, contextName
 			, userId
 			, entityAlias
 			, installDate
@@ -304,8 +304,8 @@ public class EntityReadAdapter
 		return id;
 	}
 
-	public Integer getContextId() {
-		return contextId;
+	public String getContextName() {
+		return contextName;
 	}
 
 	public Integer getUserId() {
