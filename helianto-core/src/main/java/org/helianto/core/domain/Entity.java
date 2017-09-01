@@ -189,18 +189,32 @@ public class Entity
         setPun(pun);
     }
 
-    /**
-     * Key constructor.
-     * 
-     * @param contextName
-     * @param alias
-     * @deprecated
-     */
-    public Entity(String contextName, String alias) {
-    	this();
-    	setContextName(contextName);
-    	setAlias(alias);
-   }
+	/**
+	 * Key constructor.
+	 *
+	 * @param contextName
+	 * @param alias
+	 * @deprecated
+	 */
+	public Entity(String contextName, String alias) {
+		this();
+		setContextName(contextName);
+		setAlias(alias);
+	}
+
+	/**
+	 * Key constructor.
+	 *
+	 * @param contextName
+	 * @param alias
+	 * @param entityType
+	 */
+	public Entity(String contextName, String alias, char entityType) {
+        this();
+        setContextName(contextName);
+        setAlias(alias);
+		setEntityType(entityType);
+	}
 
 //    /**
 //     * User constructor.
