@@ -1,4 +1,4 @@
-package org.helianto.core.domain;
+package org.helianto.core.domain.enums;
 
 /**
  * Entity nature.

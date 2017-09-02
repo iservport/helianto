@@ -15,49 +15,33 @@
 
 package org.helianto.core.domain;
 
-import java.util.Locale;
-
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import java.util.Locale;
+import java.util.UUID;
 
 /**
- * The <code>Context</code> domain class represents a mandatory
- * parent entity to any Helianto based installation. Every domain
- * object is traceable to one <code>Context</code> (except the class
- * <code>Identity</code>).
- * 
- * <p>
- * The most common use case will require one single <code>Context</code> instance, 
- * which is created transparently after the first run. If the installation is accessed in a 
- * larger network, a greater number of entities may be expected. In such cases, 
- * additional context instances may be created to isolate entities from each other.
- * </p>
+ * Context.
  * 
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="core_operator",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"operatorName"})}
+@Table(name="core_context",
+    uniqueConstraints = {@UniqueConstraint(columnNames={"contextName"})}
 )
 public class Context implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    private int id;
-    
-    /* legacy column */
-    @Column(length=20, name="operatorName")
+    @Id
+    private String id;
+
+    @Column(length=20)
     private String contextName;
     
     private Locale locale;
-    
-    @Column(length=64)
-    private String operatorSourceMailAddress = "operator@helianto.org";
     
     @Column(length=20)
     private String defaultEncoding = "ISO-8859-1";
@@ -71,13 +55,12 @@ public class Context implements java.io.Serializable {
     @Column(length=5)
     private String rfc822TimeZone;
     
-    private Character operationMode = 'S';
-    
-    /** 
+    /**
      * Default constructor.
      */
     public Context() {
     	super();
+    	this.id = UUID.randomUUID().toString().replaceAll("-", "");
     }
 
     /** 
@@ -104,10 +87,10 @@ public class Context implements java.io.Serializable {
     /**
      * Primary key.
      */
-    public int getId() {
+    public String getId() {
         return this.id;
     }
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -129,16 +112,6 @@ public class Context implements java.io.Serializable {
     }
     public void setLocale(Locale locale) {
         this.locale = locale;
-    }
-
-    /**
-     * Operator source mail address.
-     */
-    public String getOperatorSourceMailAddress() {
-        return this.operatorSourceMailAddress;
-    }
-    public void setOperatorSourceMailAddress(String operatorSourceMailAddress) {
-        this.operatorSourceMailAddress = operatorSourceMailAddress;
     }
 
     /**
@@ -180,47 +153,66 @@ public class Context implements java.io.Serializable {
     public void setRfc822TimeZone(String rfc822TimeZone) {
         this.rfc822TimeZone = rfc822TimeZone;
     }
-    
-    public Character getOperationMode() {
-		return operationMode;
-	}
-    public void setOperationMode(Character operationMode) {
-		this.operationMode = operationMode;
-	}
 
-    /**
-     * toString
-     * @return String
-     */
-    public String toString() {
-        StringBuffer buffer = new StringBuffer();
-
-        buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("operatorName").append("='").append(getContextName()).append("' ");
-        buffer.append("]");
-      
-        return buffer.toString();
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof Context)) return false;
+        final Context other = (Context) o;
+        if (!other.canEqual((Object) this)) return false;
+        final Object this$id = this.getId();
+        final Object other$id = other.getId();
+        if (this$id == null ? other$id != null : !this$id.equals(other$id)) return false;
+        final Object this$contextName = this.getContextName();
+        final Object other$contextName = other.getContextName();
+        if (this$contextName == null ? other$contextName != null : !this$contextName.equals(other$contextName))
+            return false;
+        final Object this$locale = this.getLocale();
+        final Object other$locale = other.getLocale();
+        if (this$locale == null ? other$locale != null : !this$locale.equals(other$locale)) return false;
+        final Object this$defaultEncoding = this.getDefaultEncoding();
+        final Object other$defaultEncoding = other.getDefaultEncoding();
+        if (this$defaultEncoding == null ? other$defaultEncoding != null : !this$defaultEncoding.equals(other$defaultEncoding))
+            return false;
+        final Object this$preferredDateFormat = this.getPreferredDateFormat();
+        final Object other$preferredDateFormat = other.getPreferredDateFormat();
+        if (this$preferredDateFormat == null ? other$preferredDateFormat != null : !this$preferredDateFormat.equals(other$preferredDateFormat))
+            return false;
+        final Object this$preferredTimeFormat = this.getPreferredTimeFormat();
+        final Object other$preferredTimeFormat = other.getPreferredTimeFormat();
+        if (this$preferredTimeFormat == null ? other$preferredTimeFormat != null : !this$preferredTimeFormat.equals(other$preferredTimeFormat))
+            return false;
+        final Object this$rfc822TimeZone = this.getRfc822TimeZone();
+        final Object other$rfc822TimeZone = other.getRfc822TimeZone();
+        if (this$rfc822TimeZone == null ? other$rfc822TimeZone != null : !this$rfc822TimeZone.equals(other$rfc822TimeZone))
+            return false;
+        return true;
     }
 
-   /**
-    * equals
-    */
-   public boolean equals(Object other) {
-         if ( (this == other ) ) return true;
-         if ( (other == null ) ) return false;
-         if ( !(other instanceof Context) ) return false;
-         Context castOther = (Context) other; 
-         
-         return (this.getContextName()==castOther.getContextName()) || ( this.getContextName()!=null && castOther.getContextName().equals(castOther.getContextName()) );
-   }
-   
-   /**
-    * hashCode
-    */
-   public int hashCode() {
-         int result = 17;
-         result = 37 * result + ( getContextName() == null ? 0 : this.getContextName().hashCode() );
-         return result;
-   }   
+    public int hashCode() {
+        final int PRIME = 59;
+        int result = 1;
+        final Object $id = this.getId();
+        result = result * PRIME + ($id == null ? 43 : $id.hashCode());
+        final Object $contextName = this.getContextName();
+        result = result * PRIME + ($contextName == null ? 43 : $contextName.hashCode());
+        final Object $locale = this.getLocale();
+        result = result * PRIME + ($locale == null ? 43 : $locale.hashCode());
+        final Object $defaultEncoding = this.getDefaultEncoding();
+        result = result * PRIME + ($defaultEncoding == null ? 43 : $defaultEncoding.hashCode());
+        final Object $preferredDateFormat = this.getPreferredDateFormat();
+        result = result * PRIME + ($preferredDateFormat == null ? 43 : $preferredDateFormat.hashCode());
+        final Object $preferredTimeFormat = this.getPreferredTimeFormat();
+        result = result * PRIME + ($preferredTimeFormat == null ? 43 : $preferredTimeFormat.hashCode());
+        final Object $rfc822TimeZone = this.getRfc822TimeZone();
+        result = result * PRIME + ($rfc822TimeZone == null ? 43 : $rfc822TimeZone.hashCode());
+        return result;
+    }
 
+    protected boolean canEqual(Object other) {
+        return other instanceof Context;
+    }
+
+    public String toString() {
+        return "org.helianto.core.domain.Context(id=" + this.getId() + ", contextName=" + this.getContextName() + ", locale=" + this.getLocale() + ", defaultEncoding=" + this.getDefaultEncoding() + ", preferredDateFormat=" + this.getPreferredDateFormat() + ", preferredTimeFormat=" + this.getPreferredTimeFormat() + ", rfc822TimeZone=" + this.getRfc822TimeZone() + ")";
+    }
 }

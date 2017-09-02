@@ -16,6 +16,7 @@
 package org.helianto.core.domain;
 
 import org.helianto.core.domain.enums.ActivityState;
+import org.helianto.core.domain.enums.EntityNature;
 import org.helianto.core.utils.StringListUtils;
 import org.helianto.user.domain.UserGroup;
 

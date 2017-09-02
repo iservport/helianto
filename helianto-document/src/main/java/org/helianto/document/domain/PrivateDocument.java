@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.classic.def.Uploadable;
+import org.helianto.classic.enums.Uploadable;
 import org.helianto.core.domain.Entity;
 import org.helianto.document.DocumentContentType;
 import org.helianto.document.internal.AbstractDocument;

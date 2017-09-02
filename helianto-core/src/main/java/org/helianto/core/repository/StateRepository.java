@@ -1,12 +1,9 @@
 package org.helianto.core.repository;
 
-import java.io.Serializable;
-import java.util.List;
-
-import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.State;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.io.Serializable;
 
 /**
  * State repository.

@@ -1,17 +1,8 @@
 package org.helianto.core.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.io.Serializable;
-import java.util.List;
-
 import org.helianto.core.domain.Entity;
-import org.helianto.core.domain.Operator;
 import org.helianto.core.repository.EntityRepository;
 import org.helianto.core.repository.IdentityRepository;
-import org.helianto.core.repository.OperatorRepository;
 import org.helianto.user.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,6 +15,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.Serializable;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 /**
  * Base class to jpa repository integration tests.
@@ -47,13 +43,9 @@ public abstract class AbstractJpaRepositoryIntegrationTest<T, R extends JpaRepos
 	@Autowired
     protected EntityRepository entityRepository;
     
-	@Autowired
-    protected OperatorRepository operatorRepository;
-
     /**
 	 * Provide the test infrastructure with an entity.
 	 */
-	public static Operator operator;
 	public static Entity entity;
 	public static long testKey = 0;
 	
@@ -104,8 +96,7 @@ public abstract class AbstractJpaRepositoryIntegrationTest<T, R extends JpaRepos
 	@Before
 	public void prepareSetUp() {
 		logger.debug("PREPARE TEST");
-		operator = operatorRepository.save(OperatorTestSupport.createOperator());
-		entity = entityRepository.save(EntityTestSupport.createEntity(operator));
+		entity = entityRepository.save(EntityTestSupport.createEntity("DEFAULT"));
 		logger.debug("Additional SETUP");
 		setUp();
 		logger.debug("START TEST");

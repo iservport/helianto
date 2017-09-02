@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.classic.def;
+package org.helianto.classic.enums;
 
 
 import org.helianto.core.domain.enums.HumanReadable;

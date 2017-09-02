@@ -1,4 +1,4 @@
-package org.helianto.classic.def;
+package org.helianto.classic.enums;
 
 /**
  * Navigation mode.

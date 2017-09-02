@@ -1,11 +1,10 @@
 package org.helianto.core.domain;
 
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Test;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * 
@@ -20,12 +19,10 @@ public class JsonSerializationCoreTests {
 		
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(Category.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(City.class)));
-		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(Country.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(Entity.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(Identity.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(IdentitySecurity.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(KeyType.class)));
-		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(Operator.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(PersonalAddress.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(PrivateSequence.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(PublicAddress.class)));

@@ -21,7 +21,7 @@ import java.util.Date;
 import javax.persistence.Lob;
 import javax.persistence.Transient;
 
-import org.helianto.classic.def.Uploadable;
+import org.helianto.classic.enums.Uploadable;
 import org.helianto.document.domain.Document;
 import org.springframework.web.multipart.MultipartFile;
 

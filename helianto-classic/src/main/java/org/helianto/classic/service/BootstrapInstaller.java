@@ -1,22 +1,18 @@
 package org.helianto.classic.service;
 
-import javax.inject.Inject;
-
+import org.helianto.classic.install.CityInstaller;
+import org.helianto.classic.install.EntityInstaller;
 import org.helianto.core.domain.City;
-import org.helianto.core.domain.Country;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
-import org.helianto.core.domain.Operator;
-import org.helianto.classic.install.CityInstaller;
-import org.helianto.classic.install.CountryInstaller;
-import org.helianto.classic.install.EntityInstaller;
 import org.helianto.core.install.IdentityInstaller;
 import org.helianto.core.repository.IdentityRepository;
-import org.helianto.core.repository.OperatorRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.env.Environment;
+
+import javax.inject.Inject;
 
 /**
  * Bootstrap installer.
@@ -26,12 +22,6 @@ public class BootstrapInstaller implements InitializingBean {
     protected static final Logger logger = LoggerFactory.getLogger(BootstrapInstaller.class);
 
     private String contextName;
-
-    @Inject
-    private OperatorRepository contextRepository;
-
-    @Inject
-    private CountryInstaller countryInstaller;
 
     @Inject
     private CityInstaller cityInstaller;
@@ -54,8 +44,7 @@ public class BootstrapInstaller implements InitializingBean {
     @Override
     public final void afterPropertiesSet() throws Exception {
         contextName = env.getProperty("helianto.defaultContextName", "DEFAULT");
-        Operator rootContext = contextRepository.findByOperatorName(contextName);
-        if (rootContext==null) {
+        if (env.getProperty("helianto.reinstall", "NO").equals("YES")) {
             City rootCity = installContext();
             Identity rootIdentity = installRootIdentity();
             // TODO install services
@@ -68,10 +57,7 @@ public class BootstrapInstaller implements InitializingBean {
      * Run once at installation to assure root state and city are persisted.
      */
     protected final City installContext() {
-        Operator rootContext = contextRepository.saveAndFlush(new Operator(contextName));
-        logger.info("Created {}.", rootContext);
-        Country country = countryInstaller.installCountries(rootContext);
-        return cityInstaller.installStatesAndCities(rootContext, country);
+        return cityInstaller.installStatesAndCities(contextName, "BRA");
     }
 
     /**

@@ -15,22 +15,13 @@
 
 package org.helianto.core.internal;
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.helianto.core.Address;
 import org.helianto.core.domain.City;
-import org.helianto.core.domain.Country;
 import org.helianto.core.domain.State;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Base class to instances having an Address.
@@ -56,14 +47,6 @@ public abstract class AbstractAddress
     
     @Column(length=10)
     private String postalCode = "";
-    
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="countryCode")
-    private Country country;
-    
-    @Transient
-    private Integer countryId = 0;
     
     @JsonIgnore
     @ManyToOne
@@ -216,10 +199,7 @@ public abstract class AbstractAddress
     	}
 		return "BRA";
 	}
-    public void setCountry(Country country) {
-		this.country = country;
-	}
-    
+
     /**
      * State.
      */

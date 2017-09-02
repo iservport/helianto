@@ -1,10 +1,9 @@
 package org.helianto.core.test;
 
+import org.helianto.core.domain.Entity;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.helianto.core.domain.Entity;
-import org.helianto.core.domain.Operator;
 
 
 /**
@@ -32,28 +31,23 @@ public class EntityTestSupport {
      * Test support method to create an <code>Entity</code>.
      */
     public static Entity createEntity() {
-        Entity entity = EntityTestSupport.createEntity(OperatorTestSupport.createOperator());
+        Entity entity = EntityTestSupport.createEntity("DEFAULT");
         return entity;
     }
 
     /**
      * Test support method to create an <code>Entity</code>.
-     * 
-     * @param operator
      */
-    public static Entity createEntity(Operator operator) {
-        Entity entity = EntityTestSupport.createEntity(operator, DomainTestSupport.getNonRepeatableStringValue(testKey++, 20));
+    public static Entity createEntity(String contextName) {
+        Entity entity = EntityTestSupport.createEntity(contextName, DomainTestSupport.getNonRepeatableStringValue(testKey++, 20));
         return entity;
     }
 
     /**
      * Test support method to create an <code>Entity</code>.
-     * 
-     * @param operator
-     * @param alias
      */
-    public static Entity createEntity(Operator operator, String alias) {
-        Entity entity = new Entity("DEFAULT", alias);
+    public static Entity createEntity(String contextName, String alias) {
+        Entity entity = new Entity(contextName, alias);
         return entity;
     }
 
@@ -63,33 +57,9 @@ public class EntityTestSupport {
      * @param entityListSize
      */
     public static List<Entity> createEntityList(int entityListSize) {
-        return createEntityList(entityListSize, 1);
-    }
-
-    /**
-     * Test support method to create a <code>Entity</code> list.
-     *
-     * @param entityListSize
-     * @param operatorListSize
-     */
-    public static List<Entity> createEntityList(int entityListSize, int operatorListSize) {
-        List<Operator> operatorList = OperatorTestSupport.createOperatorList(operatorListSize);
-
-        return createEntityList(entityListSize, operatorList);
-    }
-
-    /**
-     * Test support method to create a <code>Entity</code> list.
-     *
-     * @param entityListSize
-     * @param operatorList
-     */
-    public static List<Entity> createEntityList(int entityListSize, List<Operator> operatorList) {
         List<Entity> entityList = new ArrayList<Entity>();
-        for (Operator operator: operatorList) {
-            for (int i=0;i<entityListSize;i++) {
-                entityList.add(createEntity(operator));
-            }
+        for (int i=0;i<entityListSize;i++) {
+            entityList.add(createEntity("DEFAULT"));
         }
         return entityList;
     }

@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 @javax.persistence.Entity
 @Table(name="core_contextGroup",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"contextId", "contextGroupCode"})}
+    uniqueConstraints = {@UniqueConstraint(columnNames={"contextName", "contextGroupCode"})}
 )
 public class ContextGroup 
 	implements Serializable
@@ -26,9 +26,8 @@ public class ContextGroup
 	@Version
 	private int version;
 
+	@Column(length=20)
 	private String contextName;
-
-	private Integer contextId;
 
 	@Column(length=32)
 	private String contextGroupCode;
@@ -96,13 +95,6 @@ public class ContextGroup
 	}
 	public void setContextName(String contextName) {
 		this.contextName = contextName;
-	}
-
-	public Integer getContextId() {
-		return contextId;
-	}
-	public void setContextId(Integer contextId) {
-		this.contextId = contextId;
 	}
 
 	public String getContextGroupCode() {
@@ -175,9 +167,6 @@ public class ContextGroup
         final Object other$contextName = other.getContextName();
         if (this$contextName == null ? other$contextName != null : !this$contextName.equals(other$contextName))
             return false;
-        final Object this$contextId = this.getContextId();
-        final Object other$contextId = other.getContextId();
-        if (this$contextId == null ? other$contextId != null : !this$contextId.equals(other$contextId)) return false;
         final Object this$contextGroupCode = this.getContextGroupCode();
         final Object other$contextGroupCode = other.getContextGroupCode();
         if (this$contextGroupCode == null ? other$contextGroupCode != null : !this$contextGroupCode.equals(other$contextGroupCode))
@@ -210,8 +199,6 @@ public class ContextGroup
         result = result * PRIME + this.getVersion();
         final Object $contextName = this.getContextName();
         result = result * PRIME + ($contextName == null ? 43 : $contextName.hashCode());
-        final Object $contextId = this.getContextId();
-        result = result * PRIME + ($contextId == null ? 43 : $contextId.hashCode());
         final Object $contextGroupCode = this.getContextGroupCode();
         result = result * PRIME + ($contextGroupCode == null ? 43 : $contextGroupCode.hashCode());
         final Object $contextGroupName = this.getContextGroupName();
@@ -232,6 +219,6 @@ public class ContextGroup
     }
 
     public String toString() {
-        return "org.helianto.core.domain.ContextGroup(id=" + this.getId() + ", version=" + this.getVersion() + ", contextName=" + this.getContextName() + ", contextId=" + this.getContextId() + ", contextGroupCode=" + this.getContextGroupCode() + ", contextGroupName=" + this.getContextGroupName() + ", contextGroupDesc=" + this.getContextGroupDesc() + ", contextGroupType=" + this.getContextGroupType() + ", groupType=" + this.getGroupType() + ", priority=" + this.getPriority() + ")";
+        return "org.helianto.core.domain.ContextGroup(id=" + this.getId() + ", version=" + this.getVersion() + ", contextName=" + this.getContextName() + ", contextGroupCode=" + this.getContextGroupCode() + ", contextGroupName=" + this.getContextGroupName() + ", contextGroupDesc=" + this.getContextGroupDesc() + ", contextGroupType=" + this.getContextGroupType() + ", groupType=" + this.getGroupType() + ", priority=" + this.getPriority() + ")";
     }
 }

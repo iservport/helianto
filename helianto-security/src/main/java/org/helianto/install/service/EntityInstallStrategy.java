@@ -1,10 +1,9 @@
 package org.helianto.install.service;
 
-import java.util.List;
-
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
-import org.helianto.core.domain.Operator;
+
+import java.util.List;
 
 /**
  * Interface to define how entities must be installed.
@@ -24,12 +23,11 @@ public interface EntityInstallStrategy {
 	 * Assure the prototyped entity is persistent.
 	 * 
 	 * @param contextName
-	 * @param entityAlias
-	 * @param entityName
+	 * @param prototype
 	 */
-	Entity installEntity(Operator context, Entity prototype);
+	Entity installEntity(String contextName, Entity prototype);
 	
-	void createEntities(Operator context, List<Entity> prototypes, Identity identity);
+	void createEntities(String contextName, List<Entity> prototypes, Identity identity);
 	
 	/**
 	 * Remove lead.

@@ -1,15 +1,14 @@
 package org.helianto.core.repository;
 
-import java.io.Serializable;
-import java.util.List;
-
 import org.helianto.core.domain.City;
-import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.State;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * City repository.
@@ -38,18 +37,12 @@ public interface CityRepository extends JpaRepository<City, Serializable> {
 	
 	/**
 	 * Search cities.
-	 * 
-	 * @param search
 	 */
 	List<City> findByCityCodeContainingOrCityNameContainingOrStateStateNameContainingOrStateStateCodeContaining
 				(String cityCode, String cityName, String stateName, String stateCode , Pageable pageable);
 	
 	/**
 	 * Find by name and state.
-	 * 
-	 * @param cityName
-	 * @param stateName
-	 * @param pageable
 	 */
 	@Query("select city "
 			+ "from City city "

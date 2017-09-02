@@ -15,47 +15,23 @@
 
 package org.helianto.user.domain;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.helianto.core.Programmable;
-import org.helianto.core.domain.enums.ActivityState;
-import org.helianto.user.domain.enums.CreateIdentity;
-import org.helianto.user.domain.enums.UserState;
 import org.helianto.core.domain.Category;
 import org.helianto.core.domain.ContextGroup;
 import org.helianto.core.domain.Entity;
-import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.enums.ActivityState;
 import org.helianto.core.domain.type.FolderEntity;
 import org.helianto.core.internal.AbstractCounter;
 import org.helianto.core.internal.KeyNameAdapter;
 import org.helianto.core.utils.StringListUtils;
+import org.helianto.user.domain.enums.CreateIdentity;
+import org.helianto.user.domain.enums.UserState;
 import org.helianto.user.domain.enums.UserType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.*;
 /**
  * 			
  * An user account (or group) represents a set of roles within an <code>Entity</code>. 

@@ -1,17 +1,10 @@
 package org.helianto.install.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.inject.Inject;
-
-import org.helianto.core.domain.enums.ContextGroupType;
 import org.helianto.core.domain.ContextGroup;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.enums.ContextGroupType;
 import org.helianto.core.repository.ContextGroupRepository;
-import org.helianto.core.repository.OperatorRepository;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserAssociation;
 import org.helianto.user.domain.UserGroup;
@@ -21,6 +14,11 @@ import org.helianto.user.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * User installation service.
@@ -36,9 +34,6 @@ public class UserInstallService {
 	
 	@Inject
 	private IdentityInstallService identityInstallService;
-
-	@Inject
-	private OperatorRepository contextRepository;
 
 	@Inject
 	private ContextGroupRepository contextGroupRepository;

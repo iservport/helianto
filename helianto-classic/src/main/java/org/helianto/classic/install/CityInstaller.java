@@ -2,8 +2,6 @@ package org.helianto.classic.install;
 
 
 import org.helianto.core.domain.City;
-import org.helianto.core.domain.Country;
-import org.helianto.core.domain.Operator;
 
 /**
  * State and city installer interface.
@@ -15,8 +13,9 @@ public interface CityInstaller {
 	/**
 	 * Do install.
 	 * 
-	 * @param context
+	 * @param contextName
+	 * @param countryCode
 	 */
-	City installStatesAndCities(Operator context, Country country);
+	City installStatesAndCities(String contextName, String countryCode);
 	
 }
