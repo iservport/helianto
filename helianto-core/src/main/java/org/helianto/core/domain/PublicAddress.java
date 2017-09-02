@@ -1,14 +1,10 @@
 package org.helianto.core.domain;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
-import org.helianto.core.domain.type.RootEntity;
 import org.helianto.core.internal.AbstractAddress;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import javax.persistence.Column;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * Address databases in a common environment searchable by postal code.  
@@ -17,18 +13,15 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  */
 @javax.persistence.Entity
 @Table(name="core_publicaddress",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "postalCode"})}
+    uniqueConstraints = {@UniqueConstraint(columnNames={"contextName", "postalCode"})}
 )
 public class PublicAddress 
-	extends AbstractAddress 
-	implements RootEntity {
+	extends AbstractAddress {
 
 	private static final long serialVersionUID = 1L;
-	
-	@JsonBackReference 
-	@ManyToOne
-	@JoinColumn(name="operatorId")
-	private Operator operator;
+
+	@Column(length=20)
+	private String contextName;
 	
 	/**
 	 * Empty constructor.
@@ -40,12 +33,12 @@ public class PublicAddress
 	/**
 	 * Key constructor.
 	 * 
-	 * @param operator
+	 * @param contextName
 	 * @param postalCode
 	 */
-	public PublicAddress(Operator operator, String postalCode) {
+	public PublicAddress(String contextName, String postalCode) {
 		this();
-		setOperator(operator);
+		setContextName(contextName);
 		setPostalCode(postalCode);
 	}
 	
@@ -56,7 +49,7 @@ public class PublicAddress
 	 * @param postalCode
 	 */
 	public PublicAddress(State state, String postalCode) {
-		this(state.getContext(), postalCode);
+		this(state.getContextName(), postalCode);
 		setState(state);
 	}
 	
@@ -70,64 +63,39 @@ public class PublicAddress
 		this(city.getState(), postalCode);
 		setCity(city);
 	}
-	
-	/**
-	 * Operator that holds the address database.
-	 */
-	public Operator getOperator() {
-		return operator;
+
+	public String getContextName() {
+		return contextName;
 	}
-	public void setOperator(Operator operator) {
-		this.operator = operator;
+	public void setContextName(String contextName) {
+		this.contextName = contextName;
 	}
-	
-//    @Transient
-    public int getContextId() {
-    	if (getOperator()!=null) {
-    		return getOperator().getId();
-    	}
-    	return 0;
+
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof PublicAddress)) return false;
+        final PublicAddress other = (PublicAddress) o;
+        if (!other.canEqual((Object) this)) return false;
+        final Object this$contextName = this.getContextName();
+        final Object other$contextName = other.getContextName();
+        if (this$contextName == null ? other$contextName != null : !this$contextName.equals(other$contextName))
+            return false;
+        return true;
     }
-    
-    /**
-     * toString
-     * @return String
-     */
+
+    public int hashCode() {
+        final int PRIME = 59;
+        int result = 1;
+        final Object $contextName = this.getContextName();
+        result = result * PRIME + ($contextName == null ? 43 : $contextName.hashCode());
+        return result;
+    }
+
+    protected boolean canEqual(Object other) {
+        return other instanceof PublicAddress;
+    }
+
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
-
-        buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("postalCode").append("='").append(getPostalCode()).append("' ");
-        buffer.append("]");
-      
-        return buffer.toString();
+        return "org.helianto.core.domain.PublicAddress(contextName=" + this.getContextName() + ")";
     }
-
-   /**
-    * equals
-    */
-   public boolean equals(Object other) {
-         if ( (this == other ) ) return true;
-         if ( (other == null ) ) return false;
-         if ( !(other instanceof PublicAddress) ) return false;
-         PublicAddress castOther = (PublicAddress) other; 
-         
-         return ((this.getOperator()==castOther.getOperator()) 
-        		 || ( this.getOperator()!=null && castOther.getOperator()!=null 
-        				 && this.getOperator().equals(castOther.getOperator()) ))
-             && ((this.getPostalCode()==castOther.getPostalCode()) 
-            		 || ( this.getPostalCode()!=null && castOther.getPostalCode()!=null 
-            				 && this.getPostalCode().equals(castOther.getPostalCode()) ));
-   }
-   
-   /**
-    * hashCode
-    */
-   public int hashCode() {
-         int result = 17;
-         result = 37 * result + ( getPostalCode() == null ? 0 : this.getPostalCode().hashCode() );
-         return result;
-   }   
-
-
 }

@@ -15,20 +15,8 @@
 
 package org.helianto.core.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * State of a union or federation.
@@ -37,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @javax.persistence.Entity
 @Table(name="core_state",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"contextId", "stateCode"})}
+    uniqueConstraints = {@UniqueConstraint(columnNames={"contextName", "stateCode"})}
 )
 public class State  
 	implements Serializable, Comparable<State> {
@@ -46,22 +34,18 @@ public class State
     
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
-    
-    @JsonIgnore
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="contextId", nullable=true)
-    private Operator context;
+
+	@Column(length=20)
+    private String contextName;
     
     @Column(length=12)
     private String stateCode = "";
     
     @Column(length=64)
     private String stateName = "";
-    
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="countryId")
-    private Country country;
+
+	@Column(length=3)
+    private String countryCode = "BRA";
     
     private char priority = 0;
 
@@ -75,36 +59,38 @@ public class State
     /**
      * Key constructor.
      * 
-     * @param context
+     * @param contextName
      * @param stateCode
      */
-    public State(Operator context, String stateCode) {
+    public State(String contextName, String stateCode) {
         this();
-        setContext(context);
+        setContextName(contextName);
         setStateCode(stateCode);
     }
 
     /**
      * Country constructor.
-     * 
-     * @param country
+     *
+     * @param contextName
+     * @param countryCode
      * @param stateCode
      */
-    public State(Country country, String stateCode) {
-        this(country.getOperator(), stateCode);
-        setCountry(country);
+    public State(String contextName, String countryCode, String stateCode) {
+        this(contextName, stateCode);
+        setCountryCode(countryCode);
     }
 
     /**
-     * Name constructor.
-     * 
-     * @param operator
-     * @param provinceCode
+     * Country full constructor.
+     *
+     * @param contextName
+     * @param countryCode
+     * @param stateCode
      * @param stateName
      */
-    public State(Operator operator, String provinceCode, String stateName) {
-    	this(operator, provinceCode);
-    	setStateName(stateName);
+    public State(String contextName, String countryCode, String stateCode, String stateName) {
+        this(contextName, countryCode, stateCode);
+        setStateName(stateName);
     }
 
     /**
@@ -120,14 +106,15 @@ public class State
     /**
      * Context.
      */
-    public Operator getContext() {
-		return context;
+	public String getContextName() {
+		return contextName;
 	}
-    public void setContext(Operator context) {
-		this.context = context;
+
+	public void setContextName(String contextName) {
+		this.contextName = contextName;
 	}
-    
-    /**
+
+	/**
      * State code.
      */
     public String getStateCode() {
@@ -150,11 +137,12 @@ public class State
     /**
      * Country.
      */
-    public Country getCountry() {
-		return country;
+	public String getCountryCode() {
+		return countryCode;
 	}
-	public void setCountry(Country country) {
-		this.country = country;
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
 	}
 
 	/**
@@ -176,56 +164,66 @@ public class State
 		}
 		return getPriority()-next.getPriority();
 	}
-	
+
     /**
-     * toString
-     * @return String
+     * Merger.
+     *
+     * @param command
      */
-	public String toString() {
-    	 return getStateCode();
-	}
+    public State merge(State command) {
+	    setStateName(command.getStateName());
+	    setCountryCode(command.getCountryCode());
+	    setPriority(command.getPriority());
+	    return this;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((context == null) ? 0 : context.hashCode());
-		result = prime * result
-				+ ((stateCode == null) ? 0 : stateCode.hashCode());
-		return result;
-	}
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof State)) return false;
+        final State other = (State) o;
+        if (!other.canEqual((Object) this)) return false;
+        if (this.getId() != other.getId()) return false;
+        final Object this$contextName = this.getContextName();
+        final Object other$contextName = other.getContextName();
+        if (this$contextName == null ? other$contextName != null : !this$contextName.equals(other$contextName))
+            return false;
+        final Object this$stateCode = this.getStateCode();
+        final Object other$stateCode = other.getStateCode();
+        if (this$stateCode == null ? other$stateCode != null : !this$stateCode.equals(other$stateCode)) return false;
+        final Object this$stateName = this.getStateName();
+        final Object other$stateName = other.getStateName();
+        if (this$stateName == null ? other$stateName != null : !this$stateName.equals(other$stateName)) return false;
+        final Object this$countryCode = this.getCountryCode();
+        final Object other$countryCode = other.getCountryCode();
+        if (this$countryCode == null ? other$countryCode != null : !this$countryCode.equals(other$countryCode))
+            return false;
+        if (this.getPriority() != other.getPriority()) return false;
+        return true;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof State)) {
-			return false;
-		}
-		State other = (State) obj;
-		if (context == null) {
-			if (other.context != null) {
-				return false;
-			}
-		} else if (!context.equals(other.context)) {
-			return false;
-		}
-		if (stateCode == null) {
-			if (other.stateCode != null) {
-				return false;
-			}
-		} else if (!stateCode.equals(other.stateCode)) {
-			return false;
-		}
-		return true;
-	}
-	
-	
+    public int hashCode() {
+        final int PRIME = 59;
+        int result = 1;
+        result = result * PRIME + this.getId();
+        final Object $contextName = this.getContextName();
+        result = result * PRIME + ($contextName == null ? 43 : $contextName.hashCode());
+        final Object $stateCode = this.getStateCode();
+        result = result * PRIME + ($stateCode == null ? 43 : $stateCode.hashCode());
+        final Object $stateName = this.getStateName();
+        result = result * PRIME + ($stateName == null ? 43 : $stateName.hashCode());
+        final Object $countryCode = this.getCountryCode();
+        result = result * PRIME + ($countryCode == null ? 43 : $countryCode.hashCode());
+        result = result * PRIME + this.getPriority();
+        return result;
+    }
 
+    protected boolean canEqual(Object other) {
+        return other instanceof State;
+    }
+
+    public String toString() {
+        return "org.helianto.core.domain.State(id=" + this.getId() + ", contextName=" + this.getContextName() + ", stateCode=" + this.getStateCode() + ", stateName=" + this.getStateName() + ", countryCode=" + this.getCountryCode() + ", priority=" + this.getPriority() + ")";
+    }
 }
 
 

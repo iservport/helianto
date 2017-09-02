@@ -20,20 +20,13 @@ public interface CityRepository extends JpaRepository<City, Serializable> {
 	
 	/**
 	 * Find by natural key.
-	 * 
-	 * @param context
-	 * @param stateCode
 	 */
-	City findByContextAndCityCode(Operator context, String cityCode);
+	City findByContextNameAndCityCode(String contextName, String cityCode);
 	
 	/**
 	 * Find by state code.
-	 * 
-	 * @param context
-	 * @param state
-	 * @param sort
 	 */
-	List<City> findByContextAndStateStateCode(Operator context, String stateCode, Sort sort);
+	List<City> findByContextNameAndStateStateCode(String contextName, String stateCode, Sort sort);
 	
 	/**
 	 * Find by state.

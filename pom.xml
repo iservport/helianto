@@ -9,7 +9,7 @@
 	<artifactId>helianto</artifactId>
 	<packaging>pom</packaging>
 	<name>The Helianto Project ${project.version}</name>
-	<version>0.8.1.1-BUILD</version>
+	<version>1.0.0.1-BUILD</version>
 	<description>
 		Helianto project creates infrastructure, repository, domain and
 		service objects to promote a basic level of standardization 
@@ -31,8 +31,6 @@
 		<module>helianto-classic</module>
 		<module>helianto-partner</module>
 		<module>helianto-document</module>
-		<module>helianto-resource</module>
-		<module>helianto-inventory</module>
 		<module>helianto-security</module>
 	</modules>
 	

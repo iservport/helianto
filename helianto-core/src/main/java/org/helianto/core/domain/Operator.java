@@ -15,29 +15,10 @@
 
 package org.helianto.core.domain;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapKey;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
 import org.helianto.core.domain.enums.OperationMode;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.persistence.*;
+import java.util.Locale;
 
 /**
  * The <code>Operator</code> domain class represents a mandatory
@@ -86,11 +67,6 @@ public class Operator implements java.io.Serializable {
     @Column(length=20)
     private String operatorName;
     
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="parentId", nullable=true)
-    private Operator parent;
-    
     private Locale locale;
     
     private Character operationMode = OperationMode.LOCAL.getValue();
@@ -113,26 +89,7 @@ public class Operator implements java.io.Serializable {
     @Column(length=5)
     private String rfc822TimeZone;
     
-    @JsonIgnore
-    @OneToMany(mappedBy="operator",
-    		fetch=FetchType.LAZY)
-    private Set<KeyType> keyTypes = new HashSet<KeyType>();
-    
-    @JsonIgnore
-    @OneToMany(mappedBy="operator")
-    @MapKey(name="keyCode")
-    private Map<String, KeyType> keyTypeMap = new HashMap<String, KeyType>();
-    
-	@JsonIgnore
-    @OneToMany(mappedBy="operator", fetch=FetchType.LAZY)
-    private Set<Province> provinces = new HashSet<Province>();
-    
-	@JsonManagedReference 
-	@OneToMany(mappedBy="operator", fetch=FetchType.EAGER)
-	@MapKey(name="serviceName")
-	private Map<String, Service> serviceMap = new HashMap<String, Service>();
-
-    /** 
+    /**
      * Default constructor.
      */
     public Operator() {
@@ -177,16 +134,6 @@ public class Operator implements java.io.Serializable {
     }
     public void setOperatorName(String operatorName) {
         this.operatorName = operatorName;
-    }
-
-    /**
-     * Parent operator, if any.
-     */
-    public Operator getParent() {
-        return this.parent;
-    }
-    public void setParent(Operator parent) {
-        this.parent = parent;
     }
 
     /**
@@ -271,46 +218,6 @@ public class Operator implements java.io.Serializable {
     public void setRfc822TimeZone(String rfc822TimeZone) {
         this.rfc822TimeZone = rfc822TimeZone;
     }
-
-    /**
-     * Key type set.
-     */
-    public Set<KeyType> getKeyTypes() {
-		return keyTypes;
-	}
-	public void setKeyTypes(Set<KeyType> keyTypes) {
-		this.keyTypes = keyTypes;
-	}
-	
-    /**
-     * Key type map.
-     */
-	public Map<String, KeyType> getKeyTypeMap() {
-		return keyTypeMap;
-	}
-	public void setKeyTypeMap(Map<String, KeyType> keyTypeMap) {
-		this.keyTypeMap = keyTypeMap;
-	}
-
-    /**
-     * Province set.
-     */
-    public Set<Province> getProvinces() {
-		return provinces;
-	}
-	public void setProvinces(Set<Province> provinces) {
-		this.provinces = provinces;
-	}
-
-	/**
-	 * Service map, eagerly loaded.
-	 */
-    public Map<String, Service> getServiceMap() {
-		return serviceMap;
-	}
-	public void setServiceMap(Map<String, Service> serviceMap) {
-		this.serviceMap = serviceMap;
-	}
 
     /**
      * toString

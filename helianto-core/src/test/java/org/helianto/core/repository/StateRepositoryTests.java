@@ -20,7 +20,7 @@ public class StateRepositoryTests extends AbstractJpaRepositoryIntegrationTest<S
 	}
 	
 	protected State getNewTarget() {
-		return new State(operator, "CODE");		
+		return new State("DEFAULT", "CODE");
 	}
 	
 	protected Serializable getTargetId(State target) {
@@ -28,7 +28,7 @@ public class StateRepositoryTests extends AbstractJpaRepositoryIntegrationTest<S
 	}
 	
 	protected State findByKey() {
-		return getRepository().findByContextAndStateCode(operator, "CODE");
+		return getRepository().findByContextNameAndStateCode("DEFAULT", "CODE");
 	}
 	
 }

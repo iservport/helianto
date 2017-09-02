@@ -53,7 +53,7 @@ public class ProcessDocumentKeyRepositoryTests
 	protected void setUp() {
 		entity = entityRepository.save(new Entity());
 		processDocument = processDocumentRepository.save(new ProcessDocument(entity, "10"));
-		keyType = keyTypeRepository.save(new KeyType(operator, "CODE"));
+		keyType = keyTypeRepository.save(new KeyType("DEFAULT", "CODE"));
 	}
 
 }

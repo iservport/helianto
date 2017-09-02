@@ -16,17 +16,7 @@ public interface ServiceRepository extends JpaRepository<Service, Serializable> 
 	
 	/**
 	 * Find by natural key.
-	 * 
-	 * @param operator
-	 * @param serviceName
 	 */
-	Service findByOperatorAndServiceName(Operator operator, String serviceName);
-	
-	/**
-	 * Find by operator.
-	 * 
-	 * @param operator
-	 */
-	List<Service> findByOperator(Operator operator);
+	Service findByContextNameAndServiceName(String contextName, String serviceName);
 	
 }

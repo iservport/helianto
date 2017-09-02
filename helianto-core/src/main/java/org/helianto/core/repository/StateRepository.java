@@ -18,17 +18,9 @@ public interface StateRepository extends JpaRepository<State, Serializable> {
 	/**
 	 * Find by natural key.
 	 * 
-	 * @param context
+	 * @param contextName
 	 * @param stateCode
 	 */
-	State findByContextAndStateCode(Operator context, String stateCode);
-	
-	/**
-	 * Find by context.
-	 * 
-	 * @param context
-	 * @param sort
-	 */
-	List<State> findByContext(Operator context, Sort sort);
+	State findByContextNameAndStateCode(String contextName, String stateCode);
 	
 }

@@ -15,19 +15,7 @@
 
 package org.helianto.core.domain;
 
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
-import org.helianto.core.domain.type.RootEntity;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
 
 /**
  * Represent key types like customer, supplier or government assigned numbers.
@@ -36,21 +24,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @javax.persistence.Entity
 @Table(name="core_keytype1",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "keyCode"})}
+    uniqueConstraints = {@UniqueConstraint(columnNames={"contextName", "keyCode"})}
 )
-public class KeyType 
-	implements RootEntity 
-{
-
+public class KeyType {
     private static final long serialVersionUID = 1L;
     
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
-    
-    @JsonIgnore
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="operatorId", nullable=true)
-    private Operator operator;
+
+    @Column(length=20)
+    private String contextName;
     
     @Column(length=20)
     private String keyCode = "";
@@ -76,12 +59,12 @@ public class KeyType
     /** 
      * Key constructor
      * 
-     * @param operator
+     * @param contextName
      * @param keyCode
      */
-    public KeyType(Operator operator, String keyCode) {
+    public KeyType(String contextName, String keyCode) {
     	this();
-    	setOperator(operator);
+    	setContextName(contextName);
     	setKeyCode(keyCode);
     }
 
@@ -96,22 +79,15 @@ public class KeyType
     }
 
     /**
-     * <<NaturalKey>> Operator.
+     * Context name.
      */
-    public Operator getOperator() {
-        return this.operator;
+    public String getContextName() {
+        return contextName;
     }
-    public void setOperator(Operator operator) {
-        this.operator = operator;
+    public void setContextName(String contextName) {
+        this.contextName = contextName;
     }
 
-    public int getContextId() {
-    	if (getOperator()!=null) {
-    		return getOperator().getId();
-    	}
-    	return 0;
-    }
-    
     /**
      * <<NaturalKey>> Key code.
      */
@@ -164,41 +140,71 @@ public class KeyType
 	}
 
     /**
-     * toString
-     * @return String
+     * Merger.
+     *
+     * @param command
      */
-    public String toString() {
-        StringBuffer buffer = new StringBuffer();
-
-        buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("operator").append("='").append(getOperator()).append("' ");
-        buffer.append("keyCode").append("='").append(getKeyCode()).append("' ");
-        buffer.append("]");
-      
-        return buffer.toString();
+    public KeyType merge(KeyType command) {
+        setKeyGroup(command.getKeyGroup());
+        setKeyName(command.getKeyName());
+        setPurpose(command.getPurpose());
+        setSynonyms(command.getSynonyms());
+        return this;
     }
 
-   /**
-    * equals
-    */
-   public boolean equals(Object other) {
-         if ( (this == other ) ) return true;
-         if ( (other == null ) ) return false;
-         if ( !(other instanceof KeyType) ) return false;
-         KeyType castOther = (KeyType) other; 
-         
-         return ((this.getOperator()==castOther.getOperator()) || ( this.getOperator()!=null && castOther.getOperator()!=null && this.getOperator().equals(castOther.getOperator()) ))
-             && ((this.getKeyCode()==castOther.getKeyCode()) || ( this.getKeyCode()!=null && castOther.getKeyCode()!=null && this.getKeyCode().equals(castOther.getKeyCode()) ));
-   }
-   
-   /**
-    * hashCode
-    */
-   public int hashCode() {
-         int result = 17;
-         result = 37 * result + ( getOperator() == null ? 0 : this.getOperator().hashCode() );
-         result = 37 * result + ( getKeyCode() == null ? 0 : this.getKeyCode().hashCode() );
-         return result;
-   }   
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof KeyType)) return false;
+        final KeyType other = (KeyType) o;
+        if (!other.canEqual((Object) this)) return false;
+        if (this.getId() != other.getId()) return false;
+        final Object this$contextName = this.getContextName();
+        final Object other$contextName = other.getContextName();
+        if (this$contextName == null ? other$contextName != null : !this$contextName.equals(other$contextName))
+            return false;
+        final Object this$keyCode = this.getKeyCode();
+        final Object other$keyCode = other.getKeyCode();
+        if (this$keyCode == null ? other$keyCode != null : !this$keyCode.equals(other$keyCode)) return false;
+        final Object this$keyGroup = this.getKeyGroup();
+        final Object other$keyGroup = other.getKeyGroup();
+        if (this$keyGroup == null ? other$keyGroup != null : !this$keyGroup.equals(other$keyGroup)) return false;
+        final Object this$keyName = this.getKeyName();
+        final Object other$keyName = other.getKeyName();
+        if (this$keyName == null ? other$keyName != null : !this$keyName.equals(other$keyName)) return false;
+        final Object this$purpose = this.getPurpose();
+        final Object other$purpose = other.getPurpose();
+        if (this$purpose == null ? other$purpose != null : !this$purpose.equals(other$purpose)) return false;
+        final Object this$synonyms = this.getSynonyms();
+        final Object other$synonyms = other.getSynonyms();
+        if (this$synonyms == null ? other$synonyms != null : !this$synonyms.equals(other$synonyms)) return false;
+        return true;
+    }
+
+    public int hashCode() {
+        final int PRIME = 59;
+        int result = 1;
+        result = result * PRIME + this.getId();
+        final Object $contextName = this.getContextName();
+        result = result * PRIME + ($contextName == null ? 43 : $contextName.hashCode());
+        final Object $keyCode = this.getKeyCode();
+        result = result * PRIME + ($keyCode == null ? 43 : $keyCode.hashCode());
+        final Object $keyGroup = this.getKeyGroup();
+        result = result * PRIME + ($keyGroup == null ? 43 : $keyGroup.hashCode());
+        final Object $keyName = this.getKeyName();
+        result = result * PRIME + ($keyName == null ? 43 : $keyName.hashCode());
+        final Object $purpose = this.getPurpose();
+        result = result * PRIME + ($purpose == null ? 43 : $purpose.hashCode());
+        final Object $synonyms = this.getSynonyms();
+        result = result * PRIME + ($synonyms == null ? 43 : $synonyms.hashCode());
+        return result;
+    }
+
+    protected boolean canEqual(Object other) {
+        return other instanceof KeyType;
+    }
+
+    public String toString() {
+        return "org.helianto.core.domain.KeyType(id=" + this.getId() + ", contextName=" + this.getContextName() + ", keyCode=" + this.getKeyCode() + ", keyGroup=" + this.getKeyGroup() + ", keyName=" + this.getKeyName() + ", purpose=" + this.getPurpose() + ", synonyms=" + this.getSynonyms() + ")";
+    }
 
 }

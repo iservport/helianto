@@ -15,21 +15,10 @@
 
 package org.helianto.core.domain;
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
-import javax.persistence.Version;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.io.Serializable;
 
 
 /**
@@ -39,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @javax.persistence.Entity
 @Table(name="core_city",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"contextId", "cityCode"})
+    uniqueConstraints = {@UniqueConstraint(columnNames={"contextName", "cityCode"})
     	,@UniqueConstraint(columnNames={"stateId", "cityCode"})}
 )
 public class City 
@@ -52,11 +41,9 @@ public class City
     
     @Version
     private int version;
-    
-    @JsonIgnore
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="contextId", nullable=true)
-    private Operator context;
+
+	@Column(length=20)
+	private String contextName;
     
     @Column(length=12)
     private String cityCode = "";
@@ -86,12 +73,12 @@ public class City
     /**
      * Key constructor.
      * 
-     * @param context
+     * @param contextName
      * @param cityCode
      */
-    public City(Operator context, String cityCode) {
+    public City(String contextName, String cityCode) {
     	this();
-    	setContext(context);
+    	setContextName(contextName);
     	setCityCode(cityCode);
     }
     
@@ -102,7 +89,7 @@ public class City
      * @param cityCode
      */
     public City(State state, String cityCode) {
-    	this(state.getContext(), cityCode);
+    	this(state.getContextName(), cityCode);
     	setState(state);
     }
     
@@ -141,14 +128,14 @@ public class City
     /**
      * Context.
      */
-    public Operator getContext() {
-		return context;
+	public String getContextName() {
+		return contextName;
 	}
-    public void setContext(Operator context) {
-		this.context = context;
+	public void setContextName(String contextName) {
+		this.contextName = contextName;
 	}
-    
-    /**
+
+	/**
      * State.
      */
     public State getState() {
@@ -231,53 +218,6 @@ public class City
 		return getPriority()-next.getPriority();
 	}
 	
-    /**
-     * toString
-     * @return String
-     */
-	public String toString() {
-    	 return getCityCode();
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((cityCode == null) ? 0 : cityCode.hashCode());
-		result = prime * result + ((context == null) ? 0 : context.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof City)) {
-			return false;
-		}
-		City other = (City) obj;
-		if (cityCode == null) {
-			if (other.cityCode != null) {
-				return false;
-			}
-		} else if (!cityCode.equals(other.cityCode)) {
-			return false;
-		}
-		if (context == null) {
-			if (other.context != null) {
-				return false;
-			}
-		} else if (!context.equals(other.context)) {
-			return false;
-		}
-		return true;
-	}
-
 }
 
 

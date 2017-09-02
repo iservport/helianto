@@ -1,14 +1,13 @@
 package org.helianto.classic.utils;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-
 import org.helianto.core.domain.City;
-import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.State;
 import org.helianto.core.internal.AbstractAddress;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 /**
  * 
@@ -76,7 +75,7 @@ public class AddressUtilsTests {
 	
 	@Before
 	public void setUp() {
-		state = new State(new Operator("DEFAULT"), "ST", "STATE");
+		state = new State("DEFAULT", "BRA", "ST", "STATE");
 		city = new City(state, "1234", "CITYNAME");
 	}
 

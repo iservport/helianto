@@ -20,7 +20,7 @@ public class PublicAddressRepositoryTests extends AbstractJpaRepositoryIntegrati
 	}
 	
 	protected PublicAddress getNewTarget() {
-		return new PublicAddress(operator, "CODE");		
+		return new PublicAddress("DEFAULT", "CODE");
 	}
 	
 	protected Serializable getTargetId(PublicAddress target) {
@@ -28,7 +28,7 @@ public class PublicAddressRepositoryTests extends AbstractJpaRepositoryIntegrati
 	}
 	
 	protected PublicAddress findByKey() {
-		return getRepository().findByOperatorAndPostalCode(operator, "CODE");	
+		return getRepository().findByContextNameAndPostalCode("DEFAULT", "CODE");
 	}
 	
 }

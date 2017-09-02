@@ -33,7 +33,7 @@ public class CityRepositoryTests
 	}
 	
 	protected City getNewTarget() {
-		return new City(operator, "CODE");		
+		return new City("DEFAULT", "CODE");
 	}
 	
 	protected Serializable getTargetId(City target) {
@@ -41,16 +41,16 @@ public class CityRepositoryTests
 	}
 	
 	protected City findByKey() {
-		return getRepository().findByContextAndCityCode(operator, "CODE");
+		return getRepository().findByContextNameAndCityCode("DEFAULT", "CODE");
 	}
 	
 	@Test
 	public void stateCode() {
-		State state1 = stateRepository.saveAndFlush(new State(operator, "S1"));
-		State state2 = stateRepository.saveAndFlush(new State(operator, "S2"));
+		State state1 = stateRepository.saveAndFlush(new State("DEFAULT", "S1"));
+		State state2 = stateRepository.saveAndFlush(new State("DEFAULT", "S2"));
 		City city1 = getRepository().saveAndFlush(new City(state1, "C1"));
 		City city2 = getRepository().saveAndFlush(new City(state2, "C2"));
-		List<City> cityList = getRepository().findByContextAndStateStateCode(operator, "S1", new Sort(Direction.ASC, "cityCode"));
+		List<City> cityList = getRepository().findByContextNameAndStateStateCode("DEFAULT", "S1", new Sort(Direction.ASC, "cityCode"));
 		assertTrue(cityList.contains(city1));
 		assertFalse(cityList.contains(city2));
 	}

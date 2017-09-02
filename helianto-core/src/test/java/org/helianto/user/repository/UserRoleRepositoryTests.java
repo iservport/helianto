@@ -54,7 +54,7 @@ public class UserRoleRepositoryTests
 	
 	protected UserRole getNewTarget() {
 		userGroup = userGroupRepository.saveAndFlush(new UserGroup(entity, "GROUP"));
-		service = serviceRepository.saveAndFlush(new Service(operator, "SERVICE"));
+		service = serviceRepository.saveAndFlush(new Service("DEFAULT", "SERVICE"));
 		return new UserRole(userGroup, service, "READ,WRITE");
 	}
 	

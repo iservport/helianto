@@ -20,7 +20,7 @@ public class ServiceRepositoryTests extends AbstractJpaRepositoryIntegrationTest
 	}
 	
 	protected Service getNewTarget() {
-		return new Service(operator, "NAME");		
+		return new Service("DEFAULT", "NAME");
 	}
 	
 	protected Serializable getTargetId(Service target) {
@@ -28,7 +28,7 @@ public class ServiceRepositoryTests extends AbstractJpaRepositoryIntegrationTest
 	}
 	
 	protected Service findByKey() {
-		return getRepository().findByOperatorAndServiceName(operator, "NAME");
+		return getRepository().findByContextNameAndServiceName("DEFAULT", "NAME");
 	}
 	
 	@Override

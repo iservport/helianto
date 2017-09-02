@@ -48,7 +48,7 @@ public class EntityReadAdapter
 
 	protected String stateName;
 
-	protected Integer countryId;
+	protected String countryCode;
 
 	public EntityReadAdapter() {
 		super();
@@ -74,7 +74,7 @@ public class EntityReadAdapter
 	 * @param stateId
 	 * @param stateCode
 	 * @param stateName
-	 * @param countryId
+	 * @param countryCode
 	 */
 	public EntityReadAdapter(int id
 			, String contextName
@@ -93,7 +93,7 @@ public class EntityReadAdapter
 			, Integer stateId
 			, String stateCode
 			, String stateName
-			, Integer countryId
+			, String countryCode
 			) {
 		super();
 		this.id = id;
@@ -113,7 +113,7 @@ public class EntityReadAdapter
 		this.stateId = stateId;
 		this.stateCode = stateCode;
 		this.stateName = stateName;
-		this.countryId = countryId;
+		this.countryCode = countryCode;
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class EntityReadAdapter
 	 * @param stateId
 	 * @param stateCode
 	 * @param stateName
-	 * @param countryId
+	 * @param countryCode
 	 * 
 	 * @deprecated
 	 */
@@ -155,7 +155,7 @@ public class EntityReadAdapter
 			, Integer stateId
 			, String stateCode
 			, String stateName
-			, Integer countryId
+			, String countryCode
 			) {
 		super();
 		this.id = id;
@@ -174,7 +174,7 @@ public class EntityReadAdapter
 		this.stateId = stateId;
 		this.stateCode = stateCode;
 		this.stateName = stateName;
-		this.countryId = countryId;
+		this.countryCode = countryCode;
 	}
 
 	/**
@@ -197,7 +197,7 @@ public class EntityReadAdapter
 	 * @param stateId
 	 * @param stateCode
 	 * @param stateName
-	 * @param countryId
+	 * @param countryCode
 	 */
 	public EntityReadAdapter(Integer id
 			, String contextName
@@ -216,7 +216,7 @@ public class EntityReadAdapter
 			, Integer stateId
 			, String stateCode
 			, String stateName
-			, Integer countryId
+			, String countryCode
 			) {
 		this(id
 			, contextName
@@ -235,7 +235,7 @@ public class EntityReadAdapter
 			, stateId
 			, stateCode
 			, stateName
-			, countryId
+			, countryCode
 		);
 	}
 
@@ -258,7 +258,7 @@ public class EntityReadAdapter
 	 * @param stateId
 	 * @param stateCode
 	 * @param stateName
-	 * @param countryId
+	 * @param countryCode
 	 * 
 	 * @deprecated
 	 */
@@ -278,7 +278,7 @@ public class EntityReadAdapter
 			, Integer stateId
 			, String stateCode
 			, String stateName
-			, Integer countryId
+			, String countryCode
 			) {
 		this(id
 			, contextName
@@ -296,7 +296,7 @@ public class EntityReadAdapter
 			, stateId
 			, stateCode
 			, stateName
-			, countryId
+			, countryCode
 		);
 	}
 
@@ -368,8 +368,8 @@ public class EntityReadAdapter
 		return stateName;
 	}
 	
-	public Integer getCountryId() {
-		return countryId;
+	public String getCountryCode() {
+		return countryCode;
 	}
 
 	@Override

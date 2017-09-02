@@ -16,9 +16,9 @@ public interface PublicAddressRepository extends JpaRepository<PublicAddress, Se
 	/**
 	 * Find by natural key.
 	 * 
-	 * @param operator
+	 * @param contextName
 	 * @param postalCode
 	 */
-	PublicAddress findByOperatorAndPostalCode(Operator operator, String postalCode);
+	PublicAddress findByContextNameAndPostalCode(String contextName, String postalCode);
 	
 }

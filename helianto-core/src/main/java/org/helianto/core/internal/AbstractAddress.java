@@ -59,7 +59,7 @@ public abstract class AbstractAddress
     
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="countryId")
+    @JoinColumn(name="countryCode")
     private Country country;
     
     @Transient
@@ -210,24 +210,14 @@ public abstract class AbstractAddress
     /**
      * Country.
      */
-    public Country getCountry() {
-    	if (getState()!=null && getState().getCountry()!=null) {
-    		return getState().getCountry();
+    public String getCountryCode() {
+    	if (getState()!=null) {
+    		return getState().getCountryCode();
     	}
-		return country;
+		return "BRA";
 	}
     public void setCountry(Country country) {
 		this.country = country;
-	}
-    
-    public Integer getCountryId() {
-    	if (getCountry()!=null) {
-    		return getCountry().getId();
-    	}
-		return countryId;
-	}
-    public void setCountryId(Integer countryId) {
-		this.countryId = countryId;
 	}
     
     /**

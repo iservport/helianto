@@ -46,7 +46,7 @@ public class PrivateEntityKeyRepositoryTests extends AbstractJpaRepositoryIntegr
 	
 	public void setUp() {
 		privateEntity = privateEntityRepository.save(new PrivateEntity(entity));
-		keyType = keyTypeRepository.save(new KeyType(operator, "CODE"));
+		keyType = keyTypeRepository.save(new KeyType("DEFAULT", "CODE"));
 	}
 	
 }

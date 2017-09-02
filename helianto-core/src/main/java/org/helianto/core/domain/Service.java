@@ -15,20 +15,8 @@
 
 package org.helianto.core.domain;
 
+import javax.persistence.*;
 import java.util.Arrays;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
-import org.helianto.core.domain.type.RootEntity;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 /**
  * A service made available in a name space (operator).
  * 
@@ -36,21 +24,17 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  */
 @javax.persistence.Entity
 @Table(name="core_service",
-    uniqueConstraints = {@UniqueConstraint(columnNames={"operatorId", "serviceName"})}
+    uniqueConstraints = {@UniqueConstraint(columnNames={"contextName", "serviceName"})}
 )
-public class Service 
-	implements RootEntity 
-{
+public class Service {
 
     private static final long serialVersionUID = 1L;
     
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
-    
-    @JsonBackReference 
-    @ManyToOne
-    @JoinColumn(name="operatorId", nullable=true)
-    private Operator operator;
+
+    @Column(length=20)
+    private String contextName;
     
     @Column(length=12)
     private String serviceName = "";
@@ -68,12 +52,12 @@ public class Service
     /** 
      * Key constructor.
      * 
-     * @param operator
+     * @param contextName
      * @param serviceName
      */
-    public Service(Operator operator, String serviceName) {
+    public Service(String contextName, String serviceName) {
     	this();
-    	setOperator(operator);
+    	setContextName(contextName);
     	setServiceName(serviceName);
     }
 
@@ -90,21 +74,13 @@ public class Service
     /**
      * Operator.
      */
-    public Operator getOperator() {
-        return this.operator;
+    public String getContextName() {
+        return contextName;
     }
-    public void setOperator(Operator operator) {
-        this.operator = operator;
+    public void setContextName(String contextName) {
+        this.contextName = contextName;
     }
 
-//    @Transient
-    public int getContextId() {
-    	if (getOperator()!=null) {
-    		return getOperator().getId();
-    	}
-    	return 0;
-    }
-    
     /**
      * Service name.
      */
@@ -138,43 +114,46 @@ public class Service
 	public void setServiceExtensionsAsArray(String[] natureArray) {
 		setServiceExtensions(Arrays.deepToString(natureArray).replace("[", "").replace("]", "").replace(" ", ""));
 	}
-	
-    /**
-     * toString
-     * @return String
-     */
-    public String toString() {
-        StringBuffer buffer = new StringBuffer();
 
-        buffer.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        buffer.append("operator").append("='").append(getOperator()).append("' ");
-        buffer.append("serviceName").append("='").append(getServiceName()).append("' ");
-        buffer.append("]");
-      
-        return buffer.toString();
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof Service)) return false;
+        final Service other = (Service) o;
+        if (!other.canEqual((Object) this)) return false;
+        if (this.getId() != other.getId()) return false;
+        final Object this$contextName = this.getContextName();
+        final Object other$contextName = other.getContextName();
+        if (this$contextName == null ? other$contextName != null : !this$contextName.equals(other$contextName))
+            return false;
+        final Object this$serviceName = this.getServiceName();
+        final Object other$serviceName = other.getServiceName();
+        if (this$serviceName == null ? other$serviceName != null : !this$serviceName.equals(other$serviceName))
+            return false;
+        final Object this$serviceExtensions = this.getServiceExtensions();
+        final Object other$serviceExtensions = other.getServiceExtensions();
+        if (this$serviceExtensions == null ? other$serviceExtensions != null : !this$serviceExtensions.equals(other$serviceExtensions))
+            return false;
+        return true;
     }
 
-   /**
-    * equals
-    */
-   public boolean equals(Object other) {
-         if ( (this == other ) ) return true;
-         if ( (other == null ) ) return false;
-         if ( !(other instanceof Service) ) return false;
-         Service castOther = (Service) other; 
-         
-         return ((this.getOperator()==castOther.getOperator()) || ( this.getOperator()!=null && castOther.getOperator()!=null && this.getOperator().equals(castOther.getOperator()) ))
-             && ((this.getServiceName()==castOther.getServiceName()) || ( this.getServiceName()!=null && castOther.getServiceName()!=null && this.getServiceName().equals(castOther.getServiceName()) ));
-   }
-   
-   /**
-    * hashCode
-    */
-   public int hashCode() {
-         int result = 17;
-         result = 37 * result + ( getOperator() == null ? 0 : this.getOperator().hashCode() );
-         result = 37 * result + ( getServiceName() == null ? 0 : this.getServiceName().hashCode() );
-         return result;
-   }   
+    public int hashCode() {
+        final int PRIME = 59;
+        int result = 1;
+        result = result * PRIME + this.getId();
+        final Object $contextName = this.getContextName();
+        result = result * PRIME + ($contextName == null ? 43 : $contextName.hashCode());
+        final Object $serviceName = this.getServiceName();
+        result = result * PRIME + ($serviceName == null ? 43 : $serviceName.hashCode());
+        final Object $serviceExtensions = this.getServiceExtensions();
+        result = result * PRIME + ($serviceExtensions == null ? 43 : $serviceExtensions.hashCode());
+        return result;
+    }
 
+    protected boolean canEqual(Object other) {
+        return other instanceof Service;
+    }
+
+    public String toString() {
+        return "org.helianto.core.domain.Service(id=" + this.getId() + ", contextName=" + this.getContextName() + ", serviceName=" + this.getServiceName() + ", serviceExtensions=" + this.getServiceExtensions() + ")";
+    }
 }

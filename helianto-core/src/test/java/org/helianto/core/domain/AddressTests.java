@@ -55,31 +55,6 @@ public class AddressTests {
 		assertEquals("", address.getStateName());
 	}
 	
-	@Test
-	public void hasState() {
-		Operator operator = new Operator("DEFAULT");
-		State state = new State(operator , "CODE", "NAME");
-		address.setState(state);
-		assertSame(state, address.getState());
-		assertEquals("CODE", address.getStateCode());
-		assertEquals("NAME", address.getStateName());
-		assertNull(address.getCity());
-	}
-	
-	@Test
-	public void hasCity() {
-		Operator operator = new Operator("DEFAULT");
-		State state = new State(operator , "CODE", "NAME");
-		City city = new City(state, "CITYCODE", "CITYNAME");
-		address.setCity(city);
-		assertSame(state, address.getState());
-		assertSame(city, address.getCity());
-		assertEquals("CODE", address.getStateCode());
-		assertEquals("NAME", address.getStateName());
-		assertEquals("CITYCODE", address.getCityCode());
-		assertEquals("CITYNAME", address.getCityName());
-	}
-	
 	@SuppressWarnings("serial")
 	@Before
 	public void setUp() {

@@ -20,7 +20,7 @@ public class KeyTypeRepositoryTests extends AbstractJpaRepositoryIntegrationTest
 	}
 	
 	protected KeyType getNewTarget() {
-		return new KeyType(operator, "CODE");		
+		return new KeyType("DEFAULT", "CODE");
 	}
 	
 	protected Serializable getTargetId(KeyType target) {
@@ -28,7 +28,7 @@ public class KeyTypeRepositoryTests extends AbstractJpaRepositoryIntegrationTest
 	}
 	
 	protected KeyType findByKey() {
-		return getRepository().findByOperatorAndKeyCode(operator, "CODE");
+		return getRepository().findByContextNameAndKeyCode("DEFAULT", "CODE");
 	}
 	
 }

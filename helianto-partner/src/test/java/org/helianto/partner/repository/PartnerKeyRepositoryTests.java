@@ -57,7 +57,7 @@ public class PartnerKeyRepositoryTests
 	protected void setUp() {
 		privateEntity = privateEntityRepository.save(new PrivateEntity(entity, "PARTNER"));
 		partner = partnerRepository.save(new Partner(privateEntity));
-		keyType = keyTypeRepository.save(new KeyType(operator, "CODE"));
+		keyType = keyTypeRepository.save(new KeyType("DEFAULT", "CODE"));
 	}
 
 }

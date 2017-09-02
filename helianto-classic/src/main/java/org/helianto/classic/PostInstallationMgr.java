@@ -15,15 +15,8 @@
 
 package org.helianto.classic;
 
-import java.util.List;
-
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
-import org.helianto.core.domain.KeyType;
-import org.helianto.core.domain.Operator;
-import org.helianto.core.domain.Province;
-import org.helianto.core.domain.Service;
-import org.springframework.core.io.Resource;
 
 /**
  * Post installation tasks.
@@ -33,65 +26,11 @@ import org.springframework.core.io.Resource;
 public interface PostInstallationMgr {
 
 	/**
-	 * Install an Operator, if does not exist.
-	 * 
-	 * <p>
-	 * Automatically associate two basic services: (1) ADMIN, (2) USER.
-	 * </p>
-	 * 
-	 * @param defaultOperatorName
-	 * @param reinstall
-	 */
-	public Operator installOperator(String defaultOperatorName, boolean reinstall);
-	
-	/**
-	 * Install provinces from a xml resource.
-	 * 
-	 * <p>Resource must contain a list of provinces:</p>
-	 * <pre>
-	 * &lt;provinces>
-	 *     &lt;province provinceCode="XX" provinceName="xxxx" />
-	 *     &lt;province provinceCode="YY" provinceName="yyyy" />
-	 *     ...
-	 * &lt;/provinces>
-	 * </pre>
-	 * 
-	 * @param defaultOperator
-	 * @param rs
-	 */
-	public void installProvinces(Operator defaultOperator, Resource rs);
-	
-	/**
-	 * Install provinces from a province list.
-	 * 
-	 * @param defaultOperator
-	 * @param provinceList
-	 */
-	public void installProvinces(Operator defaultOperator, List<Province> provinceList);
-
-	/**
-	 * Install a KeyType, if does not exist.
-	 * 
-	 * @param defaultOperator
-	 * @param keyCode
-	 */
-	public KeyType installKey(Operator defaultOperator, String keyCode);
-
-	/**
-	 * Install a Service, if does not exist.
-	 * 
-	 * @param defaultOperator
-	 * @param serviceName
-	 */
-	public Service installService(Operator defaultOperator, String serviceName);
-
-	/**
 	 * Install an Entity, if one does not exist.
 	 * 
 	 * <p>
 	 * This method is appropriate to requests coming from the presentation layer. The embedded
 	 * manager identity is required and used as a signal to perform the full installation routine.
-	 * To simply update the given entity, please use {@link ContextMgr#storeEntity(Entity)}.
 	 * </p>
 	 * 
 	 * @param entity
