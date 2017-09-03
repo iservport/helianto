@@ -16,6 +16,7 @@
 package org.helianto.core.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Represent key types like customer, supplier or government assigned numbers.
@@ -23,10 +24,11 @@ import javax.persistence.*;
  * @author Mauricio Fernandes de Castro
  */
 @javax.persistence.Entity
-@Table(name="core_keytype1",
+@Table(name="core_keytype",
     uniqueConstraints = {@UniqueConstraint(columnNames={"contextName", "keyCode"})}
 )
-public class KeyType {
+public class KeyType implements Serializable {
+
     private static final long serialVersionUID = 1L;
     
     @Id @GeneratedValue(strategy=GenerationType.AUTO)

@@ -32,7 +32,9 @@ public class PublicEntityKeyRepositoryTests extends AbstractJpaRepositoryIntegra
 	}
 	
 	protected PublicEntityKey getNewTarget() {
-		return new PublicEntityKey(publicEntity, keyType);		
+        publicEntity = publicEntity2Repository.save(new PublicEntity(entity));
+		keyType = keyTypeRepository.save(new KeyType("DEFAULT", "CODE"));
+		return new PublicEntityKey(publicEntity, keyType);
 	}
 	
 	protected Serializable getTargetId(PublicEntityKey target) {
@@ -41,11 +43,6 @@ public class PublicEntityKeyRepositoryTests extends AbstractJpaRepositoryIntegra
 	
 	protected PublicEntityKey findByKey() {
 		return getRepository().findByPublicEntityAndKeyType(publicEntity, keyType);
-	}
-	
-	public void setUp() {
-		publicEntity = publicEntity2Repository.save(new PublicEntity(entity));
-		keyType = keyTypeRepository.save(new KeyType("DEFAULT", "CODE"));
 	}
 	
 }
