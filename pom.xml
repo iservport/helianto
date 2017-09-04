@@ -9,7 +9,7 @@
 	<artifactId>helianto</artifactId>
 	<packaging>pom</packaging>
 	<name>The Helianto Project ${project.version}</name>
-	<version>1.0.0.3-BUILD</version>
+	<version>1.0.0.4-BUILD</version>
 	<description>
 		Helianto project creates infrastructure, repository, domain and
 		service objects to promote a basic level of standardization 

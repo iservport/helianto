@@ -7,7 +7,7 @@ package org.helianto.security.internal;
  */
 public class Registration {
 
-    private Integer contextId = 1;
+    private String contextId = "";
 
     private String email;
 
@@ -25,7 +25,7 @@ public class Registration {
       super();
     }
 
-    public Registration(Integer cityId, Integer contextId, String email, String entityAlias, Boolean isAdmin, Boolean isDomain, String password) {
+    public Registration(Integer cityId, String contextId, String email, String entityAlias, Boolean isAdmin, Boolean isDomain, String password) {
         this.cityId = cityId;
         this.contextId = contextId;
         this.email = email;
@@ -43,11 +43,11 @@ public class Registration {
         this.cityId = cityId;
     }
 
-    public Integer getContextId() {
+    public String getContextId() {
         return contextId;
     }
 
-    public void setContextId(Integer contextId) {
+    public void setContextId(String contextId) {
         this.contextId = contextId;
     }
 
