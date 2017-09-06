@@ -496,7 +496,8 @@ public class Entity
 		setActivityState(command.getActivityState());
 		setEntityName(command.getEntityName());
         setEntityDomain(command.getEntityDomain());
-        setCityId(command.getCityId());
+		setStateCode(command.getStateCode());
+		setCityId(command.getCityId());
 		return this;
 	}
 
