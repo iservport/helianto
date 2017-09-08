@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package org.helianto.partner.domain;
+package org.helianto.partner.domain.enums;
 
 /**
  * <code>AccountType</code> enumeration.

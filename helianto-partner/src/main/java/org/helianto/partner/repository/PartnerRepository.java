@@ -6,6 +6,7 @@ import java.util.List;
 import org.helianto.core.domain.Category;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.enums.PartnerType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -20,10 +21,10 @@ public interface PartnerRepository extends JpaRepository<Partner, Serializable> 
 	 * Find by natural key.
 	 * 
 	 * @param privateEntity
-	 * @param categoryId
+	 * @param partnerType
 	 */
-	@Query("select partner from Partner partner where privateEntity = ?1 and categoryId = ?2 ")
-	Partner findByPrivateEntityAndCategoryId(PrivateEntity privateEntity, Integer categoryId);
+	@Query("select partner from Partner partner where privateEntity = ?1 and partnerType = ?2 ")
+	Partner findByPrivateEntityAndPartnerType(PrivateEntity privateEntity, PartnerType partnerType);
 	
 	/**
 	 * Find by private entity.

@@ -1,4 +1,4 @@
-package org.helianto.partner.domain;
+package org.helianto.partner.domain.enums;
 
 
 /**

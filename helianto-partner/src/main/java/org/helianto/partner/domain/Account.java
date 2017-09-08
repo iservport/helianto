@@ -21,6 +21,8 @@ import javax.persistence.UniqueConstraint;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.internal.AbstractTrunkEntity;
+import org.helianto.partner.domain.enums.AccountType;
+
 /**
  * Represents accounts.  
  * 

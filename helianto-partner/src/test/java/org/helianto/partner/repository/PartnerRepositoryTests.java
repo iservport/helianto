@@ -3,6 +3,7 @@ package org.helianto.partner.repository;
 import org.helianto.core.test.AbstractJpaRepositoryIntegrationTest;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PrivateEntity;
+import org.helianto.partner.domain.enums.PartnerType;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
@@ -30,7 +31,7 @@ public class PartnerRepositoryTests
 	@Override
 	protected Partner getNewTarget() {
 		privateEntity = privateEntityRepository.save(new PrivateEntity(entity, "PARTNER"));
-		return new Partner(privateEntity, 1);
+		return new Partner(privateEntity, PartnerType.CUSTOMER);
 	}
 
 	@Override
@@ -40,7 +41,7 @@ public class PartnerRepositoryTests
 
 	@Override
 	protected Partner findByKey() {
-		return getRepository().findByPrivateEntityAndCategoryId(privateEntity, 1);
+		return getRepository().findByPrivateEntityAndPartnerType(privateEntity, PartnerType.CUSTOMER);
 	}
 	
 }
