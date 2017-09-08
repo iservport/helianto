@@ -1,13 +1,11 @@
 package org.helianto.partner.repository;
 
-import java.io.Serializable;
-
-import org.helianto.core.domain.Category;
-import org.helianto.core.repository.CategoryRepository;
 import org.helianto.core.test.AbstractJpaRepositoryIntegrationTest;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PrivateEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.io.Serializable;
 
 /**
  * 
@@ -26,19 +24,13 @@ public class PartnerRepositoryTests
 
     private PrivateEntity privateEntity;
 	
-    private Category category;
-	
 	@Autowired
 	protected PrivateEntityRepository privateEntityRepository;
-
-	@Autowired
-	protected CategoryRepository categoryRepository;
 
 	@Override
 	protected Partner getNewTarget() {
 		privateEntity = privateEntityRepository.save(new PrivateEntity(entity, "PARTNER"));
-		category = categoryRepository.save(new Category(entity, 'X', "CATEGORY"));
-		return new Partner(privateEntity, category);
+		return new Partner(privateEntity, 1);
 	}
 
 	@Override
@@ -48,7 +40,7 @@ public class PartnerRepositoryTests
 
 	@Override
 	protected Partner findByKey() {
-		return getRepository().findByPrivateEntityAndCategory(privateEntity, category);
+		return getRepository().findByPrivateEntityAndCategoryId(privateEntity, 1);
 	}
 	
 }

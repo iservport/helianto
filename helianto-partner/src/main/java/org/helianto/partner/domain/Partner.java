@@ -15,31 +15,17 @@
 
 package org.helianto.partner.domain;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import org.helianto.core.EntityAddress;
-import org.helianto.core.domain.Category;
 import org.helianto.core.domain.City;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Phone;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import lombok.Data;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 /**
  * Base class to represent the relationship between the organization and other 
  * entities.
@@ -67,12 +53,6 @@ public class Partner
     @Transient
 	private Integer privateEntityId;
     
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="categoryId", nullable=true)
-	private Category category;
-
-    @Transient
 	private Integer categoryId;
     
     @Transient
@@ -124,11 +104,11 @@ public class Partner
      * Key constructor.
      * 
      * @param privateEntity
-     * @param category
+     * @param categoryId
      */
-    public Partner(PrivateEntity privateEntity, Category category) {
+    public Partner(PrivateEntity privateEntity, Integer categoryId) {
     	this(privateEntity);
-    	setCategory(category);
+    	setCategoryId(categoryId);
     }
 
 	/**
@@ -249,20 +229,7 @@ public class Partner
     	return this.getPrivateEntity().getMainEmail();
     }
 
-	public Category getCategory() {
-		return category;
-	}
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-	
-	/**
-	 * <<Transient>> category id.
-	 */
 	public Integer getCategoryId() {
-		if (getCategory()!=null) {
-			return getCategory().getId();
-		}
 		return categoryId;
 	}
 	public void setCategoryId(Integer categoryId) {

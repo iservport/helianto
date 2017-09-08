@@ -20,10 +20,10 @@ public interface PartnerRepository extends JpaRepository<Partner, Serializable> 
 	 * Find by natural key.
 	 * 
 	 * @param privateEntity
-	 * @param category
+	 * @param categoryId
 	 */
-	@Query("select partner from Partner partner where privateEntity = ?1 and category = ?2")
-	Partner findByPrivateEntityAndCategory(PrivateEntity privateEntity, Category category);
+	@Query("select partner from Partner partner where privateEntity = ?1 and categoryId = ?2 ")
+	Partner findByPrivateEntityAndCategoryId(PrivateEntity privateEntity, Integer categoryId);
 	
 	/**
 	 * Find by private entity.

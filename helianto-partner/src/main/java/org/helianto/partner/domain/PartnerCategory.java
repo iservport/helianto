@@ -210,10 +210,6 @@ public class PartnerCategory
 		setMultipartFileContentType(file.getContentType());
 	}
 
-    /**
-     * True if {@link #afterInternalNumberSet(long)} starts with "text".
-     */
-//    @Transient
     public boolean isText() {
     	if (getContent()!=null && getMultipartFileContentType().startsWith("text")) {
     		return true;
@@ -221,10 +217,6 @@ public class PartnerCategory
     	return false;
     }
 
-    /**
-     * True if {@link #afterInternalNumberSet(long)} starts with "text/html".
-     */
-//    @Transient
     public boolean isHtml() {
     	if (getContent()!=null && getMultipartFileContentType().startsWith("text/html")) {
     		return true;
@@ -232,10 +224,6 @@ public class PartnerCategory
     	return false;
     }
 
-    /**
-     * True if {@link #afterInternalNumberSet(long)} starts with "image".
-     */
-//    @Transient
     public boolean isImage() {
     	if (getContent()!=null && getMultipartFileContentType().startsWith("image")) {
     		return true;
