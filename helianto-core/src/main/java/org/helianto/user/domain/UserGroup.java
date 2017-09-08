@@ -87,12 +87,6 @@ public class UserGroup
     
     private boolean accountNonExpired = true;
     
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="categoryId", nullable=true)
-    private Category category;
-    
-    @Transient
     private Integer categoryId = 0;
     
     @Transient
@@ -565,16 +559,6 @@ public class UserGroup
 	/**
 	 * Category attached to user or group.
 	 */
-	public Category getCategory() {
-		return category;
-	}
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-	
-	/**
-	 * <<Transient>> category id.
-	 */
     public Integer getCategoryId() {
 		return categoryId;
 	}
@@ -716,6 +700,7 @@ public class UserGroup
 	 * @param command
 	 */
 	public UserGroup merge(UserGroup command) {
+		setCategoryId(command.getCategoryId());
 		setUserName(command.getUserName());
 		setLocale(command.getLocale());
 		setLastEvent(command.getLastEvent());
