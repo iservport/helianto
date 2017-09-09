@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Category2;
 import org.helianto.core.repository.CategoryReadAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -146,13 +146,13 @@ public class QualifierAdapter {
 		return qualifierAdapterList;
 	}
 	
-	public static List<QualifierAdapter> qualifierAdapterList(List<Category> categoryList) {
+	public static List<QualifierAdapter> qualifierAdapterList(List<Category2> categoryList) {
 		return qualifierAdapterList(categoryList, true);
 	}
 	
-	public static List<QualifierAdapter> qualifierAdapterList(List<Category> categoryList, boolean addEmpty) {
+	public static List<QualifierAdapter> qualifierAdapterList(List<Category2> categoryList, boolean addEmpty) {
 		List<QualifierAdapter> qualifierAdapterList = new ArrayList<QualifierAdapter>();
-		for (Category qualifier: categoryList) {
+		for (Category2 qualifier: categoryList) {
 			qualifierAdapterList.add(new QualifierAdapter(qualifier));
 		}
 		if (addEmpty) {

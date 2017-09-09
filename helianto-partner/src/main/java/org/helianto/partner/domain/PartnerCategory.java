@@ -30,7 +30,7 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.helianto.classic.enums.Uploadable;
-import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Category2;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -63,7 +63,7 @@ public class PartnerCategory
     
     @ManyToOne
     @JoinColumn(name="categoryId", nullable=true)
-    private Category category;
+    private Category2 category;
     
     @Lob
     private byte[] content;
@@ -90,7 +90,7 @@ public class PartnerCategory
      * @param partner
      * @param category
      */
-    public PartnerCategory(Partner partner, Category category) {
+    public PartnerCategory(Partner partner, Category2 category) {
     	this(partner);
         setCategory(category);
     }
@@ -135,10 +135,10 @@ public class PartnerCategory
     /**
      * Category.
      */
-    public Category getCategory() {
+    public Category2 getCategory() {
 		return category;
 	}
-    public void setCategory(Category category) {
+    public void setCategory(Category2 category) {
 		this.category = category;
 	}
     

@@ -17,7 +17,7 @@ public class JsonSerializationCoreTests {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		
-		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(Category.class)));
+		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(Category2.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(City.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(Entity.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(Identity.class)));

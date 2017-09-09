@@ -19,7 +19,7 @@ import javax.annotation.Resource;
 
 import org.helianto.classic.CategoryMgr;
 import org.helianto.core.domain.enums.CategoryGroup;
-import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Category2;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.repository.CategoryRepository;
 import org.slf4j.Logger;
@@ -40,22 +40,22 @@ public class CategoryMgrImpl implements CategoryMgr {
 	}
     
 	@Transactional
-	public Category storeCategory(Category category) {
+	public Category2 storeCategory(Category2 category) {
     	return categoryRepository.saveAndFlush(category);
 	}
 
-	public void removeCategory(Category category) {
+	public void removeCategory(Category2 category) {
 		categoryRepository.delete(category);
 	}
 	
 	@Transactional
-	public Category installCategory(Entity entity, CategoryGroup categoryGroup, String categoryCode, String categoryName) {
-    	Category category = categoryRepository.findByEntityAndCategoryGroupAndCategoryCode(entity, categoryGroup.getValue(), categoryCode);
+	public Category2 installCategory(Entity entity, CategoryGroup categoryGroup, String categoryCode, String categoryName) {
+    	Category2 category = categoryRepository.findByEntityAndCategoryGroupAndCategoryCode(entity, categoryGroup.getValue(), categoryCode);
     	if (category!=null) {
         	logger.debug("Found category {}", category);
     		return category;
     	}
-    	category = categoryRepository.saveAndFlush(new Category(entity, categoryGroup, categoryCode, categoryName));
+    	category = categoryRepository.saveAndFlush(new Category2(entity, categoryGroup, categoryCode, categoryName));
     	logger.debug("Category {} installed.", category);
     	return category;
 	}

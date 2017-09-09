@@ -2,7 +2,7 @@ package org.helianto.partner.repository;
 
 import java.io.Serializable;
 
-import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Category2;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PartnerCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,6 +20,6 @@ public interface PartnerCategoryRepository extends JpaRepository<PartnerCategory
 	 * @param partner
 	 * @param category
 	 */
-	PartnerCategory findByPartnerAndCategory(Partner partner, Category category);
+	PartnerCategory findByPartnerAndCategory(Partner partner, Category2 category);
 	
 }

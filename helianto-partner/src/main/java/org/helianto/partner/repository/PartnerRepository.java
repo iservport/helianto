@@ -3,7 +3,6 @@ package org.helianto.partner.repository;
 import java.io.Serializable;
 import java.util.List;
 
-import org.helianto.core.domain.Category;
 import org.helianto.partner.domain.Partner;
 import org.helianto.partner.domain.PrivateEntity;
 import org.helianto.partner.domain.enums.PartnerType;

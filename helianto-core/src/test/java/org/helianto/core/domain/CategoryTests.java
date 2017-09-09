@@ -41,7 +41,7 @@ public class CategoryTests {
      */
 	@Test
     public void categoryEquals() {
-        Category copy = (Category) DomainTestSupport.minimalEqualsTest(category);
+        Category2 copy = (Category2) DomainTestSupport.minimalEqualsTest(category);
         
         copy.setEntity(null);
         copy.setCategoryGroup(' ');
@@ -108,12 +108,12 @@ public class CategoryTests {
 	}
 	
 	private Entity entity;
-	private Category category;
+	private Category2 category;
 	
 	@Before
 	public void setUp() {
         entity = new Entity();
-        category = new Category(entity, CategoryGroup.INSTRUMENT, "CODE");
+        category = new Category2(entity, CategoryGroup.INSTRUMENT, "CODE");
 	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(CategoryTests.class);

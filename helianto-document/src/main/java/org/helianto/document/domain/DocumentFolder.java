@@ -26,7 +26,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Category2;
 import org.helianto.core.domain.Entity;
 import org.helianto.document.internal.AbstractSerializer;
 
@@ -55,7 +55,7 @@ public class DocumentFolder
 	@JsonIgnore
     @ManyToOne
     @JoinColumn(name="categoryId", nullable=true)
-    private Category category;
+    private Category2 category;
 
     @Transient
     private Integer categoryId = 0;
@@ -79,12 +79,12 @@ public class DocumentFolder
 
     /**
      * Category.
-     * @see {@link Category}
+     * @see {@link Category2}
      */
-    public Category getCategory() {
+    public Category2 getCategory() {
 		return getInternalCategory(category);
 	}
-    public void setCategory(Category category) {
+    public void setCategory(Category2 category) {
 		this.category = category;
 	}
     
@@ -105,7 +105,7 @@ public class DocumentFolder
 	 * Default implementation does not replace the private field.
 	 * </p>
 	 */
-	protected Category getInternalCategory(Category category) {
+	protected Category2 getInternalCategory(Category2 category) {
 		return category;
 	}
 	

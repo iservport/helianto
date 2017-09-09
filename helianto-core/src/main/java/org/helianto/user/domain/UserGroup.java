@@ -17,7 +17,6 @@ package org.helianto.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.helianto.core.Programmable;
-import org.helianto.core.domain.Category;
 import org.helianto.core.domain.ContextGroup;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.enums.ActivityState;

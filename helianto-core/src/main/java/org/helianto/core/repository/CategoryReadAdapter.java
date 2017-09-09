@@ -2,7 +2,7 @@ package org.helianto.core.repository;
 
 import java.io.Serializable;
 
-import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Category2;
 import org.helianto.core.internal.KeyNameAdapter;
 import org.helianto.core.utils.StringListUtils;
 
@@ -19,7 +19,7 @@ public class CategoryReadAdapter
 	implements KeyNameAdapter
 {
 	
-	private Category adaptee;
+	private Category2 adaptee;
 	
 	private Integer id;
 	
@@ -59,7 +59,7 @@ public class CategoryReadAdapter
 	 * 
 	 * @param category
 	 */
-	public CategoryReadAdapter(Category category) {
+	public CategoryReadAdapter(Category2 category) {
 		this();
 		setAdaptee(category);
 	}
@@ -148,7 +148,7 @@ public class CategoryReadAdapter
 	/**
 	 * Merger.
 	 */
-	public Category merge() {
+	public Category2 merge() {
 		adaptee.setId(id);
 		adaptee.setCategoryGroup(categoryGroup);
 		adaptee.setCategoryCode(categoryCode);
@@ -160,10 +160,10 @@ public class CategoryReadAdapter
 	}
 
 	@JsonIgnore
-	public Category getAdaptee() {
+	public Category2 getAdaptee() {
 		return adaptee;
 	}
-	public CategoryReadAdapter setAdaptee(Category adaptee) {
+	public CategoryReadAdapter setAdaptee(Category2 adaptee) {
 		this.adaptee = adaptee;
 		return this;
 	}

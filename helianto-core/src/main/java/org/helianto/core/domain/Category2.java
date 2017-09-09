@@ -48,12 +48,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * Categories.  
  * 
  * @author Mauricio Fernandes de Castro
+ * @deprecated
  */
 @javax.persistence.Entity
 @Table(name="core_category",
     uniqueConstraints = {@UniqueConstraint(columnNames={"entityId", "categoryGroup", "categoryCode"})}
 )
-public class Category 
+public class Category2
 	extends AbstractHumanReadable
 	implements 
 	  TrunkEntity
@@ -149,7 +150,7 @@ public class Category
 	/** 
      * Default constructor
      */
-    public Category() {
+    public Category2() {
     	super();
     	setCategoryGroupAsEnum(CategoryGroup.NOT_DEFINED);
     }
@@ -162,7 +163,7 @@ public class Category
      * @param categoryCode
      * @deprecated
      */
-    public  Category(Entity entity, CategoryGroup categoryGroup, String categoryCode) {
+    public Category2(Entity entity, CategoryGroup categoryGroup, String categoryCode) {
     	this();
     	setEntity(entity);
         setCategoryGroupAsEnum(categoryGroup);
@@ -176,7 +177,7 @@ public class Category
      * @param categoryGroup
      * @param categoryCode
      */
-    public  Category(Entity entity, char categoryGroup, String categoryCode) {
+    public Category2(Entity entity, char categoryGroup, String categoryCode) {
     	this();
     	setEntity(entity);
         setCategoryGroup(categoryGroup);
@@ -188,7 +189,7 @@ public class Category
      * 
      * @param categoryGroupType
      */
-    public  Category(CategoryGroup categoryGroupType) {
+    public Category2(CategoryGroup categoryGroupType) {
     	this();
         setCategoryGroupType(categoryGroupType);
     }
@@ -202,7 +203,7 @@ public class Category
      * @param categoryName
      * @deprecated
      */
-    public  Category(Entity entity, CategoryGroup categoryGroup, String categoryCode, String categoryName) {
+    public Category2(Entity entity, CategoryGroup categoryGroup, String categoryCode, String categoryName) {
     	this(entity, categoryGroup, categoryCode);
     	setCategoryName(categoryName);
     }
@@ -215,7 +216,7 @@ public class Category
      * @param categoryCode
      * @param categoryName
      */
-    public  Category(Entity entity, char categoryGroup, String categoryCode, String categoryName) {
+    public Category2(Entity entity, char categoryGroup, String categoryCode, String categoryName) {
     	this(entity, categoryGroup, categoryCode);
     	setCategoryName(categoryName);
     }
@@ -242,7 +243,7 @@ public class Category
 	 * @param scriptItems
 	 * @param activityCode
 	 */
-    public Category(int id
+    public Category2(int id
     		, byte[] content
     		, String encoding
     		, String multipartFileContentType
@@ -668,7 +669,7 @@ public class Category
      * 
      * @param command
      */
-	public Category merge(Category command) {
+	public Category2 merge(Category2 command) {
 		super.merge(command);
 		setCategoryGroupType(command.getCategoryGroupType());
 		setCategoryCode(command.getCategoryCode());
@@ -714,8 +715,8 @@ public class Category
     public boolean equals(Object other) {
         if ( (this == other ) ) return true;
         if ( (other == null ) ) return false;
-        if ( !(other instanceof Category) ) return false;
-         Category castOther = (Category) other; 
+        if ( !(other instanceof Category2) ) return false;
+         Category2 castOther = (Category2) other;
          
         return ((this.getEntity()==castOther.getEntity()) 
         		|| ( this.getEntity()!=null && castOther.getEntity()!=null 

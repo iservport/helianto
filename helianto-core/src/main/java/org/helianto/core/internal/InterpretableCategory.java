@@ -1,6 +1,6 @@
 package org.helianto.core.internal;
 
-import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Category2;
 
 /**
  * Interface para classes onde a categoria define a origem dos scripts a serem interpretados.
@@ -16,6 +16,6 @@ public interface InterpretableCategory
     /**
      * Category.
      */
-    Category getCategory();
+    Category2 getCategory();
     
 }

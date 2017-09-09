@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.helianto.core.domain.enums.CategoryGroup;
-import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Category2;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.internal.SimpleCounter;
 import org.springframework.data.domain.Page;
@@ -19,7 +19,7 @@ import org.springframework.data.jpa.repository.Query;
  * 
  * @author mauriciofernandesdecastro
  */
-public interface CategoryRepository extends JpaRepository<Category, Serializable> {
+public interface CategoryRepository extends JpaRepository<Category2, Serializable> {
 	
 	/**
 	 * Find by category group.
@@ -27,7 +27,7 @@ public interface CategoryRepository extends JpaRepository<Category, Serializable
 	 * @param entity
 	 * @param categoryGroup
 	 */
-	List<Category> findByEntityAndCategoryGroup(Entity entity, char categoryGroup);
+	List<Category2> findByEntityAndCategoryGroup(Entity entity, char categoryGroup);
 	
 	/**
 	 * Find by natural key.
@@ -36,7 +36,7 @@ public interface CategoryRepository extends JpaRepository<Category, Serializable
 	 * @param categoryGroup
 	 * @param categoryCode
 	 */
-	Category findByEntityAndCategoryGroupAndCategoryCode(Entity entity, char categoryGroup, String categoryCode);
+	Category2 findByEntityAndCategoryGroupAndCategoryCode(Entity entity, char categoryGroup, String categoryCode);
 	
 	/**
 	 * Find by Entity Id
@@ -44,9 +44,9 @@ public interface CategoryRepository extends JpaRepository<Category, Serializable
 	 * @param entityId
 	 * @return
 	 */
-	List<Category> findByEntity_Id(int entityId);
+	List<Category2> findByEntity_Id(int entityId);
 	
-	public static final String QUERY = "select new Category"
+	public static final String QUERY = "select new Category2"
 			+ "(category_.id"
 			+ ", category_.content"
 			+ ", category_.encoding"
@@ -69,7 +69,7 @@ public interface CategoryRepository extends JpaRepository<Category, Serializable
 			+ ", category_.scriptItems"
 			+ ", category_.activityCode"
 			+ ") "
-			+ "from Category category_ ";
+			+ "from Category2 category_ ";
 	
 	/**
 	 * Find category by Id.
@@ -78,7 +78,7 @@ public interface CategoryRepository extends JpaRepository<Category, Serializable
 	 */
 	@Query(QUERY
 			+ "where category_.id = ?1 ")
-	Category findAdapter(int id);
+    Category2 findAdapter(int id);
 
 	/**
 	 * Category list.
@@ -90,7 +90,7 @@ public interface CategoryRepository extends JpaRepository<Category, Serializable
 	@Query(QUERY
 			+ "where category_.entity.id = ?1 "
 			+ "and category_.categoryGroup = ?2 ")
-	List<Category> findByEntity_IdAndCategoryGroup(int entityId, char categoryGroup, Sort sort);
+	List<Category2> findByEntity_IdAndCategoryGroup(int entityId, char categoryGroup, Sort sort);
 
 	/**
 	 * Category page.
@@ -102,7 +102,7 @@ public interface CategoryRepository extends JpaRepository<Category, Serializable
 	@Query(QUERY
 			+ "where category_.entity.id = ?1 "
 			+ "and category_.categoryGroupType = ?2 ")
-	Page<Category> findByEntity_IdAndCategoryGroupType(int entityId, CategoryGroup categoryGroupType, Pageable page);
+	Page<Category2> findByEntity_IdAndCategoryGroupType(int entityId, CategoryGroup categoryGroupType, Pageable page);
 
 	/**
 	 * Category adapter list.
@@ -114,7 +114,7 @@ public interface CategoryRepository extends JpaRepository<Category, Serializable
 	@Query(QUERY
 			+ "where category_.entity.id = ?1 "
 			+ "and category_.categoryCode like %?2% ")
-	Page<Category> findByEntity_IdAndCategoryCodeLike(int entityId, String categoryCode, Pageable sort);
+	Page<Category2> findByEntity_IdAndCategoryCodeLike(int entityId, String categoryCode, Pageable sort);
 
 	/**
 	 * Category adapter page.
@@ -126,25 +126,25 @@ public interface CategoryRepository extends JpaRepository<Category, Serializable
 	@Query(QUERY
 			+ "where category_.entity.id = ?1 "
 			+ "and category_.categoryGroup = ?2 ")
-	Page<Category> findByEntity_IdAndCategoryGroup(int entityId, char categoryGroup, Pageable page);
+	Page<Category2> findByEntity_IdAndCategoryGroup(int entityId, char categoryGroup, Pageable page);
 
 	@Query(QUERY
 			+ "where category_.entity.id = ?1 "
 			+ "and category_.categoryGroup in ?2 "
 			+ "and (category_.categoryCode like %?3% OR category_.categoryName like %?3% )")
-	Page<Category> findByEntityIdAndCategoryGroupAndCategoryCodeLikeOrCategoryNameLike(int entityId, char[] categoryGroup
+	Page<Category2> findByEntityIdAndCategoryGroupAndCategoryCodeLikeOrCategoryNameLike(int entityId, char[] categoryGroup
 			, String search, Pageable page);
 	
 	@Query("select new "
 			+ "org.helianto.core.internal.SimpleCounter(category_.categoryGroup, count(category_.id)) "
-			+ "from Category category_ "
+			+ "from Category2 category_ "
 			+ "where category_.entity.id = ?1 "
 			+ "group by category_.categoryGroup ")
 	SimpleCounter countCategoryByGroup(int entityId);
 
 	@Query("select "
 			+ "category_.categoryGroup "
-			+ "from Category category_ "
+			+ "from Category2 category_ "
 			+ "where category_.entity.id = ?1 "
 			+ "group by category_.categoryGroup ")
 	List<Character> countCategoryByGroup2(int entityId);
@@ -157,7 +157,7 @@ public interface CategoryRepository extends JpaRepository<Category, Serializable
 	 * @param categoryCode
 	 */
 	@Query("select count(category_) "
-			+ "from Category category_ "
+			+ "from Category2 category_ "
 			+ "where category_.entity.id = ?1 "
 			+ "and category_.categoryGroup = ?2 "
 			+ "and category_.categoryCode like ?3 ")
@@ -171,7 +171,7 @@ public interface CategoryRepository extends JpaRepository<Category, Serializable
 	 * @param categoryCode
 	 */
 	@Query("select category_.id "
-			+ "from Category category_ "
+			+ "from Category2 category_ "
 			+ "where category_.entity.id = ?1 "
 			+ "and category_.categoryGroup = ?2 "
 			+ "and category_.categoryCode = ?3 ")
@@ -185,7 +185,7 @@ public interface CategoryRepository extends JpaRepository<Category, Serializable
 	@Query("select new " +
 			"org.helianto.core.internal.SimpleCounter" +
 			"(category_.categoryGroup, count(category_)) " +
-			"from Category category_ " +
+			"from Category2 category_ " +
 			"where category_.entity.id = ?1 " +
 			"group by category_.categoryGroup")
 	List<SimpleCounter> countCategoriesByEntityIdGroupByGroup(int entityId);

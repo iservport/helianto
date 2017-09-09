@@ -24,7 +24,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Category2;
 import org.helianto.core.domain.Entity;
 import org.helianto.classic.number.Sequenceable;
 import org.helianto.document.def.ReviewFrequency;
@@ -69,7 +69,7 @@ public abstract class AbstractCustomDocument
 	@JsonIgnore
     @ManyToOne
     @JoinColumn(name="categoryId", nullable=true)
-    private Category category;
+    private Category2 category;
 	
 	@Transient
 	private Integer categoryId = 0;
@@ -300,12 +300,12 @@ public abstract class AbstractCustomDocument
 
     /**
      * Category.
-     * @see {@link Category}
+     * @see {@link Category2}
      */
-    public Category getCategory() {
+    public Category2 getCategory() {
 		return getInternalCategory(category);
 	}
-    public void setCategory(Category category) {
+    public void setCategory(Category2 category) {
 		this.category = category;
 	}
     
@@ -357,7 +357,7 @@ public abstract class AbstractCustomDocument
 	 * Default implementation does not replace the private field.
 	 * </p>
 	 */
-	protected Category getInternalCategory(Category category) {
+	protected Category2 getInternalCategory(Category2 category) {
 		return category;
 	}
 	

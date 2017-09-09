@@ -4,7 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.helianto.core.domain.enums.CategoryGroup;
-import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Category2;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.test.DomainTestSupport;
 import org.helianto.core.test.EntityTestSupport;
@@ -20,7 +20,7 @@ public class PartnerCategoryTests {
 		Entity entity = EntityTestSupport.createEntity();
         PrivateEntity privateEntity = new PrivateEntity(entity);
         Partner partner = new Partner(privateEntity);
-        Category category = new Category(entity, CategoryGroup.NOT_DEFINED, "");
+        Category2 category = new Category2(entity, CategoryGroup.NOT_DEFINED, "");
         
         PartnerCategory partnerKey = new PartnerCategory(partner, category);
         PartnerCategory copy = (PartnerCategory) DomainTestSupport.minimalEqualsTest(partnerKey);

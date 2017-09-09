@@ -16,7 +16,7 @@
 package org.helianto.classic;
 
 import org.helianto.core.domain.enums.CategoryGroup;
-import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Category2;
 import org.helianto.core.domain.Entity;
 
 /**
@@ -47,14 +47,14 @@ public interface CategoryMgr {
 	 * 
 	 * @param category
 	 */
-	Category storeCategory(Category category);
+	Category2 storeCategory(Category2 category);
 
 	/**
 	 * Remove category.
 	 * 
 	 * @param category
 	 */
-	void removeCategory(Category category);
+	void removeCategory(Category2 category);
 
 	/**
 	 * Install category.
@@ -63,6 +63,6 @@ public interface CategoryMgr {
      * @param categoryGroup
      * @param categoryCode
 	 */
-	Category installCategory(Entity entity, CategoryGroup categoryGroup, String categoryCode, String categoryName);
+	Category2 installCategory(Entity entity, CategoryGroup categoryGroup, String categoryCode, String categoryName);
 
 }

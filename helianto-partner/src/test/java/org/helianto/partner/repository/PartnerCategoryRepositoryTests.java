@@ -3,7 +3,7 @@ package org.helianto.partner.repository;
 import java.io.Serializable;
 
 import org.helianto.core.domain.enums.CategoryGroup;
-import org.helianto.core.domain.Category;
+import org.helianto.core.domain.Category2;
 import org.helianto.core.repository.CategoryRepository;
 import org.helianto.core.test.AbstractJpaRepositoryIntegrationTest;
 import org.helianto.partner.domain.Partner;
@@ -28,7 +28,7 @@ public class PartnerCategoryRepositoryTests
 
     private PrivateEntity privateEntity;
     private Partner partner;
-    private Category category;
+    private Category2 category;
 	
 	@Autowired
 	protected PrivateEntityRepository privateEntityRepository;
@@ -58,7 +58,7 @@ public class PartnerCategoryRepositoryTests
 	protected void setUp() {
 		privateEntity = privateEntityRepository.save(new PrivateEntity(entity, "PARTNER"));
 		partner = partnerRepository.save(new Partner(privateEntity));
-		category = categoryRepository.save(new Category(entity, CategoryGroup.NOT_DEFINED, "CAT"));
+		category = categoryRepository.save(new Category2(entity, CategoryGroup.NOT_DEFINED, "CAT"));
 	}
 
 }
