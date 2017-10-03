@@ -3,7 +3,7 @@ package org.helianto.document.repository;
 import java.io.Serializable;
 
 import org.helianto.core.domain.KeyType;
-import org.helianto.document.domain.ProcessDocument;
+import org.helianto.document.domain.ProcessDocument2;
 import org.helianto.document.domain.ProcessDocumentKey;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -20,6 +20,6 @@ public interface ProcessDocumentKeyRepository extends JpaRepository<ProcessDocum
 	 * @param processDocument
 	 * @param keyType
 	 */
-	ProcessDocumentKey findByProcessDocumentAndKeyType(ProcessDocument processDocument, KeyType keyType);
+	ProcessDocumentKey findByProcessDocumentAndKeyType(ProcessDocument2 processDocument, KeyType keyType);
 
 }

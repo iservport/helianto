@@ -21,7 +21,7 @@ public class ProcessDocumentTests {
 	@Test
     public void constructor() {
         Entity entity = EntityTestSupport.createEntity();
-    	ProcessDocument document = new ProcessDocument(entity, "CODE");
+    	ProcessDocument2 document = new ProcessDocument2(entity, "CODE");
 
 		assertSame(entity, document.getEntity());
         assertEquals("CODE", document.getDocCode());
@@ -30,10 +30,10 @@ public class ProcessDocumentTests {
 	@Test
 	@SuppressWarnings("serial")
 	public void processDocumentEquals() {
-		ProcessDocument document = new ProcessDocument(null, null) { };
+		ProcessDocument2 document = new ProcessDocument2(null, null) { };
 		assertFalse(document.equals(null));
 		
-		ProcessDocument other = new ProcessDocument(null, null) { };
+		ProcessDocument2 other = new ProcessDocument2(null, null) { };
 		assertTrue(document.equals(other));
 		
 		Entity entity = EntityTestSupport.createEntity();

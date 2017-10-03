@@ -15,6 +15,10 @@
 
 package org.helianto.user.domain;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -465,6 +469,15 @@ public class User
     	}
         return new Date();
     }
+
+    public int getAge() {
+		if ((getUserBirthDate() != null)) {
+            LocalDate birthDate = getUserBirthDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			return Period.between(birthDate, LocalDate.now()).getYears();
+		} else {
+			return 0;
+		}
+	}
     
     /**
      * User initials (optional), like JFK, etc..

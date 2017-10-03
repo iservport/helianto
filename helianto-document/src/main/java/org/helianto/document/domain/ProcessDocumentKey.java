@@ -51,7 +51,7 @@ public class ProcessDocumentKey
     @JsonIgnore 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="processDocumentId", nullable=true)
-    private ProcessDocument processDocument;
+    private ProcessDocument2 processDocument;
 
     /** 
      * Empty constructor.
@@ -66,7 +66,7 @@ public class ProcessDocumentKey
      * @param document
      * @param keyType
      */
-    public ProcessDocumentKey(ProcessDocument document, KeyType keyType) {
+    public ProcessDocumentKey(ProcessDocument2 document, KeyType keyType) {
     	this();
         setProcessDocument(document);
         setKeyType(keyType);
@@ -77,7 +77,7 @@ public class ProcessDocumentKey
      * 
      * @param processDocument
      */
-    public ProcessDocumentKey(ProcessDocument processDocument) {
+    public ProcessDocumentKey(ProcessDocument2 processDocument) {
     	super();
     	setProcessDocument(processDocument);
     }
@@ -85,10 +85,10 @@ public class ProcessDocumentKey
     /**
      * Process document.
      */
-    public ProcessDocument getProcessDocument() {
+    public ProcessDocument2 getProcessDocument() {
         return this.processDocument;
     }
-    public void setProcessDocument(ProcessDocument processDocument) {
+    public void setProcessDocument(ProcessDocument2 processDocument) {
         this.processDocument = processDocument;
     }
 

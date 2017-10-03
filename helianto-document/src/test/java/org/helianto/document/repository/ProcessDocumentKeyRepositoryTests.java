@@ -6,7 +6,7 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.KeyType;
 import org.helianto.core.repository.KeyTypeRepository;
 import org.helianto.core.test.AbstractJpaRepositoryIntegrationTest;
-import org.helianto.document.domain.ProcessDocument;
+import org.helianto.document.domain.ProcessDocument2;
 import org.helianto.document.domain.ProcessDocumentKey;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,11 +25,11 @@ public class ProcessDocumentKeyRepositoryTests
 		return repository;
 	}
 	
-	private ProcessDocument processDocument;
+	private ProcessDocument2 processDocument;
 	private KeyType keyType;
 	
 	@Autowired
-	private ProcessDocumentRepository processDocumentRepository;
+	private ProcessDocumentRepository2 processDocumentRepository;
 	
 	@Autowired
 	private KeyTypeRepository keyTypeRepository;
@@ -52,7 +52,7 @@ public class ProcessDocumentKeyRepositoryTests
 	@Override
 	protected void setUp() {
 		entity = entityRepository.save(new Entity());
-		processDocument = processDocumentRepository.save(new ProcessDocument(entity, "10"));
+		processDocument = processDocumentRepository.save(new ProcessDocument2(entity, "10"));
 		keyType = keyTypeRepository.save(new KeyType("DEFAULT", "CODE"));
 	}
 

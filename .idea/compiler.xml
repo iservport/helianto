@@ -16,7 +16,7 @@
     <bytecodeTargetLevel>
       <module name="helianto" target="1.7" />
       <module name="helianto-classic" target="1.7" />
-      <module name="helianto-core" target="1.7" />
+      <module name="helianto-core" target="1.8" />
       <module name="helianto-document" target="1.7" />
       <module name="helianto-inventory" target="1.7" />
       <module name="helianto-partner" target="1.7" />

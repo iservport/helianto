@@ -38,7 +38,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @javax.persistence.Entity
 @Table(name="doc_process")
-public class ProcessDocument 
+public class ProcessDocument2
 	extends Document 
 	implements Comparator<DocumentAssociation> {
 
@@ -61,7 +61,7 @@ public class ProcessDocument
     /** 
 	 * Default constructor.
 	 */
-    public ProcessDocument() {
+    public ProcessDocument2() {
     	super();
     }
 
@@ -71,7 +71,7 @@ public class ProcessDocument
 	 * @param entity
 	 * @param docCode
 	 */
-    public ProcessDocument(Entity entity, String docCode) {
+    public ProcessDocument2(Entity entity, String docCode) {
     	this();
     	setEntity(entity);
     	setDocCode(docCode);
@@ -135,7 +135,7 @@ public class ProcessDocument
     */
    @Override
    public boolean equals(Object other) {
-         if ( !(other instanceof ProcessDocument) ) return false;
+         if ( !(other instanceof ProcessDocument2) ) return false;
          return super.equals(other);
    }
 

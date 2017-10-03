@@ -22,7 +22,7 @@ public class JsonSerializationDocumentTests {
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(DocumentAssociation.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(DocumentFolder.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(PrivateDocument.class)));
-		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(ProcessDocument.class)));
+		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(ProcessDocument2.class)));
 		assertTrue(objectMapper.canDeserialize(objectMapper.constructType(ProcessDocumentKey.class)));
 		
 	}
